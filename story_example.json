@@ -1,0 +1,61 @@
+{
+  "title": "MY MOTO JOURNEY",
+  "subtitle": "2,000 KM ACROSS EAST AFRICA",
+  "intro_duration": 4.0,
+  "output_name": "moto_journey.mp4",
+  "stats_title": "TRIP SUMMARY",
+
+  "settings": {
+    "theme": "neon",
+    "watermark": "@YourHandle",
+    "audio": "assets/music/background.mp3"
+  },
+
+  "slides": [
+    {
+      "image":    "assets/images/day1_start.jpg",
+      "caption":  "Day 1 – Left Nairobi at sunrise 🌅",
+      "location": "Nairobi, Kenya",
+      "duration": 4.0
+    },
+    {
+      "image":    "assets/images/mountain_road.jpg",
+      "caption":  "Climbing the Rift Valley escarpment",
+      "location": "Naivasha",
+      "duration": 3.5
+    },
+    {
+      "image":    "assets/images/lake_view.jpg",
+      "caption":  "Stopped for chai by the lake ☕",
+      "location": "Lake Nakuru",
+      "duration": 3.5
+    },
+    {
+      "image":    "assets/images/night_camp.jpg",
+      "caption":  "Night 1 – slept under the stars 🌌",
+      "location": "Nyahururu",
+      "duration": 4.0
+    },
+    {
+      "image":    "assets/images/long_road.jpg",
+      "caption":  "Day 2 – 500 km of open tarmac",
+      "location": "Isiolo",
+      "duration": 3.5
+    },
+    {
+      "image":    "assets/images/finish.jpg",
+      "caption":  "MADE IT! 2,048 km total 🏆",
+      "location": "Mombasa",
+      "duration": 5.0
+    }
+  ],
+
+  "stats": {
+    "Total Distance":  "2,048 km",
+    "Days on Road":    "5 days",
+    "Cities Visited":  "12",
+    "Fuel Stops":      "18",
+    "Best Day":        "Day 2 (520 km)",
+    "Flat Tyres":      "1 (oops)"
+  }
+}
