@@ -1,1 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>🎬 Journey Video Maker</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka+One&family=Nunito:wght@700;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --c1:#ff6b35;--c2:#ffd23f;--c3:#06d6a0;--c4:#118ab2;--c5:#ef476f;--c6:#7209b7;
+  --dk:#12121e;--card:#1e1e32;--bdr:#2a2a44;
+  --ft:'Bangers',cursive;--fu:'Fredoka One',cursive;--fb:'Nunito',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--dk);color:#fff;font-family:var(--fb);min-height:100vh;overflow-x:hidden}
 
+/* HEADER */
+header{text-align:center;padding:36px 20px 20px;background:linear-gradient(180deg,#0a0a16 0%,transparent);position:relative;overflow:hidden}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(255,107,53,.1) 0%,transparent 70%)}
+.title{font-family:var(--ft);font-size:68px;letter-spacing:4px;
+  background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(255,107,53,.4));margin-bottom:6px}
+.sub{font-family:var(--fu);font-size:17px;color:rgba(255,255,255,.5);margin-bottom:18px}
+.badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.badge{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:5px 12px;border-radius:20px;font-family:var(--fu);font-size:12px}
+
+/* TABS */
+.tabs{display:flex;justify-content:center;border-bottom:2px solid var(--bdr);margin:0 20px}
+.tab{padding:14px 24px;font-family:var(--fu);font-size:16px;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,.45);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s}
+.tab.on{color:var(--c1);border-bottom-color:var(--c1)}
+.tab:hover{color:var(--c2)}
+
+/* PANELS */
+.panel{display:none;padding:28px 20px;max-width:1100px;margin:0 auto}
+.panel.on{display:block}
+
+/* README */
+.rm{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:36px;line-height:1.7}
+.rm h1{font-family:var(--ft);font-size:48px;color:var(--c1);margin-bottom:8px}
+.rm h2{font-family:var(--fu);font-size:22px;color:var(--c3);margin:28px 0 12px;border-bottom:1px solid var(--bdr);padding-bottom:8px}
+.rm h3{font-family:var(--fu);font-size:18px;color:var(--c2);margin:18px 0 8px}
+.rm p{margin-bottom:12px;color:rgba(255,255,255,.85)}
+.rm code{background:#0d0d1a;color:var(--c3);padding:2px 8px;border-radius:4px;font-family:monospace;font-size:13px}
+.rm pre{background:#0a0a14;border:1px solid var(--bdr);padding:18px;border-radius:10px;overflow-x:auto;margin:12px 0}
+.rm pre code{background:none;padding:0;color:#aef}
+.rm ul,.rm ol{padding-left:22px;margin-bottom:12px;color:rgba(255,255,255,.85)}
+.rm li{margin-bottom:6px}
+.rm table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+.rm th{background:rgba(255,255,255,.07);padding:10px 14px;text-align:left;color:var(--c2);font-family:var(--fu)}
+.rm td{padding:10px 14px;border-bottom:1px solid #1e1e2e}
+.rm a{color:var(--c3)}
+.go-btn{
+  display:inline-block;margin-top:20px;padding:14px 36px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--c1),var(--c2));color:#1a0a00;
+  font-family:var(--ft);font-size:24px;letter-spacing:2px;cursor:pointer;transition:all .2s;
+}
+.go-btn:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(255,107,53,.4)}
+
+/* STUDIO */
+.studio{display:grid;grid-template-columns:380px 1fr;gap:22px}
+@media(max-width:900px){.studio{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:20px;margin-bottom:14px}
+.card h3{font-family:var(--fu);font-size:15px;color:var(--c2);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.row{margin-bottom:12px}
+.row label{display:block;font-size:13px;color:rgba(255,255,255,.55);margin-bottom:5px}
+.row input,.row select,.row textarea{width:100%;background:#12121e;border:1px solid var(--bdr);color:#fff;padding:9px 12px;border-radius:8px;font-family:var(--fb);font-size:14px;transition:border-color .2s}
+.row input:focus,.row select:focus,.row textarea:focus{outline:none;border-color:var(--c3)}
+.row textarea{height:70px;resize:vertical}
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ts{padding:9px;border-radius:8px;border:2px solid transparent;cursor:pointer;text-align:center;font-family:var(--fu);font-size:13px;transition:all .15s}
+.ts.on{border-color:#fff;transform:scale(1.04)}
+.ts:hover{transform:scale(1.06)}
+#slist{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.si{background:#12121e;border:1px solid var(--bdr);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .15s}
+.si:hover,.si.on{border-color:var(--c3);background:rgba(6,214,160,.07)}
+.snum{width:26px;height:26px;border-radius:50%;background:var(--c4);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
+.stxt{flex:1;font-size:13px}
+.scap{color:rgba(255,255,255,.9)}
+.sloc{color:rgba(255,255,255,.4);font-size:11px}
+.sedi{width:110px;font-size:12px;background:#0a0a14;border:1px solid #333;color:#fff;padding:4px 7px;border-radius:4px}
+.del{background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:15px;padding:2px 5px}
+.del:hover{color:var(--c5)}
+.add{width:100%;padding:11px;background:none;border:1px dashed var(--bdr);color:var(--c3);font-family:var(--fu);font-size:15px;cursor:pointer;border-radius:8px;transition:all .2s}
+.add:hover{border-color:var(--c3);background:rgba(6,214,160,.07)}
+
+/* Preview */
+.parea{position:sticky;top:18px}
+.pbox{background:#000;border-radius:12px;overflow:hidden;border:2px solid var(--bdr);margin-bottom:14px;aspect-ratio:9/16;max-height:600px;width:100%;display:flex;align-items:center;justify-content:center}
+#pcanv{width:100%;height:100%;object-fit:contain;display:block}
+.pctrl{display:flex;gap:8px;margin-bottom:10px}
+.pb{flex:1;padding:11px;border-radius:8px;border:1px solid var(--bdr);background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-family:var(--fu);font-size:14px;transition:all .2s}
+.pb:hover{background:rgba(255,255,255,.12)}
+.rbtn{width:100%;padding:15px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--c1),var(--c2));color:#1a0a00;font-family:var(--ft);font-size:22px;letter-spacing:2px;cursor:pointer;transition:all .2s}
+.rbtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,53,.4)}
+.rbtn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+#rp{margin-top:14px;display:none}
+.pt{height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin:8px 0}
+.pf{height:100%;background:linear-gradient(90deg,var(--c3),var(--c4));transition:width .2s;border-radius:4px}
+.ptxt{font-size:12px;color:rgba(255,255,255,.55);text-align:center}
+#da{display:none;margin-top:14px;text-align:center}
+.dl{display:inline-block;padding:14px 30px;border-radius:10px;background:linear-gradient(135deg,var(--c3),var(--c4));color:#fff;font-family:var(--ft);font-size:20px;letter-spacing:2px;text-decoration:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title">🎬 JOURNEY VIDEO MAKER</div>
+  <div class="sub">Create Motu &amp; Patlu style cartoon journey videos in your browser</div>
+  <div class="badges">
+    <span class="badge">🎨 Cartoon Characters</span>
+    <span class="badge">📱 9:16 Vertical</span>
+    <span class="badge">⚡ No Install</span>
+    <span class="badge">🏍️ Moto Journey Style</span>
+    <span class="badge">🆓 100% Free</span>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab on"  onclick="showTab('readme',this)">📖 README</button>
+  <button class="tab"     onclick="showTab('studio',this)">🎬 Studio</button>
+  <button class="tab"     onclick="showTab('gallery',this)">🗂 Gallery</button>
+</div>
+
+<!-- README (shown first) -->
+<div class="panel on" id="readme-panel">
+<div class="rm">
+
+<h1>🎬 Journey Video Maker</h1>
+<p>Create <strong>TikTok / Reels-style cartoon journey videos</strong> right in your browser — no software, no account. Inspired by adventure creators like <em>Motu Patlu Journey</em> 🏍️</p>
+
+<button class="go-btn" onclick="showTab('studio',document.querySelectorAll('.tab')[1]);document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('on',i===1)})">🎬 OPEN STUDIO →</button>
+
+<h2>🚀 Quick Start (30 seconds)</h2>
+<ol>
+  <li>Click <strong>🎬 OPEN STUDIO</strong> above</li>
+  <li>Type your video title &amp; handle</li>
+  <li>Pick a cartoon theme (🏍️ Moto is the Motu Patlu style)</li>
+  <li>Add scenes — each scene gets a caption + location</li>
+  <li>Click <strong>▶ Animate</strong> to preview</li>
+  <li>Click <strong>🎬 RENDER VIDEO</strong> to create your WebM video</li>
+  <li>Download and post to TikTok / Reels!</li>
+</ol>
+
+<h2>🎨 Cartoon Features</h2>
+<table>
+  <tr><th>Feature</th><th>Details</th></tr>
+  <tr><td>🧑 Fat Cartoon Biker</td><td>Big round body, huge head — true Motu Patlu proportions, bounces as he rides</td></tr>
+  <tr><td>🏍️ Cartoon Motorcycle</td><td>Round tyres, spinning spokes, smoke puffs, headlight glow</td></tr>
+  <tr><td>💬 Speech Bubbles</td><td>Auto dialogue from your captions pops above the character</td></tr>
+  <tr><td>🌄 Cartoon Backgrounds</td><td>Hand-drawn style sky, hills, road, clouds, sun/moon</td></tr>
+  <tr><td>✨ Animated Effects</td><td>Speed lines, star bursts, wheel spin, bounce physics</td></tr>
+  <tr><td>📊 Stats Card</td><td>Final trophy card with your trip numbers</td></tr>
+  <tr><td>🎞️ Smooth Animation</td><td>24 FPS, 3.5s per slide, rendered frame-by-frame</td></tr>
+</table>
+
+<h2>🎨 Themes</h2>
+<table>
+  <tr><th>Theme</th><th>Style</th><th>Best for</th></tr>
+  <tr><td>🏍️ Moto</td><td>Orange/yellow sunset, Motu Patlu character colours</td><td>Motorcycle journeys</td></tr>
+  <tr><td>🌙 Night Ride</td><td>Deep purple sky, neon city lights, moon glow</td><td>Night adventures</td></tr>
+  <tr><td>🌿 Jungle</td><td>Green canopy, tropical sun, lush scenery</td><td>Forest routes</td></tr>
+  <tr><td>🏜️ Desert</td><td>Sandy dunes, blazing sun, cactus silhouettes</td><td>Arid region rides</td></tr>
+  <tr><td>🌊 Ocean</td><td>Deep blue sky, coastal road, crashing waves</td><td>Coastal journeys</td></tr>
+  <tr><td>🕹️ Retro</td><td>8-bit pixel art style, neon colours, scanlines</td><td>Nostalgic feel</td></tr>
+</table>
+
+<h2>📹 Output Format</h2>
+<p>Videos are exported as <strong>WebM (VP9)</strong> — the best web video format. TikTok, Instagram Reels, YouTube Shorts all accept WebM. You can also convert to MP4 using <a href="https://cloudconvert.com/webm-to-mp4" target="_blank">cloudconvert.com</a> for free.</p>
+
+<h2>🌐 Deploy on GitHub Pages (Free)</h2>
+<pre><code># 1. Create a new GitHub repo called "journey-video-maker"
+# 2. Upload this index.html file
+# 3. Go to Settings → Pages → Source: main / root
+# Your app is live at:
+https://YOUR_USERNAME.github.io/journey-video-maker</code></pre>
+
+<h2>📲 Works on Mobile</h2>
+<p>Open in Chrome or Safari on Android/iPhone. Preview and edit scenes on your phone. Rendering may be slow on older devices — use a PC for best results.</p>
+
+<h2>🛠️ Tech Stack</h2>
+<ul>
+  <li><strong>HTML5 Canvas API</strong> — all cartoon drawing (no external libraries)</li>
+  <li><strong>MediaRecorder API</strong> — captures canvas frames as video</li>
+  <li><strong>Zero dependencies</strong> — single HTML file, works offline after first load</li>
+</ul>
+
+<h2>🏍️ About the Motu Patlu Style</h2>
+<p>The default cartoon character is drawn in the <em>Motu Patlu</em> style — a popular Indian cartoon known for its fat, round characters with huge heads, simple expressions, and colourful outfits. The biker character bounces rhythmically, has a big grin, and rides a chunky cartoon motorcycle with spinning wheels.</p>
+
+<button class="go-btn" onclick="showTab('studio',document.querySelectorAll('.tab')[1]);document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('on',i===1)})">🚀 START MAKING VIDEOS →</button>
+
+</div>
+</div>
+
+<!-- STUDIO -->
+<div class="panel" id="studio-panel">
+<div class="studio">
+  <div>
+    <div class="card">
+      <h3>🎭 VIDEO INFO</h3>
+      <div class="row"><label>Video Title</label><input id="vtitle" value="MY MOTO JOURNEY" placeholder="Your journey title"/></div>
+      <div class="row"><label>Subtitle</label><input id="vsub" value="2,000 KM ACROSS EAST AFRICA" placeholder="Short tagline"/></div>
+      <div class="row"><label>Your Handle</label><input id="vhand" value="@YourHandle" placeholder="@username"/></div>
+    </div>
+
+    <div class="card">
+      <h3>🎨 THEME</h3>
+      <div class="tg" id="tgrid">
+        <div class="ts on" data-t="moto"    style="background:linear-gradient(135deg,#ff6b35,#ffd23f)">🏍️ Moto</div>
+        <div class="ts"    data-t="night"   style="background:linear-gradient(135deg,#1a0533,#5a0a9a)">🌙 Night</div>
+        <div class="ts"    data-t="jungle"  style="background:linear-gradient(135deg,#1a5c1a,#8bc34a)">🌿 Jungle</div>
+        <div class="ts"    data-t="desert"  style="background:linear-gradient(135deg,#c27a1a,#f5c842)">🏜️ Desert</div>
+        <div class="ts"    data-t="ocean"   style="background:linear-gradient(135deg,#0a3a6a,#00ccff)">🌊 Ocean</div>
+        <div class="ts"    data-t="retro"   style="background:linear-gradient(135deg,#3a1a5c,#ff2299)">🕹️ Retro</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📍 SCENES</h3>
+      <div id="slist"></div>
+      <button class="add" onclick="addScene()">+ ADD SCENE</button>
+    </div>
+
+    <div class="card">
+      <h3>📊 TRIP STATS</h3>
+      <div class="row"><label>Total Distance</label><input id="sdist" value="2,048 km"/></div>
+      <div class="row"><label>Days on Road</label><input id="sdays" value="5 days"/></div>
+      <div class="row"><label>Best Moment</label><input id="smem"  value="Sunrise at the peak"/></div>
+      <div class="row"><label>Fuel Stops</label><input id="sfuel" value="18 stops"/></div>
+      <div class="row"><label>Extra Stat</label><input id="sextra" value="0 regrets 😄"/></div>
+    </div>
+  </div>
+
+  <div class="parea">
+    <div class="pbox"><canvas id="pcanv" width="540" height="960"></canvas></div>
+    <div class="pctrl">
+      <button class="pb" onclick="prevSc()">◀ Prev</button>
+      <button class="pb" onclick="nextSc()">Next ▶</button>
+      <button class="pb" id="abtn" onclick="startAnim()">▶ Animate</button>
+    </div>
+    <button class="rbtn" id="rbtn" onclick="renderVid()">🎬 RENDER VIDEO</button>
+    <div id="rp">
+      <div class="pt"><div class="pf" id="pfill" style="width:0%"></div></div>
+      <div class="ptxt" id="ptxt">Rendering...</div>
+    </div>
+    <div id="da">
+      <p style="font-family:var(--fu);margin-bottom:12px;color:var(--c3)">✅ Video Ready!</p>
+      <a id="dlnk" class="dl" download="journey.webm">⬇ DOWNLOAD VIDEO</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- GALLERY -->
+<div class="panel" id="gallery-panel">
+  <h2 style="font-family:var(--ft);font-size:36px;color:var(--c2);margin-bottom:6px">YOUR VIDEOS</h2>
+  <p style="color:rgba(255,255,255,.4);margin-bottom:20px">Videos you render appear here</p>
+  <div id="ggrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">
+    <div id="gplaceholder" style="color:rgba(255,255,255,.25);font-family:var(--fu);padding:40px;text-align:center;border:1px dashed var(--bdr);border-radius:12px;grid-column:1/-1">
+      🎬 No videos yet — go to Studio and render one!
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//   JOURNEY VIDEO MAKER — Motu Patlu Cartoon Engine
+// ═══════════════════════════════════════════════════════
+
+const W=540,H=960;
+const canvas=document.getElementById('pcanv');
+const ctx=canvas.getContext('2d');
+
+// ── Default scenes ─────────────────────────────────────
+let scenes=[
+  {cap:'Day 1 — Left home at dawn! 🌅',loc:'Nairobi, Kenya',  emo:'🌅'},
+  {cap:'Rift Valley — breathtaking!',   loc:'Naivasha',         emo:'⛰️'},
+  {cap:'Roadside chai break ☕',         loc:'Nakuru',           emo:'☕'},
+  {cap:'Sunset at the lake 🌊',          loc:'Lake Nakuru',      emo:'🌊'},
+  {cap:'Day 4 — Almost there! 💪',      loc:'Mombasa Road',     emo:'🏁'},
+  {cap:'MADE IT! 2,048 km done! 🏆',    loc:'Mombasa',          emo:'🏆'},
+];
+let curSc=0, curTheme='moto', animTmr=null, previewFN=0;
+
+// ── Themes ──────────────────────────────────────────────
+const TH={
+  moto:  {s1:'#ff7a20',s2:'#ffd060',s3:'#c88028',gnd:'#d4a030',rd:'#504438',cl:'rgba(255,250,210,.88)',body:'#ff5522',shirt:'#ffd23f',skin:'#ffcc88',helmet:'#ff3300',bike:'#cc3300',wheel:'#1a1a1a',acc:'#ff3300',txt:'#1a0800'},
+  night: {s1:'#100228',s2:'#280850',s3:'#0d0d1a',gnd:'#0a0a18',rd:'#1a1a28',cl:'rgba(80,30,120,.6)',body:'#8844ff',shirt:'#dd44ff',skin:'#cc9966',helmet:'#550088',bike:'#440066',wheel:'#111',acc:'#ff44ff',txt:'#fff'},
+  jungle:{s1:'#0e3a12',s2:'#4a8a22',s3:'#1a4a10',gnd:'#224410',rd:'#2a1e10',cl:'rgba(200,255,180,.55)',body:'#228822',shirt:'#88cc22',skin:'#ddaa66',helmet:'#116611',bike:'#1a5a18',wheel:'#111',acc:'#44ff22',txt:'#fff'},
+  desert:{s1:'#b06010',s2:'#e8b820',s3:'#c89040',gnd:'#c09030',rd:'#80601a',cl:'rgba(255,240,190,.7)',body:'#cc6600',shirt:'#ffcc00',skin:'#e8aa66',helmet:'#993300',bike:'#884422',wheel:'#1a1a1a',acc:'#ff6600',txt:'#1a0800'},
+  ocean: {s1:'#082848',s2:'#0096cc',s3:'#004466',gnd:'#005577',rd:'#003344',cl:'rgba(200,240,255,.8)',body:'#0066cc',shirt:'#00ddff',skin:'#ddbb88',helmet:'#004499',bike:'#002266',wheel:'#111',acc:'#00ffff',txt:'#fff'},
+  retro: {s1:'#2a0a50',s2:'#cc0088',s3:'#150828',gnd:'#100820',rd:'#1a0030',cl:'rgba(255,80,220,.5)',body:'#ff00ff',shirt:'#ffff00',skin:'#ffbb88',helmet:'#8800ff',bike:'#440088',wheel:'#111',acc:'#00ffff',txt:'#fff'},
+};
+
+// ── Helpers ─────────────────────────────────────────────
+function rrect(c,x,y,w,h,r,fill,stroke){
+  c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.arcTo(x+w,y,x+w,y+r,r);
+  c.lineTo(x+w,y+h-r);c.arcTo(x+w,y+h,x+w-r,y+h,r);c.lineTo(x+r,y+h);
+  c.arcTo(x,y+h,x,y+h-r,r);c.lineTo(x,y+r);c.arcTo(x,y,x+r,y,r);c.closePath();
+  if(fill){c.fillStyle=fill;c.fill();}if(stroke){c.strokeStyle=stroke;c.lineWidth=3;c.stroke();}
+}
+function sh(c,col='rgba(0,0,0,.35)',b=8){c.shadowColor=col;c.shadowBlur=b}
+function nsh(c){c.shadowColor='transparent';c.shadowBlur=0}
+
+// ── Background ──────────────────────────────────────────
+function drawBG(c,t,fn){
+  const T=TH[t],ts=fn*.018;
+  // Sky gradient
+  const g=c.createLinearGradient(0,0,0,H*.68);g.addColorStop(0,T.s1);g.addColorStop(1,T.s2);
+  c.fillStyle=g;c.fillRect(0,0,W,H);
+  // Retro scanlines
+  if(t==='retro'){for(let y=0;y<H;y+=4){c.fillStyle='rgba(0,0,0,.18)';c.fillRect(0,y,W,2);}}
+  // Stars
+  if(t==='night'||t==='retro'){for(let i=0;i<100;i++){const sx=(i*157+fn*.4)%W,sy=(i*83)%(H*.5),a=.3+.7*Math.sin(ts+i);c.fillStyle=`rgba(255,255,255,${a})`;c.fillRect(sx,sy,1+(i%2),1+(i%2));}}
+  // Sun or Moon
+  if(t==='moto'||t==='desert'){
+    sh(c,'rgba(255,200,0,.7)',28);c.fillStyle='#fff9b0';c.beginPath();c.arc(W*.75,H*.14,42,0,Math.PI*2);c.fill();
+    c.fillStyle='#ffdd00';c.beginPath();c.arc(W*.75,H*.14,34,0,Math.PI*2);c.fill();nsh(c);
+    c.strokeStyle='rgba(255,200,0,.4)';c.lineWidth=3;
+    for(let r=0;r<8;r++){const a=r*Math.PI/4+ts;c.beginPath();c.moveTo(W*.75+Math.cos(a)*42,H*.14+Math.sin(a)*42);c.lineTo(W*.75+Math.cos(a)*60,H*.14+Math.sin(a)*60);c.stroke();}
+  }
+  if(t==='night'){sh(c,'rgba(200,200,255,.8)',20);c.fillStyle='#fff';c.beginPath();c.arc(W*.8,H*.1,26,0,Math.PI*2);c.fill();c.fillStyle=T.s1;c.beginPath();c.arc(W*.8+10,H*.1-8,20,0,Math.PI*2);c.fill();nsh(c);}
+  if(t==='ocean'){sh(c,'rgba(255,240,200,.6)',20);c.fillStyle='#fffacc';c.beginPath();c.arc(W*.7,H*.12,36,0,Math.PI*2);c.fill();nsh(c);}
+  // Clouds
+  drawCloud(c,T.cl,W*.12+Math.sin(ts*.3)*12,H*.2,88,38);
+  drawCloud(c,T.cl,W*.65+Math.sin(ts*.2)*8, H*.22+12,68,30);
+  if(t!=='night') drawCloud(c,T.cl,W*.42+Math.sin(ts*.4)*6,H*.18-15,52,22);
+  // Hills / mountains
+  c.fillStyle='rgba(0,0,0,.22)';c.beginPath();c.moveTo(0,H*.52);
+  for(let x=0;x<=W;x+=W/10){c.lineTo(x,H*.52-H*.08-Math.sin(x*.014)*H*.07-Math.cos(x*.019)*H*.04);}
+  c.lineTo(W,H*.52);c.closePath();c.fill();
+  // Ground
+  const gg=c.createLinearGradient(0,H*.55,0,H);gg.addColorStop(0,T.gnd);gg.addColorStop(1,t==='night'?'#040408':'#7a5a20');
+  c.fillStyle=gg;c.fillRect(0,H*.55,W,H*.45);
+  // Perspective road
+  const rg=c.createLinearGradient(W/2,H*.55,W/2,H);rg.addColorStop(0,T.rd);rg.addColorStop(1,t==='night'?'#2a2a3a':'#887844');
+  c.fillStyle=rg;c.beginPath();c.moveTo(W*.36,H*.56);c.lineTo(W*.64,H*.56);c.lineTo(W,H);c.lineTo(0,H);c.closePath();c.fill();
+  // Road markings
+  c.strokeStyle='rgba(255,255,255,.3)';c.lineWidth=3;c.setLineDash([28,18]);c.beginPath();c.moveTo(W/2,H*.56);c.lineTo(W/2,H);c.stroke();c.setLineDash([]);
+  c.strokeStyle='rgba(255,255,255,.18)';c.lineWidth=2;
+  c.beginPath();c.moveTo(W*.36,H*.56);c.lineTo(0,H);c.stroke();
+  c.beginPath();c.moveTo(W*.64,H*.56);c.lineTo(W,H);c.stroke();
+  // Jungle trees
+  if(t==='jungle'){drawTree(c,W*.1,H*.52);drawTree(c,W*.88,H*.52);drawTree(c,W*.05,H*.48);}
+  // Ocean waves
+  if(t==='ocean'){c.strokeStyle='rgba(0,200,255,.4)';c.lineWidth=2;for(let i=0;i<3;i++){c.beginPath();c.moveTo(0,H*.58+i*8);for(let x=0;x<=W;x+=30)c.lineTo(x,H*.58+i*8+Math.sin((x+fn*3+i*20)*.04)*4);c.stroke();}}
+  // Desert cacti
+  if(t==='desert'){drawCactus(c,W*.08,H*.53);drawCactus(c,W*.92,H*.53);}
+}
+function drawCloud(c,col,x,y,w,h){c.fillStyle=col;c.beginPath();c.ellipse(x,y,w*.5,h*.5,0,0,Math.PI*2);c.fill();c.beginPath();c.ellipse(x+w*.3,y+h*.1,w*.32,h*.4,0,0,Math.PI*2);c.fill();c.beginPath();c.ellipse(x-w*.3,y+h*.1,w*.28,h*.36,0,0,Math.PI*2);c.fill();}
+function drawTree(c,x,y){c.fillStyle='#1a5c1a';c.beginPath();c.moveTo(x,y-60);c.lineTo(x-25,y);c.lineTo(x+25,y);c.closePath();c.fill();c.beginPath();c.moveTo(x,y-80);c.lineTo(x-20,y-25);c.lineTo(x+20,y-25);c.closePath();c.fill();c.fillStyle='#5a3820';c.fillRect(x-5,y,10,18);}
+function drawCactus(c,x,y){c.fillStyle='#4a8a22';c.fillRect(x-7,y-50,14,50);c.fillRect(x-20,y-30,14,8);c.fillRect(x+6,y-22,14,8);c.fillRect(x-26,y-40,6,20);c.fillRect(x+20,y-32,6,18);}
+
+// ── Motu Patlu style FAT CARTOON BIKER ─────────────────
+function drawBiker(c,x,y,s,t,fn){
+  const T=TH[t];const bob=Math.sin(fn*.18)*4*s;c.save();c.translate(x,y+bob);
+  const lean=Math.sin(fn*.06)*.04;c.rotate(lean);
+
+  // === MOTORCYCLE ===
+  sh(c,'rgba(0,0,0,.4)',12);
+  // Body frame
+  c.fillStyle=T.bike;rrect(c,-70*s,-10*s,140*s,32*s,6*s,T.bike);
+  // Fuel tank — big rounded hump
+  c.beginPath();c.ellipse(-5*s,-18*s,40*s,22*s,0,0,Math.PI*2);c.fillStyle=T.bike;c.fill();
+  c.beginPath();c.ellipse(-5*s,-18*s,38*s,20*s,0,0,Math.PI*2);c.fillStyle=T.body;c.fill();
+
+  // Exhaust pipes
+  c.strokeStyle='#888';c.lineWidth=5*s;c.lineCap='round';
+  c.beginPath();c.moveTo(-65*s,18*s);c.bezierCurveTo(-90*s,18*s,-95*s,32*s,-100*s,28*s);c.stroke();
+  c.beginPath();c.moveTo(-65*s,12*s);c.bezierCurveTo(-88*s,12*s,-93*s,26*s,-98*s,22*s);c.stroke();
+
+  // Headlight
+  sh(c,'rgba(255,255,180,.9)',20);c.fillStyle='#fffaaa';c.beginPath();c.ellipse(70*s,-2*s,12*s,9*s,0,0,Math.PI*2);c.fill();nsh(c);
+  // Headlight beam
+  c.fillStyle='rgba(255,255,180,.12)';c.beginPath();c.moveTo(70*s,-2*s);c.lineTo(120*s,-18*s);c.lineTo(120*s,14*s);c.closePath();c.fill();
+
+  // Windshield
+  c.fillStyle='rgba(150,220,255,.35)';rrect(c,38*s,-28*s,28*s,22*s,6*s,'rgba(150,220,255,.35)');
+
+  nsh(c);
+  // === WHEELS ===
+  [[-52*s,28*s],[52*s,28*s]].forEach(([wx,wy],wi)=>{
+    // Tyre
+    c.lineWidth=8*s;c.strokeStyle='#111';c.beginPath();c.arc(wx,wy,26*s,0,Math.PI*2);c.stroke();
+    // Rim
+    c.fillStyle='#888';c.beginPath();c.arc(wx,wy,14*s,0,Math.PI*2);c.fill();
+    c.fillStyle='#555';c.beginPath();c.arc(wx,wy,10*s,0,Math.PI*2);c.fill();
+    // Spokes (spinning)
+    c.strokeStyle='#aaa';c.lineWidth=2*s;
+    for(let k=0;k<6;k++){const a=k*Math.PI/3+(wi===0?fn*.3:fn*.3);c.beginPath();c.moveTo(wx,wy);c.lineTo(wx+Math.cos(a)*23*s,wy+Math.sin(a)*23*s);c.stroke();}
+    // Hub cap
+    c.fillStyle='#ccc';c.beginPath();c.arc(wx,wy,4*s,0,Math.PI*2);c.fill();
+  });
+
+  // === MOTU PATLU FAT CHARACTER ===
+  // Lower body / legs (straddling)
+  c.fillStyle=T.body;
+  c.beginPath();c.ellipse(0*s,-28*s,32*s,24*s,0,0,Math.PI*2);c.fill();
+  c.strokeStyle='rgba(0,0,0,.2)';c.lineWidth=2;c.stroke();
+  // Trouser legs
+  c.fillStyle='#3a3a8a';
+  c.beginPath();c.ellipse(-16*s,-10*s,14*s,20*s,.3,0,Math.PI*2);c.fill();
+  c.beginPath();c.ellipse(16*s,-8*s,14*s,20*s,-.3,0,Math.PI*2);c.fill();
+  // Shoes
+  c.fillStyle='#2a1a10';
+  c.beginPath();c.ellipse(-20*s,12*s,16*s,8*s,.2,0,Math.PI*2);c.fill();
+  c.beginPath();c.ellipse(20*s,14*s,16*s,8*s,-.2,0,Math.PI*2);c.fill();
+
+  // Belly / shirt (BIG round belly - Motu style)
+  sh(c,'rgba(0,0,0,.3)',10);
+  c.fillStyle=T.shirt;
+  c.beginPath();c.ellipse(0,-38*s,34*s,30*s,0,0,Math.PI*2);c.fill();
+  c.strokeStyle='rgba(0,0,0,.25)';c.lineWidth=2;c.stroke();
+  nsh(c);
+  // Belly button / shirt detail
+  c.fillStyle='rgba(0,0,0,.15)';c.beginPath();c.arc(0,-40*s,4*s,0,Math.PI*2);c.fill();
+
+  // Arms - chubby
+  c.lineWidth=13*s;c.lineCap='round';c.strokeStyle=T.shirt;
+  c.beginPath();c.moveTo(-12*s,-38*s);c.quadraticCurveTo(-38*s,-28*s,-32*s,-14*s);c.stroke();
+  c.beginPath();c.moveTo(12*s,-38*s);c.quadraticCurveTo(38*s,-26*s,32*s,-14*s);c.stroke();
+  // Hands (big round)
+  c.fillStyle=T.skin;
+  c.beginPath();c.arc(-32*s,-14*s,9*s,0,Math.PI*2);c.fill();
+  c.beginPath();c.arc(32*s,-14*s,9*s,0,Math.PI*2);c.fill();
+  // Handlebar grips
+  c.fillStyle='#555';c.beginPath();c.arc(-32*s,-15*s,5*s,0,Math.PI*2);c.fill();
+  c.beginPath();c.arc(32*s,-15*s,5*s,0,Math.PI*2);c.fill();
+  // Handlebar
+  c.strokeStyle='#777';c.lineWidth=6*s;c.lineCap='round';
+  c.beginPath();c.moveTo(-32*s,-15*s);c.lineTo(-20*s,-22*s);c.lineTo(20*s,-22*s);c.lineTo(32*s,-15*s);c.stroke();
+  // Mirror
+  c.fillStyle='#555';c.fillRect(-24*s,-35*s,4*s,12*s);c.fillRect(-30*s,-36*s,12*s,7*s);
+
+  // === BIG FAT HEAD — Motu proportions ===
+  sh(c,'rgba(0,0,0,.35)',14);
+  c.fillStyle=T.skin;
+  c.beginPath();c.arc(0,-76*s,36*s,0,Math.PI*2);c.fill();
+  c.strokeStyle='rgba(0,0,0,.2)';c.lineWidth=2;c.stroke();
+  nsh(c);
+  // Chubby cheeks
+  c.fillStyle='rgba(255,160,120,.35)';
+  c.beginPath();c.ellipse(-22*s,-72*s,10*s,8*s,0,0,Math.PI*2);c.fill();
+  c.beginPath();c.ellipse(22*s,-72*s,10*s,8*s,0,0,Math.PI*2);c.fill();
+
+  // === HELMET ===
+  c.fillStyle=T.helmet;
+  c.beginPath();c.arc(0,-76*s,37*s,Math.PI,0);c.closePath();c.fill();
+  // Helmet chin strap
+  c.strokeStyle=T.helmet;c.lineWidth=5*s;
+  c.beginPath();c.moveTo(-34*s,-76*s);c.lineTo(-28*s,-62*s);c.stroke();
+  c.beginPath();c.moveTo(34*s,-76*s);c.lineTo(28*s,-62*s);c.stroke();
+  // Helmet visor (large)
+  c.fillStyle='rgba(150,210,255,.65)';
+  c.beginPath();c.ellipse(0,-76*s,32*s,14*s,0,0,Math.PI);c.fill();
+  // Helmet vent lines
+  c.strokeStyle='rgba(0,0,0,.2)';c.lineWidth=2;
+  c.beginPath();c.moveTo(-15*s,-96*s);c.lineTo(-12*s,-88*s);c.stroke();
+  c.beginPath();c.moveTo(0,-98*s);c.lineTo(0,-90*s);c.stroke();
+  c.beginPath();c.moveTo(15*s,-96*s);c.lineTo(12*s,-88*s);c.stroke();
+
+  // === FACE ===
+  // Eyes (big Motu style)
+  c.fillStyle='#fff';c.beginPath();c.ellipse(-13*s,-74*s,7*s,8*s,0,0,Math.PI*2);c.fill();
+  c.fillStyle='#fff';c.beginPath();c.ellipse(13*s,-74*s,7*s,8*s,0,0,Math.PI*2);c.fill();
+  c.fillStyle='#222';c.beginPath();c.arc(-13*s,-74*s,4*s,0,Math.PI*2);c.fill();
+  c.fillStyle='#222';c.beginPath();c.arc(13*s,-74*s,4*s,0,Math.PI*2);c.fill();
+  // Eye shine
+  c.fillStyle='#fff';c.beginPath();c.arc(-11*s,-76*s,1.5*s,0,Math.PI*2);c.fill();
+  c.beginPath();c.arc(15*s,-76*s,1.5*s,0,Math.PI*2);c.fill();
+  // Big grin
+  c.strokeStyle='#333';c.lineWidth=2.5*s;
+  c.beginPath();c.arc(0,-68*s,12*s,.1,Math.PI-.1);c.stroke();
+  // Teeth
+  c.fillStyle='#fff';rrect(c,-9*s,-69*s,18*s,5*s,1.5*s,'#fff');
+  // Moustache (small)
+  c.fillStyle='#333';c.beginPath();c.ellipse(-5*s,-63*s,5*s,2.5*s,.3,0,Math.PI*2);c.fill();
+  c.beginPath();c.ellipse(5*s,-63*s,5*s,2.5*s,-.3,0,Math.PI*2);c.fill();
+  // Nose
+  c.fillStyle='rgba(200,120,80,.6)';c.beginPath();c.arc(0,-69*s,5*s,0,Math.PI*2);c.fill();
+
+  // Speed lines (fast motion)
+  c.strokeStyle='rgba(255,255,255,.35)';c.lineWidth=2;
+  for(let i=0;i<5;i++){
+    const ly=(-50+i*16)*s,ln=(30+Math.random()*20)*s;
+    c.beginPath();c.moveTo(-100*s,ly);c.lineTo(-100*s+ln,ly);c.stroke();
+  }
+  // Smoke puffs from exhaust
+  if(fn%3===0){
+    c.fillStyle='rgba(200,200,200,.25)';
+    c.beginPath();c.arc(-105*s+Math.random()*10,20*s,6+Math.random()*4,0,Math.PI*2);c.fill();
+  }
+
+  c.restore();
+}
+
+// ── Speech bubble ───────────────────────────────────────
+function drawBubble(c,txt,bx,by,t,fn){
+  const T=TH[t];const alpha=Math.min(1,(fn-10)/10);if(alpha<=0)return;
+  c.globalAlpha=alpha;const f=20;c.font=`bold ${f}px Fredoka One, sans-serif`;
+  const tw=c.measureText(txt).width;const bw=tw+28,bh=46;
+  sh(c,'rgba(0,0,0,.3)',8);rrect(c,bx,by,bw,bh,12,'#fff','rgba(0,0,0,.1)');
+  c.fillStyle='#fff';c.beginPath();c.moveTo(bx+24,by+bh);c.lineTo(bx+12,by+bh+18);c.lineTo(bx+40,by+bh);c.closePath();c.fill();
+  nsh(c);c.fillStyle=T.txt;c.fillText(txt,bx+14,by+f+10);c.globalAlpha=1;
+}
+
+// ── HUD Overlay ──────────────────────────────────────────
+function drawOverlay(c,t){
+  const h=document.getElementById('vhand')?.value||'@YourHandle';
+  c.font='bold 18px Fredoka One, sans-serif';c.textAlign='right';
+  c.fillStyle='rgba(255,255,255,.45)';sh(c,'rgba(0,0,0,.5)',3);c.fillText(h,W-16,H-18);nsh(c);c.textAlign='left';
+}
+
+// ── Intro slide ──────────────────────────────────────────
+function drawIntro(c,title,sub,t,fn){
+  drawBG(c,t,fn);const T=TH[t];const alpha=Math.min(1,fn/18);const sc=.8+.2*Math.min(1,fn/14);
+  c.save();c.globalAlpha=alpha;c.translate(W/2,H/2-100);c.scale(sc,sc);c.textAlign='center';
+  c.font='bold 58px Bangers, cursive';const tw=c.measureText(title.toUpperCase()).width;
+  sh(c,'rgba(0,0,0,.5)',18);rrect(c,-tw/2-22,-52,tw+44,72,14,T.acc);nsh(c);
+  c.fillStyle='#fff';c.fillText(title.toUpperCase(),0,10);c.restore();
+  c.save();c.globalAlpha=Math.min(1,Math.max(0,(fn-12)/10));c.textAlign='center';
+  c.font='bold 24px Fredoka One, sans-serif';c.fillStyle=T.shirt;
+  sh(c,'rgba(0,0,0,.5)',5);c.fillText(sub,W/2,H/2+25);nsh(c);c.restore();
+  c.save();c.globalAlpha=.45+.55*Math.min(1,fn/18);drawBiker(c,W*.72,H*.62,.78,t,fn);c.restore();
+  // Star burst
+  if(fn>20){drawStars(c,W*.2,H*.3,fn);}
+  drawOverlay(c,t);
+}
+
+// ── Content slide ────────────────────────────────────────
+function drawContent(c,sc,idx,t,fn){
+  drawBG(c,t,fn);const T=TH[t];
+  // Big emoji
+  const es=1+.15*Math.sin(fn*.12);c.font=`${76*es}px serif`;c.textAlign='center';
+  c.fillText(sc.emo||'🏍️',W*.25,H*.575);
+  // Character
+  drawBiker(c,W*.7,H*.62,.82,t,fn);
+  // Bubble
+  if(sc.cap){const sh2=sc.cap.split(' ').slice(0,5).join(' ')+(sc.cap.split(' ').length>5?'…':'');drawBubble(c,sh2,W*.35,H*.42,t,fn);}
+  // Scene badge
+  sh(c,'rgba(0,0,0,.3)',8);rrect(c,16,26,76,52,10,T.acc);nsh(c);
+  c.font='bold 12px Fredoka One, sans-serif';c.textAlign='left';c.fillStyle='rgba(255,255,255,.65)';c.fillText('SCENE',24,44);
+  c.font='bold 26px Bangers, cursive';c.fillStyle='#fff';c.fillText('#'+(idx+1),24,68);
+  // Caption box
+  drawCaption(c,sc.cap||'',sc.loc||'',t,fn);
+  drawOverlay(c,t);
+}
+
+// ── Caption box ──────────────────────────────────────────
+function drawCaption(c,txt,loc,t,fn){
+  const T=TH[t];const by=H*.71,bh=170;
+  c.fillStyle='rgba(0,0,0,.58)';rrect(c,16,by,W-32,bh,14);
+  // Coloured top line
+  const lg=c.createLinearGradient(16,by,W-16,by);lg.addColorStop(0,T.acc);lg.addColorStop(1,T.shirt);
+  c.fillStyle=lg;c.fillRect(16,by,W-32,4);
+  if(loc){c.font='bold 19px Fredoka One, sans-serif';const lw=c.measureText('📍 '+loc).width;rrect(c,32,by+14,lw+18,28,14,T.acc);c.fillStyle='#fff';c.fillText('📍 '+loc,41,by+33);}
+  // Main text
+  c.fillStyle='#fff';c.font='bold 32px Nunito, sans-serif';c.textAlign='center';
+  const wds=txt.split(' '),lns=[];let ln='';
+  wds.forEach(w=>{const ts=ln?ln+' '+w:w;if(c.measureText(ts).width>W-80){lns.push(ln);ln=w;}else ln=ts;});if(ln)lns.push(ln);
+  const sy=loc?by+62:by+44;lns.slice(0,3).forEach((l,i)=>{sh(c,'rgba(0,0,0,.8)',4);c.fillText(l,W/2,sy+i*38);nsh(c);});
+  c.textAlign='left';
+}
+
+// ── Stars decoration ─────────────────────────────────────
+function drawStars(c,x,y,fn){
+  c.fillStyle='rgba(255,220,0,.8)';
+  for(let i=0;i<5;i++){
+    const a=i/5*Math.PI*2+fn*.05,r=30+Math.sin(fn*.1+i)*5;
+    const sx=x+Math.cos(a)*r,sy=y+Math.sin(a)*r;
+    c.font='22px serif';c.textAlign='center';c.fillText('⭐',sx,sy);
+  }
+  c.textAlign='left';
+}
+
+// ── Stats slide ──────────────────────────────────────────
+function drawStats(c,title,stats,t,fn){
+  drawBG(c,t,fn);const T=TH[t];
+  // Trophy bounce
+  const tb=Math.sin(fn*.14)*10;c.font='100px serif';c.textAlign='center';c.fillText('🏆',W/2,H*.26+tb);
+  sh(c,'rgba(0,0,0,.5)',12);c.font='bold 50px Bangers, cursive';c.fillStyle=T.shirt;c.fillText('JOURNEY STATS',W/2,H*.42);nsh(c);
+  const n=Object.keys(stats).length;const ch2=n*56+34;const cy=H*.47;
+  rrect(c,24,cy,W-48,ch2,14,'rgba(0,0,0,.62)','rgba(255,255,255,.08)');
+  Object.entries(stats).forEach(([k,v],i)=>{
+    const ry=cy+30+i*56;const alpha=Math.min(1,Math.max(0,(fn-(i*3+8))/8));c.globalAlpha=alpha;
+    c.textAlign='left';c.font='bold 19px Fredoka One, sans-serif';c.fillStyle='rgba(255,255,255,.55)';c.fillText(k,42,ry);
+    c.textAlign='right';c.font='bold 21px Fredoka One, sans-serif';c.fillStyle=T.shirt;c.fillText(v,W-42,ry);c.globalAlpha=1;
+    if(i<n-1){c.strokeStyle='rgba(255,255,255,.1)';c.lineWidth=1;c.beginPath();c.moveTo(34,ry+14);c.lineTo(W-34,ry+14);c.stroke();}
+  });
+  drawOverlay(c,t);c.textAlign='left';
+}
+
+// ── Render frame ─────────────────────────────────────────
+function renderFrame(c,fn){
+  c.clearRect(0,0,W,H);
+  const title=document.getElementById('vtitle')?.value||'MY JOURNEY';
+  const sub  =document.getElementById('vsub')?.value||'';
+  const t=curTheme;
+  const total=scenes.length;
+  if(curSc===0) drawIntro(c,title,sub,t,fn);
+  else if(curSc<=total) drawContent(c,scenes[curSc-1],curSc-1,t,fn);
+  else{
+    const st={
+      'Total Distance':document.getElementById('sdist')?.value||'—',
+      'Days on Road':  document.getElementById('sdays')?.value||'—',
+      'Best Moment':   document.getElementById('smem')?.value||'—',
+      'Fuel Stops':    document.getElementById('sfuel')?.value||'—',
+      'Extra':         document.getElementById('sextra')?.value||'—',
+    };
+    drawStats(c,title,st,t,fn);
+  }
+}
+
+// ── Preview ───────────────────────────────────────────────
+function drawPreview(fn){ renderFrame(ctx,fn); }
+
+function startAnim(){
+  clearInterval(animTmr);previewFN=0;
+  const btn=document.getElementById('abtn');btn.textContent='⏹ Stop';
+  animTmr=setInterval(()=>{ previewFN++;if(previewFN>90)previewFN=0;drawPreview(previewFN); },33);
+  btn.onclick=()=>{ clearInterval(animTmr);animTmr=null;btn.textContent='▶ Animate';btn.onclick=startAnim; };
+}
+
+function prevSc(){ curSc=Math.max(0,curSc-1);previewFN=0;drawPreview(0);hl(); }
+function nextSc(){ curSc=Math.min(scenes.length+1,curSc+1);previewFN=0;drawPreview(0);hl(); }
+function hl(){ document.querySelectorAll('.si').forEach((el,i)=>el.classList.toggle('on',i+1===curSc)); }
+
+// ── Scene list ────────────────────────────────────────────
+function renderList(){
+  const list=document.getElementById('slist');list.innerHTML='';
+  const intro=document.createElement('div');intro.className='si'+(curSc===0?' on':'');
+  intro.innerHTML=`<div class="snum">⭐</div><div class="stxt"><div class="scap">Intro Card</div><div class="sloc">${document.getElementById('vtitle')?.value||'Title'}</div></div>`;
+  intro.onclick=()=>{curSc=0;previewFN=0;drawPreview(0);renderList();}; list.appendChild(intro);
+  scenes.forEach((s,i)=>{
+    const el=document.createElement('div');el.className='si'+(curSc===i+1?' on':'');
+    el.innerHTML=`<div class="snum">${i+1}</div><div class="stxt"><div class="scap">${s.emo||''} ${s.cap||'(empty)'}</div><div class="sloc">📍 ${s.loc||'—'}</div></div><input class="sedi" type="text" value="${s.cap||''}" oninput="scenes[${i}].cap=this.value;drawPreview(0)" onclick="event.stopPropagation()"/><button class="del" onclick="event.stopPropagation();delSc(${i})">✕</button>`;
+    el.onclick=()=>{curSc=i+1;previewFN=0;drawPreview(0);renderList();}; list.appendChild(el);
+  });
+  const stats=document.createElement('div');stats.className='si'+(curSc===scenes.length+1?' on':'');
+  stats.innerHTML=`<div class="snum">📊</div><div class="stxt"><div class="scap">Stats Card</div><div class="sloc">Final summary</div></div>`;
+  stats.onclick=()=>{curSc=scenes.length+1;previewFN=0;drawPreview(0);renderList();}; list.appendChild(stats);
+}
+function addScene(){ scenes.push({cap:'New scene '+(scenes.length+1),loc:'Location',emo:'🗺️'});curSc=scenes.length;renderList();drawPreview(0); }
+function delSc(i){ scenes.splice(i,1);if(curSc>scenes.length+1)curSc=scenes.length+1;renderList();drawPreview(0); }
+
+// Theme switching
+document.querySelectorAll('.ts').forEach(el=>{
+  el.addEventListener('click',()=>{
+    document.querySelectorAll('.ts').forEach(e=>e.classList.remove('on'));
+    el.classList.add('on');curTheme=el.dataset.t;drawPreview(previewFN||0);
+  });
+});
+
+// ── Video Rendering ───────────────────────────────────────
+async function renderVid(){
+  const rbtn=document.getElementById('rbtn');const rp=document.getElementById('rp');
+  const pfill=document.getElementById('pfill');const ptxt=document.getElementById('ptxt');
+  rbtn.disabled=true;rp.style.display='block';document.getElementById('da').style.display='none';
+  const FPS=24,SPD=3.5,total=scenes.length+2;const tframes=total*SPD*FPS|0,fps=SPD*FPS|0;
+  const oc=document.createElement('canvas');oc.width=540;oc.height=960;const oc2=oc.getContext('2d');
+  const stream=oc.captureStream(FPS);
+  let mime='video/webm;codecs=vp9';if(!MediaRecorder.isTypeSupported(mime)) mime='video/webm';
+  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:2800000});
+  const chunks=[];rec.ondataavailable=e=>{if(e.data.size>0) chunks.push(e.data);};rec.start(100);
+  const title=document.getElementById('vtitle').value||'MY JOURNEY';
+  const sub  =document.getElementById('vsub').value||'';
+  const t=curTheme;
+  const st={'Total Distance':document.getElementById('sdist').value||'—','Days on Road':document.getElementById('sdays').value||'—','Best Moment':document.getElementById('smem').value||'—','Fuel Stops':document.getElementById('sfuel').value||'—','Extra':document.getElementById('sextra').value||'—'};
+  for(let f=0;f<tframes;f++){
+    const si=Math.floor(f/fps),fi=f%fps;oc2.clearRect(0,0,540,960);
+    const prevCurSc=curSc;curSc=si;
+    renderFrame(oc2,fi);curSc=prevCurSc;
+    const pct=Math.round(f/tframes*100);pfill.style.width=pct+'%';ptxt.textContent=`Rendering frame ${f+1}/${tframes} (${pct}%)`;
+    if(f%4===0) await new Promise(r=>requestAnimationFrame(r));
+  }
+  rec.stop();
+  rec.onstop=()=>{
+    const blob=new Blob(chunks,{type:mime});const url=URL.createObjectURL(blob);
+    const dl=document.getElementById('dlnk');dl.href=url;dl.download=`${title.replace(/\s+/g,'-').toLowerCase()}.webm`;
+    document.getElementById('da').style.display='block';rbtn.disabled=false;rp.style.display='none';
+    addGallery(title,t,url);
+  };
+}
+
+function addGallery(title,theme,url){
+  const g=document.getElementById('ggrid');const ph=document.getElementById('gplaceholder');if(ph) ph.remove();
+  const item=document.createElement('div');item.style.cssText='background:var(--card);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;';
+  const thumb=document.createElement('canvas');thumb.width=180;thumb.height=320;thumb.style.cssText='width:100%;aspect-ratio:9/16;display:block;';
+  const tc=thumb.getContext('2d');const T=TH[theme];const g2=tc.createLinearGradient(0,0,0,320);g2.addColorStop(0,T.s1);g2.addColorStop(1,T.s2);tc.fillStyle=g2;tc.fillRect(0,0,180,320);tc.font='bold 22px Bangers, cursive';tc.textAlign='center';tc.fillStyle='#fff';tc.fillText(title.slice(0,14),90,155);
+  item.appendChild(thumb);
+  item.innerHTML+=`<div style="padding:10px 12px"><div style="font-family:var(--fu);font-size:13px;margin-bottom:4px">${title}</div><div style="font-size:11px;color:rgba(255,255,255,.4)">${theme}</div></div><div style="display:flex;gap:6px;padding:0 12px 12px"><a href="${url}" download class="dl" style="flex:1;padding:8px;font-size:15px">⬇</a><button onclick="this.closest('div').parentElement.remove()" style="flex:1;padding:8px;background:none;border:1px solid var(--bdr);color:#fff;cursor:pointer;border-radius:6px">🗑</button></div>`;
+  g.prepend(item);
+}
+
+// ── Tab switching ─────────────────────────────────────────
+function showTab(name,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(name+'-panel').classList.add('on');
+  if(el) el.classList.add('on');
+}
+
+// ── Live updates ──────────────────────────────────────────
+document.getElementById('vtitle')?.addEventListener('input',()=>{renderList();drawPreview(0);});
+
+// ── Init ──────────────────────────────────────────────────
+renderList();drawPreview(0);
+</script>
+</body>
+</html>
