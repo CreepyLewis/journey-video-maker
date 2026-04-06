@@ -3,783 +3,1097 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>🎬 Pixar Story Video Maker</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<title>🎬 AI Cartoon Story Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#0a0b0f;--card:#13151c;--card2:#1a1d28;--bdr:#252836;
-  --acc:#ff5722;--acc2:#ff9800;--acc3:#4caf50;--blue:#2196f3;
-  --txt:#e8eaf0;--txt2:#8b90a0;
-  --r:14px;
+  --bg:#08090e;--s1:#0f1117;--s2:#161923;--s3:#1d2130;
+  --bdr:#252a38;--bdr2:#2e3447;
+  --acc:#ff4d00;--acc2:#ff9500;--acc3:#ffca28;
+  --blue:#3d8ef8;--green:#22c55e;--purple:#a855f7;
+  --txt:#dde1f0;--txt2:#7a82a0;--txt3:#4a5070;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
+html,body{height:100%}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;overflow:hidden}
 
-/* ── HEADER ── */
-.hdr{background:linear-gradient(135deg,#0d0f1a 0%,#1a0d0a 100%);border-bottom:1px solid var(--bdr);padding:20px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:28px;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px;white-space:nowrap}
-.hdr-sub{font-size:12px;color:var(--txt2);margin-top:2px}
-.hdr-right{margin-left:auto;display:flex;gap:10px;align-items:center}
-.badge{background:rgba(255,87,34,.12);border:1px solid rgba(255,87,34,.3);color:var(--acc);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600}
+/* ══ LAYOUT ══ */
+.app{display:grid;grid-template-columns:320px 1fr 280px;grid-template-rows:56px 1fr;height:100vh;overflow:hidden}
+.topbar{grid-column:1/-1;background:var(--s1);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 20px;gap:16px;z-index:50}
+.sidebar-left{grid-column:1;background:var(--s1);border-right:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
+.center{grid-column:2;background:var(--bg);overflow-y:auto;display:flex;flex-direction:column}
+.sidebar-right{grid-column:3;background:var(--s1);border-left:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
 
-/* ── LAYOUT ── */
-.wrap{display:grid;grid-template-columns:420px 1fr;gap:0;height:calc(100vh - 65px)}
-@media(max-width:900px){.wrap{grid-template-columns:1fr;height:auto}}
-.sidebar{border-right:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
-.main{overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:20px}
+/* ══ TOPBAR ══ */
+.logo{font-family:'Bebas Neue';font-size:26px;letter-spacing:2px;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
+.topbar-badges{display:flex;gap:8px;margin-left:8px}
+.tbadge{background:rgba(255,77,0,.1);border:1px solid rgba(255,77,0,.25);color:var(--acc);padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px}
+.tbadge.b{background:rgba(61,142,248,.1);border-color:rgba(61,142,248,.25);color:var(--blue)}
+.tbadge.g{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:var(--green)}
+.topbar-right{margin-left:auto;display:flex;gap:10px;align-items:center}
 
-/* ── SIDEBAR SECTIONS ── */
-.sec{border-bottom:1px solid var(--bdr);padding:20px}
-.sec-title{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--txt2);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.sec-title::before{content:'';width:3px;height:14px;background:linear-gradient(var(--acc),var(--acc2));border-radius:2px;display:inline-block}
+/* ══ SECTION HEADERS ══ */
+.shead{padding:14px 16px 10px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--txt3);text-transform:uppercase;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.shead-dot{width:3px;height:14px;border-radius:2px;background:linear-gradient(var(--acc),var(--acc2))}
 
-/* ── FORM ELEMENTS ── */
-.field{margin-bottom:12px}
-.field label{display:block;font-size:12px;font-weight:600;color:var(--txt2);margin-bottom:5px}
-.field input,.field select,.field textarea{width:100%;background:#0d0f18;border:1px solid var(--bdr);color:var(--txt);padding:9px 12px;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;transition:border-color .2s;outline:none}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--acc)}
-.field textarea{height:72px;resize:vertical;line-height:1.5}
-.field select option{background:#1a1d28}
+/* ══ CHARACTERS PANEL ══ */
+.char-list{padding:10px;display:flex;flex-direction:column;gap:6px}
+.char-card{background:var(--s2);border:1px solid var(--bdr);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .18s;position:relative}
+.char-card:hover{border-color:var(--bdr2);background:var(--s3)}
+.char-card.active{border-color:var(--acc);background:rgba(255,77,0,.06)}
+.char-avatar{width:42px;height:42px;border-radius:10px;overflow:hidden;border:2px solid var(--bdr2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;background:var(--s3)}
+.char-avatar img{width:100%;height:100%;object-fit:cover}
+.char-info{flex:1;min-width:0}
+.char-name{font-size:13px;font-weight:700;color:var(--txt)}
+.char-role{font-size:11px;color:var(--txt2);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.char-badge{font-size:9px;background:rgba(255,77,0,.15);color:var(--acc);padding:2px 6px;border-radius:4px;font-weight:700;margin-top:3px;display:inline-block}
+.char-preview-btn{font-size:13px;background:none;border:none;cursor:pointer;padding:4px;border-radius:6px;transition:.2s;color:var(--txt2)}
+.char-preview-btn:hover{background:var(--bdr);color:var(--txt)}
 
-/* ── SCENE CARDS ── */
-.scene-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
-.scene-card{background:#0d0f18;border:1px solid var(--bdr);border-radius:10px;padding:12px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
-.scene-card::before{content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:var(--bdr);transition:background .2s}
-.scene-card.active::before{background:linear-gradient(var(--acc),var(--acc2))}
-.scene-card.active{border-color:rgba(255,87,34,.3);background:rgba(255,87,34,.04)}
-.scene-card:hover{border-color:#333}
-.sc-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.sc-num{width:24px;height:24px;border-radius:6px;background:var(--acc);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sc-title{font-size:13px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sc-del{background:none;border:none;color:var(--txt2);cursor:pointer;padding:2px 6px;border-radius:4px;font-size:13px;transition:all .15s;flex-shrink:0}
-.sc-del:hover{color:#f44336;background:rgba(244,67,54,.1)}
-.sc-desc{font-size:11px;color:var(--txt2);line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.sc-status{display:flex;align-items:center;gap:6px;margin-top:8px}
-.sc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.sc-dot.ready{background:#4caf50}
-.sc-dot.loading{background:#ff9800;animation:pulse .8s infinite}
-.sc-dot.error{background:#f44336}
-.sc-dot.idle{background:var(--bdr)}
-.sc-dot-txt{font-size:10px;color:var(--txt2)}
-@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+/* ══ STORY INPUT ══ */
+.story-box{padding:14px}
+.story-textarea{width:100%;background:#0a0c13;border:1px solid var(--bdr);color:var(--txt);padding:12px;border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;line-height:1.7;resize:none;height:180px;outline:none;transition:border-color .2s}
+.story-textarea:focus{border-color:rgba(255,77,0,.4)}
+.story-hints{margin-top:8px;font-size:10px;color:var(--txt3);line-height:1.7}
+.story-hints span{color:var(--acc);font-weight:700}
 
-.add-btn{width:100%;padding:10px;background:none;border:1px dashed var(--bdr);color:var(--acc);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border-radius:8px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
-.add-btn:hover{border-color:var(--acc);background:rgba(255,87,34,.05)}
+/* ══ BUTTONS ══ */
+.btn{padding:9px 16px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;transition:all .2s;display:inline-flex;align-items:center;gap:6px;letter-spacing:.3px}
+.btn-fire{background:linear-gradient(135deg,#ff4d00,#ff9500);color:#fff;box-shadow:0 4px 16px rgba(255,77,0,.3)}
+.btn-fire:hover{filter:brightness(1.12);transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,77,0,.4)}
+.btn-fire:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-outline{background:transparent;border:1px solid var(--bdr2);color:var(--txt2)}
+.btn-outline:hover{background:var(--s2);color:var(--txt);border-color:#444}
+.btn-blue{background:rgba(61,142,248,.15);border:1px solid rgba(61,142,248,.3);color:var(--blue)}
+.btn-blue:hover{background:rgba(61,142,248,.25)}
+.btn-green{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;box-shadow:0 4px 16px rgba(34,197,94,.25)}
+.btn-green:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-green:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-full{width:100%;justify-content:center;padding:12px}
 
-/* ── MAIN AREA ── */
-.preview-row{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
-@media(max-width:1200px){.preview-row{grid-template-columns:1fr}}
+/* ══ CENTER — SCENE PIPELINE ══ */
+.center-head{padding:16px 20px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:12px;flex-shrink:0}
+.center-head h2{font-family:'Bebas Neue';font-size:20px;letter-spacing:1px;color:var(--txt)}
+.scene-count-badge{background:var(--s2);border:1px solid var(--bdr2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;color:var(--txt2)}
+.pipeline{padding:16px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
 
-.phone-wrap{position:sticky;top:24px}
-.phone{width:240px;background:#000;border-radius:22px;overflow:hidden;border:3px solid #222;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 0 1px #333;position:relative}
-.phone::before{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:60px;height:5px;background:#1a1a1a;border-radius:3px;z-index:10}
-#preview-canvas{width:240px;height:426px;display:block;background:#000}
-
-.phone-ctrls{display:flex;gap:8px;margin-top:12px}
-.pctrl{flex:1;padding:8px;border-radius:8px;border:1px solid var(--bdr);background:var(--card);color:var(--txt);cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;transition:all .2s}
-.pctrl:hover{background:var(--card2);border-color:#444}
-.pctrl.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent;color:#fff}
-.pctrl.primary:hover{filter:brightness(1.1)}
-
-.gen-panel{flex:1}
-.gen-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:var(--acc);margin-bottom:4px}
-.gen-sub{font-size:12px;color:var(--txt2);margin-bottom:16px}
-
-/* ── SCENE EDITOR ── */
-.sce-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;margin-bottom:16px}
-.sce-card h4{font-size:13px;font-weight:700;color:var(--acc2);margin-bottom:14px;display:flex;align-items:center;gap:8px}
-
-/* ── IMAGE GRID ── */
-.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px}
-.img-cell{aspect-ratio:9/16;border-radius:10px;overflow:hidden;border:2px solid var(--bdr);position:relative;cursor:pointer;transition:all .2s;background:#0d0f18}
-.img-cell.selected{border-color:var(--acc);box-shadow:0 0 0 2px rgba(255,87,34,.3)}
-.img-cell img{width:100%;height:100%;object-fit:cover;display:block}
-.img-cell .img-loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-size:11px;color:var(--txt2)}
-.spin{width:28px;height:28px;border:3px solid var(--bdr);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
+/* ══ SCENE ROW ══ */
+.scene-row{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;overflow:hidden;transition:all .2s;cursor:pointer}
+.scene-row:hover{border-color:var(--bdr2)}
+.scene-row.active{border-color:rgba(255,77,0,.4);box-shadow:0 0 0 1px rgba(255,77,0,.15)}
+.scene-row-head{display:flex;align-items:center;gap:10px;padding:10px 14px}
+.scene-num{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.scene-char-chips{display:flex;gap:4px;flex:1;flex-wrap:wrap}
+.chip{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(61,142,248,.12);border:1px solid rgba(61,142,248,.2);color:var(--blue)}
+.chip.loc{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.2);color:var(--purple)}
+.chip.dia{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.2);color:var(--green)}
+.scene-actions{display:flex;gap:6px;margin-left:auto}
+.scene-action-btn{width:26px;height:26px;border-radius:6px;border:1px solid var(--bdr);background:var(--s2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:.15s;color:var(--txt2)}
+.scene-action-btn:hover{background:var(--s3);border-color:#444;color:var(--txt)}
+.scene-body{display:none;border-top:1px solid var(--bdr);padding:10px 14px;display:grid;grid-template-columns:100px 1fr;gap:10px}
+.scene-thumb{width:100px;height:178px;border-radius:8px;overflow:hidden;background:var(--s2);border:1px solid var(--bdr);flex-shrink:0;position:relative;display:flex;align-items:center;justify-content:center}
+.scene-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.scene-thumb-loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:10px;color:var(--txt2);text-align:center;padding:8px}
+.scene-details{display:flex;flex-direction:column;gap:8px}
+.scene-text-row{font-size:12px;line-height:1.6}
+.scene-text-row .label{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:2px}
+.scene-text-row .val{color:var(--txt2)}
+.scene-dialogue{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:6px;padding:6px 10px;font-size:12px;color:var(--green);font-style:italic}
+.spin{width:22px;height:22px;border:2.5px solid var(--bdr2);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.img-cell .img-overlay{position:absolute;bottom:0;left:0;right:0;padding:6px 8px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-size:10px;color:#fff;font-weight:600}
-.img-cell .img-select{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:10px;opacity:0;transition:.2s}
-.img-cell.selected .img-select{opacity:1}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.st-idle{background:var(--bdr2)}
+.st-gen{background:var(--acc2);animation:pulse .8s ease infinite}
+.st-done{background:var(--green)}
+.st-err{background:#ef4444}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 
-/* ── BUTTONS ── */
-.btn{padding:10px 20px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:7px}
-.btn-pri{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
-.btn-pri:hover{filter:brightness(1.1);transform:translateY(-1px)}
-.btn-pri:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.btn-sec{background:var(--card2);border:1px solid var(--bdr);color:var(--txt)}
-.btn-sec:hover{background:#252836}
-.btn-green{background:linear-gradient(135deg,#43a047,#66bb6a);color:#fff}
-.btn-green:hover{filter:brightness(1.1)}
-.btn-full{width:100%;justify-content:center;padding:14px}
+/* ══ PREVIEW ══ */
+.preview-wrap{padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.phone-shell{width:220px;background:#111;border-radius:28px;border:3px solid #2a2a2a;box-shadow:0 20px 50px rgba(0,0,0,.7),inset 0 0 0 1px #333;position:relative;overflow:hidden;flex-shrink:0}
+.phone-notch{height:20px;background:#111;display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
+.notch-bar{width:50px;height:4px;background:#1a1a1a;border-radius:2px}
+#pcanv{width:214px;height:380px;display:block;background:#000;border-radius:0 0 20px 20px}
+.phone-btns{display:flex;gap:6px;width:100%}
+.pbtn{flex:1;padding:8px 6px;border-radius:8px;border:1px solid var(--bdr);background:var(--s2);color:var(--txt2);cursor:pointer;font-size:11px;font-weight:700;font-family:'Inter',sans-serif;transition:.18s;text-align:center}
+.pbtn:hover{background:var(--s3);color:var(--txt)}
+.pbtn.prim{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent;color:#fff}
+.pbtn.prim:hover{filter:brightness(1.1)}
+.scene-ind{font-size:11px;color:var(--txt3);text-align:center}
 
-/* ── STORY BUILDER ── */
-.story-box{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;margin-bottom:16px}
-.genre-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-.genre-btn{padding:10px 6px;border-radius:8px;border:2px solid var(--bdr);background:var(--card2);color:var(--txt2);cursor:pointer;font-size:12px;font-weight:600;text-align:center;transition:all .2s;font-family:'Inter',sans-serif}
-.genre-btn.on{border-color:var(--acc);color:var(--acc);background:rgba(255,87,34,.08)}
-.genre-btn:hover{border-color:#444}
+/* ══ RENDER ══ */
+.render-section{padding:14px;border-top:1px solid var(--bdr);margin-top:auto}
+.render-section h4{font-size:11px;font-weight:700;color:var(--txt2);letter-spacing:.8px;margin-bottom:10px;text-transform:uppercase}
+.prog-bar{height:5px;background:var(--bdr);border-radius:3px;overflow:hidden;margin:8px 0}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));border-radius:3px;transition:width .25s}
+.prog-txt{font-size:10px;color:var(--txt2);text-align:center}
+.dl-area{text-align:center;padding:10px 0}
+.dl-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;text-decoration:none;box-shadow:0 4px 16px rgba(34,197,94,.3)}
 
-/* ── RENDER ── */
-.render-box{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:20px}
-.prog-bar{height:6px;background:var(--bdr);border-radius:3px;overflow:hidden;margin:10px 0}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:3px;transition:width .3s}
-.prog-txt{font-size:11px;color:var(--txt2);text-align:center}
-.dl-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;background:linear-gradient(135deg,#43a047,#66bb6a);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;text-decoration:none;margin-top:12px}
-.dl-btn:hover{filter:brightness(1.1)}
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--s2);border:1px solid var(--bdr2);border-radius:10px;padding:10px 16px;font-size:12px;font-weight:600;z-index:999;display:none;animation:fadeUp .3s ease;max-width:320px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.toast.err{border-color:rgba(239,68,68,.3);background:rgba(30,8,8,.9);color:#f87171}
+.toast.ok{border-color:rgba(34,197,94,.3);color:var(--green)}
 
-/* ── CAPTION STYLE ── */
-.cap-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.cap-opt{padding:8px;border-radius:8px;border:2px solid var(--bdr);background:var(--card2);cursor:pointer;text-align:center;font-size:11px;font-weight:600;transition:all .2s;font-family:'Inter',sans-serif;color:var(--txt2)}
-.cap-opt.on{border-color:var(--blue);color:var(--blue);background:rgba(33,150,243,.08)}
+/* ══ LOADING OVERLAY ══ */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.overlay.show{display:flex}
+.overlay-box{background:var(--s2);border:1px solid var(--bdr2);border-radius:16px;padding:32px 40px;text-align:center;max-width:360px}
+.overlay-box .spin{width:40px;height:40px;border-width:4px;margin:0 auto 16px}
+.overlay-box h3{font-family:'Bebas Neue';font-size:22px;letter-spacing:1px;margin-bottom:6px;color:var(--acc2)}
+.overlay-box p{font-size:13px;color:var(--txt2);line-height:1.6}
+.overlay-steps{margin-top:16px;display:flex;flex-direction:column;gap:6px}
+.ost{padding:6px 12px;border-radius:6px;font-size:11px;text-align:left;display:flex;gap:8px;align-items:center}
+.ost.done{background:rgba(34,197,94,.1);color:var(--green)}
+.ost.active{background:rgba(255,149,0,.1);color:var(--acc2)}
+.ost.wait{background:var(--s1);color:var(--txt3)}
 
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#2a2d3a;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#3a3d4a}
+/* ══ CHAR DETAIL MODAL ══ */
+.char-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.char-modal.show{display:flex}
+.char-modal-box{background:var(--s2);border:1px solid var(--bdr2);border-radius:16px;width:360px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.char-modal-img{width:100%;height:220px;object-fit:cover;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:64px}
+.char-modal-body{padding:18px}
+.char-modal-name{font-family:'Bebas Neue';font-size:26px;letter-spacing:1px;color:var(--acc2);margin-bottom:4px}
+.char-modal-role{font-size:12px;color:var(--txt2);margin-bottom:10px}
+.char-modal-desc{font-size:12px;color:var(--txt);line-height:1.7;background:var(--s1);padding:10px;border-radius:8px;border:1px solid var(--bdr)}
+.char-modal-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.5);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
 
-/* ── TOAST ── */
-.toast{position:fixed;bottom:24px;right:24px;background:#252836;border:1px solid var(--bdr);border-radius:10px;padding:12px 18px;font-size:13px;z-index:1000;display:none;animation:fadeIn .3s}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* ══ TABS ══ */
+.tabs{display:flex;border-bottom:1px solid var(--bdr);padding:0 16px;flex-shrink:0}
+.tab{padding:10px 14px;font-size:11px;font-weight:700;cursor:pointer;color:var(--txt3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.2s;letter-spacing:.3px}
+.tab.on{color:var(--acc);border-bottom-color:var(--acc)}
+.tab:hover{color:var(--txt2)}
 
-/* ── ASPECT RATIO TOGGLE ── */
-.ar-row{display:flex;gap:8px;margin-bottom:12px}
-.ar-btn{flex:1;padding:8px;border-radius:7px;border:1px solid var(--bdr);background:var(--card2);color:var(--txt2);cursor:pointer;font-size:12px;font-weight:600;transition:all .2s;font-family:'Inter',sans-serif}
-.ar-btn.on{border-color:var(--acc);color:var(--acc);background:rgba(255,87,34,.08)}
+/* ══ STORY EXAMPLE ══ */
+.example-box{margin:10px 14px;background:rgba(61,142,248,.05);border:1px solid rgba(61,142,248,.15);border-radius:8px;padding:10px}
+.example-box p{font-size:11px;color:var(--txt2);line-height:1.6}
+.example-box .ex-title{font-size:10px;font-weight:700;color:var(--blue);letter-spacing:.8px;margin-bottom:4px;text-transform:uppercase}
+.use-example{font-size:10px;font-weight:700;color:var(--blue);background:rgba(61,142,248,.12);border:1px solid rgba(61,142,248,.2);padding:3px 10px;border-radius:4px;cursor:pointer;margin-top:6px;display:inline-block;font-family:'Inter',sans-serif}
+.use-example:hover{background:rgba(61,142,248,.22)}
 
-/* ── EMPTY STATE ── */
-.empty{text-align:center;padding:40px 20px;color:var(--txt2)}
-.empty-icon{font-size:48px;margin-bottom:12px}
-.empty p{font-size:13px;line-height:1.6}
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:3px}
 
-/* ── EFFECT BADGE ── */
-.fx-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.fx-b{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--bdr);background:var(--card2);color:var(--txt2);transition:all .2s;font-family:'Inter',sans-serif}
-.fx-b.on{background:rgba(33,150,243,.15);border-color:var(--blue);color:var(--blue)}
+/* ══ RESPONSIVE ══ */
+@media(max-width:1100px){.app{grid-template-columns:280px 1fr 240px}}
+@media(max-width:860px){.app{grid-template-columns:1fr;grid-template-rows:56px auto 1fr auto};.sidebar-left,.sidebar-right{display:none}}
 </style>
 </head>
 <body>
 
-<header class="hdr">
-  <div>
-    <div class="logo">🎬 PIXAR STORY MAKER</div>
-    <div class="hdr-sub">AI-generated 3D cartoon videos for TikTok & Reels</div>
+<div class="app">
+
+<!-- ══ TOPBAR ══ -->
+<header class="topbar">
+  <div class="logo">🎬 AI Cartoon Story Studio</div>
+  <div class="topbar-badges">
+    <span class="tbadge">✨ Pixar Style</span>
+    <span class="tbadge b">🎭 10 Characters</span>
+    <span class="tbadge g">📱 9:16 Video</span>
   </div>
-  <div class="hdr-right">
-    <span class="badge">✨ AI Powered</span>
-    <span class="badge">🎭 Pixar Style</span>
-    <span class="badge">📱 9:16 Vertical</span>
+  <div class="topbar-right">
+    <button class="btn btn-outline" onclick="clearAll()" style="font-size:11px">🗑 Clear</button>
+    <button class="btn btn-green" onclick="renderVideo()" id="render-btn">🎬 Export Video</button>
   </div>
 </header>
 
-<div class="wrap">
-  <!-- ═══ SIDEBAR ═══ -->
-  <div class="sidebar">
-
-    <!-- Story Setup -->
-    <div class="sec">
-      <div class="sec-title">Story Setup</div>
-      <div class="field"><label>Story Title</label><input id="s-title" value="THE CHECKPOINT" placeholder="Your story title"/></div>
-      <div class="field"><label>Creator Handle</label><input id="s-handle" value="@cartoonworld" placeholder="@yourhandle"/></div>
-      <div class="field">
-        <label>Story Genre</label>
-        <div class="genre-grid" id="genre-grid">
-          <button class="genre-btn on" data-g="comedy">😂 Comedy</button>
-          <button class="genre-btn" data-g="action">💥 Action</button>
-          <button class="genre-btn" data-g="drama">🎭 Drama</button>
-          <button class="genre-btn" data-g="adventure">🗺️ Adventure</button>
-          <button class="genre-btn" data-g="romance">💕 Romance</button>
-          <button class="genre-btn" data-g="mystery">🔍 Mystery</button>
-        </div>
-      </div>
-      <div class="field"><label>Character Style</label>
-        <select id="s-char">
-          <option value="fat cartoon police officer with big round belly and black hair, Pixar 3D style">👮 Chubby Police Officer</option>
-          <option value="cartoon family man with mustache and colorful shirt, Pixar 3D style">👨‍👩‍👧 Family Man</option>
-          <option value="cartoon superhero with cape and big muscles, Pixar 3D style">🦸 Superhero</option>
-          <option value="cartoon chef with tall white hat and apron, Pixar 3D style">👨‍🍳 Chef</option>
-          <option value="cartoon soldier with helmet and uniform, Pixar 3D style">🪖 Soldier</option>
-          <option value="cartoon businessman in suit, Pixar 3D style">👔 Businessman</option>
-        </select>
-      </div>
-      <div class="field"><label>Setting / Location</label>
-        <select id="s-setting">
-          <option value="desert highway with cars">🏜️ Desert Highway</option>
-          <option value="city streets at night with neon lights">🌃 City Night</option>
-          <option value="tropical beach road">🏖️ Tropical Beach</option>
-          <option value="African savanna landscape">🌍 African Savanna</option>
-          <option value="busy market street in Africa">🏪 African Market</option>
-          <option value="mountain road with scenic views">⛰️ Mountain Road</option>
-          <option value="small town in Kenya">🇰🇪 Kenyan Town</option>
-        </select>
-      </div>
-      <div class="field"><label>Your Story Idea (or leave blank for AI)</label>
-        <textarea id="s-idea" placeholder="e.g. Police officer stops car, finds bananas inside, everyone laughs..."></textarea>
-      </div>
-      <button class="btn btn-pri btn-full" id="gen-story-btn" onclick="generateStory()">
-        <span id="gen-story-icon">✨</span> Generate Story with AI
-      </button>
-    </div>
-
-    <!-- Scenes -->
-    <div class="sec" style="flex:1">
-      <div class="sec-title">Scenes <span style="color:var(--txt);margin-left:4px" id="scene-count">(0)</span></div>
-      <div class="scene-list" id="scene-list">
-        <div class="empty"><div class="empty-icon">🎭</div><p>Generate a story above or add scenes manually to begin</p></div>
-      </div>
-      <button class="add-btn" onclick="addScene()">+ Add Scene</button>
-    </div>
-
-    <!-- Video Settings -->
-    <div class="sec">
-      <div class="sec-title">Video Settings</div>
-      <div class="field"><label>Caption Style</label>
-        <div class="cap-opts">
-          <button class="cap-opt on" data-c="bottom" onclick="selectCap(this)">Bottom Bar</button>
-          <button class="cap-opt" data-c="center" onclick="selectCap(this)">Centered</button>
-          <button class="cap-opt" data-c="none" onclick="selectCap(this)">None</button>
-        </div>
-      </div>
-      <div class="field"><label>Scene Duration</label>
-        <select id="scene-dur">
-          <option value="3">3 seconds (Fast)</option>
-          <option value="4" selected>4 seconds (Normal)</option>
-          <option value="5">5 seconds (Slow)</option>
-          <option value="6">6 seconds (Cinematic)</option>
-        </select>
-      </div>
-      <div class="field"><label>Camera Effects</label>
-        <div class="fx-badges">
-          <button class="fx-b on" data-fx="zoom" onclick="toggleFx(this)">🔍 Ken Burns</button>
-          <button class="fx-b on" data-fx="pan" onclick="toggleFx(this)">↔ Pan</button>
-          <button class="fx-b on" data-fx="captions" onclick="toggleFx(this)">💬 Captions</button>
-          <button class="fx-b" data-fx="vignette" onclick="toggleFx(this)">🌑 Vignette</button>
-          <button class="fx-b on" data-fx="handle" onclick="toggleFx(this)">🏷 Handle</button>
-        </div>
-      </div>
-    </div>
-
+<!-- ══ LEFT SIDEBAR — CHARACTERS + STORY ══ -->
+<aside class="sidebar-left">
+  <div class="tabs">
+    <button class="tab on" onclick="switchTab('chars',this)">Characters</button>
+    <button class="tab" onclick="switchTab('story',this)">Write Story</button>
   </div>
 
-  <!-- ═══ MAIN ═══ -->
-  <div class="main">
+  <!-- CHARACTERS TAB -->
+  <div id="tab-chars">
+    <div class="shead"><div class="shead-dot"></div>Your Cast — Use these names in your story</div>
+    <div class="char-list" id="char-list"></div>
+  </div>
 
-    <!-- Top row: phone preview + controls -->
-    <div class="preview-row">
-      <div class="phone-wrap">
-        <div class="phone">
-          <canvas id="preview-canvas" width="540" height="960"></canvas>
-        </div>
-        <div class="phone-ctrls">
-          <button class="pctrl" onclick="prevScene()">◀</button>
-          <button class="pctrl primary" id="anim-btn" onclick="toggleAnim()">▶ Play</button>
-          <button class="pctrl" onclick="nextScene()">▶</button>
-        </div>
-        <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--txt2)" id="scene-indicator">Scene 0 / 0</div>
+  <!-- STORY TAB -->
+  <div id="tab-story" style="display:none">
+    <div style="padding:14px">
+      <div class="shead" style="margin:-14px -14px 12px;padding:10px 14px"><div class="shead-dot"></div>Write Your Story</div>
+      <textarea class="story-textarea" id="story-input" placeholder="Write your story here using the character names...
+
+Example:
+Brian wakes up and goes to the market. Merchant Fatuma sells him mangoes. Inspector Kamau arrives and everyone is surprised..."></textarea>
+      <div class="story-hints">
+        Mention characters by name: <span>Brian, Zawadi, Mama Wanjiru, Inspector Kamau</span>, etc.<br/>
+        Add locations: <span>river, hospital, market, school, forest, city</span><br/>
+        Add dialogue: <span>Brian says "Hello!"</span>
       </div>
-
-      <div class="gen-panel">
-        <!-- Scene Image Generator -->
-        <div class="sce-card" id="scene-editor">
-          <h4>🖼 Scene Image Generator</h4>
-          <div id="no-scene-msg" style="color:var(--txt2);font-size:13px;padding:20px 0">Select a scene from the sidebar to generate images</div>
-          <div id="scene-edit-content" style="display:none">
-            <div class="field"><label>Scene Caption</label><input id="edit-cap" placeholder="What happens in this scene?"/></div>
-            <div class="field"><label>Image Prompt</label><textarea id="edit-prompt" placeholder="Detailed description for image generation..."></textarea></div>
-            <div style="display:flex;gap:8px;margin-bottom:14px">
-              <button class="btn btn-pri" onclick="generateImages()" id="gen-img-btn"><span>🎨</span> Generate 4 Images</button>
-              <button class="btn btn-sec" onclick="regenerateImages()">🔄 Re-roll</button>
-            </div>
-            <!-- Image options -->
-            <div class="img-grid" id="img-grid">
-              <div style="color:var(--txt2);font-size:12px;grid-column:1/-1;padding:20px;text-align:center">Click "Generate Images" to create AI visuals for this scene</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Render Section -->
-        <div class="render-box">
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;margin-bottom:4px">🎬 Render Video</div>
-          <div style="font-size:12px;color:var(--txt2);margin-bottom:14px">Generate all images, then render your final video. Uses Ken Burns animation + captions.</div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-pri" onclick="generateAllImages()" id="gen-all-btn">
-              <span>🖼</span> Generate All Scene Images
-            </button>
-            <button class="btn btn-green" onclick="renderVideo()" id="render-btn">
-              <span>🎬</span> Render Video
-            </button>
-          </div>
-          <div id="render-progress" style="display:none;margin-top:12px">
-            <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-            <div class="prog-txt" id="prog-txt">Preparing...</div>
-          </div>
-          <div id="download-area" style="display:none;margin-top:14px;text-align:center">
-            <div style="color:var(--acc3);font-weight:700;margin-bottom:8px;font-size:14px">✅ Video Ready!</div>
-            <a id="dl-link" class="dl-btn" download="story.webm">⬇ DOWNLOAD VIDEO</a>
-            <div style="font-size:11px;color:var(--txt2);margin-top:8px">WebM format · Compatible with TikTok, Reels, YouTube Shorts</div>
-          </div>
-        </div>
+      <div style="margin-top:10px;display:flex;gap:8px">
+        <button class="btn btn-fire btn-full" id="parse-btn" onclick="parseStory()">
+          ✨ Generate Scenes from Story
+        </button>
       </div>
     </div>
 
+    <div class="example-box">
+      <div class="ex-title">📖 Example Story</div>
+      <p>Brian and Zawadi walk to school early in the morning. Mwalimu Hassan greets them at the gate. Suddenly Inspector Kamau arrives in his police car. He says "School is cancelled today!" Everyone cheers. Mama Wanjiru comes running and says "Brian! Get back inside!" Brian laughs and runs home. Doctor Amara watches from the hospital and shakes her head.</p>
+      <button class="use-example" onclick="useExample()">Use This Example →</button>
+    </div>
+  </div>
+</aside>
+
+<!-- ══ CENTER — SCENE PIPELINE ══ -->
+<main class="center">
+  <div class="center-head">
+    <h2>🎬 Scene Pipeline</h2>
+    <span class="scene-count-badge" id="scene-count-badge">0 scenes</span>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <button class="btn btn-blue" onclick="generateAllImages()" id="gen-all-btn" style="display:none">🖼 Generate All Images</button>
+    </div>
+  </div>
+
+  <div class="pipeline" id="pipeline">
+    <!-- Empty state -->
+    <div id="empty-state" style="text-align:center;padding:60px 20px;color:var(--txt3)">
+      <div style="font-size:64px;margin-bottom:16px">🎭</div>
+      <div style="font-family:'Bebas Neue';font-size:24px;letter-spacing:1px;color:var(--txt2);margin-bottom:8px">Your scenes appear here</div>
+      <div style="font-size:13px;line-height:1.7;max-width:360px;margin:0 auto">
+        Go to the <strong style="color:var(--acc)">Write Story</strong> tab on the left, type your story using character names, then click <strong style="color:var(--acc)">Generate Scenes</strong>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ══ RIGHT SIDEBAR — PREVIEW + RENDER ══ -->
+<aside class="sidebar-right">
+  <div class="shead"><div class="shead-dot"></div>Preview</div>
+
+  <div class="preview-wrap">
+    <div class="phone-shell">
+      <div class="phone-notch"><div class="notch-bar"></div></div>
+      <canvas id="pcanv" width="540" height="960"></canvas>
+    </div>
+    <div class="phone-btns">
+      <button class="pbtn" onclick="prevSc()">◀</button>
+      <button class="pbtn prim" id="play-btn" onclick="togglePlay()">▶ Play</button>
+      <button class="pbtn" onclick="nextSc()">▶</button>
+    </div>
+    <div class="scene-ind" id="scene-ind">Scene 0 / 0</div>
+  </div>
+
+  <div class="render-section">
+    <h4>🎬 Export</h4>
+    <div style="font-size:11px;color:var(--txt3);margin-bottom:10px;line-height:1.6">Generate all images, then export your video for TikTok & Reels</div>
+    <button class="btn btn-green btn-full" onclick="renderVideo()" id="render-btn2">🎬 Export Video (WebM)</button>
+    <div id="render-prog" style="display:none;margin-top:10px">
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="prog-txt" id="prog-txt">Preparing...</div>
+    </div>
+    <div id="dl-area" style="display:none" class="dl-area">
+      <a id="dl-link" class="dl-btn" download="cartoon-story.webm">⬇ DOWNLOAD</a>
+      <div style="font-size:10px;color:var(--txt3);margin-top:6px">Works with TikTok · Reels · Shorts</div>
+    </div>
+  </div>
+</aside>
+</div>
+
+<!-- ══ LOADING OVERLAY ══ -->
+<div class="overlay" id="overlay">
+  <div class="overlay-box">
+    <div class="spin"></div>
+    <h3 id="ov-title">Analysing Story...</h3>
+    <p id="ov-msg">Please wait while AI reads your story and creates scenes</p>
+    <div class="overlay-steps" id="ov-steps"></div>
   </div>
 </div>
 
+<!-- ══ CHARACTER MODAL ══ -->
+<div class="char-modal" id="char-modal" onclick="if(event.target===this)closeModal()">
+  <div class="char-modal-box" style="position:relative">
+    <div id="cm-img" class="char-modal-img"></div>
+    <div class="char-modal-body">
+      <div class="char-modal-name" id="cm-name"></div>
+      <div class="char-modal-role" id="cm-role"></div>
+      <div class="char-modal-desc" id="cm-desc"></div>
+      <button class="use-example" style="margin-top:10px;width:100%;text-align:center;display:block" onclick="closeModal()">Close</button>
+    </div>
+    <button class="char-modal-close" onclick="closeModal()">✕</button>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-//  PIXAR STORY VIDEO MAKER — AI-Powered Engine
-// ═══════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════
+//  AI CARTOON STORY STUDIO — Full Engine
+// ════════════════════════════════════════════════════════════
 
-const W=540,H=960;
-const canvas=document.getElementById('preview-canvas');
-const ctx=canvas.getContext('2d');
-
-let scenes=[];
-let curScene=-1;
-let curGenre='comedy';
-let capStyle='bottom';
-let fxFlags={zoom:true,pan:true,captions:true,vignette:false,handle:true};
-let animTimer=null;
-let animFrame=0;
-let previewImages={};// sceneIdx -> selected image URL
-
-// ── Genre selection ──────────────────────────────────────
-document.querySelectorAll('.genre-btn').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('.genre-btn').forEach(x=>x.classList.remove('on'));
-    b.classList.add('on');curGenre=b.dataset.g;
-  });
-});
-function selectCap(el){document.querySelectorAll('.cap-opt').forEach(x=>x.classList.remove('on'));el.classList.add('on');capStyle=el.dataset.c;}
-function toggleFx(el){el.classList.toggle('on');fxFlags[el.dataset.fx]=el.classList.contains('on');}
-
-// ── Toast ────────────────────────────────────────────────
-function toast(msg,dur=2500){
-  const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
-  clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',dur);
-}
-
-// ── Scene management ─────────────────────────────────────
-function addScene(cap='New scene',prompt='',img=null){
-  const s={cap,prompt,imgs:[],selectedImg:img,status:'idle'};
-  scenes.push(s);renderSceneList();updateSceneCount();
-  selectScene(scenes.length-1);
-}
-function delScene(i){scenes.splice(i,1);if(curScene>=scenes.length)curScene=scenes.length-1;renderSceneList();updateSceneCount();if(curScene>=0)selectScene(curScene);}
-function selectScene(i){
-  curScene=i;renderSceneList();
-  const s=scenes[i];
-  document.getElementById('no-scene-msg').style.display='none';
-  document.getElementById('scene-edit-content').style.display='block';
-  document.getElementById('edit-cap').value=s.cap||'';
-  document.getElementById('edit-prompt').value=s.prompt||'';
-  renderImgGrid(i);
-  drawScenePreview(i,0);
-}
-function updateSceneCount(){document.getElementById('scene-count').textContent=`(${scenes.length})`;document.getElementById('scene-indicator').textContent=`Scene ${Math.max(0,curScene+1)} / ${scenes.length}`;}
-function renderSceneList(){
-  const list=document.getElementById('scene-list');
-  if(!scenes.length){list.innerHTML='<div class="empty"><div class="empty-icon">🎭</div><p>Generate a story above or add scenes manually to begin</p></div>';return;}
-  list.innerHTML='';
-  scenes.forEach((s,i)=>{
-    const el=document.createElement('div');el.className='scene-card'+(curScene===i?' active':'');
-    const statusDot={idle:'idle',loading:'loading',ready:'ready',error:'error'}[s.status]||'idle';
-    const statusTxt={idle:'No image yet',loading:'Generating...',ready:`${s.imgs.length} image${s.imgs.length>1?'s':''} ready`,error:'Error generating'}[s.status]||'';
-    el.innerHTML=`<div class="sc-head"><div class="sc-num">${i+1}</div><div class="sc-title">${s.cap||'(empty)'}</div><button class="sc-del" onclick="event.stopPropagation();delScene(${i})">✕</button></div><div class="sc-desc">${s.prompt||'No prompt set'}</div><div class="sc-status"><div class="sc-dot ${statusDot}"></div><span class="sc-dot-txt">${statusTxt}</span></div>`;
-    el.addEventListener('click',()=>selectScene(i));
-    list.appendChild(el);
-  });
-}
-function renderImgGrid(idx){
-  const s=scenes[idx];const grid=document.getElementById('img-grid');grid.innerHTML='';
-  if(!s.imgs.length){grid.innerHTML='<div style="color:var(--txt2);font-size:12px;grid-column:1/-1;padding:20px;text-align:center">Click "Generate Images" to create AI visuals for this scene</div>';return;}
-  s.imgs.forEach((url,ii)=>{
-    const cell=document.createElement('div');cell.className='img-cell'+(s.selectedImg===url?' selected':'');
-    if(url==='loading'){cell.innerHTML='<div class="img-loader"><div class="spin"></div>Generating...</div>';}
-    else if(url.startsWith('error:')){cell.innerHTML='<div class="img-loader"><div style="font-size:20px">⚠️</div><div style="color:#f44336;font-size:10px">Failed</div></div>';}
-    else{
-      const img=document.createElement('img');img.src=url;img.alt='scene';
-      img.onerror=()=>{cell.innerHTML='<div class="img-loader"><div style="font-size:20px">⚠️</div><div style="color:#f44336;font-size:10px">Load error</div></div>';};
-      cell.appendChild(img);
-      const sel=document.createElement('div');sel.className='img-select';sel.textContent='✓';cell.appendChild(sel);
-      cell.addEventListener('click',()=>{s.selectedImg=url;previewImages[idx]=url;renderImgGrid(idx);drawScenePreview(idx,0);});
-    }
-    grid.appendChild(cell);
-  });
-}
-
-// ── Image Generation via Pollinations ───────────────────
-function buildPrompt(scene,charStyle,setting,genre){
-  const base=scene.prompt||scene.cap;
-  const style='Pixar 3D animation style, high quality render, cinematic lighting, photorealistic texture, 9:16 vertical composition, dramatic shot';
-  const genreStyle={comedy:'funny expression, exaggerated emotion',action:'dynamic action pose, motion blur',drama:'emotional facial expression, moody lighting',adventure:'epic wide shot, golden hour',romance:'warm soft lighting, beautiful bokeh',mystery:'dark atmospheric lighting, shadows'}[genre]||'';
-  return `${base}, ${charStyle}, ${setting}, ${genreStyle}, ${style}`;
-}
-
-async function loadImage(url){
-  return new Promise((res,rej)=>{
-    const img=new Image();img.crossOrigin='anonymous';
-    img.onload=()=>res(img);img.onerror=()=>rej(new Error('load fail'));
-    img.src=url;setTimeout(()=>rej(new Error('timeout')),30000);
-  });
-}
-
-async function generateImages(){
-  if(curScene<0)return;
-  const s=scenes[curScene];
-  s.cap=document.getElementById('edit-cap').value;
-  s.prompt=document.getElementById('edit-prompt').value;
-  if(!s.prompt&&!s.cap){toast('⚠️ Enter a prompt or caption first');return;}
-  const char=document.getElementById('s-char').value;
-  const setting=document.getElementById('s-setting').value;
-  const fullPrompt=buildPrompt(s,char,setting,curGenre);
-  s.status='loading';s.imgs=['loading','loading','loading','loading'];
-  renderSceneList();renderImgGrid(curScene);
-  const seeds=[Math.random()*99999|0,Math.random()*99999|0,Math.random()*99999|0,Math.random()*99999|0];
-  const promises=seeds.map(async(seed,ii)=>{
-    const enc=encodeURIComponent(fullPrompt);
-    const url=`https://image.pollinations.ai/prompt/${enc}?width=540&height=960&seed=${seed}&model=flux&nologo=true&enhance=true`;
-    try{
-      await loadImage(url);
-      s.imgs[ii]=url;if(!s.selectedImg){s.selectedImg=url;previewImages[curScene]=url;}
-    }catch(e){s.imgs[ii]='error:'+e.message;}
-    renderImgGrid(curScene);
-  });
-  await Promise.all(promises);
-  s.status=s.imgs.some(u=>!u.startsWith('error:')&&u!=='loading')?'ready':'error';
-  renderSceneList();toast('✅ Images generated!');
-}
-
-async function regenerateImages(){
-  if(curScene<0)return;
-  scenes[curScene].imgs=[];scenes[curScene].selectedImg=null;delete previewImages[curScene];
-  await generateImages();
-}
-
-async function generateAllImages(){
-  const btn=document.getElementById('gen-all-btn');btn.disabled=true;btn.innerHTML='⏳ Generating...';
-  for(let i=0;i<scenes.length;i++){
-    curScene=i;selectScene(i);
-    toast(`🎨 Generating scene ${i+1}/${scenes.length}...`,4000);
-    await generateImages();
-    await new Promise(r=>setTimeout(r,500));
+// ── 10 CHARACTERS ──────────────────────────────────────────
+const CHARACTERS = {
+  "Brian": {
+    emoji:"👦", role:"Curious Schoolboy",
+    age:"10-year-old",
+    imgDesc:"10-year-old African boy in blue school uniform, short natural black hair, bright curious brown eyes, big warm smile, small round face, dark brown skin",
+    fullDesc:"Brian is a 10-year-old African boy who loves adventure and always gets into funny situations. He wears a blue school uniform and has a big bright smile.",
+    color:"#3d8ef8"
+  },
+  "Zawadi": {
+    emoji:"👧", role:"Brian's Best Friend",
+    age:"12-year-old",
+    imgDesc:"12-year-old African girl in school uniform, braided hair with colorful yellow and orange beads, cheerful dimpled smile, dark skin, expressive eyes",
+    fullDesc:"Zawadi is Brian's clever and cheerful best friend. She has beautiful braided hair with colorful beads and always has a dimpled smile.",
+    color:"#a855f7"
+  },
+  "Mama Wanjiru": {
+    emoji:"👩", role:"Brian's Mother",
+    age:"middle-aged woman",
+    imgDesc:"middle-aged African woman, bright orange and green kitenge dress, colorful head wrap, kind warm face, full figure, carrying basket",
+    fullDesc:"Mama Wanjiru is Brian's caring but strict mother. She wears colorful traditional kitenge dresses and a head wrap, and always carries a shopping basket.",
+    color:"#f97316"
+  },
+  "Inspector Kamau": {
+    emoji:"👮", role:"Funny Police Officer",
+    age:"fat middle-aged man",
+    imgDesc:"fat African police officer, dark navy blue uniform with badge, big black mustache, bald head, round chubby cheeks, stern expression that breaks into smile",
+    fullDesc:"Inspector Kamau is the town's cheerful but strict police officer. He is large with a big mustache and always arrives dramatically in his police car.",
+    color:"#1d4ed8"
+  },
+  "Doctor Amara": {
+    emoji:"👩‍⚕️", role:"Town Doctor",
+    age:"35-year-old woman",
+    imgDesc:"35-year-old African woman doctor, white doctor coat, stethoscope around neck, round glasses, natural afro hair, confident smile, professional appearance",
+    fullDesc:"Doctor Amara is the town's brilliant and kind doctor. She wears her white coat and stethoscope everywhere and always has a calm, confident smile.",
+    color:"#22c55e"
+  },
+  "Chef Omondi": {
+    emoji:"👨‍🍳", role:"The Big Chef",
+    age:"large cheerful man",
+    imgDesc:"large fat African man in white chef uniform, tall white chef hat, big white apron with food stains, huge cheerful smile, round face, holding cooking spoon",
+    fullDesc:"Chef Omondi runs the town's best restaurant. He is large and jolly, always in his white chef uniform, and loves feeding everyone his special recipes.",
+    color:"#eab308"
+  },
+  "Mwalimu Hassan": {
+    emoji:"👨‍🏫", role:"The Teacher",
+    age:"tall elderly man",
+    imgDesc:"tall thin African male teacher, round glasses, formal white shirt and dark tie, carrying books, gentle wise smile, grey temples, kind eyes",
+    fullDesc:"Mwalimu Hassan is the wise and gentle schoolteacher. He is tall and thin, always in a formal shirt and tie, carrying books under his arm.",
+    color:"#06b6d4"
+  },
+  "Merchant Fatuma": {
+    emoji:"👩‍🦱", role:"Market Merchant",
+    age:"energetic woman",
+    imgDesc:"energetic African market woman, bright colorful dress, white headscarf, big basket of fruits on head, loud expressive face, lots of colorful bracelets",
+    fullDesc:"Merchant Fatuma runs the busiest market stall in town. She is loud, energetic, and always has a tower of fresh fruits balanced on her head.",
+    color:"#ec4899"
+  },
+  "Baba James": {
+    emoji:"👴", role:"Village Elder",
+    age:"elderly man",
+    imgDesc:"elderly African man, grey white hair and beard, traditional white kanzu robe, wooden walking stick, deeply lined wise face, peaceful smile, dignified posture",
+    fullDesc:"Baba James is the respected village elder. He wears a traditional white kanzu robe and carries his wooden walking stick everywhere, always calm and wise.",
+    color:"#78716c"
+  },
+  "Ranger Kipchoge": {
+    emoji:"🦺", role:"Wildlife Ranger",
+    age:"athletic young man",
+    imgDesc:"athletic African ranger in khaki uniform, wide-brimmed khaki hat, binoculars around neck, boots, strong jaw, confident adventurous look, tall muscular build",
+    fullDesc:"Ranger Kipchoge protects the national park. He is tall and athletic in his khaki ranger uniform, always ready for adventure with binoculars around his neck.",
+    color:"#84cc16"
   }
-  btn.disabled=false;btn.innerHTML='<span>🖼</span> Generate All Scene Images';
-  toast(`✅ All ${scenes.length} scenes generated!`,3000);
+};
+
+// ── LOCATION IMAGE DESCRIPTIONS ──────────────────────────
+const LOCATIONS = {
+  "market":"vibrant African outdoor market with colorful stalls, fruits and vegetables, busy crowd, red tomatoes, green bananas hanging, dusty ground, bright sunshine",
+  "river":"wide flowing African river, lush green trees on banks, crystal clear water, small wooden boat, birds flying, golden afternoon light reflecting on water",
+  "hospital":"modern African hospital entrance, white building with red cross sign, parked ambulance, patients walking in, clean bright hallway visible through glass doors",
+  "school":"African primary school with painted yellow and blue walls, children in uniforms, big mango tree in compound, chalk-dusty blackboard visible through window",
+  "forest":"dense tropical African forest, tall trees with thick canopy, sunlight filtering through leaves, red dirt path, birdsong atmosphere, lush green undergrowth",
+  "city":"busy East African city street, matatu minibuses, tall buildings, street vendors, traffic, city noise, overhead power lines, mix of old and modern buildings",
+  "home":"typical Kenyan home interior, modest but tidy, colorful sofa, framed family photos on wall, small TV, potted plants, warm afternoon light through curtains",
+  "road":"African tarmac road cutting through savanna landscape, acacia trees, flat-topped hills, big blue sky, dust on roadside, road stretching to horizon",
+  "field":"wide open African field, golden dry grass, scattered acacia trees, blue sky with big white clouds, Maasai Mara style landscape, distant hills",
+  "night":"African night scene, bright stars overhead, bonfire light, fireflies, silhouettes of trees, warm orange glow, crickets chirping atmosphere",
+  "default":"East African landscape background, clear blue sky, green scenery, warm sunlight"
+};
+
+// ── STATE ─────────────────────────────────────────────────
+let scenes = [];
+let curScene = -1;
+let playTimer = null;
+let playFrame = 0;
+let imgCache = {};
+const W=540,H=960;
+const canvas = document.getElementById('pcanv');
+const ctx = canvas.getContext('2d');
+
+// ── INIT ─────────────────────────────────────────────────
+function init(){
+  renderCharList();
+  drawEmptyPreview();
 }
 
-// ── AI Story Generator ───────────────────────────────────
-async function generateStory(){
-  const btn=document.getElementById('gen-story-btn');
-  const icon=document.getElementById('gen-story-icon');
-  btn.disabled=true;icon.textContent='⏳';
-  const title=document.getElementById('s-title').value||'My Story';
-  const idea=document.getElementById('s-idea').value;
-  const char=document.getElementById('s-char').value;
-  const setting=document.getElementById('s-setting').value;
-  const genre=curGenre;
-  const systemPrompt=`You are a TikTok cartoon video story writer. Create short, engaging stories in the style of popular 3D Pixar-style cartoon TikTok videos. Respond ONLY with valid JSON, no markdown, no explanation.`;
-  const userPrompt=`Create a ${genre} story video script for TikTok. 
-Title: "${title}"
-${idea?`Story idea: ${idea}`:'Come up with a funny/engaging story'}
-Main character: ${char}
-Setting: ${setting}
-Genre: ${genre}
+function renderCharList(){
+  const list = document.getElementById('char-list');
+  list.innerHTML = '';
+  Object.entries(CHARACTERS).forEach(([name, ch])=>{
+    const card = document.createElement('div');
+    card.className = 'char-card';
+    card.innerHTML = `
+      <div class="char-avatar" style="font-size:26px">${ch.emoji}</div>
+      <div class="char-info">
+        <div class="char-name">${name}</div>
+        <div class="char-role">${ch.role}</div>
+        <span class="char-badge" style="background:${ch.color}22;color:${ch.color};border:1px solid ${ch.color}44">Say "${name}"</span>
+      </div>
+      <button class="char-preview-btn" title="View Character" onclick="event.stopPropagation();showCharModal('${name}')">👁</button>
+    `;
+    card.addEventListener('click',()=>showCharModal(name));
+    list.appendChild(card);
+  });
+}
 
-Return JSON with exactly this shape:
+// ── TABS ─────────────────────────────────────────────────
+function switchTab(name, el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('tab-chars').style.display = name==='chars'?'block':'none';
+  document.getElementById('tab-story').style.display = name==='story'?'block':'none';
+}
+
+// ── CHARACTER MODAL ───────────────────────────────────────
+function showCharModal(name){
+  const ch = CHARACTERS[name];
+  document.getElementById('cm-img').textContent = ch.emoji;
+  document.getElementById('cm-img').style.fontSize = '72px';
+  document.getElementById('cm-name').textContent = name;
+  document.getElementById('cm-role').textContent = ch.role + ' · ' + ch.age;
+  document.getElementById('cm-desc').textContent = ch.fullDesc;
+  document.getElementById('char-modal').classList.add('show');
+}
+function closeModal(){ document.getElementById('char-modal').classList.remove('show'); }
+
+// ── EXAMPLE STORY ─────────────────────────────────────────
+const EXAMPLE_STORY = `Brian and Zawadi are walking to school early in the morning. Mwalimu Hassan is waiting at the school gate with his books. Suddenly Inspector Kamau arrives in his police car with flashing lights. Inspector Kamau says "School is cancelled today! There is a big celebration!" Brian says "YES! No school today!" Zawadi jumps up and down with excitement. Mama Wanjiru comes running from the market and says "Brian! Get back inside right now!" Brian laughs and runs home through the market. Doctor Amara is standing outside the hospital shaking her head and smiling. Baba James sits under the mango tree and laughs at all the chaos.`;
+
+function useExample(){
+  document.getElementById('story-input').value = EXAMPLE_STORY;
+  switchTab('story', document.querySelectorAll('.tab')[1]);
+  toast('Example story loaded! Click "Generate Scenes" to continue', 'ok');
+}
+
+// ── STORY PARSER ─────────────────────────────────────────
+async function parseStory(){
+  const storyText = document.getElementById('story-input').value.trim();
+  if(!storyText){ toast('Please write a story first!', 'err'); return; }
+
+  showOverlay('Reading Your Story...', 'AI is breaking your story into cartoon scenes');
+  setOverlaySteps([
+    {label:'Detecting characters', state:'active'},
+    {label:'Splitting into scenes', state:'wait'},
+    {label:'Building image prompts', state:'wait'},
+    {label:'Preparing pipeline', state:'wait'}
+  ]);
+
+  try {
+    // Use Pollinations text API (free, no auth needed)
+    const systemPrompt = `You are a cartoon story scene planner. Break stories into Pixar-style animation scenes. Return ONLY valid JSON, nothing else.`;
+    
+    const charNames = Object.keys(CHARACTERS).join(', ');
+    const userPrompt = `Break this story into cartoon video scenes. 
+    
+Available characters: ${charNames}
+Each character has a unique look - use their exact names.
+
+Story: "${storyText}"
+
+Return a JSON array where each element is a scene:
 {
-  "title": "Story title",
   "scenes": [
     {
-      "cap": "Short caption text shown on video (max 12 words, punchy)",
-      "prompt": "Detailed visual description for AI image generation - describe exactly what should be seen, camera angle, character action, expression, background details"
+      "sceneNum": 1,
+      "caption": "Short punchy text shown on screen (max 10 words, dramatic/funny)",
+      "characters": ["Name1", "Name2"],
+      "action": "Describe exactly what happens visually in this scene (1-2 sentences)",
+      "location": "One word: market/river/hospital/school/forest/city/home/road/field/night/default",
+      "dialogue": "If a character speaks, include it here - or leave empty string",
+      "speaker": "Name of who speaks - or empty string",
+      "mood": "One word: happy/surprised/scared/angry/sad/funny/dramatic",
+      "cameraAngle": "One of: wide-shot/close-up/medium-shot/aerial-shot/dramatic-low-angle"
     }
   ]
 }
 
-Requirements:
-- 5-8 scenes
-- Each scene has a dramatic or funny moment
-- Captions are SHORT and punchy (like TikTok text)
-- Prompts are detailed visual descriptions (50+ words each)
-- Build to a funny/dramatic climax
-- Match the ${genre} genre tone`;
+Rules:
+- Create 1 scene per major action/moment
+- Keep it 5-10 scenes
+- Make captions punchy and fun like TikTok
+- Only use characters from the available list
+- Each scene must have clear visual action`;
 
-  try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        system:systemPrompt,
-        messages:[{role:'user',content:userPrompt}]
+    updateOverlayStep(0, 'done');
+    updateOverlayStep(1, 'active');
+
+    const response = await fetch('https://text.pollinations.ai/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        messages: [
+          {role: 'system', content: systemPrompt},
+          {role: 'user', content: userPrompt}
+        ],
+        model: 'openai',
+        jsonMode: true,
+        seed: Math.floor(Math.random()*9999)
       })
     });
-    const data=await resp.json();
-    let text=data.content?.[0]?.text||'';
-    text=text.replace(/```json|```/g,'').trim();
-    const story=JSON.parse(text);
-    scenes=[];
-    story.scenes.forEach(s=>scenes.push({cap:s.cap,prompt:s.prompt,imgs:[],selectedImg:null,status:'idle'}));
-    renderSceneList();updateSceneCount();
-    if(scenes.length>0)selectScene(0);
-    toast(`✅ Story generated: ${scenes.length} scenes!`);
-  }catch(e){
-    console.error(e);toast('❌ Generation failed. Check your connection.');
+
+    if(!response.ok) throw new Error(`API ${response.status}`);
+    const text = await response.text();
+    
+    updateOverlayStep(1, 'done');
+    updateOverlayStep(2, 'active');
+
+    let parsed;
+    try {
+      const clean = text.replace(/```json|```/g,'').trim();
+      parsed = JSON.parse(clean);
+    } catch(e) {
+      // Fallback: parse story manually
+      parsed = fallbackParse(storyText);
+    }
+
+    const rawScenes = parsed.scenes || parsed;
+    if(!Array.isArray(rawScenes) || !rawScenes.length) throw new Error('No scenes');
+
+    updateOverlayStep(2, 'done');
+    updateOverlayStep(3, 'active');
+
+    // Build scenes with image prompts
+    scenes = rawScenes.map((s, i) => ({
+      sceneNum: i+1,
+      caption: s.caption || `Scene ${i+1}`,
+      characters: Array.isArray(s.characters) ? s.characters.filter(c=>CHARACTERS[c]) : [],
+      action: s.action || '',
+      location: s.location || 'default',
+      dialogue: s.dialogue || '',
+      speaker: s.speaker || '',
+      mood: s.mood || 'happy',
+      cameraAngle: s.cameraAngle || 'medium-shot',
+      imgPrompt: buildImgPrompt(s, i),
+      imgUrl: null,
+      imgStatus: 'idle'
+    }));
+
+    updateOverlayStep(3, 'done');
+    await new Promise(r=>setTimeout(r,500));
+    hideOverlay();
+
+    curScene = 0;
+    renderPipeline();
+    updateSceneCount();
+    drawScenePreview(0, 0);
+    document.getElementById('gen-all-btn').style.display = 'flex';
+    toast(`✅ ${scenes.length} scenes created! Now click "Generate All Images"`, 'ok');
+
+  } catch(e) {
+    console.error(e);
+    hideOverlay();
+    // Try fallback
+    const fb = fallbackParse(storyText);
+    if(fb.scenes && fb.scenes.length){
+      scenes = fb.scenes.map((s,i)=>({...s, sceneNum:i+1, imgUrl:null, imgStatus:'idle', imgPrompt:buildImgPrompt(s,i)}));
+      curScene=0; renderPipeline(); updateSceneCount();
+      document.getElementById('gen-all-btn').style.display='flex';
+      toast(`Story parsed! ${scenes.length} scenes ready. Click "Generate All Images"`, 'ok');
+    } else {
+      toast('Could not parse story. Check your internet connection and try again.', 'err');
+    }
   }
-  btn.disabled=false;icon.textContent='✨';
 }
 
-// ── Canvas Preview ────────────────────────────────────────
-const loadedImgs={};
-async function getImg(url){
-  if(!url)return null;
-  if(loadedImgs[url])return loadedImgs[url];
-  try{const img=await loadImage(url);loadedImgs[url]=img;return img;}
-  catch{return null;}
+// ── FALLBACK STORY PARSER (offline) ──────────────────────
+function fallbackParse(text){
+  const charNames = Object.keys(CHARACTERS);
+  const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+  const sceneGroups = [];
+  let cur = [];
+  
+  sentences.forEach((sent, i)=>{
+    cur.push(sent.trim());
+    if(cur.length >= 2 || i === sentences.length-1){
+      sceneGroups.push(cur.join(' '));
+      cur = [];
+    }
+  });
+
+  return {
+    scenes: sceneGroups.map((grp, i) => {
+      const chars = charNames.filter(n => grp.includes(n));
+      const dialogueMatch = grp.match(/"([^"]+)"|says?\s+"([^"]+)"|says?\s+'([^']+)'/i);
+      const dialogue = dialogueMatch ? (dialogueMatch[1]||dialogueMatch[2]||dialogueMatch[3]) : '';
+      const speaker = chars.find(c=>grp.toLowerCase().includes(c.toLowerCase()+'says')||grp.toLowerCase().includes(c.toLowerCase()+' says')) || chars[0] || '';
+      const locMatch = Object.keys(LOCATIONS).find(l=>grp.toLowerCase().includes(l));
+      const words = grp.split(' ').slice(0,8).join(' ');
+      return {
+        caption: words.length > 5 ? words.replace(/[.!?,]/g,'')+'...' : 'Scene '+(i+1),
+        characters: chars.length ? chars : [charNames[0]],
+        action: grp,
+        location: locMatch || 'default',
+        dialogue, speaker,
+        mood: grp.match(/laugh|happy|joy|cheer/i)?'happy':grp.match(/scare|shock|surprise/i)?'surprised':'funny',
+        cameraAngle: i===0?'wide-shot':i%2===0?'close-up':'medium-shot'
+      };
+    })
+  };
 }
 
-function drawPreviewFrame(imgEl,cap,frame,totalFrames){
+// ── BUILD IMAGE PROMPT ────────────────────────────────────
+function buildImgPrompt(scene, idx){
+  const chars = Array.isArray(scene.characters) ? scene.characters.filter(c=>CHARACTERS[c]) : [];
+  const charDescs = chars.map(n => CHARACTERS[n].imgDesc).join(', and ');
+  const locDesc = LOCATIONS[scene.location] || LOCATIONS.default;
+  const moodDesc = {
+    happy:'joyful bright atmosphere',
+    surprised:'shocked wide eyes dramatic expression',
+    scared:'frightened tense atmosphere',
+    angry:'confrontational tense expressions',
+    sad:'somber emotional moment',
+    funny:'comedic exaggerated expressions',
+    dramatic:'cinematic dramatic moment'
+  }[scene.mood] || 'lively atmosphere';
+  const camDesc = {
+    'wide-shot':'wide establishing shot showing full scene and environment',
+    'close-up':'dramatic close-up shot on face showing emotion',
+    'medium-shot':'medium shot showing characters from waist up',
+    'aerial-shot':'aerial bird\'s eye view shot from above',
+    'dramatic-low-angle':'dramatic low angle shot looking up at character'
+  }[scene.cameraAngle] || 'medium shot';
+
+  const action = scene.action || '';
+  
+  return `${charDescs || 'African cartoon character'} in ${locDesc}, ${action}, ${moodDesc}, ${camDesc}, Pixar 3D animation style, ultra high quality render, cinematic lighting, photorealistic 3D texture, vivid colors, 9:16 vertical composition, dramatic film lighting, no text, no watermark`.substring(0, 400);
+}
+
+// ── IMAGE GENERATION ─────────────────────────────────────
+async function generateSceneImage(idx){
+  const s = scenes[idx];
+  if(!s) return;
+  s.imgStatus = 'generating';
+  updateSceneRow(idx);
+
+  const prompt = encodeURIComponent(s.imgPrompt);
+  const seed = Math.floor(Math.random() * 99999);
+  const url = `https://image.pollinations.ai/prompt/${prompt}?width=540&height=960&seed=${seed}&model=flux&nologo=true&enhance=true`;
+
+  try {
+    await loadImg(url); // pre-load to confirm it works
+    s.imgUrl = url;
+    s.imgStatus = 'done';
+    if(!imgCache[idx]) imgCache[idx] = await loadImgEl(url);
+    if(curScene === idx) drawScenePreview(idx, 0);
+  } catch(e) {
+    s.imgStatus = 'error';
+    console.error('Image gen failed', e);
+  }
+  updateSceneRow(idx);
+}
+
+function loadImg(url){ return new Promise((res,rej)=>{ const i=new Image(); i.crossOrigin='anonymous'; i.onload=()=>res(i); i.onerror=()=>rej(new Error('fail')); i.src=url; setTimeout(()=>rej(new Error('timeout')),40000); }); }
+async function loadImgEl(url){ try{ const img=await loadImg(url); imgCache[url]=img; return img; }catch{ return null; } }
+
+async function generateAllImages(){
+  const btn = document.getElementById('gen-all-btn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ Generating...';
+
+  for(let i=0; i<scenes.length; i++){
+    toast(`🎨 Generating scene ${i+1} of ${scenes.length}...`, 'ok');
+    await generateSceneImage(i);
+    await new Promise(r=>setTimeout(r,300));
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '🖼 Re-generate All Images';
+  toast(`✅ All ${scenes.length} scenes have images! Export your video now.`, 'ok');
+}
+
+// ── RENDER PIPELINE ───────────────────────────────────────
+function renderPipeline(){
+  const pipe = document.getElementById('pipeline');
+  document.getElementById('empty-state').style.display = 'none';
+  pipe.innerHTML = '';
+
+  scenes.forEach((s, i) => {
+    const row = document.createElement('div');
+    row.className = 'scene-row' + (curScene===i?' active':'');
+    row.id = `sr-${i}`;
+    row.innerHTML = buildSceneRowHTML(s, i);
+    row.querySelector('.scene-row-head').addEventListener('click', ()=>selectScene(i));
+    pipe.appendChild(row);
+  });
+}
+
+function buildSceneRowHTML(s, i){
+  const charChips = s.characters.map(c=>`<span class="chip" style="background:${(CHARACTERS[c]||{color:'#3d8ef8'}).color}18;border-color:${(CHARACTERS[c]||{color:'#3d8ef8'}).color}35;color:${(CHARACTERS[c]||{color:'#3d8ef8'}).color}">${CHARACTERS[c]?CHARACTERS[c].emoji:''} ${c}</span>`).join('');
+  const locChip = `<span class="chip loc">📍 ${s.location}</span>`;
+  const diaChip = s.dialogue ? `<span class="chip dia">💬 Dialogue</span>` : '';
+  const statusMap = {idle:'st-idle',generating:'st-gen',done:'st-done',error:'st-err'};
+  const thumbContent = s.imgStatus==='done' && s.imgUrl
+    ? `<img src="${s.imgUrl}" alt="scene"/>`
+    : s.imgStatus==='generating'
+    ? `<div class="scene-thumb-loader"><div class="spin"></div>Generating...</div>`
+    : `<div class="scene-thumb-loader"><span style="font-size:20px">🎨</span><span>No image</span></div>`;
+
+  return `
+  <div class="scene-row-head">
+    <div class="scene-num">${i+1}</div>
+    <div class="scene-char-chips">${charChips}${locChip}${diaChip}</div>
+    <div class="scene-actions">
+      <div class="status-dot ${statusMap[s.imgStatus]||'st-idle'}" title="${s.imgStatus}" style="margin-right:4px;margin-top:4px"></div>
+      <button class="scene-action-btn" title="Generate image" onclick="event.stopPropagation();genOneImg(${i})">🎨</button>
+      <button class="scene-action-btn" title="Delete scene" onclick="event.stopPropagation();delScene(${i})">✕</button>
+    </div>
+  </div>
+  <div class="scene-body" style="display:grid">
+    <div class="scene-thumb">${thumbContent}</div>
+    <div class="scene-details">
+      <div class="scene-text-row"><div class="label">Caption</div><div class="val" style="font-weight:700;color:var(--txt)">${s.caption}</div></div>
+      <div class="scene-text-row"><div class="label">Action</div><div class="val">${s.action}</div></div>
+      ${s.dialogue?`<div class="scene-dialogue">"${s.dialogue}" <span style="font-style:normal;font-size:10px;opacity:.6">— ${s.speaker||s.characters[0]||''}</span></div>`:''}
+      <div style="font-size:10px;color:var(--txt3)">${s.cameraAngle} · ${s.mood} mood</div>
+    </div>
+  </div>`;
+}
+
+function updateSceneRow(i){
+  const row = document.getElementById(`sr-${i}`);
+  if(row){ row.innerHTML = buildSceneRowHTML(scenes[i], i); row.querySelector('.scene-row-head').addEventListener('click',()=>selectScene(i)); }
+}
+
+function updateSceneCount(){
+  document.getElementById('scene-count-badge').textContent = `${scenes.length} scene${scenes.length!==1?'s':''}`;
+  document.getElementById('scene-ind').textContent = `Scene ${Math.max(0,curScene+1)} / ${scenes.length}`;
+}
+
+function selectScene(i){
+  curScene = i;
+  document.querySelectorAll('.scene-row').forEach((r,j)=>r.classList.toggle('active',j===i));
+  drawScenePreview(i, 0);
+  document.getElementById('scene-ind').textContent = `Scene ${i+1} / ${scenes.length}`;
+}
+
+async function genOneImg(i){ await generateSceneImage(i); }
+function delScene(i){ scenes.splice(i,1); if(curScene>=scenes.length) curScene=scenes.length-1; renderPipeline(); updateSceneCount(); }
+
+// ── CANVAS PREVIEW ────────────────────────────────────────
+function drawEmptyPreview(){
+  ctx.fillStyle='#0a0b0f';ctx.fillRect(0,0,W,H);
+  ctx.font='72px serif';ctx.textAlign='center';ctx.fillText('🎬',W/2,H/2-20);
+  ctx.font='bold 28px Poppins,sans-serif';ctx.fillStyle='rgba(255,255,255,.25)';ctx.fillText('Your preview',W/2,H/2+50);
+  ctx.font='18px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,.15)';ctx.fillText('appears here',W/2,H/2+85);
+  ctx.textAlign='left';
+}
+
+async function drawScenePreview(idx, frame){
+  if(idx<0||idx>=scenes.length){ drawEmptyPreview(); return; }
+  const s = scenes[idx];
+
+  // Get image
+  let imgEl = null;
+  if(s.imgUrl && s.imgUrl!=='loading'){
+    imgEl = imgCache[idx] || await loadImgEl(s.imgUrl);
+    if(imgEl) imgCache[idx]=imgEl;
+  }
+
   ctx.clearRect(0,0,W,H);
+
   if(imgEl){
     ctx.save();
-    // Ken Burns effect
-    if(fxFlags.zoom||fxFlags.pan){
-      const t=frame/Math.max(1,totalFrames-1);
-      const startScale=1.0,endScale=1.08;
-      const sc=startScale+(endScale-startScale)*t;
-      const panX=(fxFlags.pan?t*20-10:0);
-      const panY=0;
-      ctx.translate(W/2+panX,H/2+panY);ctx.scale(sc,sc);ctx.translate(-W/2,-H/2);
-    }
-    // Draw image
-    const iw=imgEl.naturalWidth||imgEl.width,ih=imgEl.naturalHeight||imgEl.height;
+    // Ken Burns zoom
+    const t = Math.min(1, frame/120);
+    const sc = 1 + 0.06*t;
+    const px = Math.sin(t*Math.PI)*15;
+    ctx.translate(W/2+px, H/2);ctx.scale(sc,sc);ctx.translate(-W/2,-H/2);
+    const iw=imgEl.naturalWidth||imgEl.width, ih=imgEl.naturalHeight||imgEl.height;
     const scale=Math.max(W/iw,H/ih);
     const dw=iw*scale,dh=ih*scale;
     ctx.drawImage(imgEl,(W-dw)/2,(H-dh)/2,dw,dh);
     ctx.restore();
-    // Vignette
-    if(fxFlags.vignette){
-      const vg=ctx.createRadialGradient(W/2,H/2,H*.2,W/2,H/2,H*.7);
-      vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,.7)');
-      ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
-    }
-  }else{
-    // Placeholder
-    const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#1a1228');g.addColorStop(1,'#0a0610');
+    // Cinematic bars
+    ctx.fillStyle='rgba(0,0,0,.15)';ctx.fillRect(0,0,W,H);
+    // Gradient bottom for captions
+    const bg=ctx.createLinearGradient(0,H*.55,0,H);bg.addColorStop(0,'transparent');bg.addColorStop(1,'rgba(0,0,0,.85)');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    // Gradient top
+    const tg=ctx.createLinearGradient(0,0,0,H*.3);tg.addColorStop(0,'rgba(0,0,0,.5)');tg.addColorStop(1,'transparent');
+    ctx.fillStyle=tg;ctx.fillRect(0,0,W,H);
+  } else {
+    // Placeholder background
+    const g=ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#0d1522');g.addColorStop(1,'#060810');
     ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='rgba(255,255,255,.05)';
-    for(let y=0;y<H;y+=80){ctx.fillRect(0,y,W,1);}
-    ctx.font='48px serif';ctx.textAlign='center';ctx.fillText('🎭',W/2,H/2-20);
-    ctx.font='bold 16px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,.3)';ctx.fillText('No image — generate one',W/2,H/2+30);
+    // Grid pattern
+    ctx.strokeStyle='rgba(255,255,255,.03)';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    if(s.imgStatus==='generating'){
+      ctx.font='44px serif';ctx.textAlign='center';ctx.fillText('⏳',W/2,H/2-20);
+      ctx.font='bold 22px Poppins,sans-serif';ctx.fillStyle='rgba(255,149,0,.7)';
+      ctx.fillText('Generating Image...',W/2,H/2+40);
+    } else {
+      ctx.font='44px serif';ctx.textAlign='center';ctx.fillText(s.characters[0]&&CHARACTERS[s.characters[0]]?CHARACTERS[s.characters[0]].emoji:'🎭',W/2,H/2-20);
+      ctx.font='bold 20px Poppins,sans-serif';ctx.fillStyle='rgba(255,255,255,.3)';
+      ctx.fillText('Click 🎨 to generate',W/2,H/2+40);
+    }
     ctx.textAlign='left';
   }
-  // Caption
-  if(fxFlags.captions&&cap&&capStyle!=='none'){
-    const alpha=Math.min(1,frame/8);
+
+  // ── DIALOGUE SPEECH BUBBLE ────────────────────────────
+  if(s.dialogue && frame > 10){
+    const alpha = Math.min(1,(frame-10)/15);
     ctx.globalAlpha=alpha;
-    drawCaption(ctx,cap,capStyle);
+    const speaker = s.speaker || s.characters[0] || '';
+    const charColor = CHARACTERS[speaker] ? CHARACTERS[speaker].color : '#fff';
+    drawSpeechBubble(ctx, s.dialogue, speaker, charColor, W/2, H*.38);
     ctx.globalAlpha=1;
   }
-  // Handle
-  if(fxFlags.handle){
-    const handle=document.getElementById('s-handle').value||'@creator';
-    ctx.font='bold 20px Inter,sans-serif';ctx.textAlign='right';
-    ctx.fillStyle='rgba(255,255,255,.5)';
-    ctx.shadowColor='rgba(0,0,0,.8)';ctx.shadowBlur=6;
-    ctx.fillText(handle,W-16,H-16);ctx.shadowBlur=0;ctx.textAlign='left';
+
+  // ── CAPTION BAR ───────────────────────────────────────
+  if(s.caption){
+    const alpha = Math.min(1, frame/10);
+    ctx.globalAlpha=alpha;
+    drawCaptionBar(ctx, s.caption);
+    ctx.globalAlpha=1;
   }
-  // TikTok-style scene number
-  ctx.font='bold 13px Inter,sans-serif';ctx.textAlign='left';
-  ctx.fillStyle='rgba(255,255,255,.35)';ctx.fillText(`#${curScene+1}`,16,32);ctx.textAlign='left';
+
+  // ── SCENE NUMBER + CHARACTERS ─────────────────────────
+  ctx.globalAlpha=0.85;
+  // Scene number tag
+  ctx.fillStyle='rgba(0,0,0,.6)';
+  roundRect(ctx,16,48,58,34,8);ctx.fill();
+  ctx.font='bold 11px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,.5)';ctx.textAlign='left';ctx.fillText('SCENE',24,62);
+  ctx.font='bold 22px Bebas Neue,sans-serif';ctx.fillStyle='#fff';ctx.fillText(idx+1,24,82);
+
+  // Character emoji row
+  if(s.characters.length){
+    let cx=W-16;
+    s.characters.slice().reverse().forEach(name=>{
+      const ch=CHARACTERS[name];if(!ch)return;
+      ctx.font='22px serif';ctx.textAlign='right';ctx.fillText(ch.emoji,cx,72);
+      cx-=28;
+    });
+  }
+
+  // Handle
+  ctx.font='bold 17px Inter,sans-serif';ctx.textAlign='right';ctx.fillStyle='rgba(255,255,255,.45)';
+  ctx.shadowColor='rgba(0,0,0,.8)';ctx.shadowBlur=6;
+  ctx.fillText('@CartoonStudio',W-14,H-18);
+  ctx.shadowBlur=0;ctx.textAlign='left';ctx.globalAlpha=1;
 }
 
-function drawCaption(c,txt,style){
-  const words=txt.split(' ');const lineH=44;const maxW=W-80;
-  c.font='bold 30px Poppins, sans-serif';
-  // Wrap
+function drawSpeechBubble(c,text,speaker,color,cx,cy){
+  c.font='bold 26px Poppins,sans-serif';
+  const words=text.split(' ');const maxW=360;const lineH=36;
   const lines=[];let cur='';
-  words.forEach(w=>{const t=cur?cur+' '+w:w;if(c.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;});
-  if(cur)lines.push(cur);
-  const totalH=lines.length*lineH+24;
-  let baseY;
-  if(style==='bottom') baseY=H-totalH-60;
-  else baseY=H/2-totalH/2;
-  // Background
-  c.fillStyle='rgba(0,0,0,.72)';
-  const bx=20,bw=W-40;
-  roundRect(c,bx,baseY-12,bw,totalH,12,'rgba(0,0,0,.7)');
-  // Accent bar
-  const ag=c.createLinearGradient(bx,0,bx+bw,0);ag.addColorStop(0,'#ff5722');ag.addColorStop(1,'#ff9800');
-  c.fillStyle=ag;c.fillRect(bx,baseY-12,bw,4);
+  words.forEach(w=>{const t=cur?cur+' '+w:w;if(c.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;});if(cur)lines.push(cur);
+  const bw=Math.min(420,maxW+40),bh=lines.length*lineH+50;
+  const bx=cx-bw/2,by=cy-bh/2;
+  // Shadow
+  c.shadowColor='rgba(0,0,0,.5)';c.shadowBlur=18;
+  // Bubble body
+  roundRect(c,bx,by,bw,bh,18);
+  c.fillStyle='rgba(255,255,255,.95)';c.fill();
+  // Color top bar
+  roundRect(c,bx,by,bw,8,4);c.fillStyle=color;c.fill();
+  c.shadowBlur=0;
+  // Tail
+  c.beginPath();c.moveTo(cx-12,by+bh);c.lineTo(cx,by+bh+20);c.lineTo(cx+12,by+bh);c.fillStyle='rgba(255,255,255,.95)';c.fill();
+  // Speaker name
+  if(speaker){c.font='bold 13px Inter,sans-serif';c.fillStyle=color;c.textAlign='center';c.fillText(speaker,cx,by+26);}
   // Text
+  c.font='bold 26px Poppins,sans-serif';c.fillStyle='#111';
+  lines.forEach((ln,i)=>{ c.textAlign='center'; c.fillText(ln,cx,by+(speaker?40:24)+i*lineH); });
+  c.textAlign='left';
+}
+
+function drawCaptionBar(c,text){
+  const words=text.split(' ');const lineH=46;const maxW=W-80;
+  c.font='bold 32px Poppins,sans-serif';
+  const lines=[];let cur='';
+  words.forEach(w=>{const t=cur?cur+' '+w:w;if(c.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;});if(cur)lines.push(cur);
+  const totalH=lines.length*lineH+32;
+  const by=H-totalH-50;
+  // Background
+  roundRect(c,16,by-4,W-32,totalH+4,12);
+  c.fillStyle='rgba(0,0,0,.72)';c.fill();
+  // Orange top stripe
+  const gr=c.createLinearGradient(16,0,W-16,0);gr.addColorStop(0,'#ff4d00');gr.addColorStop(1,'#ff9500');
+  roundRect(c,16,by-4,W-32,5,3);c.fillStyle=gr;c.fill();
+  // Text
+  c.textAlign='center';
   lines.forEach((ln,i)=>{
     c.shadowColor='rgba(0,0,0,.9)';c.shadowBlur=8;
-    c.fillStyle='#fff';c.textAlign='center';
-    c.fillText(ln,W/2,baseY+i*lineH+30);
+    c.fillStyle='#fff';c.font='bold 32px Poppins,sans-serif';
+    c.fillText(ln,W/2,by+i*lineH+32);
   });
   c.shadowBlur=0;c.textAlign='left';
 }
 
-function roundRect(c,x,y,w,h,r,fill){
+function roundRect(c,x,y,w,h,r){
   c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.arcTo(x+w,y,x+w,y+r,r);
   c.lineTo(x+w,y+h-r);c.arcTo(x+w,y+h,x+w-r,y+h,r);c.lineTo(x+r,y+h);
   c.arcTo(x,y+h,x,y+h-r,r);c.lineTo(x,y+r);c.arcTo(x,y,x+r,y,r);c.closePath();
-  if(fill){c.fillStyle=fill;c.fill();}
 }
 
-let cachedPreviewImg=null;
-async function drawScenePreview(idx,frame){
-  if(idx<0||idx>=scenes.length){ctx.fillStyle='#0a0b0f';ctx.fillRect(0,0,W,H);return;}
-  const s=scenes[idx];
-  const url=previewImages[idx]||s.selectedImg;
-  if(url&&url!=='loading'&&!url.startsWith('error:')){
-    const img=await getImg(url);
-    drawPreviewFrame(img,s.cap,frame,100);
-  }else drawPreviewFrame(null,s.cap,frame,100);
-}
-
-function toggleAnim(){
-  if(animTimer){clearInterval(animTimer);animTimer=null;document.getElementById('anim-btn').textContent='▶ Play';return;}
-  document.getElementById('anim-btn').textContent='⏹ Stop';
-  animFrame=0;
-  let scIdx=Math.max(0,curScene);const FPD=30,DUR=parseInt(document.getElementById('scene-dur').value)||4;
-  const fPerScene=DUR*FPD;let localFrame=0;
-  animTimer=setInterval(async()=>{
-    await drawScenePreview(scIdx,localFrame);
-    localFrame++;
-    if(localFrame>=fPerScene){localFrame=0;scIdx=(scIdx+1)%Math.max(1,scenes.length);if(curScene!==scIdx){curScene=scIdx;renderSceneList();document.getElementById('scene-indicator').textContent=`Scene ${curScene+1} / ${scenes.length}`;}}
-    animFrame++;
+// ── ANIMATION PLAYBACK ────────────────────────────────────
+function togglePlay(){
+  if(playTimer){ clearInterval(playTimer); playTimer=null; document.getElementById('play-btn').textContent='▶ Play'; return; }
+  document.getElementById('play-btn').textContent='⏹ Stop';
+  playFrame=0;let scIdx=Math.max(0,curScene);const FPD=30;let lf=0;
+  playTimer=setInterval(async()=>{
+    await drawScenePreview(scIdx,lf);lf++;
+    if(lf>=FPD*4){lf=0;scIdx=(scIdx+1)%Math.max(1,scenes.length);curScene=scIdx;document.getElementById('scene-ind').textContent=`Scene ${scIdx+1} / ${scenes.length}`;}
   },1000/FPD);
 }
-function prevScene(){if(curScene>0)selectScene(curScene-1);}
-function nextScene(){if(curScene<scenes.length-1)selectScene(curScene+1);}
+function prevSc(){if(curScene>0){curScene--;renderPipeline();drawScenePreview(curScene,0);document.getElementById('scene-ind').textContent=`Scene ${curScene+1} / ${scenes.length}`;}}
+function nextSc(){if(curScene<scenes.length-1){curScene++;renderPipeline();drawScenePreview(curScene,0);document.getElementById('scene-ind').textContent=`Scene ${curScene+1} / ${scenes.length}`;}}
 
-// ── Video Render ──────────────────────────────────────────
+// ── VIDEO RENDER ──────────────────────────────────────────
 async function renderVideo(){
-  if(!scenes.length){toast('❌ Add scenes first!');return;}
-  const hasImages=scenes.some(s=>s.selectedImg&&!s.selectedImg.startsWith('error:'));
-  if(!hasImages){toast('⚠️ Generate images for at least one scene first!');return;}
+  if(!scenes.length){toast('Write a story and generate scenes first!','err');return;}
+  const hasImg=scenes.some(s=>s.imgUrl&&s.imgStatus==='done');
+  if(!hasImg){toast('Generate images for at least some scenes first!','err');return;}
 
-  const btn=document.getElementById('render-btn');btn.disabled=true;
-  const prog=document.getElementById('render-progress');prog.style.display='block';
-  document.getElementById('download-area').style.display='none';
+  const rbtn=document.getElementById('render-btn');const rbtn2=document.getElementById('render-btn2');
+  rbtn.disabled=true;rbtn2.disabled=true;
+  const prog=document.getElementById('render-prog');prog.style.display='block';
+  document.getElementById('dl-area').style.display='none';
 
-  const FPS=30,DUR=parseInt(document.getElementById('scene-dur').value)||4;
-  const fPerScene=DUR*FPS;
-  const totalFrames=scenes.length*fPerScene;
-
+  const FPS=30,DUR=4,fPerScene=DUR*FPS,total=scenes.length*fPerScene;
   const oc=document.createElement('canvas');oc.width=540;oc.height=960;
   const oc2=oc.getContext('2d');
   const stream=oc.captureStream(FPS);
   let mime='video/webm;codecs=vp9';if(!MediaRecorder.isTypeSupported(mime))mime='video/webm';
-  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4000000});
-  const chunks=[];
-  rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
-  rec.start(100);
+  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4500000});
+  const chunks=[];rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};rec.start(100);
 
   // Preload all images
   document.getElementById('prog-txt').textContent='Loading images...';
-  const imgCache={};
+  const imgs={};
   for(let i=0;i<scenes.length;i++){
-    const url=previewImages[i]||scenes[i].selectedImg;
-    if(url&&!url.startsWith('error:')&&url!=='loading'){
-      try{imgCache[i]=await getImg(url);}catch{}
-    }
+    const s=scenes[i];
+    if(s.imgUrl&&s.imgStatus==='done'){try{imgs[i]=await loadImg(s.imgUrl);}catch{}}
   }
 
-  for(let f=0;f<totalFrames;f++){
-    const sIdx=Math.floor(f/fPerScene);
-    const lf=f%fPerScene;
-    const s=scenes[sIdx];
-    const img=imgCache[sIdx]||null;
-    // Copy draw logic to oc2
+  for(let f=0;f<total;f++){
+    const si=Math.floor(f/fPerScene),lf=f%fPerScene;
+    const s=scenes[si];const imgEl=imgs[si]||null;
     oc2.clearRect(0,0,540,960);
-    if(img){
+
+    if(imgEl){
       oc2.save();
-      if(fxFlags.zoom||fxFlags.pan){
-        const t=lf/Math.max(1,fPerScene-1);
-        const sc=1.0+0.08*t;const panX=fxFlags.pan?t*20-10:0;
-        oc2.translate(270+panX,480);oc2.scale(sc,sc);oc2.translate(-270,-480);
-      }
-      const iw=img.naturalWidth||img.width,ih=img.naturalHeight||img.height;
+      const t=lf/Math.max(1,fPerScene-1);
+      const sc=1+0.06*t;const px=Math.sin(t*Math.PI)*15;
+      oc2.translate(270+px,480);oc2.scale(sc,sc);oc2.translate(-270,-480);
+      const iw=imgEl.naturalWidth||imgEl.width,ih=imgEl.naturalHeight||imgEl.height;
       const scale=Math.max(540/iw,960/ih);
-      const dw=iw*scale,dh=ih*scale;
-      oc2.drawImage(img,(540-dw)/2,(960-dh)/2,dw,dh);
+      oc2.drawImage(imgEl,(540-iw*scale)/2,(960-ih*scale)/2,iw*scale,ih*scale);
       oc2.restore();
-      if(fxFlags.vignette){
-        const vg=oc2.createRadialGradient(270,480,192,270,480,672);
-        vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,.7)');
-        oc2.fillStyle=vg;oc2.fillRect(0,0,540,960);
-      }
-    }else{
-      const g=oc2.createLinearGradient(0,0,0,960);g.addColorStop(0,'#1a1228');g.addColorStop(1,'#0a0610');
+      // Overlays
+      const bg=oc2.createLinearGradient(0,528,0,960);bg.addColorStop(0,'transparent');bg.addColorStop(1,'rgba(0,0,0,.85)');
+      oc2.fillStyle=bg;oc2.fillRect(0,0,540,960);
+      const tg=oc2.createLinearGradient(0,0,0,288);tg.addColorStop(0,'rgba(0,0,0,.5)');tg.addColorStop(1,'transparent');
+      oc2.fillStyle=tg;oc2.fillRect(0,0,540,960);
+    } else {
+      const g=oc2.createLinearGradient(0,0,0,960);g.addColorStop(0,'#0d1522');g.addColorStop(1,'#060810');
       oc2.fillStyle=g;oc2.fillRect(0,0,540,960);
     }
+
+    // Dialogue
+    if(s.dialogue&&lf>10){
+      const alpha=Math.min(1,(lf-10)/15);oc2.globalAlpha=alpha;
+      const sp=s.speaker||s.characters[0]||'';
+      const color=CHARACTERS[sp]?CHARACTERS[sp].color:'#fff';
+      const words=s.dialogue.split(' ');const maxW=360;const lineH=36;
+      const lines=[];let cur='';
+      words.forEach(w=>{const t=cur?cur+' '+w:w;if(oc2.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;});if(cur)lines.push(cur);
+      const bw=Math.min(420,maxW+40),bh=lines.length*lineH+50;
+      const cx=270,cy=384,bx=cx-bw/2,by=cy-bh/2;
+      oc2.font='bold 26px Poppins,sans-serif';
+      oc2.shadowColor='rgba(0,0,0,.5)';oc2.shadowBlur=18;
+      roundRect(oc2,bx,by,bw,bh,18);oc2.fillStyle='rgba(255,255,255,.95)';oc2.fill();
+      roundRect(oc2,bx,by,bw,8,4);oc2.fillStyle=color;oc2.fill();
+      oc2.shadowBlur=0;
+      if(sp){oc2.font='bold 13px Inter,sans-serif';oc2.fillStyle=color;oc2.textAlign='center';oc2.fillText(sp,cx,by+26);}
+      oc2.font='bold 26px Poppins,sans-serif';oc2.fillStyle='#111';
+      lines.forEach((ln,i)=>{oc2.textAlign='center';oc2.fillText(ln,cx,by+(sp?40:24)+i*lineH);});
+      oc2.textAlign='left';oc2.globalAlpha=1;
+    }
+
     // Caption
-    if(fxFlags.captions&&s.cap&&capStyle!=='none'){
-      const alpha=Math.min(1,lf/8);
-      oc2.globalAlpha=alpha;
-      // Simplified caption draw for render
-      const words=s.cap.split(' ');const lineH=44;const maxW=460;
-      oc2.font='bold 30px Poppins, sans-serif';
-      const lines2=[];let cur='';
-      words.forEach(w=>{const tt=cur?cur+' '+w:w;if(oc2.measureText(tt).width>maxW){lines2.push(cur);cur=w;}else cur=tt;});if(cur)lines2.push(cur);
-      const totalH2=lines2.length*lineH+24;
-      const baseY=capStyle==='center'?480-totalH2/2:960-totalH2-60;
-      roundRect2(oc2,20,baseY-12,500,totalH2,12,'rgba(0,0,0,.72)');
-      const ag=oc2.createLinearGradient(20,0,520,0);ag.addColorStop(0,'#ff5722');ag.addColorStop(1,'#ff9800');
-      oc2.fillStyle=ag;oc2.fillRect(20,baseY-12,500,4);
-      lines2.forEach((ln,i)=>{oc2.shadowColor='rgba(0,0,0,.9)';oc2.shadowBlur=8;oc2.fillStyle='#fff';oc2.textAlign='center';oc2.fillText(ln,270,baseY+i*lineH+30);});
+    if(s.caption){
+      const alpha=Math.min(1,lf/10);oc2.globalAlpha=alpha;
+      const words=s.caption.split(' ');const maxW=460;const lineH=46;
+      oc2.font='bold 32px Poppins,sans-serif';
+      const lines=[];let cur='';
+      words.forEach(w=>{const t=cur?cur+' '+w:w;if(oc2.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;});if(cur)lines.push(cur);
+      const totalH=lines.length*lineH+32;
+      const by=960-totalH-50;
+      roundRect(oc2,16,by-4,508,totalH+4,12);oc2.fillStyle='rgba(0,0,0,.72)';oc2.fill();
+      const gr=oc2.createLinearGradient(16,0,524,0);gr.addColorStop(0,'#ff4d00');gr.addColorStop(1,'#ff9500');
+      roundRect(oc2,16,by-4,508,5,3);oc2.fillStyle=gr;oc2.fill();
+      oc2.textAlign='center';
+      lines.forEach((ln,i)=>{oc2.shadowColor='rgba(0,0,0,.9)';oc2.shadowBlur=8;oc2.fillStyle='#fff';oc2.font='bold 32px Poppins,sans-serif';oc2.fillText(ln,270,by+i*lineH+32);});
       oc2.shadowBlur=0;oc2.textAlign='left';oc2.globalAlpha=1;
     }
+
     // Handle
-    if(fxFlags.handle){
-      const handle=document.getElementById('s-handle').value||'@creator';
-      oc2.font='bold 20px Inter,sans-serif';oc2.textAlign='right';
-      oc2.fillStyle='rgba(255,255,255,.55)';oc2.shadowColor='rgba(0,0,0,.8)';oc2.shadowBlur=6;
-      oc2.fillText(handle,524,944);oc2.shadowBlur=0;oc2.textAlign='left';
-    }
-    const pct=Math.round(f/totalFrames*100);
+    oc2.font='bold 17px Inter,sans-serif';oc2.textAlign='right';oc2.fillStyle='rgba(255,255,255,.45)';
+    oc2.shadowColor='rgba(0,0,0,.8)';oc2.shadowBlur=6;oc2.fillText('@CartoonStudio',526,944);oc2.shadowBlur=0;oc2.textAlign='left';
+
+    const pct=Math.round(f/total*100);
     document.getElementById('prog-fill').style.width=pct+'%';
-    document.getElementById('prog-txt').textContent=`Rendering: ${pct}% (scene ${sIdx+1}/${scenes.length})`;
-    if(f%4===0)await new Promise(r=>requestAnimationFrame(r));
+    document.getElementById('prog-txt').textContent=`Rendering ${pct}% · Scene ${si+1}/${scenes.length}`;
+    if(f%4===0) await new Promise(r=>requestAnimationFrame(r));
   }
 
   rec.stop();
   rec.onstop=()=>{
     const blob=new Blob(chunks,{type:mime});
     const url=URL.createObjectURL(blob);
-    const title=document.getElementById('s-title').value||'story';
     document.getElementById('dl-link').href=url;
-    document.getElementById('dl-link').download=title.replace(/\s+/g,'-').toLowerCase()+'.webm';
-    document.getElementById('download-area').style.display='block';
-    prog.style.display='none';btn.disabled=false;
-    toast('🎬 Video rendered!',4000);
+    document.getElementById('dl-area').style.display='block';
+    prog.style.display='none';
+    rbtn.disabled=false;rbtn2.disabled=false;
+    toast('🎬 Video ready! Click Download.','ok');
   };
 }
 
-function roundRect2(c,x,y,w,h,r,fill){
-  c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.arcTo(x+w,y,x+w,y+r,r);
-  c.lineTo(x+w,y+h-r);c.arcTo(x+w,y+h,x+w-r,y+h,r);c.lineTo(x+r,y+h);
-  c.arcTo(x,y+h,x,y+h-r,r);c.lineTo(x,y+r);c.arcTo(x,y,x+r,y,r);c.closePath();
-  if(fill){c.fillStyle=fill;c.fill();}
+// ── OVERLAY HELPERS ───────────────────────────────────────
+function showOverlay(title,msg){
+  document.getElementById('ov-title').textContent=title;
+  document.getElementById('ov-msg').textContent=msg;
+  document.getElementById('overlay').classList.add('show');
+}
+function hideOverlay(){ document.getElementById('overlay').classList.remove('show'); }
+function setOverlaySteps(steps){
+  const el=document.getElementById('ov-steps');
+  el.innerHTML=steps.map((s,i)=>`<div class="ost ${s.state}" id="ost-${i}">${s.state==='done'?'✅':s.state==='active'?'⏳':'⭕'} ${s.label}</div>`).join('');
+}
+function updateOverlayStep(idx,state){
+  const el=document.getElementById(`ost-${idx}`);
+  if(el){el.className=`ost ${state}`;el.innerHTML=`${state==='done'?'✅':state==='active'?'⏳':'⭕'} ${el.textContent.slice(2)}`;}
 }
 
-// ── Init ─────────────────────────────────────────────────
-// Default scenes to get started
-const defaults=[
-  {cap:'THE CHECKPOINT…',prompt:'Two fat cartoon police officers in dark blue uniforms standing at a police checkpoint on a desert highway, orange traffic cones, police car with flashing lights in background, Pixar 3D animation style, cinematic lighting, wide shot, photorealistic texture'},
-  {cap:'A car approaches slowly 👀',prompt:'Car slowly driving toward a police checkpoint on a desert road, fat cartoon police officer with mustache holding up hand to stop, dramatic angle, dust cloud, suspense, Pixar 3D animation style, golden hour lighting'},
-  {cap:'Officer: "Step out of the vehicle!"',prompt:'Fat cartoon police officer in uniform leaning into car window with stern expression, pointing finger, exaggerated cartoon face, wide eyes, desert road background, Pixar 3D style, close-up dramatic shot'},
-  {cap:'What they found inside… 😱',prompt:'Inside the car, cartoon characters looking nervous and sweating, something suspicious under the seat, dramatic reveal moment, Pixar 3D animation style, interior car shot, dramatic lighting, exaggerated expressions'},
-  {cap:'NOBODY expected THIS 😂',prompt:'Fat cartoon police officer with jaw dropped in shock and huge wide eyes, holding something unexpected, other officer covering mouth laughing, desert highway background, Pixar 3D animation style, comedy reaction shot'},
-  {cap:'Justice served! 🏆',prompt:'Fat cartoon police officers laughing together at a police checkpoint, thumbs up, police car in background, sunset golden sky, happy ending, Pixar 3D animation style, warm cinematic lighting, wide shot'},
-];
-defaults.forEach(d=>scenes.push({...d,imgs:[],selectedImg:null,status:'idle'}));
-renderSceneList();updateSceneCount();
-selectScene(0);
-drawScenePreview(0,0);
+// ── TOAST ─────────────────────────────────────────────────
+function toast(msg,type=''){
+  const t=document.getElementById('toast');t.textContent=msg;
+  t.className='toast'+(type?' '+type:'');t.style.display='block';
+  clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',3500);
+}
+function clearAll(){ if(confirm('Clear all scenes?')){ scenes=[]; curScene=-1; renderPipeline(); drawEmptyPreview(); document.getElementById('empty-state').style.display='block'; updateSceneCount(); document.getElementById('gen-all-btn').style.display='none'; }}
+
+init();
 </script>
 </body>
 </html>
