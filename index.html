@@ -3,709 +3,783 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>🎬 Journey Video Maker</title>
-<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka+One&family=Nunito:wght@700;900&display=swap" rel="stylesheet"/>
+<title>🎬 Pixar Story Video Maker</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --c1:#ff6b35;--c2:#ffd23f;--c3:#06d6a0;--c4:#118ab2;--c5:#ef476f;--c6:#7209b7;
-  --dk:#12121e;--card:#1e1e32;--bdr:#2a2a44;
-  --ft:'Bangers',cursive;--fu:'Fredoka One',cursive;--fb:'Nunito',sans-serif;
+  --bg:#0a0b0f;--card:#13151c;--card2:#1a1d28;--bdr:#252836;
+  --acc:#ff5722;--acc2:#ff9800;--acc3:#4caf50;--blue:#2196f3;
+  --txt:#e8eaf0;--txt2:#8b90a0;
+  --r:14px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--dk);color:#fff;font-family:var(--fb);min-height:100vh;overflow-x:hidden}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden}
 
-/* HEADER */
-header{text-align:center;padding:36px 20px 20px;background:linear-gradient(180deg,#0a0a16 0%,transparent);position:relative;overflow:hidden}
-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(255,107,53,.1) 0%,transparent 70%)}
-.title{font-family:var(--ft);font-size:68px;letter-spacing:4px;
-  background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 0 20px rgba(255,107,53,.4));margin-bottom:6px}
-.sub{font-family:var(--fu);font-size:17px;color:rgba(255,255,255,.5);margin-bottom:18px}
-.badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-.badge{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:5px 12px;border-radius:20px;font-family:var(--fu);font-size:12px}
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,#0d0f1a 0%,#1a0d0a 100%);border-bottom:1px solid var(--bdr);padding:20px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:28px;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px;white-space:nowrap}
+.hdr-sub{font-size:12px;color:var(--txt2);margin-top:2px}
+.hdr-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.badge{background:rgba(255,87,34,.12);border:1px solid rgba(255,87,34,.3);color:var(--acc);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600}
 
-/* TABS */
-.tabs{display:flex;justify-content:center;border-bottom:2px solid var(--bdr);margin:0 20px}
-.tab{padding:14px 24px;font-family:var(--fu);font-size:16px;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,.45);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s}
-.tab.on{color:var(--c1);border-bottom-color:var(--c1)}
-.tab:hover{color:var(--c2)}
+/* ── LAYOUT ── */
+.wrap{display:grid;grid-template-columns:420px 1fr;gap:0;height:calc(100vh - 65px)}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;height:auto}}
+.sidebar{border-right:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
+.main{overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:20px}
 
-/* PANELS */
-.panel{display:none;padding:28px 20px;max-width:1100px;margin:0 auto}
-.panel.on{display:block}
+/* ── SIDEBAR SECTIONS ── */
+.sec{border-bottom:1px solid var(--bdr);padding:20px}
+.sec-title{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--txt2);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.sec-title::before{content:'';width:3px;height:14px;background:linear-gradient(var(--acc),var(--acc2));border-radius:2px;display:inline-block}
 
-/* README */
-.rm{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:36px;line-height:1.7}
-.rm h1{font-family:var(--ft);font-size:48px;color:var(--c1);margin-bottom:8px}
-.rm h2{font-family:var(--fu);font-size:22px;color:var(--c3);margin:28px 0 12px;border-bottom:1px solid var(--bdr);padding-bottom:8px}
-.rm h3{font-family:var(--fu);font-size:18px;color:var(--c2);margin:18px 0 8px}
-.rm p{margin-bottom:12px;color:rgba(255,255,255,.85)}
-.rm code{background:#0d0d1a;color:var(--c3);padding:2px 8px;border-radius:4px;font-family:monospace;font-size:13px}
-.rm pre{background:#0a0a14;border:1px solid var(--bdr);padding:18px;border-radius:10px;overflow-x:auto;margin:12px 0}
-.rm pre code{background:none;padding:0;color:#aef}
-.rm ul,.rm ol{padding-left:22px;margin-bottom:12px;color:rgba(255,255,255,.85)}
-.rm li{margin-bottom:6px}
-.rm table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
-.rm th{background:rgba(255,255,255,.07);padding:10px 14px;text-align:left;color:var(--c2);font-family:var(--fu)}
-.rm td{padding:10px 14px;border-bottom:1px solid #1e1e2e}
-.rm a{color:var(--c3)}
-.go-btn{
-  display:inline-block;margin-top:20px;padding:14px 36px;border-radius:10px;border:none;
-  background:linear-gradient(135deg,var(--c1),var(--c2));color:#1a0a00;
-  font-family:var(--ft);font-size:24px;letter-spacing:2px;cursor:pointer;transition:all .2s;
-}
-.go-btn:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(255,107,53,.4)}
+/* ── FORM ELEMENTS ── */
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--txt2);margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;background:#0d0f18;border:1px solid var(--bdr);color:var(--txt);padding:9px 12px;border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;transition:border-color .2s;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--acc)}
+.field textarea{height:72px;resize:vertical;line-height:1.5}
+.field select option{background:#1a1d28}
 
-/* STUDIO */
-.studio{display:grid;grid-template-columns:380px 1fr;gap:22px}
-@media(max-width:900px){.studio{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:20px;margin-bottom:14px}
-.card h3{font-family:var(--fu);font-size:15px;color:var(--c2);margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.row{margin-bottom:12px}
-.row label{display:block;font-size:13px;color:rgba(255,255,255,.55);margin-bottom:5px}
-.row input,.row select,.row textarea{width:100%;background:#12121e;border:1px solid var(--bdr);color:#fff;padding:9px 12px;border-radius:8px;font-family:var(--fb);font-size:14px;transition:border-color .2s}
-.row input:focus,.row select:focus,.row textarea:focus{outline:none;border-color:var(--c3)}
-.row textarea{height:70px;resize:vertical}
-.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.ts{padding:9px;border-radius:8px;border:2px solid transparent;cursor:pointer;text-align:center;font-family:var(--fu);font-size:13px;transition:all .15s}
-.ts.on{border-color:#fff;transform:scale(1.04)}
-.ts:hover{transform:scale(1.06)}
-#slist{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
-.si{background:#12121e;border:1px solid var(--bdr);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .15s}
-.si:hover,.si.on{border-color:var(--c3);background:rgba(6,214,160,.07)}
-.snum{width:26px;height:26px;border-radius:50%;background:var(--c4);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
-.stxt{flex:1;font-size:13px}
-.scap{color:rgba(255,255,255,.9)}
-.sloc{color:rgba(255,255,255,.4);font-size:11px}
-.sedi{width:110px;font-size:12px;background:#0a0a14;border:1px solid #333;color:#fff;padding:4px 7px;border-radius:4px}
-.del{background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:15px;padding:2px 5px}
-.del:hover{color:var(--c5)}
-.add{width:100%;padding:11px;background:none;border:1px dashed var(--bdr);color:var(--c3);font-family:var(--fu);font-size:15px;cursor:pointer;border-radius:8px;transition:all .2s}
-.add:hover{border-color:var(--c3);background:rgba(6,214,160,.07)}
+/* ── SCENE CARDS ── */
+.scene-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.scene-card{background:#0d0f18;border:1px solid var(--bdr);border-radius:10px;padding:12px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.scene-card::before{content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:var(--bdr);transition:background .2s}
+.scene-card.active::before{background:linear-gradient(var(--acc),var(--acc2))}
+.scene-card.active{border-color:rgba(255,87,34,.3);background:rgba(255,87,34,.04)}
+.scene-card:hover{border-color:#333}
+.sc-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sc-num{width:24px;height:24px;border-radius:6px;background:var(--acc);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sc-title{font-size:13px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sc-del{background:none;border:none;color:var(--txt2);cursor:pointer;padding:2px 6px;border-radius:4px;font-size:13px;transition:all .15s;flex-shrink:0}
+.sc-del:hover{color:#f44336;background:rgba(244,67,54,.1)}
+.sc-desc{font-size:11px;color:var(--txt2);line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.sc-status{display:flex;align-items:center;gap:6px;margin-top:8px}
+.sc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sc-dot.ready{background:#4caf50}
+.sc-dot.loading{background:#ff9800;animation:pulse .8s infinite}
+.sc-dot.error{background:#f44336}
+.sc-dot.idle{background:var(--bdr)}
+.sc-dot-txt{font-size:10px;color:var(--txt2)}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 
-/* Preview */
-.parea{position:sticky;top:18px}
-.pbox{background:#000;border-radius:12px;overflow:hidden;border:2px solid var(--bdr);margin-bottom:14px;aspect-ratio:9/16;max-height:600px;width:100%;display:flex;align-items:center;justify-content:center}
-#pcanv{width:100%;height:100%;object-fit:contain;display:block}
-.pctrl{display:flex;gap:8px;margin-bottom:10px}
-.pb{flex:1;padding:11px;border-radius:8px;border:1px solid var(--bdr);background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-family:var(--fu);font-size:14px;transition:all .2s}
-.pb:hover{background:rgba(255,255,255,.12)}
-.rbtn{width:100%;padding:15px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--c1),var(--c2));color:#1a0a00;font-family:var(--ft);font-size:22px;letter-spacing:2px;cursor:pointer;transition:all .2s}
-.rbtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,53,.4)}
-.rbtn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-#rp{margin-top:14px;display:none}
-.pt{height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin:8px 0}
-.pf{height:100%;background:linear-gradient(90deg,var(--c3),var(--c4));transition:width .2s;border-radius:4px}
-.ptxt{font-size:12px;color:rgba(255,255,255,.55);text-align:center}
-#da{display:none;margin-top:14px;text-align:center}
-.dl{display:inline-block;padding:14px 30px;border-radius:10px;background:linear-gradient(135deg,var(--c3),var(--c4));color:#fff;font-family:var(--ft);font-size:20px;letter-spacing:2px;text-decoration:none}
+.add-btn{width:100%;padding:10px;background:none;border:1px dashed var(--bdr);color:var(--acc);font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border-radius:8px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.add-btn:hover{border-color:var(--acc);background:rgba(255,87,34,.05)}
+
+/* ── MAIN AREA ── */
+.preview-row{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+@media(max-width:1200px){.preview-row{grid-template-columns:1fr}}
+
+.phone-wrap{position:sticky;top:24px}
+.phone{width:240px;background:#000;border-radius:22px;overflow:hidden;border:3px solid #222;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 0 1px #333;position:relative}
+.phone::before{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:60px;height:5px;background:#1a1a1a;border-radius:3px;z-index:10}
+#preview-canvas{width:240px;height:426px;display:block;background:#000}
+
+.phone-ctrls{display:flex;gap:8px;margin-top:12px}
+.pctrl{flex:1;padding:8px;border-radius:8px;border:1px solid var(--bdr);background:var(--card);color:var(--txt);cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;transition:all .2s}
+.pctrl:hover{background:var(--card2);border-color:#444}
+.pctrl.primary{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent;color:#fff}
+.pctrl.primary:hover{filter:brightness(1.1)}
+
+.gen-panel{flex:1}
+.gen-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:var(--acc);margin-bottom:4px}
+.gen-sub{font-size:12px;color:var(--txt2);margin-bottom:16px}
+
+/* ── SCENE EDITOR ── */
+.sce-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;margin-bottom:16px}
+.sce-card h4{font-size:13px;font-weight:700;color:var(--acc2);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+
+/* ── IMAGE GRID ── */
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+.img-cell{aspect-ratio:9/16;border-radius:10px;overflow:hidden;border:2px solid var(--bdr);position:relative;cursor:pointer;transition:all .2s;background:#0d0f18}
+.img-cell.selected{border-color:var(--acc);box-shadow:0 0 0 2px rgba(255,87,34,.3)}
+.img-cell img{width:100%;height:100%;object-fit:cover;display:block}
+.img-cell .img-loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-size:11px;color:var(--txt2)}
+.spin{width:28px;height:28px;border:3px solid var(--bdr);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.img-cell .img-overlay{position:absolute;bottom:0;left:0;right:0;padding:6px 8px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-size:10px;color:#fff;font-weight:600}
+.img-cell .img-select{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:10px;opacity:0;transition:.2s}
+.img-cell.selected .img-select{opacity:1}
+
+/* ── BUTTONS ── */
+.btn{padding:10px 20px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:7px}
+.btn-pri{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
+.btn-pri:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-pri:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-sec{background:var(--card2);border:1px solid var(--bdr);color:var(--txt)}
+.btn-sec:hover{background:#252836}
+.btn-green{background:linear-gradient(135deg,#43a047,#66bb6a);color:#fff}
+.btn-green:hover{filter:brightness(1.1)}
+.btn-full{width:100%;justify-content:center;padding:14px}
+
+/* ── STORY BUILDER ── */
+.story-box{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:20px;margin-bottom:16px}
+.genre-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.genre-btn{padding:10px 6px;border-radius:8px;border:2px solid var(--bdr);background:var(--card2);color:var(--txt2);cursor:pointer;font-size:12px;font-weight:600;text-align:center;transition:all .2s;font-family:'Inter',sans-serif}
+.genre-btn.on{border-color:var(--acc);color:var(--acc);background:rgba(255,87,34,.08)}
+.genre-btn:hover{border-color:#444}
+
+/* ── RENDER ── */
+.render-box{background:var(--card);border:1px solid var(--bdr);border-radius:var(--r);padding:20px}
+.prog-bar{height:6px;background:var(--bdr);border-radius:3px;overflow:hidden;margin:10px 0}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:3px;transition:width .3s}
+.prog-txt{font-size:11px;color:var(--txt2);text-align:center}
+.dl-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;background:linear-gradient(135deg,#43a047,#66bb6a);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;text-decoration:none;margin-top:12px}
+.dl-btn:hover{filter:brightness(1.1)}
+
+/* ── CAPTION STYLE ── */
+.cap-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cap-opt{padding:8px;border-radius:8px;border:2px solid var(--bdr);background:var(--card2);cursor:pointer;text-align:center;font-size:11px;font-weight:600;transition:all .2s;font-family:'Inter',sans-serif;color:var(--txt2)}
+.cap-opt.on{border-color:var(--blue);color:var(--blue);background:rgba(33,150,243,.08)}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#2a2d3a;border-radius:3px}::-webkit-scrollbar-thumb:hover{background:#3a3d4a}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;background:#252836;border:1px solid var(--bdr);border-radius:10px;padding:12px 18px;font-size:13px;z-index:1000;display:none;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ── ASPECT RATIO TOGGLE ── */
+.ar-row{display:flex;gap:8px;margin-bottom:12px}
+.ar-btn{flex:1;padding:8px;border-radius:7px;border:1px solid var(--bdr);background:var(--card2);color:var(--txt2);cursor:pointer;font-size:12px;font-weight:600;transition:all .2s;font-family:'Inter',sans-serif}
+.ar-btn.on{border-color:var(--acc);color:var(--acc);background:rgba(255,87,34,.08)}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:40px 20px;color:var(--txt2)}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.empty p{font-size:13px;line-height:1.6}
+
+/* ── EFFECT BADGE ── */
+.fx-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.fx-b{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--bdr);background:var(--card2);color:var(--txt2);transition:all .2s;font-family:'Inter',sans-serif}
+.fx-b.on{background:rgba(33,150,243,.15);border-color:var(--blue);color:var(--blue)}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="title">🎬 JOURNEY VIDEO MAKER</div>
-  <div class="sub">Create Motu &amp; Patlu style cartoon journey videos in your browser</div>
-  <div class="badges">
-    <span class="badge">🎨 Cartoon Characters</span>
+<header class="hdr">
+  <div>
+    <div class="logo">🎬 PIXAR STORY MAKER</div>
+    <div class="hdr-sub">AI-generated 3D cartoon videos for TikTok & Reels</div>
+  </div>
+  <div class="hdr-right">
+    <span class="badge">✨ AI Powered</span>
+    <span class="badge">🎭 Pixar Style</span>
     <span class="badge">📱 9:16 Vertical</span>
-    <span class="badge">⚡ No Install</span>
-    <span class="badge">🏍️ Moto Journey Style</span>
-    <span class="badge">🆓 100% Free</span>
   </div>
 </header>
 
-<div class="tabs">
-  <button class="tab on"  onclick="showTab('readme',this)">📖 README</button>
-  <button class="tab"     onclick="showTab('studio',this)">🎬 Studio</button>
-  <button class="tab"     onclick="showTab('gallery',this)">🗂 Gallery</button>
-</div>
+<div class="wrap">
+  <!-- ═══ SIDEBAR ═══ -->
+  <div class="sidebar">
 
-<!-- README (shown first) -->
-<div class="panel on" id="readme-panel">
-<div class="rm">
-
-<h1>🎬 Journey Video Maker</h1>
-<p>Create <strong>TikTok / Reels-style cartoon journey videos</strong> right in your browser — no software, no account. Inspired by adventure creators like <em>Motu Patlu Journey</em> 🏍️</p>
-
-<button class="go-btn" onclick="showTab('studio',document.querySelectorAll('.tab')[1]);document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('on',i===1)})">🎬 OPEN STUDIO →</button>
-
-<h2>🚀 Quick Start (30 seconds)</h2>
-<ol>
-  <li>Click <strong>🎬 OPEN STUDIO</strong> above</li>
-  <li>Type your video title &amp; handle</li>
-  <li>Pick a cartoon theme (🏍️ Moto is the Motu Patlu style)</li>
-  <li>Add scenes — each scene gets a caption + location</li>
-  <li>Click <strong>▶ Animate</strong> to preview</li>
-  <li>Click <strong>🎬 RENDER VIDEO</strong> to create your WebM video</li>
-  <li>Download and post to TikTok / Reels!</li>
-</ol>
-
-<h2>🎨 Cartoon Features</h2>
-<table>
-  <tr><th>Feature</th><th>Details</th></tr>
-  <tr><td>🧑 Fat Cartoon Biker</td><td>Big round body, huge head — true Motu Patlu proportions, bounces as he rides</td></tr>
-  <tr><td>🏍️ Cartoon Motorcycle</td><td>Round tyres, spinning spokes, smoke puffs, headlight glow</td></tr>
-  <tr><td>💬 Speech Bubbles</td><td>Auto dialogue from your captions pops above the character</td></tr>
-  <tr><td>🌄 Cartoon Backgrounds</td><td>Hand-drawn style sky, hills, road, clouds, sun/moon</td></tr>
-  <tr><td>✨ Animated Effects</td><td>Speed lines, star bursts, wheel spin, bounce physics</td></tr>
-  <tr><td>📊 Stats Card</td><td>Final trophy card with your trip numbers</td></tr>
-  <tr><td>🎞️ Smooth Animation</td><td>24 FPS, 3.5s per slide, rendered frame-by-frame</td></tr>
-</table>
-
-<h2>🎨 Themes</h2>
-<table>
-  <tr><th>Theme</th><th>Style</th><th>Best for</th></tr>
-  <tr><td>🏍️ Moto</td><td>Orange/yellow sunset, Motu Patlu character colours</td><td>Motorcycle journeys</td></tr>
-  <tr><td>🌙 Night Ride</td><td>Deep purple sky, neon city lights, moon glow</td><td>Night adventures</td></tr>
-  <tr><td>🌿 Jungle</td><td>Green canopy, tropical sun, lush scenery</td><td>Forest routes</td></tr>
-  <tr><td>🏜️ Desert</td><td>Sandy dunes, blazing sun, cactus silhouettes</td><td>Arid region rides</td></tr>
-  <tr><td>🌊 Ocean</td><td>Deep blue sky, coastal road, crashing waves</td><td>Coastal journeys</td></tr>
-  <tr><td>🕹️ Retro</td><td>8-bit pixel art style, neon colours, scanlines</td><td>Nostalgic feel</td></tr>
-</table>
-
-<h2>📹 Output Format</h2>
-<p>Videos are exported as <strong>WebM (VP9)</strong> — the best web video format. TikTok, Instagram Reels, YouTube Shorts all accept WebM. You can also convert to MP4 using <a href="https://cloudconvert.com/webm-to-mp4" target="_blank">cloudconvert.com</a> for free.</p>
-
-<h2>🌐 Deploy on GitHub Pages (Free)</h2>
-<pre><code># 1. Create a new GitHub repo called "journey-video-maker"
-# 2. Upload this index.html file
-# 3. Go to Settings → Pages → Source: main / root
-# Your app is live at:
-https://YOUR_USERNAME.github.io/journey-video-maker</code></pre>
-
-<h2>📲 Works on Mobile</h2>
-<p>Open in Chrome or Safari on Android/iPhone. Preview and edit scenes on your phone. Rendering may be slow on older devices — use a PC for best results.</p>
-
-<h2>🛠️ Tech Stack</h2>
-<ul>
-  <li><strong>HTML5 Canvas API</strong> — all cartoon drawing (no external libraries)</li>
-  <li><strong>MediaRecorder API</strong> — captures canvas frames as video</li>
-  <li><strong>Zero dependencies</strong> — single HTML file, works offline after first load</li>
-</ul>
-
-<h2>🏍️ About the Motu Patlu Style</h2>
-<p>The default cartoon character is drawn in the <em>Motu Patlu</em> style — a popular Indian cartoon known for its fat, round characters with huge heads, simple expressions, and colourful outfits. The biker character bounces rhythmically, has a big grin, and rides a chunky cartoon motorcycle with spinning wheels.</p>
-
-<button class="go-btn" onclick="showTab('studio',document.querySelectorAll('.tab')[1]);document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('on',i===1)})">🚀 START MAKING VIDEOS →</button>
-
-</div>
-</div>
-
-<!-- STUDIO -->
-<div class="panel" id="studio-panel">
-<div class="studio">
-  <div>
-    <div class="card">
-      <h3>🎭 VIDEO INFO</h3>
-      <div class="row"><label>Video Title</label><input id="vtitle" value="MY MOTO JOURNEY" placeholder="Your journey title"/></div>
-      <div class="row"><label>Subtitle</label><input id="vsub" value="2,000 KM ACROSS EAST AFRICA" placeholder="Short tagline"/></div>
-      <div class="row"><label>Your Handle</label><input id="vhand" value="@YourHandle" placeholder="@username"/></div>
+    <!-- Story Setup -->
+    <div class="sec">
+      <div class="sec-title">Story Setup</div>
+      <div class="field"><label>Story Title</label><input id="s-title" value="THE CHECKPOINT" placeholder="Your story title"/></div>
+      <div class="field"><label>Creator Handle</label><input id="s-handle" value="@cartoonworld" placeholder="@yourhandle"/></div>
+      <div class="field">
+        <label>Story Genre</label>
+        <div class="genre-grid" id="genre-grid">
+          <button class="genre-btn on" data-g="comedy">😂 Comedy</button>
+          <button class="genre-btn" data-g="action">💥 Action</button>
+          <button class="genre-btn" data-g="drama">🎭 Drama</button>
+          <button class="genre-btn" data-g="adventure">🗺️ Adventure</button>
+          <button class="genre-btn" data-g="romance">💕 Romance</button>
+          <button class="genre-btn" data-g="mystery">🔍 Mystery</button>
+        </div>
+      </div>
+      <div class="field"><label>Character Style</label>
+        <select id="s-char">
+          <option value="fat cartoon police officer with big round belly and black hair, Pixar 3D style">👮 Chubby Police Officer</option>
+          <option value="cartoon family man with mustache and colorful shirt, Pixar 3D style">👨‍👩‍👧 Family Man</option>
+          <option value="cartoon superhero with cape and big muscles, Pixar 3D style">🦸 Superhero</option>
+          <option value="cartoon chef with tall white hat and apron, Pixar 3D style">👨‍🍳 Chef</option>
+          <option value="cartoon soldier with helmet and uniform, Pixar 3D style">🪖 Soldier</option>
+          <option value="cartoon businessman in suit, Pixar 3D style">👔 Businessman</option>
+        </select>
+      </div>
+      <div class="field"><label>Setting / Location</label>
+        <select id="s-setting">
+          <option value="desert highway with cars">🏜️ Desert Highway</option>
+          <option value="city streets at night with neon lights">🌃 City Night</option>
+          <option value="tropical beach road">🏖️ Tropical Beach</option>
+          <option value="African savanna landscape">🌍 African Savanna</option>
+          <option value="busy market street in Africa">🏪 African Market</option>
+          <option value="mountain road with scenic views">⛰️ Mountain Road</option>
+          <option value="small town in Kenya">🇰🇪 Kenyan Town</option>
+        </select>
+      </div>
+      <div class="field"><label>Your Story Idea (or leave blank for AI)</label>
+        <textarea id="s-idea" placeholder="e.g. Police officer stops car, finds bananas inside, everyone laughs..."></textarea>
+      </div>
+      <button class="btn btn-pri btn-full" id="gen-story-btn" onclick="generateStory()">
+        <span id="gen-story-icon">✨</span> Generate Story with AI
+      </button>
     </div>
 
-    <div class="card">
-      <h3>🎨 THEME</h3>
-      <div class="tg" id="tgrid">
-        <div class="ts on" data-t="moto"    style="background:linear-gradient(135deg,#ff6b35,#ffd23f)">🏍️ Moto</div>
-        <div class="ts"    data-t="night"   style="background:linear-gradient(135deg,#1a0533,#5a0a9a)">🌙 Night</div>
-        <div class="ts"    data-t="jungle"  style="background:linear-gradient(135deg,#1a5c1a,#8bc34a)">🌿 Jungle</div>
-        <div class="ts"    data-t="desert"  style="background:linear-gradient(135deg,#c27a1a,#f5c842)">🏜️ Desert</div>
-        <div class="ts"    data-t="ocean"   style="background:linear-gradient(135deg,#0a3a6a,#00ccff)">🌊 Ocean</div>
-        <div class="ts"    data-t="retro"   style="background:linear-gradient(135deg,#3a1a5c,#ff2299)">🕹️ Retro</div>
+    <!-- Scenes -->
+    <div class="sec" style="flex:1">
+      <div class="sec-title">Scenes <span style="color:var(--txt);margin-left:4px" id="scene-count">(0)</span></div>
+      <div class="scene-list" id="scene-list">
+        <div class="empty"><div class="empty-icon">🎭</div><p>Generate a story above or add scenes manually to begin</p></div>
+      </div>
+      <button class="add-btn" onclick="addScene()">+ Add Scene</button>
+    </div>
+
+    <!-- Video Settings -->
+    <div class="sec">
+      <div class="sec-title">Video Settings</div>
+      <div class="field"><label>Caption Style</label>
+        <div class="cap-opts">
+          <button class="cap-opt on" data-c="bottom" onclick="selectCap(this)">Bottom Bar</button>
+          <button class="cap-opt" data-c="center" onclick="selectCap(this)">Centered</button>
+          <button class="cap-opt" data-c="none" onclick="selectCap(this)">None</button>
+        </div>
+      </div>
+      <div class="field"><label>Scene Duration</label>
+        <select id="scene-dur">
+          <option value="3">3 seconds (Fast)</option>
+          <option value="4" selected>4 seconds (Normal)</option>
+          <option value="5">5 seconds (Slow)</option>
+          <option value="6">6 seconds (Cinematic)</option>
+        </select>
+      </div>
+      <div class="field"><label>Camera Effects</label>
+        <div class="fx-badges">
+          <button class="fx-b on" data-fx="zoom" onclick="toggleFx(this)">🔍 Ken Burns</button>
+          <button class="fx-b on" data-fx="pan" onclick="toggleFx(this)">↔ Pan</button>
+          <button class="fx-b on" data-fx="captions" onclick="toggleFx(this)">💬 Captions</button>
+          <button class="fx-b" data-fx="vignette" onclick="toggleFx(this)">🌑 Vignette</button>
+          <button class="fx-b on" data-fx="handle" onclick="toggleFx(this)">🏷 Handle</button>
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <h3>📍 SCENES</h3>
-      <div id="slist"></div>
-      <button class="add" onclick="addScene()">+ ADD SCENE</button>
-    </div>
-
-    <div class="card">
-      <h3>📊 TRIP STATS</h3>
-      <div class="row"><label>Total Distance</label><input id="sdist" value="2,048 km"/></div>
-      <div class="row"><label>Days on Road</label><input id="sdays" value="5 days"/></div>
-      <div class="row"><label>Best Moment</label><input id="smem"  value="Sunrise at the peak"/></div>
-      <div class="row"><label>Fuel Stops</label><input id="sfuel" value="18 stops"/></div>
-      <div class="row"><label>Extra Stat</label><input id="sextra" value="0 regrets 😄"/></div>
-    </div>
   </div>
 
-  <div class="parea">
-    <div class="pbox"><canvas id="pcanv" width="540" height="960"></canvas></div>
-    <div class="pctrl">
-      <button class="pb" onclick="prevSc()">◀ Prev</button>
-      <button class="pb" onclick="nextSc()">Next ▶</button>
-      <button class="pb" id="abtn" onclick="startAnim()">▶ Animate</button>
+  <!-- ═══ MAIN ═══ -->
+  <div class="main">
+
+    <!-- Top row: phone preview + controls -->
+    <div class="preview-row">
+      <div class="phone-wrap">
+        <div class="phone">
+          <canvas id="preview-canvas" width="540" height="960"></canvas>
+        </div>
+        <div class="phone-ctrls">
+          <button class="pctrl" onclick="prevScene()">◀</button>
+          <button class="pctrl primary" id="anim-btn" onclick="toggleAnim()">▶ Play</button>
+          <button class="pctrl" onclick="nextScene()">▶</button>
+        </div>
+        <div style="text-align:center;margin-top:8px;font-size:11px;color:var(--txt2)" id="scene-indicator">Scene 0 / 0</div>
+      </div>
+
+      <div class="gen-panel">
+        <!-- Scene Image Generator -->
+        <div class="sce-card" id="scene-editor">
+          <h4>🖼 Scene Image Generator</h4>
+          <div id="no-scene-msg" style="color:var(--txt2);font-size:13px;padding:20px 0">Select a scene from the sidebar to generate images</div>
+          <div id="scene-edit-content" style="display:none">
+            <div class="field"><label>Scene Caption</label><input id="edit-cap" placeholder="What happens in this scene?"/></div>
+            <div class="field"><label>Image Prompt</label><textarea id="edit-prompt" placeholder="Detailed description for image generation..."></textarea></div>
+            <div style="display:flex;gap:8px;margin-bottom:14px">
+              <button class="btn btn-pri" onclick="generateImages()" id="gen-img-btn"><span>🎨</span> Generate 4 Images</button>
+              <button class="btn btn-sec" onclick="regenerateImages()">🔄 Re-roll</button>
+            </div>
+            <!-- Image options -->
+            <div class="img-grid" id="img-grid">
+              <div style="color:var(--txt2);font-size:12px;grid-column:1/-1;padding:20px;text-align:center">Click "Generate Images" to create AI visuals for this scene</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Render Section -->
+        <div class="render-box">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;margin-bottom:4px">🎬 Render Video</div>
+          <div style="font-size:12px;color:var(--txt2);margin-bottom:14px">Generate all images, then render your final video. Uses Ken Burns animation + captions.</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-pri" onclick="generateAllImages()" id="gen-all-btn">
+              <span>🖼</span> Generate All Scene Images
+            </button>
+            <button class="btn btn-green" onclick="renderVideo()" id="render-btn">
+              <span>🎬</span> Render Video
+            </button>
+          </div>
+          <div id="render-progress" style="display:none;margin-top:12px">
+            <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+            <div class="prog-txt" id="prog-txt">Preparing...</div>
+          </div>
+          <div id="download-area" style="display:none;margin-top:14px;text-align:center">
+            <div style="color:var(--acc3);font-weight:700;margin-bottom:8px;font-size:14px">✅ Video Ready!</div>
+            <a id="dl-link" class="dl-btn" download="story.webm">⬇ DOWNLOAD VIDEO</a>
+            <div style="font-size:11px;color:var(--txt2);margin-top:8px">WebM format · Compatible with TikTok, Reels, YouTube Shorts</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <button class="rbtn" id="rbtn" onclick="renderVid()">🎬 RENDER VIDEO</button>
-    <div id="rp">
-      <div class="pt"><div class="pf" id="pfill" style="width:0%"></div></div>
-      <div class="ptxt" id="ptxt">Rendering...</div>
-    </div>
-    <div id="da">
-      <p style="font-family:var(--fu);margin-bottom:12px;color:var(--c3)">✅ Video Ready!</p>
-      <a id="dlnk" class="dl" download="journey.webm">⬇ DOWNLOAD VIDEO</a>
-    </div>
+
   </div>
-</div>
 </div>
 
-<!-- GALLERY -->
-<div class="panel" id="gallery-panel">
-  <h2 style="font-family:var(--ft);font-size:36px;color:var(--c2);margin-bottom:6px">YOUR VIDEOS</h2>
-  <p style="color:rgba(255,255,255,.4);margin-bottom:20px">Videos you render appear here</p>
-  <div id="ggrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">
-    <div id="gplaceholder" style="color:rgba(255,255,255,.25);font-family:var(--fu);padding:40px;text-align:center;border:1px dashed var(--bdr);border-radius:12px;grid-column:1/-1">
-      🎬 No videos yet — go to Studio and render one!
-    </div>
-  </div>
-</div>
+<div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════════════════
-//   JOURNEY VIDEO MAKER — Motu Patlu Cartoon Engine
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+//  PIXAR STORY VIDEO MAKER — AI-Powered Engine
+// ═══════════════════════════════════════════════════════════
 
 const W=540,H=960;
-const canvas=document.getElementById('pcanv');
+const canvas=document.getElementById('preview-canvas');
 const ctx=canvas.getContext('2d');
 
-// ── Default scenes ─────────────────────────────────────
-let scenes=[
-  {cap:'Day 1 — Left home at dawn! 🌅',loc:'Nairobi, Kenya',  emo:'🌅'},
-  {cap:'Rift Valley — breathtaking!',   loc:'Naivasha',         emo:'⛰️'},
-  {cap:'Roadside chai break ☕',         loc:'Nakuru',           emo:'☕'},
-  {cap:'Sunset at the lake 🌊',          loc:'Lake Nakuru',      emo:'🌊'},
-  {cap:'Day 4 — Almost there! 💪',      loc:'Mombasa Road',     emo:'🏁'},
-  {cap:'MADE IT! 2,048 km done! 🏆',    loc:'Mombasa',          emo:'🏆'},
-];
-let curSc=0, curTheme='moto', animTmr=null, previewFN=0;
+let scenes=[];
+let curScene=-1;
+let curGenre='comedy';
+let capStyle='bottom';
+let fxFlags={zoom:true,pan:true,captions:true,vignette:false,handle:true};
+let animTimer=null;
+let animFrame=0;
+let previewImages={};// sceneIdx -> selected image URL
 
-// ── Themes ──────────────────────────────────────────────
-const TH={
-  moto:  {s1:'#ff7a20',s2:'#ffd060',s3:'#c88028',gnd:'#d4a030',rd:'#504438',cl:'rgba(255,250,210,.88)',body:'#ff5522',shirt:'#ffd23f',skin:'#ffcc88',helmet:'#ff3300',bike:'#cc3300',wheel:'#1a1a1a',acc:'#ff3300',txt:'#1a0800'},
-  night: {s1:'#100228',s2:'#280850',s3:'#0d0d1a',gnd:'#0a0a18',rd:'#1a1a28',cl:'rgba(80,30,120,.6)',body:'#8844ff',shirt:'#dd44ff',skin:'#cc9966',helmet:'#550088',bike:'#440066',wheel:'#111',acc:'#ff44ff',txt:'#fff'},
-  jungle:{s1:'#0e3a12',s2:'#4a8a22',s3:'#1a4a10',gnd:'#224410',rd:'#2a1e10',cl:'rgba(200,255,180,.55)',body:'#228822',shirt:'#88cc22',skin:'#ddaa66',helmet:'#116611',bike:'#1a5a18',wheel:'#111',acc:'#44ff22',txt:'#fff'},
-  desert:{s1:'#b06010',s2:'#e8b820',s3:'#c89040',gnd:'#c09030',rd:'#80601a',cl:'rgba(255,240,190,.7)',body:'#cc6600',shirt:'#ffcc00',skin:'#e8aa66',helmet:'#993300',bike:'#884422',wheel:'#1a1a1a',acc:'#ff6600',txt:'#1a0800'},
-  ocean: {s1:'#082848',s2:'#0096cc',s3:'#004466',gnd:'#005577',rd:'#003344',cl:'rgba(200,240,255,.8)',body:'#0066cc',shirt:'#00ddff',skin:'#ddbb88',helmet:'#004499',bike:'#002266',wheel:'#111',acc:'#00ffff',txt:'#fff'},
-  retro: {s1:'#2a0a50',s2:'#cc0088',s3:'#150828',gnd:'#100820',rd:'#1a0030',cl:'rgba(255,80,220,.5)',body:'#ff00ff',shirt:'#ffff00',skin:'#ffbb88',helmet:'#8800ff',bike:'#440088',wheel:'#111',acc:'#00ffff',txt:'#fff'},
-};
+// ── Genre selection ──────────────────────────────────────
+document.querySelectorAll('.genre-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.genre-btn').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');curGenre=b.dataset.g;
+  });
+});
+function selectCap(el){document.querySelectorAll('.cap-opt').forEach(x=>x.classList.remove('on'));el.classList.add('on');capStyle=el.dataset.c;}
+function toggleFx(el){el.classList.toggle('on');fxFlags[el.dataset.fx]=el.classList.contains('on');}
 
-// ── Helpers ─────────────────────────────────────────────
-function rrect(c,x,y,w,h,r,fill,stroke){
+// ── Toast ────────────────────────────────────────────────
+function toast(msg,dur=2500){
+  const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
+  clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',dur);
+}
+
+// ── Scene management ─────────────────────────────────────
+function addScene(cap='New scene',prompt='',img=null){
+  const s={cap,prompt,imgs:[],selectedImg:img,status:'idle'};
+  scenes.push(s);renderSceneList();updateSceneCount();
+  selectScene(scenes.length-1);
+}
+function delScene(i){scenes.splice(i,1);if(curScene>=scenes.length)curScene=scenes.length-1;renderSceneList();updateSceneCount();if(curScene>=0)selectScene(curScene);}
+function selectScene(i){
+  curScene=i;renderSceneList();
+  const s=scenes[i];
+  document.getElementById('no-scene-msg').style.display='none';
+  document.getElementById('scene-edit-content').style.display='block';
+  document.getElementById('edit-cap').value=s.cap||'';
+  document.getElementById('edit-prompt').value=s.prompt||'';
+  renderImgGrid(i);
+  drawScenePreview(i,0);
+}
+function updateSceneCount(){document.getElementById('scene-count').textContent=`(${scenes.length})`;document.getElementById('scene-indicator').textContent=`Scene ${Math.max(0,curScene+1)} / ${scenes.length}`;}
+function renderSceneList(){
+  const list=document.getElementById('scene-list');
+  if(!scenes.length){list.innerHTML='<div class="empty"><div class="empty-icon">🎭</div><p>Generate a story above or add scenes manually to begin</p></div>';return;}
+  list.innerHTML='';
+  scenes.forEach((s,i)=>{
+    const el=document.createElement('div');el.className='scene-card'+(curScene===i?' active':'');
+    const statusDot={idle:'idle',loading:'loading',ready:'ready',error:'error'}[s.status]||'idle';
+    const statusTxt={idle:'No image yet',loading:'Generating...',ready:`${s.imgs.length} image${s.imgs.length>1?'s':''} ready`,error:'Error generating'}[s.status]||'';
+    el.innerHTML=`<div class="sc-head"><div class="sc-num">${i+1}</div><div class="sc-title">${s.cap||'(empty)'}</div><button class="sc-del" onclick="event.stopPropagation();delScene(${i})">✕</button></div><div class="sc-desc">${s.prompt||'No prompt set'}</div><div class="sc-status"><div class="sc-dot ${statusDot}"></div><span class="sc-dot-txt">${statusTxt}</span></div>`;
+    el.addEventListener('click',()=>selectScene(i));
+    list.appendChild(el);
+  });
+}
+function renderImgGrid(idx){
+  const s=scenes[idx];const grid=document.getElementById('img-grid');grid.innerHTML='';
+  if(!s.imgs.length){grid.innerHTML='<div style="color:var(--txt2);font-size:12px;grid-column:1/-1;padding:20px;text-align:center">Click "Generate Images" to create AI visuals for this scene</div>';return;}
+  s.imgs.forEach((url,ii)=>{
+    const cell=document.createElement('div');cell.className='img-cell'+(s.selectedImg===url?' selected':'');
+    if(url==='loading'){cell.innerHTML='<div class="img-loader"><div class="spin"></div>Generating...</div>';}
+    else if(url.startsWith('error:')){cell.innerHTML='<div class="img-loader"><div style="font-size:20px">⚠️</div><div style="color:#f44336;font-size:10px">Failed</div></div>';}
+    else{
+      const img=document.createElement('img');img.src=url;img.alt='scene';
+      img.onerror=()=>{cell.innerHTML='<div class="img-loader"><div style="font-size:20px">⚠️</div><div style="color:#f44336;font-size:10px">Load error</div></div>';};
+      cell.appendChild(img);
+      const sel=document.createElement('div');sel.className='img-select';sel.textContent='✓';cell.appendChild(sel);
+      cell.addEventListener('click',()=>{s.selectedImg=url;previewImages[idx]=url;renderImgGrid(idx);drawScenePreview(idx,0);});
+    }
+    grid.appendChild(cell);
+  });
+}
+
+// ── Image Generation via Pollinations ───────────────────
+function buildPrompt(scene,charStyle,setting,genre){
+  const base=scene.prompt||scene.cap;
+  const style='Pixar 3D animation style, high quality render, cinematic lighting, photorealistic texture, 9:16 vertical composition, dramatic shot';
+  const genreStyle={comedy:'funny expression, exaggerated emotion',action:'dynamic action pose, motion blur',drama:'emotional facial expression, moody lighting',adventure:'epic wide shot, golden hour',romance:'warm soft lighting, beautiful bokeh',mystery:'dark atmospheric lighting, shadows'}[genre]||'';
+  return `${base}, ${charStyle}, ${setting}, ${genreStyle}, ${style}`;
+}
+
+async function loadImage(url){
+  return new Promise((res,rej)=>{
+    const img=new Image();img.crossOrigin='anonymous';
+    img.onload=()=>res(img);img.onerror=()=>rej(new Error('load fail'));
+    img.src=url;setTimeout(()=>rej(new Error('timeout')),30000);
+  });
+}
+
+async function generateImages(){
+  if(curScene<0)return;
+  const s=scenes[curScene];
+  s.cap=document.getElementById('edit-cap').value;
+  s.prompt=document.getElementById('edit-prompt').value;
+  if(!s.prompt&&!s.cap){toast('⚠️ Enter a prompt or caption first');return;}
+  const char=document.getElementById('s-char').value;
+  const setting=document.getElementById('s-setting').value;
+  const fullPrompt=buildPrompt(s,char,setting,curGenre);
+  s.status='loading';s.imgs=['loading','loading','loading','loading'];
+  renderSceneList();renderImgGrid(curScene);
+  const seeds=[Math.random()*99999|0,Math.random()*99999|0,Math.random()*99999|0,Math.random()*99999|0];
+  const promises=seeds.map(async(seed,ii)=>{
+    const enc=encodeURIComponent(fullPrompt);
+    const url=`https://image.pollinations.ai/prompt/${enc}?width=540&height=960&seed=${seed}&model=flux&nologo=true&enhance=true`;
+    try{
+      await loadImage(url);
+      s.imgs[ii]=url;if(!s.selectedImg){s.selectedImg=url;previewImages[curScene]=url;}
+    }catch(e){s.imgs[ii]='error:'+e.message;}
+    renderImgGrid(curScene);
+  });
+  await Promise.all(promises);
+  s.status=s.imgs.some(u=>!u.startsWith('error:')&&u!=='loading')?'ready':'error';
+  renderSceneList();toast('✅ Images generated!');
+}
+
+async function regenerateImages(){
+  if(curScene<0)return;
+  scenes[curScene].imgs=[];scenes[curScene].selectedImg=null;delete previewImages[curScene];
+  await generateImages();
+}
+
+async function generateAllImages(){
+  const btn=document.getElementById('gen-all-btn');btn.disabled=true;btn.innerHTML='⏳ Generating...';
+  for(let i=0;i<scenes.length;i++){
+    curScene=i;selectScene(i);
+    toast(`🎨 Generating scene ${i+1}/${scenes.length}...`,4000);
+    await generateImages();
+    await new Promise(r=>setTimeout(r,500));
+  }
+  btn.disabled=false;btn.innerHTML='<span>🖼</span> Generate All Scene Images';
+  toast(`✅ All ${scenes.length} scenes generated!`,3000);
+}
+
+// ── AI Story Generator ───────────────────────────────────
+async function generateStory(){
+  const btn=document.getElementById('gen-story-btn');
+  const icon=document.getElementById('gen-story-icon');
+  btn.disabled=true;icon.textContent='⏳';
+  const title=document.getElementById('s-title').value||'My Story';
+  const idea=document.getElementById('s-idea').value;
+  const char=document.getElementById('s-char').value;
+  const setting=document.getElementById('s-setting').value;
+  const genre=curGenre;
+  const systemPrompt=`You are a TikTok cartoon video story writer. Create short, engaging stories in the style of popular 3D Pixar-style cartoon TikTok videos. Respond ONLY with valid JSON, no markdown, no explanation.`;
+  const userPrompt=`Create a ${genre} story video script for TikTok. 
+Title: "${title}"
+${idea?`Story idea: ${idea}`:'Come up with a funny/engaging story'}
+Main character: ${char}
+Setting: ${setting}
+Genre: ${genre}
+
+Return JSON with exactly this shape:
+{
+  "title": "Story title",
+  "scenes": [
+    {
+      "cap": "Short caption text shown on video (max 12 words, punchy)",
+      "prompt": "Detailed visual description for AI image generation - describe exactly what should be seen, camera angle, character action, expression, background details"
+    }
+  ]
+}
+
+Requirements:
+- 5-8 scenes
+- Each scene has a dramatic or funny moment
+- Captions are SHORT and punchy (like TikTok text)
+- Prompts are detailed visual descriptions (50+ words each)
+- Build to a funny/dramatic climax
+- Match the ${genre} genre tone`;
+
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:systemPrompt,
+        messages:[{role:'user',content:userPrompt}]
+      })
+    });
+    const data=await resp.json();
+    let text=data.content?.[0]?.text||'';
+    text=text.replace(/```json|```/g,'').trim();
+    const story=JSON.parse(text);
+    scenes=[];
+    story.scenes.forEach(s=>scenes.push({cap:s.cap,prompt:s.prompt,imgs:[],selectedImg:null,status:'idle'}));
+    renderSceneList();updateSceneCount();
+    if(scenes.length>0)selectScene(0);
+    toast(`✅ Story generated: ${scenes.length} scenes!`);
+  }catch(e){
+    console.error(e);toast('❌ Generation failed. Check your connection.');
+  }
+  btn.disabled=false;icon.textContent='✨';
+}
+
+// ── Canvas Preview ────────────────────────────────────────
+const loadedImgs={};
+async function getImg(url){
+  if(!url)return null;
+  if(loadedImgs[url])return loadedImgs[url];
+  try{const img=await loadImage(url);loadedImgs[url]=img;return img;}
+  catch{return null;}
+}
+
+function drawPreviewFrame(imgEl,cap,frame,totalFrames){
+  ctx.clearRect(0,0,W,H);
+  if(imgEl){
+    ctx.save();
+    // Ken Burns effect
+    if(fxFlags.zoom||fxFlags.pan){
+      const t=frame/Math.max(1,totalFrames-1);
+      const startScale=1.0,endScale=1.08;
+      const sc=startScale+(endScale-startScale)*t;
+      const panX=(fxFlags.pan?t*20-10:0);
+      const panY=0;
+      ctx.translate(W/2+panX,H/2+panY);ctx.scale(sc,sc);ctx.translate(-W/2,-H/2);
+    }
+    // Draw image
+    const iw=imgEl.naturalWidth||imgEl.width,ih=imgEl.naturalHeight||imgEl.height;
+    const scale=Math.max(W/iw,H/ih);
+    const dw=iw*scale,dh=ih*scale;
+    ctx.drawImage(imgEl,(W-dw)/2,(H-dh)/2,dw,dh);
+    ctx.restore();
+    // Vignette
+    if(fxFlags.vignette){
+      const vg=ctx.createRadialGradient(W/2,H/2,H*.2,W/2,H/2,H*.7);
+      vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,.7)');
+      ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+    }
+  }else{
+    // Placeholder
+    const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#1a1228');g.addColorStop(1,'#0a0610');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='rgba(255,255,255,.05)';
+    for(let y=0;y<H;y+=80){ctx.fillRect(0,y,W,1);}
+    ctx.font='48px serif';ctx.textAlign='center';ctx.fillText('🎭',W/2,H/2-20);
+    ctx.font='bold 16px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,.3)';ctx.fillText('No image — generate one',W/2,H/2+30);
+    ctx.textAlign='left';
+  }
+  // Caption
+  if(fxFlags.captions&&cap&&capStyle!=='none'){
+    const alpha=Math.min(1,frame/8);
+    ctx.globalAlpha=alpha;
+    drawCaption(ctx,cap,capStyle);
+    ctx.globalAlpha=1;
+  }
+  // Handle
+  if(fxFlags.handle){
+    const handle=document.getElementById('s-handle').value||'@creator';
+    ctx.font='bold 20px Inter,sans-serif';ctx.textAlign='right';
+    ctx.fillStyle='rgba(255,255,255,.5)';
+    ctx.shadowColor='rgba(0,0,0,.8)';ctx.shadowBlur=6;
+    ctx.fillText(handle,W-16,H-16);ctx.shadowBlur=0;ctx.textAlign='left';
+  }
+  // TikTok-style scene number
+  ctx.font='bold 13px Inter,sans-serif';ctx.textAlign='left';
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.fillText(`#${curScene+1}`,16,32);ctx.textAlign='left';
+}
+
+function drawCaption(c,txt,style){
+  const words=txt.split(' ');const lineH=44;const maxW=W-80;
+  c.font='bold 30px Poppins, sans-serif';
+  // Wrap
+  const lines=[];let cur='';
+  words.forEach(w=>{const t=cur?cur+' '+w:w;if(c.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;});
+  if(cur)lines.push(cur);
+  const totalH=lines.length*lineH+24;
+  let baseY;
+  if(style==='bottom') baseY=H-totalH-60;
+  else baseY=H/2-totalH/2;
+  // Background
+  c.fillStyle='rgba(0,0,0,.72)';
+  const bx=20,bw=W-40;
+  roundRect(c,bx,baseY-12,bw,totalH,12,'rgba(0,0,0,.7)');
+  // Accent bar
+  const ag=c.createLinearGradient(bx,0,bx+bw,0);ag.addColorStop(0,'#ff5722');ag.addColorStop(1,'#ff9800');
+  c.fillStyle=ag;c.fillRect(bx,baseY-12,bw,4);
+  // Text
+  lines.forEach((ln,i)=>{
+    c.shadowColor='rgba(0,0,0,.9)';c.shadowBlur=8;
+    c.fillStyle='#fff';c.textAlign='center';
+    c.fillText(ln,W/2,baseY+i*lineH+30);
+  });
+  c.shadowBlur=0;c.textAlign='left';
+}
+
+function roundRect(c,x,y,w,h,r,fill){
   c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.arcTo(x+w,y,x+w,y+r,r);
   c.lineTo(x+w,y+h-r);c.arcTo(x+w,y+h,x+w-r,y+h,r);c.lineTo(x+r,y+h);
   c.arcTo(x,y+h,x,y+h-r,r);c.lineTo(x,y+r);c.arcTo(x,y,x+r,y,r);c.closePath();
-  if(fill){c.fillStyle=fill;c.fill();}if(stroke){c.strokeStyle=stroke;c.lineWidth=3;c.stroke();}
-}
-function sh(c,col='rgba(0,0,0,.35)',b=8){c.shadowColor=col;c.shadowBlur=b}
-function nsh(c){c.shadowColor='transparent';c.shadowBlur=0}
-
-// ── Background ──────────────────────────────────────────
-function drawBG(c,t,fn){
-  const T=TH[t],ts=fn*.018;
-  // Sky gradient
-  const g=c.createLinearGradient(0,0,0,H*.68);g.addColorStop(0,T.s1);g.addColorStop(1,T.s2);
-  c.fillStyle=g;c.fillRect(0,0,W,H);
-  // Retro scanlines
-  if(t==='retro'){for(let y=0;y<H;y+=4){c.fillStyle='rgba(0,0,0,.18)';c.fillRect(0,y,W,2);}}
-  // Stars
-  if(t==='night'||t==='retro'){for(let i=0;i<100;i++){const sx=(i*157+fn*.4)%W,sy=(i*83)%(H*.5),a=.3+.7*Math.sin(ts+i);c.fillStyle=`rgba(255,255,255,${a})`;c.fillRect(sx,sy,1+(i%2),1+(i%2));}}
-  // Sun or Moon
-  if(t==='moto'||t==='desert'){
-    sh(c,'rgba(255,200,0,.7)',28);c.fillStyle='#fff9b0';c.beginPath();c.arc(W*.75,H*.14,42,0,Math.PI*2);c.fill();
-    c.fillStyle='#ffdd00';c.beginPath();c.arc(W*.75,H*.14,34,0,Math.PI*2);c.fill();nsh(c);
-    c.strokeStyle='rgba(255,200,0,.4)';c.lineWidth=3;
-    for(let r=0;r<8;r++){const a=r*Math.PI/4+ts;c.beginPath();c.moveTo(W*.75+Math.cos(a)*42,H*.14+Math.sin(a)*42);c.lineTo(W*.75+Math.cos(a)*60,H*.14+Math.sin(a)*60);c.stroke();}
-  }
-  if(t==='night'){sh(c,'rgba(200,200,255,.8)',20);c.fillStyle='#fff';c.beginPath();c.arc(W*.8,H*.1,26,0,Math.PI*2);c.fill();c.fillStyle=T.s1;c.beginPath();c.arc(W*.8+10,H*.1-8,20,0,Math.PI*2);c.fill();nsh(c);}
-  if(t==='ocean'){sh(c,'rgba(255,240,200,.6)',20);c.fillStyle='#fffacc';c.beginPath();c.arc(W*.7,H*.12,36,0,Math.PI*2);c.fill();nsh(c);}
-  // Clouds
-  drawCloud(c,T.cl,W*.12+Math.sin(ts*.3)*12,H*.2,88,38);
-  drawCloud(c,T.cl,W*.65+Math.sin(ts*.2)*8, H*.22+12,68,30);
-  if(t!=='night') drawCloud(c,T.cl,W*.42+Math.sin(ts*.4)*6,H*.18-15,52,22);
-  // Hills / mountains
-  c.fillStyle='rgba(0,0,0,.22)';c.beginPath();c.moveTo(0,H*.52);
-  for(let x=0;x<=W;x+=W/10){c.lineTo(x,H*.52-H*.08-Math.sin(x*.014)*H*.07-Math.cos(x*.019)*H*.04);}
-  c.lineTo(W,H*.52);c.closePath();c.fill();
-  // Ground
-  const gg=c.createLinearGradient(0,H*.55,0,H);gg.addColorStop(0,T.gnd);gg.addColorStop(1,t==='night'?'#040408':'#7a5a20');
-  c.fillStyle=gg;c.fillRect(0,H*.55,W,H*.45);
-  // Perspective road
-  const rg=c.createLinearGradient(W/2,H*.55,W/2,H);rg.addColorStop(0,T.rd);rg.addColorStop(1,t==='night'?'#2a2a3a':'#887844');
-  c.fillStyle=rg;c.beginPath();c.moveTo(W*.36,H*.56);c.lineTo(W*.64,H*.56);c.lineTo(W,H);c.lineTo(0,H);c.closePath();c.fill();
-  // Road markings
-  c.strokeStyle='rgba(255,255,255,.3)';c.lineWidth=3;c.setLineDash([28,18]);c.beginPath();c.moveTo(W/2,H*.56);c.lineTo(W/2,H);c.stroke();c.setLineDash([]);
-  c.strokeStyle='rgba(255,255,255,.18)';c.lineWidth=2;
-  c.beginPath();c.moveTo(W*.36,H*.56);c.lineTo(0,H);c.stroke();
-  c.beginPath();c.moveTo(W*.64,H*.56);c.lineTo(W,H);c.stroke();
-  // Jungle trees
-  if(t==='jungle'){drawTree(c,W*.1,H*.52);drawTree(c,W*.88,H*.52);drawTree(c,W*.05,H*.48);}
-  // Ocean waves
-  if(t==='ocean'){c.strokeStyle='rgba(0,200,255,.4)';c.lineWidth=2;for(let i=0;i<3;i++){c.beginPath();c.moveTo(0,H*.58+i*8);for(let x=0;x<=W;x+=30)c.lineTo(x,H*.58+i*8+Math.sin((x+fn*3+i*20)*.04)*4);c.stroke();}}
-  // Desert cacti
-  if(t==='desert'){drawCactus(c,W*.08,H*.53);drawCactus(c,W*.92,H*.53);}
-}
-function drawCloud(c,col,x,y,w,h){c.fillStyle=col;c.beginPath();c.ellipse(x,y,w*.5,h*.5,0,0,Math.PI*2);c.fill();c.beginPath();c.ellipse(x+w*.3,y+h*.1,w*.32,h*.4,0,0,Math.PI*2);c.fill();c.beginPath();c.ellipse(x-w*.3,y+h*.1,w*.28,h*.36,0,0,Math.PI*2);c.fill();}
-function drawTree(c,x,y){c.fillStyle='#1a5c1a';c.beginPath();c.moveTo(x,y-60);c.lineTo(x-25,y);c.lineTo(x+25,y);c.closePath();c.fill();c.beginPath();c.moveTo(x,y-80);c.lineTo(x-20,y-25);c.lineTo(x+20,y-25);c.closePath();c.fill();c.fillStyle='#5a3820';c.fillRect(x-5,y,10,18);}
-function drawCactus(c,x,y){c.fillStyle='#4a8a22';c.fillRect(x-7,y-50,14,50);c.fillRect(x-20,y-30,14,8);c.fillRect(x+6,y-22,14,8);c.fillRect(x-26,y-40,6,20);c.fillRect(x+20,y-32,6,18);}
-
-// ── Motu Patlu style FAT CARTOON BIKER ─────────────────
-function drawBiker(c,x,y,s,t,fn){
-  const T=TH[t];const bob=Math.sin(fn*.18)*4*s;c.save();c.translate(x,y+bob);
-  const lean=Math.sin(fn*.06)*.04;c.rotate(lean);
-
-  // === MOTORCYCLE ===
-  sh(c,'rgba(0,0,0,.4)',12);
-  // Body frame
-  c.fillStyle=T.bike;rrect(c,-70*s,-10*s,140*s,32*s,6*s,T.bike);
-  // Fuel tank — big rounded hump
-  c.beginPath();c.ellipse(-5*s,-18*s,40*s,22*s,0,0,Math.PI*2);c.fillStyle=T.bike;c.fill();
-  c.beginPath();c.ellipse(-5*s,-18*s,38*s,20*s,0,0,Math.PI*2);c.fillStyle=T.body;c.fill();
-
-  // Exhaust pipes
-  c.strokeStyle='#888';c.lineWidth=5*s;c.lineCap='round';
-  c.beginPath();c.moveTo(-65*s,18*s);c.bezierCurveTo(-90*s,18*s,-95*s,32*s,-100*s,28*s);c.stroke();
-  c.beginPath();c.moveTo(-65*s,12*s);c.bezierCurveTo(-88*s,12*s,-93*s,26*s,-98*s,22*s);c.stroke();
-
-  // Headlight
-  sh(c,'rgba(255,255,180,.9)',20);c.fillStyle='#fffaaa';c.beginPath();c.ellipse(70*s,-2*s,12*s,9*s,0,0,Math.PI*2);c.fill();nsh(c);
-  // Headlight beam
-  c.fillStyle='rgba(255,255,180,.12)';c.beginPath();c.moveTo(70*s,-2*s);c.lineTo(120*s,-18*s);c.lineTo(120*s,14*s);c.closePath();c.fill();
-
-  // Windshield
-  c.fillStyle='rgba(150,220,255,.35)';rrect(c,38*s,-28*s,28*s,22*s,6*s,'rgba(150,220,255,.35)');
-
-  nsh(c);
-  // === WHEELS ===
-  [[-52*s,28*s],[52*s,28*s]].forEach(([wx,wy],wi)=>{
-    // Tyre
-    c.lineWidth=8*s;c.strokeStyle='#111';c.beginPath();c.arc(wx,wy,26*s,0,Math.PI*2);c.stroke();
-    // Rim
-    c.fillStyle='#888';c.beginPath();c.arc(wx,wy,14*s,0,Math.PI*2);c.fill();
-    c.fillStyle='#555';c.beginPath();c.arc(wx,wy,10*s,0,Math.PI*2);c.fill();
-    // Spokes (spinning)
-    c.strokeStyle='#aaa';c.lineWidth=2*s;
-    for(let k=0;k<6;k++){const a=k*Math.PI/3+(wi===0?fn*.3:fn*.3);c.beginPath();c.moveTo(wx,wy);c.lineTo(wx+Math.cos(a)*23*s,wy+Math.sin(a)*23*s);c.stroke();}
-    // Hub cap
-    c.fillStyle='#ccc';c.beginPath();c.arc(wx,wy,4*s,0,Math.PI*2);c.fill();
-  });
-
-  // === MOTU PATLU FAT CHARACTER ===
-  // Lower body / legs (straddling)
-  c.fillStyle=T.body;
-  c.beginPath();c.ellipse(0*s,-28*s,32*s,24*s,0,0,Math.PI*2);c.fill();
-  c.strokeStyle='rgba(0,0,0,.2)';c.lineWidth=2;c.stroke();
-  // Trouser legs
-  c.fillStyle='#3a3a8a';
-  c.beginPath();c.ellipse(-16*s,-10*s,14*s,20*s,.3,0,Math.PI*2);c.fill();
-  c.beginPath();c.ellipse(16*s,-8*s,14*s,20*s,-.3,0,Math.PI*2);c.fill();
-  // Shoes
-  c.fillStyle='#2a1a10';
-  c.beginPath();c.ellipse(-20*s,12*s,16*s,8*s,.2,0,Math.PI*2);c.fill();
-  c.beginPath();c.ellipse(20*s,14*s,16*s,8*s,-.2,0,Math.PI*2);c.fill();
-
-  // Belly / shirt (BIG round belly - Motu style)
-  sh(c,'rgba(0,0,0,.3)',10);
-  c.fillStyle=T.shirt;
-  c.beginPath();c.ellipse(0,-38*s,34*s,30*s,0,0,Math.PI*2);c.fill();
-  c.strokeStyle='rgba(0,0,0,.25)';c.lineWidth=2;c.stroke();
-  nsh(c);
-  // Belly button / shirt detail
-  c.fillStyle='rgba(0,0,0,.15)';c.beginPath();c.arc(0,-40*s,4*s,0,Math.PI*2);c.fill();
-
-  // Arms - chubby
-  c.lineWidth=13*s;c.lineCap='round';c.strokeStyle=T.shirt;
-  c.beginPath();c.moveTo(-12*s,-38*s);c.quadraticCurveTo(-38*s,-28*s,-32*s,-14*s);c.stroke();
-  c.beginPath();c.moveTo(12*s,-38*s);c.quadraticCurveTo(38*s,-26*s,32*s,-14*s);c.stroke();
-  // Hands (big round)
-  c.fillStyle=T.skin;
-  c.beginPath();c.arc(-32*s,-14*s,9*s,0,Math.PI*2);c.fill();
-  c.beginPath();c.arc(32*s,-14*s,9*s,0,Math.PI*2);c.fill();
-  // Handlebar grips
-  c.fillStyle='#555';c.beginPath();c.arc(-32*s,-15*s,5*s,0,Math.PI*2);c.fill();
-  c.beginPath();c.arc(32*s,-15*s,5*s,0,Math.PI*2);c.fill();
-  // Handlebar
-  c.strokeStyle='#777';c.lineWidth=6*s;c.lineCap='round';
-  c.beginPath();c.moveTo(-32*s,-15*s);c.lineTo(-20*s,-22*s);c.lineTo(20*s,-22*s);c.lineTo(32*s,-15*s);c.stroke();
-  // Mirror
-  c.fillStyle='#555';c.fillRect(-24*s,-35*s,4*s,12*s);c.fillRect(-30*s,-36*s,12*s,7*s);
-
-  // === BIG FAT HEAD — Motu proportions ===
-  sh(c,'rgba(0,0,0,.35)',14);
-  c.fillStyle=T.skin;
-  c.beginPath();c.arc(0,-76*s,36*s,0,Math.PI*2);c.fill();
-  c.strokeStyle='rgba(0,0,0,.2)';c.lineWidth=2;c.stroke();
-  nsh(c);
-  // Chubby cheeks
-  c.fillStyle='rgba(255,160,120,.35)';
-  c.beginPath();c.ellipse(-22*s,-72*s,10*s,8*s,0,0,Math.PI*2);c.fill();
-  c.beginPath();c.ellipse(22*s,-72*s,10*s,8*s,0,0,Math.PI*2);c.fill();
-
-  // === HELMET ===
-  c.fillStyle=T.helmet;
-  c.beginPath();c.arc(0,-76*s,37*s,Math.PI,0);c.closePath();c.fill();
-  // Helmet chin strap
-  c.strokeStyle=T.helmet;c.lineWidth=5*s;
-  c.beginPath();c.moveTo(-34*s,-76*s);c.lineTo(-28*s,-62*s);c.stroke();
-  c.beginPath();c.moveTo(34*s,-76*s);c.lineTo(28*s,-62*s);c.stroke();
-  // Helmet visor (large)
-  c.fillStyle='rgba(150,210,255,.65)';
-  c.beginPath();c.ellipse(0,-76*s,32*s,14*s,0,0,Math.PI);c.fill();
-  // Helmet vent lines
-  c.strokeStyle='rgba(0,0,0,.2)';c.lineWidth=2;
-  c.beginPath();c.moveTo(-15*s,-96*s);c.lineTo(-12*s,-88*s);c.stroke();
-  c.beginPath();c.moveTo(0,-98*s);c.lineTo(0,-90*s);c.stroke();
-  c.beginPath();c.moveTo(15*s,-96*s);c.lineTo(12*s,-88*s);c.stroke();
-
-  // === FACE ===
-  // Eyes (big Motu style)
-  c.fillStyle='#fff';c.beginPath();c.ellipse(-13*s,-74*s,7*s,8*s,0,0,Math.PI*2);c.fill();
-  c.fillStyle='#fff';c.beginPath();c.ellipse(13*s,-74*s,7*s,8*s,0,0,Math.PI*2);c.fill();
-  c.fillStyle='#222';c.beginPath();c.arc(-13*s,-74*s,4*s,0,Math.PI*2);c.fill();
-  c.fillStyle='#222';c.beginPath();c.arc(13*s,-74*s,4*s,0,Math.PI*2);c.fill();
-  // Eye shine
-  c.fillStyle='#fff';c.beginPath();c.arc(-11*s,-76*s,1.5*s,0,Math.PI*2);c.fill();
-  c.beginPath();c.arc(15*s,-76*s,1.5*s,0,Math.PI*2);c.fill();
-  // Big grin
-  c.strokeStyle='#333';c.lineWidth=2.5*s;
-  c.beginPath();c.arc(0,-68*s,12*s,.1,Math.PI-.1);c.stroke();
-  // Teeth
-  c.fillStyle='#fff';rrect(c,-9*s,-69*s,18*s,5*s,1.5*s,'#fff');
-  // Moustache (small)
-  c.fillStyle='#333';c.beginPath();c.ellipse(-5*s,-63*s,5*s,2.5*s,.3,0,Math.PI*2);c.fill();
-  c.beginPath();c.ellipse(5*s,-63*s,5*s,2.5*s,-.3,0,Math.PI*2);c.fill();
-  // Nose
-  c.fillStyle='rgba(200,120,80,.6)';c.beginPath();c.arc(0,-69*s,5*s,0,Math.PI*2);c.fill();
-
-  // Speed lines (fast motion)
-  c.strokeStyle='rgba(255,255,255,.35)';c.lineWidth=2;
-  for(let i=0;i<5;i++){
-    const ly=(-50+i*16)*s,ln=(30+Math.random()*20)*s;
-    c.beginPath();c.moveTo(-100*s,ly);c.lineTo(-100*s+ln,ly);c.stroke();
-  }
-  // Smoke puffs from exhaust
-  if(fn%3===0){
-    c.fillStyle='rgba(200,200,200,.25)';
-    c.beginPath();c.arc(-105*s+Math.random()*10,20*s,6+Math.random()*4,0,Math.PI*2);c.fill();
-  }
-
-  c.restore();
+  if(fill){c.fillStyle=fill;c.fill();}
 }
 
-// ── Speech bubble ───────────────────────────────────────
-function drawBubble(c,txt,bx,by,t,fn){
-  const T=TH[t];const alpha=Math.min(1,(fn-10)/10);if(alpha<=0)return;
-  c.globalAlpha=alpha;const f=20;c.font=`bold ${f}px Fredoka One, sans-serif`;
-  const tw=c.measureText(txt).width;const bw=tw+28,bh=46;
-  sh(c,'rgba(0,0,0,.3)',8);rrect(c,bx,by,bw,bh,12,'#fff','rgba(0,0,0,.1)');
-  c.fillStyle='#fff';c.beginPath();c.moveTo(bx+24,by+bh);c.lineTo(bx+12,by+bh+18);c.lineTo(bx+40,by+bh);c.closePath();c.fill();
-  nsh(c);c.fillStyle=T.txt;c.fillText(txt,bx+14,by+f+10);c.globalAlpha=1;
+let cachedPreviewImg=null;
+async function drawScenePreview(idx,frame){
+  if(idx<0||idx>=scenes.length){ctx.fillStyle='#0a0b0f';ctx.fillRect(0,0,W,H);return;}
+  const s=scenes[idx];
+  const url=previewImages[idx]||s.selectedImg;
+  if(url&&url!=='loading'&&!url.startsWith('error:')){
+    const img=await getImg(url);
+    drawPreviewFrame(img,s.cap,frame,100);
+  }else drawPreviewFrame(null,s.cap,frame,100);
 }
 
-// ── HUD Overlay ──────────────────────────────────────────
-function drawOverlay(c,t){
-  const h=document.getElementById('vhand')?.value||'@YourHandle';
-  c.font='bold 18px Fredoka One, sans-serif';c.textAlign='right';
-  c.fillStyle='rgba(255,255,255,.45)';sh(c,'rgba(0,0,0,.5)',3);c.fillText(h,W-16,H-18);nsh(c);c.textAlign='left';
+function toggleAnim(){
+  if(animTimer){clearInterval(animTimer);animTimer=null;document.getElementById('anim-btn').textContent='▶ Play';return;}
+  document.getElementById('anim-btn').textContent='⏹ Stop';
+  animFrame=0;
+  let scIdx=Math.max(0,curScene);const FPD=30,DUR=parseInt(document.getElementById('scene-dur').value)||4;
+  const fPerScene=DUR*FPD;let localFrame=0;
+  animTimer=setInterval(async()=>{
+    await drawScenePreview(scIdx,localFrame);
+    localFrame++;
+    if(localFrame>=fPerScene){localFrame=0;scIdx=(scIdx+1)%Math.max(1,scenes.length);if(curScene!==scIdx){curScene=scIdx;renderSceneList();document.getElementById('scene-indicator').textContent=`Scene ${curScene+1} / ${scenes.length}`;}}
+    animFrame++;
+  },1000/FPD);
 }
+function prevScene(){if(curScene>0)selectScene(curScene-1);}
+function nextScene(){if(curScene<scenes.length-1)selectScene(curScene+1);}
 
-// ── Intro slide ──────────────────────────────────────────
-function drawIntro(c,title,sub,t,fn){
-  drawBG(c,t,fn);const T=TH[t];const alpha=Math.min(1,fn/18);const sc=.8+.2*Math.min(1,fn/14);
-  c.save();c.globalAlpha=alpha;c.translate(W/2,H/2-100);c.scale(sc,sc);c.textAlign='center';
-  c.font='bold 58px Bangers, cursive';const tw=c.measureText(title.toUpperCase()).width;
-  sh(c,'rgba(0,0,0,.5)',18);rrect(c,-tw/2-22,-52,tw+44,72,14,T.acc);nsh(c);
-  c.fillStyle='#fff';c.fillText(title.toUpperCase(),0,10);c.restore();
-  c.save();c.globalAlpha=Math.min(1,Math.max(0,(fn-12)/10));c.textAlign='center';
-  c.font='bold 24px Fredoka One, sans-serif';c.fillStyle=T.shirt;
-  sh(c,'rgba(0,0,0,.5)',5);c.fillText(sub,W/2,H/2+25);nsh(c);c.restore();
-  c.save();c.globalAlpha=.45+.55*Math.min(1,fn/18);drawBiker(c,W*.72,H*.62,.78,t,fn);c.restore();
-  // Star burst
-  if(fn>20){drawStars(c,W*.2,H*.3,fn);}
-  drawOverlay(c,t);
-}
+// ── Video Render ──────────────────────────────────────────
+async function renderVideo(){
+  if(!scenes.length){toast('❌ Add scenes first!');return;}
+  const hasImages=scenes.some(s=>s.selectedImg&&!s.selectedImg.startsWith('error:'));
+  if(!hasImages){toast('⚠️ Generate images for at least one scene first!');return;}
 
-// ── Content slide ────────────────────────────────────────
-function drawContent(c,sc,idx,t,fn){
-  drawBG(c,t,fn);const T=TH[t];
-  // Big emoji
-  const es=1+.15*Math.sin(fn*.12);c.font=`${76*es}px serif`;c.textAlign='center';
-  c.fillText(sc.emo||'🏍️',W*.25,H*.575);
-  // Character
-  drawBiker(c,W*.7,H*.62,.82,t,fn);
-  // Bubble
-  if(sc.cap){const sh2=sc.cap.split(' ').slice(0,5).join(' ')+(sc.cap.split(' ').length>5?'…':'');drawBubble(c,sh2,W*.35,H*.42,t,fn);}
-  // Scene badge
-  sh(c,'rgba(0,0,0,.3)',8);rrect(c,16,26,76,52,10,T.acc);nsh(c);
-  c.font='bold 12px Fredoka One, sans-serif';c.textAlign='left';c.fillStyle='rgba(255,255,255,.65)';c.fillText('SCENE',24,44);
-  c.font='bold 26px Bangers, cursive';c.fillStyle='#fff';c.fillText('#'+(idx+1),24,68);
-  // Caption box
-  drawCaption(c,sc.cap||'',sc.loc||'',t,fn);
-  drawOverlay(c,t);
-}
+  const btn=document.getElementById('render-btn');btn.disabled=true;
+  const prog=document.getElementById('render-progress');prog.style.display='block';
+  document.getElementById('download-area').style.display='none';
 
-// ── Caption box ──────────────────────────────────────────
-function drawCaption(c,txt,loc,t,fn){
-  const T=TH[t];const by=H*.71,bh=170;
-  c.fillStyle='rgba(0,0,0,.58)';rrect(c,16,by,W-32,bh,14);
-  // Coloured top line
-  const lg=c.createLinearGradient(16,by,W-16,by);lg.addColorStop(0,T.acc);lg.addColorStop(1,T.shirt);
-  c.fillStyle=lg;c.fillRect(16,by,W-32,4);
-  if(loc){c.font='bold 19px Fredoka One, sans-serif';const lw=c.measureText('📍 '+loc).width;rrect(c,32,by+14,lw+18,28,14,T.acc);c.fillStyle='#fff';c.fillText('📍 '+loc,41,by+33);}
-  // Main text
-  c.fillStyle='#fff';c.font='bold 32px Nunito, sans-serif';c.textAlign='center';
-  const wds=txt.split(' '),lns=[];let ln='';
-  wds.forEach(w=>{const ts=ln?ln+' '+w:w;if(c.measureText(ts).width>W-80){lns.push(ln);ln=w;}else ln=ts;});if(ln)lns.push(ln);
-  const sy=loc?by+62:by+44;lns.slice(0,3).forEach((l,i)=>{sh(c,'rgba(0,0,0,.8)',4);c.fillText(l,W/2,sy+i*38);nsh(c);});
-  c.textAlign='left';
-}
+  const FPS=30,DUR=parseInt(document.getElementById('scene-dur').value)||4;
+  const fPerScene=DUR*FPS;
+  const totalFrames=scenes.length*fPerScene;
 
-// ── Stars decoration ─────────────────────────────────────
-function drawStars(c,x,y,fn){
-  c.fillStyle='rgba(255,220,0,.8)';
-  for(let i=0;i<5;i++){
-    const a=i/5*Math.PI*2+fn*.05,r=30+Math.sin(fn*.1+i)*5;
-    const sx=x+Math.cos(a)*r,sy=y+Math.sin(a)*r;
-    c.font='22px serif';c.textAlign='center';c.fillText('⭐',sx,sy);
-  }
-  c.textAlign='left';
-}
-
-// ── Stats slide ──────────────────────────────────────────
-function drawStats(c,title,stats,t,fn){
-  drawBG(c,t,fn);const T=TH[t];
-  // Trophy bounce
-  const tb=Math.sin(fn*.14)*10;c.font='100px serif';c.textAlign='center';c.fillText('🏆',W/2,H*.26+tb);
-  sh(c,'rgba(0,0,0,.5)',12);c.font='bold 50px Bangers, cursive';c.fillStyle=T.shirt;c.fillText('JOURNEY STATS',W/2,H*.42);nsh(c);
-  const n=Object.keys(stats).length;const ch2=n*56+34;const cy=H*.47;
-  rrect(c,24,cy,W-48,ch2,14,'rgba(0,0,0,.62)','rgba(255,255,255,.08)');
-  Object.entries(stats).forEach(([k,v],i)=>{
-    const ry=cy+30+i*56;const alpha=Math.min(1,Math.max(0,(fn-(i*3+8))/8));c.globalAlpha=alpha;
-    c.textAlign='left';c.font='bold 19px Fredoka One, sans-serif';c.fillStyle='rgba(255,255,255,.55)';c.fillText(k,42,ry);
-    c.textAlign='right';c.font='bold 21px Fredoka One, sans-serif';c.fillStyle=T.shirt;c.fillText(v,W-42,ry);c.globalAlpha=1;
-    if(i<n-1){c.strokeStyle='rgba(255,255,255,.1)';c.lineWidth=1;c.beginPath();c.moveTo(34,ry+14);c.lineTo(W-34,ry+14);c.stroke();}
-  });
-  drawOverlay(c,t);c.textAlign='left';
-}
-
-// ── Render frame ─────────────────────────────────────────
-function renderFrame(c,fn){
-  c.clearRect(0,0,W,H);
-  const title=document.getElementById('vtitle')?.value||'MY JOURNEY';
-  const sub  =document.getElementById('vsub')?.value||'';
-  const t=curTheme;
-  const total=scenes.length;
-  if(curSc===0) drawIntro(c,title,sub,t,fn);
-  else if(curSc<=total) drawContent(c,scenes[curSc-1],curSc-1,t,fn);
-  else{
-    const st={
-      'Total Distance':document.getElementById('sdist')?.value||'—',
-      'Days on Road':  document.getElementById('sdays')?.value||'—',
-      'Best Moment':   document.getElementById('smem')?.value||'—',
-      'Fuel Stops':    document.getElementById('sfuel')?.value||'—',
-      'Extra':         document.getElementById('sextra')?.value||'—',
-    };
-    drawStats(c,title,st,t,fn);
-  }
-}
-
-// ── Preview ───────────────────────────────────────────────
-function drawPreview(fn){ renderFrame(ctx,fn); }
-
-function startAnim(){
-  clearInterval(animTmr);previewFN=0;
-  const btn=document.getElementById('abtn');btn.textContent='⏹ Stop';
-  animTmr=setInterval(()=>{ previewFN++;if(previewFN>90)previewFN=0;drawPreview(previewFN); },33);
-  btn.onclick=()=>{ clearInterval(animTmr);animTmr=null;btn.textContent='▶ Animate';btn.onclick=startAnim; };
-}
-
-function prevSc(){ curSc=Math.max(0,curSc-1);previewFN=0;drawPreview(0);hl(); }
-function nextSc(){ curSc=Math.min(scenes.length+1,curSc+1);previewFN=0;drawPreview(0);hl(); }
-function hl(){ document.querySelectorAll('.si').forEach((el,i)=>el.classList.toggle('on',i+1===curSc)); }
-
-// ── Scene list ────────────────────────────────────────────
-function renderList(){
-  const list=document.getElementById('slist');list.innerHTML='';
-  const intro=document.createElement('div');intro.className='si'+(curSc===0?' on':'');
-  intro.innerHTML=`<div class="snum">⭐</div><div class="stxt"><div class="scap">Intro Card</div><div class="sloc">${document.getElementById('vtitle')?.value||'Title'}</div></div>`;
-  intro.onclick=()=>{curSc=0;previewFN=0;drawPreview(0);renderList();}; list.appendChild(intro);
-  scenes.forEach((s,i)=>{
-    const el=document.createElement('div');el.className='si'+(curSc===i+1?' on':'');
-    el.innerHTML=`<div class="snum">${i+1}</div><div class="stxt"><div class="scap">${s.emo||''} ${s.cap||'(empty)'}</div><div class="sloc">📍 ${s.loc||'—'}</div></div><input class="sedi" type="text" value="${s.cap||''}" oninput="scenes[${i}].cap=this.value;drawPreview(0)" onclick="event.stopPropagation()"/><button class="del" onclick="event.stopPropagation();delSc(${i})">✕</button>`;
-    el.onclick=()=>{curSc=i+1;previewFN=0;drawPreview(0);renderList();}; list.appendChild(el);
-  });
-  const stats=document.createElement('div');stats.className='si'+(curSc===scenes.length+1?' on':'');
-  stats.innerHTML=`<div class="snum">📊</div><div class="stxt"><div class="scap">Stats Card</div><div class="sloc">Final summary</div></div>`;
-  stats.onclick=()=>{curSc=scenes.length+1;previewFN=0;drawPreview(0);renderList();}; list.appendChild(stats);
-}
-function addScene(){ scenes.push({cap:'New scene '+(scenes.length+1),loc:'Location',emo:'🗺️'});curSc=scenes.length;renderList();drawPreview(0); }
-function delSc(i){ scenes.splice(i,1);if(curSc>scenes.length+1)curSc=scenes.length+1;renderList();drawPreview(0); }
-
-// Theme switching
-document.querySelectorAll('.ts').forEach(el=>{
-  el.addEventListener('click',()=>{
-    document.querySelectorAll('.ts').forEach(e=>e.classList.remove('on'));
-    el.classList.add('on');curTheme=el.dataset.t;drawPreview(previewFN||0);
-  });
-});
-
-// ── Video Rendering ───────────────────────────────────────
-async function renderVid(){
-  const rbtn=document.getElementById('rbtn');const rp=document.getElementById('rp');
-  const pfill=document.getElementById('pfill');const ptxt=document.getElementById('ptxt');
-  rbtn.disabled=true;rp.style.display='block';document.getElementById('da').style.display='none';
-  const FPS=24,SPD=3.5,total=scenes.length+2;const tframes=total*SPD*FPS|0,fps=SPD*FPS|0;
-  const oc=document.createElement('canvas');oc.width=540;oc.height=960;const oc2=oc.getContext('2d');
+  const oc=document.createElement('canvas');oc.width=540;oc.height=960;
+  const oc2=oc.getContext('2d');
   const stream=oc.captureStream(FPS);
-  let mime='video/webm;codecs=vp9';if(!MediaRecorder.isTypeSupported(mime)) mime='video/webm';
-  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:2800000});
-  const chunks=[];rec.ondataavailable=e=>{if(e.data.size>0) chunks.push(e.data);};rec.start(100);
-  const title=document.getElementById('vtitle').value||'MY JOURNEY';
-  const sub  =document.getElementById('vsub').value||'';
-  const t=curTheme;
-  const st={'Total Distance':document.getElementById('sdist').value||'—','Days on Road':document.getElementById('sdays').value||'—','Best Moment':document.getElementById('smem').value||'—','Fuel Stops':document.getElementById('sfuel').value||'—','Extra':document.getElementById('sextra').value||'—'};
-  for(let f=0;f<tframes;f++){
-    const si=Math.floor(f/fps),fi=f%fps;oc2.clearRect(0,0,540,960);
-    const prevCurSc=curSc;curSc=si;
-    renderFrame(oc2,fi);curSc=prevCurSc;
-    const pct=Math.round(f/tframes*100);pfill.style.width=pct+'%';ptxt.textContent=`Rendering frame ${f+1}/${tframes} (${pct}%)`;
-    if(f%4===0) await new Promise(r=>requestAnimationFrame(r));
+  let mime='video/webm;codecs=vp9';if(!MediaRecorder.isTypeSupported(mime))mime='video/webm';
+  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4000000});
+  const chunks=[];
+  rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
+  rec.start(100);
+
+  // Preload all images
+  document.getElementById('prog-txt').textContent='Loading images...';
+  const imgCache={};
+  for(let i=0;i<scenes.length;i++){
+    const url=previewImages[i]||scenes[i].selectedImg;
+    if(url&&!url.startsWith('error:')&&url!=='loading'){
+      try{imgCache[i]=await getImg(url);}catch{}
+    }
   }
+
+  for(let f=0;f<totalFrames;f++){
+    const sIdx=Math.floor(f/fPerScene);
+    const lf=f%fPerScene;
+    const s=scenes[sIdx];
+    const img=imgCache[sIdx]||null;
+    // Copy draw logic to oc2
+    oc2.clearRect(0,0,540,960);
+    if(img){
+      oc2.save();
+      if(fxFlags.zoom||fxFlags.pan){
+        const t=lf/Math.max(1,fPerScene-1);
+        const sc=1.0+0.08*t;const panX=fxFlags.pan?t*20-10:0;
+        oc2.translate(270+panX,480);oc2.scale(sc,sc);oc2.translate(-270,-480);
+      }
+      const iw=img.naturalWidth||img.width,ih=img.naturalHeight||img.height;
+      const scale=Math.max(540/iw,960/ih);
+      const dw=iw*scale,dh=ih*scale;
+      oc2.drawImage(img,(540-dw)/2,(960-dh)/2,dw,dh);
+      oc2.restore();
+      if(fxFlags.vignette){
+        const vg=oc2.createRadialGradient(270,480,192,270,480,672);
+        vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,.7)');
+        oc2.fillStyle=vg;oc2.fillRect(0,0,540,960);
+      }
+    }else{
+      const g=oc2.createLinearGradient(0,0,0,960);g.addColorStop(0,'#1a1228');g.addColorStop(1,'#0a0610');
+      oc2.fillStyle=g;oc2.fillRect(0,0,540,960);
+    }
+    // Caption
+    if(fxFlags.captions&&s.cap&&capStyle!=='none'){
+      const alpha=Math.min(1,lf/8);
+      oc2.globalAlpha=alpha;
+      // Simplified caption draw for render
+      const words=s.cap.split(' ');const lineH=44;const maxW=460;
+      oc2.font='bold 30px Poppins, sans-serif';
+      const lines2=[];let cur='';
+      words.forEach(w=>{const tt=cur?cur+' '+w:w;if(oc2.measureText(tt).width>maxW){lines2.push(cur);cur=w;}else cur=tt;});if(cur)lines2.push(cur);
+      const totalH2=lines2.length*lineH+24;
+      const baseY=capStyle==='center'?480-totalH2/2:960-totalH2-60;
+      roundRect2(oc2,20,baseY-12,500,totalH2,12,'rgba(0,0,0,.72)');
+      const ag=oc2.createLinearGradient(20,0,520,0);ag.addColorStop(0,'#ff5722');ag.addColorStop(1,'#ff9800');
+      oc2.fillStyle=ag;oc2.fillRect(20,baseY-12,500,4);
+      lines2.forEach((ln,i)=>{oc2.shadowColor='rgba(0,0,0,.9)';oc2.shadowBlur=8;oc2.fillStyle='#fff';oc2.textAlign='center';oc2.fillText(ln,270,baseY+i*lineH+30);});
+      oc2.shadowBlur=0;oc2.textAlign='left';oc2.globalAlpha=1;
+    }
+    // Handle
+    if(fxFlags.handle){
+      const handle=document.getElementById('s-handle').value||'@creator';
+      oc2.font='bold 20px Inter,sans-serif';oc2.textAlign='right';
+      oc2.fillStyle='rgba(255,255,255,.55)';oc2.shadowColor='rgba(0,0,0,.8)';oc2.shadowBlur=6;
+      oc2.fillText(handle,524,944);oc2.shadowBlur=0;oc2.textAlign='left';
+    }
+    const pct=Math.round(f/totalFrames*100);
+    document.getElementById('prog-fill').style.width=pct+'%';
+    document.getElementById('prog-txt').textContent=`Rendering: ${pct}% (scene ${sIdx+1}/${scenes.length})`;
+    if(f%4===0)await new Promise(r=>requestAnimationFrame(r));
+  }
+
   rec.stop();
   rec.onstop=()=>{
-    const blob=new Blob(chunks,{type:mime});const url=URL.createObjectURL(blob);
-    const dl=document.getElementById('dlnk');dl.href=url;dl.download=`${title.replace(/\s+/g,'-').toLowerCase()}.webm`;
-    document.getElementById('da').style.display='block';rbtn.disabled=false;rp.style.display='none';
-    addGallery(title,t,url);
+    const blob=new Blob(chunks,{type:mime});
+    const url=URL.createObjectURL(blob);
+    const title=document.getElementById('s-title').value||'story';
+    document.getElementById('dl-link').href=url;
+    document.getElementById('dl-link').download=title.replace(/\s+/g,'-').toLowerCase()+'.webm';
+    document.getElementById('download-area').style.display='block';
+    prog.style.display='none';btn.disabled=false;
+    toast('🎬 Video rendered!',4000);
   };
 }
 
-function addGallery(title,theme,url){
-  const g=document.getElementById('ggrid');const ph=document.getElementById('gplaceholder');if(ph) ph.remove();
-  const item=document.createElement('div');item.style.cssText='background:var(--card);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;';
-  const thumb=document.createElement('canvas');thumb.width=180;thumb.height=320;thumb.style.cssText='width:100%;aspect-ratio:9/16;display:block;';
-  const tc=thumb.getContext('2d');const T=TH[theme];const g2=tc.createLinearGradient(0,0,0,320);g2.addColorStop(0,T.s1);g2.addColorStop(1,T.s2);tc.fillStyle=g2;tc.fillRect(0,0,180,320);tc.font='bold 22px Bangers, cursive';tc.textAlign='center';tc.fillStyle='#fff';tc.fillText(title.slice(0,14),90,155);
-  item.appendChild(thumb);
-  item.innerHTML+=`<div style="padding:10px 12px"><div style="font-family:var(--fu);font-size:13px;margin-bottom:4px">${title}</div><div style="font-size:11px;color:rgba(255,255,255,.4)">${theme}</div></div><div style="display:flex;gap:6px;padding:0 12px 12px"><a href="${url}" download class="dl" style="flex:1;padding:8px;font-size:15px">⬇</a><button onclick="this.closest('div').parentElement.remove()" style="flex:1;padding:8px;background:none;border:1px solid var(--bdr);color:#fff;cursor:pointer;border-radius:6px">🗑</button></div>`;
-  g.prepend(item);
+function roundRect2(c,x,y,w,h,r,fill){
+  c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.arcTo(x+w,y,x+w,y+r,r);
+  c.lineTo(x+w,y+h-r);c.arcTo(x+w,y+h,x+w-r,y+h,r);c.lineTo(x+r,y+h);
+  c.arcTo(x,y+h,x,y+h-r,r);c.lineTo(x,y+r);c.arcTo(x,y,x+r,y,r);c.closePath();
+  if(fill){c.fillStyle=fill;c.fill();}
 }
 
-// ── Tab switching ─────────────────────────────────────────
-function showTab(name,el){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-  document.getElementById(name+'-panel').classList.add('on');
-  if(el) el.classList.add('on');
-}
-
-// ── Live updates ──────────────────────────────────────────
-document.getElementById('vtitle')?.addEventListener('input',()=>{renderList();drawPreview(0);});
-
-// ── Init ──────────────────────────────────────────────────
-renderList();drawPreview(0);
+// ── Init ─────────────────────────────────────────────────
+// Default scenes to get started
+const defaults=[
+  {cap:'THE CHECKPOINT…',prompt:'Two fat cartoon police officers in dark blue uniforms standing at a police checkpoint on a desert highway, orange traffic cones, police car with flashing lights in background, Pixar 3D animation style, cinematic lighting, wide shot, photorealistic texture'},
+  {cap:'A car approaches slowly 👀',prompt:'Car slowly driving toward a police checkpoint on a desert road, fat cartoon police officer with mustache holding up hand to stop, dramatic angle, dust cloud, suspense, Pixar 3D animation style, golden hour lighting'},
+  {cap:'Officer: "Step out of the vehicle!"',prompt:'Fat cartoon police officer in uniform leaning into car window with stern expression, pointing finger, exaggerated cartoon face, wide eyes, desert road background, Pixar 3D style, close-up dramatic shot'},
+  {cap:'What they found inside… 😱',prompt:'Inside the car, cartoon characters looking nervous and sweating, something suspicious under the seat, dramatic reveal moment, Pixar 3D animation style, interior car shot, dramatic lighting, exaggerated expressions'},
+  {cap:'NOBODY expected THIS 😂',prompt:'Fat cartoon police officer with jaw dropped in shock and huge wide eyes, holding something unexpected, other officer covering mouth laughing, desert highway background, Pixar 3D animation style, comedy reaction shot'},
+  {cap:'Justice served! 🏆',prompt:'Fat cartoon police officers laughing together at a police checkpoint, thumbs up, police car in background, sunset golden sky, happy ending, Pixar 3D animation style, warm cinematic lighting, wide shot'},
+];
+defaults.forEach(d=>scenes.push({...d,imgs:[],selectedImg:null,status:'idle'}));
+renderSceneList();updateSceneCount();
+selectScene(0);
+drawScenePreview(0,0);
 </script>
 </body>
 </html>
