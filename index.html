@@ -233,9 +233,14 @@ Brian wakes up and goes to the market. Merchant Fatuma sells him mangoes. Inspec
     </div>
 
     <div class="example-box">
-      <div class="ex-title">📖 Example Story</div>
-      <p>Brian and Zawadi walk to school early in the morning. Mwalimu Hassan greets them at the gate. Suddenly Inspector Kamau arrives in his police car. He says "School is cancelled today!" Everyone cheers. Mama Wanjiru comes running and says "Brian! Get back inside!" Brian laughs and runs home. Doctor Amara watches from the hospital and shakes her head.</p>
-      <button class="use-example" onclick="useExample()">Use This Example →</button>
+      <div class="ex-title">📖 Example 1 — School Chaos</div>
+      <p style="font-size:10px">Brian runs to school late, Inspector Kamau bursts in, Mama Wanjiru drags Brian home...</p>
+      <button class="use-example" onclick="useExample(1)">Use Example 1 →</button>
+    </div>
+    <div class="example-box" style="margin-top:0">
+      <div class="ex-title">📖 Example 2 — Market Argument</div>
+      <p style="font-size:10px">Zawadi argues with Merchant Fatuma over tomatoes, Inspector Kamau falls laughing...</p>
+      <button class="use-example" onclick="useExample(2)">Use Example 2 →</button>
     </div>
   </div>
 </aside>
@@ -401,20 +406,130 @@ const CHARACTERS = {
   }
 };
 
-// ── LOCATION IMAGE DESCRIPTIONS ──────────────────────────
+// ── LOCATION BACKGROUNDS (detailed environments) ─────────
 const LOCATIONS = {
-  "market":"vibrant African outdoor market with colorful stalls, fruits and vegetables, busy crowd, red tomatoes, green bananas hanging, dusty ground, bright sunshine",
-  "river":"wide flowing African river, lush green trees on banks, crystal clear water, small wooden boat, birds flying, golden afternoon light reflecting on water",
-  "hospital":"modern African hospital entrance, white building with red cross sign, parked ambulance, patients walking in, clean bright hallway visible through glass doors",
-  "school":"African primary school with painted yellow and blue walls, children in uniforms, big mango tree in compound, chalk-dusty blackboard visible through window",
-  "forest":"dense tropical African forest, tall trees with thick canopy, sunlight filtering through leaves, red dirt path, birdsong atmosphere, lush green undergrowth",
-  "city":"busy East African city street, matatu minibuses, tall buildings, street vendors, traffic, city noise, overhead power lines, mix of old and modern buildings",
-  "home":"typical Kenyan home interior, modest but tidy, colorful sofa, framed family photos on wall, small TV, potted plants, warm afternoon light through curtains",
-  "road":"African tarmac road cutting through savanna landscape, acacia trees, flat-topped hills, big blue sky, dust on roadside, road stretching to horizon",
-  "field":"wide open African field, golden dry grass, scattered acacia trees, blue sky with big white clouds, Maasai Mara style landscape, distant hills",
-  "night":"African night scene, bright stars overhead, bonfire light, fireflies, silhouettes of trees, warm orange glow, crickets chirping atmosphere",
-  "default":"East African landscape background, clear blue sky, green scenery, warm sunlight"
+  "market":"vibrant African outdoor market background, colorful wooden stalls overflowing with tomatoes mangoes bananas, busy crowd of people, hanging cloth awnings in red yellow green, dusty ground, bright tropical midday sun, market signs, baskets and crates stacked high",
+  "river":"wide beautiful African river background, lush green trees and tall grass on muddy banks, sparkling water with gentle current, wooden dugout canoe tied to bank, dragonflies, golden late-afternoon sun reflecting off water surface, distant hills, papyrus reeds",
+  "hospital":"modern African hospital building background, white exterior walls with large RED CROSS sign, parked white ambulance with red cross, clean tiled entrance, potted plants, blue sky, patients and nurses visible near entrance, hospital sign overhead",
+  "school":"African primary school compound background, bright yellow and blue painted school building, children in blue and white school uniforms playing in compound, big old mango tree, concrete path, chalkboard visible through open window, school bell on wall",
+  "forest":"dense tropical African forest path background, enormous towering trees with thick canopy overhead, shafts of golden sunlight piercing through leaves, narrow red dirt footpath winding into forest, ferns and undergrowth, birds flying between branches, misty atmosphere",
+  "city":"bustling East African city street background, colourful matatu minibuses with graffiti, tall modern and colonial buildings, busy street vendors with carts, traffic jam, motorbike boda-bodas weaving through, overhead power cables, city noise energy, Nairobi CBD style",
+  "home":"warm African family home interior background, modest sitting room, bright patterned sofa with cushions, framed family photos on painted walls, old wooden TV cabinet, potted plants on windowsill, checked curtains, afternoon sunlight through window, clean swept floor",
+  "road":"long straight African tarmac road background stretching to vanishing point, dry savanna on both sides, flat-topped acacia trees, big dramatic blue sky with clouds, distant purple hills, road markings, telephone poles, birds on wire, warm golden light",
+  "police_station":"African police station background, grey concrete building with POLICE sign, blue and white police cars parked, uniformed officers, Kenyan flag, metal security fence, notice board with papers",
+  "checkpoint":"police roadblock checkpoint on highway, orange and white traffic barriers, police car with blue flashing lights, POLICE CHECKPOINT wooden sign, traffic cones, open dusty road stretching behind, clear sky",
+  "church":"African church interior or exterior, white-painted stone church building, wooden cross on roof, congregation in Sunday best clothes, colourful stained glass windows, open doors with light streaming in",
+  "field":"wide open African savanna field background, golden dry grass stretching to horizon, scattered flat-topped acacia trees, enormous blue sky with large white clouds, distant purple hills, Maasai Mara style landscape, heat haze shimmer",
+  "night":"African night exterior background, deep dark blue-black sky filled with brilliant stars and large moon, warm orange glow from cooking fire, fireflies, silhouette of acacia tree against moonlit sky, frogs and crickets ambiance",
+  "default":"East African landscape, clear blue sky with light clouds, green hills in distance, warm golden tropical sunlight, African countryside feel"
 };
+
+// ── ACTION VERB → VISUAL MOTION DESCRIPTIONS ────────────
+const ACTION_VISUALS = {
+  // Movement
+  walk:   "walking with natural stride, one foot forward, arms swinging, body in motion",
+  run:    "running at full sprint, arms pumping vigorously, feet barely touching ground, leaning forward with speed, motion blur on legs",
+  arrive: "just arriving, stepping out of vehicle or walking up, dramatic entrance pose, dust settling",
+  enter:  "stepping through doorway, one hand on door frame, pausing at entrance",
+  leave:  "walking away from camera, looking back over shoulder, departure motion",
+  go:     "walking purposefully toward destination, destination visible ahead in background",
+  come:   "walking briskly toward camera, getting closer, approaching with energy",
+  stop:   "stopping suddenly, feet planted, arms out for balance, surprised halt expression",
+  jump:   "jumping in the air, feet off ground, arms raised, mid-leap pose",
+  fall:   "tumbling and falling, arms flailing, shocked expression, ground approaching",
+  // Interaction
+  talk:   "facing each other directly, one character gesturing with hand while speaking, expressive open mouth, engaged listener leaning in",
+  say:    "speaking expressively, mouth open, one hand raised in talking gesture, face animated",
+  argue:  "two characters facing off, pointing fingers at each other, angry expressions, leaning forward aggressively",
+  laugh:  "throwing head back in loud laughter, hands on big belly, mouth wide open, eyes squinted with joy, shaking with laughter",
+  cry:    "crying with big cartoon tears streaming down face, hands covering face, hunched shoulders, trembling lip",
+  shout:  "shouting with mouth wide open, veins on forehead, arms raised, intense expression, other characters stepping back",
+  greet:  "waving enthusiastically with big smile, other character waving back happily, joyful reunion energy",
+  hug:    "two characters embracing in warm hug, arms wrapped around each other, happy smiling faces",
+  fight:  "dynamic fighting pose, fists raised, action stance, dramatic low angle, dust cloud around feet",
+  arrest: "police officer placing handcuffs on suspect's wrists, dramatic moment, suspect looking shocked, officer stern-faced",
+  // Actions
+  eat:    "eating enthusiastically, food in hand or on plate, chewing with exaggerated enjoyment, crumbs flying, eyes half-closed in satisfaction",
+  cook:   "cooking over fire or stove, big wooden spoon stirring pot, steam rising dramatically, focused concentration",
+  buy:    "at market stall, reaching forward to pick up item, handing over money coins, merchant smiling, goods displayed prominently",
+  sell:   "behind market stall, holding up goods to show customer, energetic selling gesture, big salesperson smile",
+  drive:  "sitting behind steering wheel, hands on wheel, looking forward at road, vehicle in motion",
+  chase:  "one character running fast chasing another, both in full sprint, arms pumping, determined expressions",
+  hide:   "crouching and hiding behind object, one eye peeking out cautiously, scared nervous expression",
+  find:   "discovering something, bending down or reaching forward, surprised wide eyes, pointing at discovery",
+  carry:  "carrying heavy load, arms around bundle, bent under weight, strained expression",
+  read:   "holding book or paper close to face, squinting in concentration, finger tracing lines",
+  sleep:  "lying down sleeping, eyes closed, gentle snoring expression, peaceful relaxed face",
+  pray:   "hands clasped together, head bowed, kneeling or standing respectfully, devout expression",
+  dance:  "dancing with raised arms, wide smile, feet moving, body swaying, celebration energy",
+  fall_sick: "looking ill, hand on forehead, pale sweating face, slumped posture, dizzy expression",
+  examine:"doctor leaning in close to examine patient, stethoscope on chest, focused professional expression, patient sitting nervously",
+  // Emotions
+  surprised:"jaw dropped open, eyes enormously wide, hands on cheeks in shock, stepping backward, exaggerated surprise expression",
+  scared: "trembling with fear, sweat drops flying, eyes darting around, knees knocking together, hair standing on end",
+  angry:  "face red with rage, fists clenched, steam from ears, teeth bared, eyebrows furrowed dramatically",
+  happy:  "beaming with joy, arms outstretched, jumping slightly, biggest smile showing teeth, radiant happy energy",
+  sad:    "drooping posture, downcast eyes, single tear on cheek, mouth turned down, dejected expression"
+};
+
+// ── DETECT ACTION FROM SCENE TEXT ────────────────────────
+function detectActionVisual(actionText, characters, location){
+  if(!actionText) return '';
+  const txt = actionText.toLowerCase();
+  
+  // Priority action matching (order matters)
+  const checks = [
+    ['arrest','handcuff','caught','apprehend'], 
+    ['chase','chasing','pursuing'],
+    ['fight','fighting','punch','kick','hit'],
+    ['run','running','sprint','flee','escape','rush'],
+    ['laugh','laughing','burst out','cackle','chuckle'],
+    ['cry','crying','weep','sob','tears'],
+    ['shout','shouting','scream','yell','screaming'],
+    ['argue','arguing','confront','quarrel'],
+    ['arrive','arriving','pulls up','drives up','comes in','shows up','steps out'],
+    ['fall','falling','trips','stumbles','collapses'],
+    ['jump','jumping','leap','bounce','hop'],
+    ['hide','hiding','crouches','sneaks'],
+    ['eat','eating','devour','feast','biting','munching'],
+    ['cook','cooking','stir','boil','fry'],
+    ['buy','buying','purchase','shopping','picks up'],
+    ['sell','selling','vendors','hawking'],
+    ['talk','talking','discuss','chat','conversation','face to face'],
+    ['say','says','tells','explains','announces','declares'],
+    ['greet','greeting','wave','welcome','hello','meet'],
+    ['hug','embrace','hold'],
+    ['carry','carrying','lift','holding heavy'],
+    ['drive','driving','steering'],
+    ['read','reading','studying','looking at paper'],
+    ['sleep','sleeping','napping','resting','lying'],
+    ['pray','praying','worship','church'],
+    ['dance','dancing','celebrate','party'],
+    ['examine','check','diagnose','inspect','treat','treating'],
+    ['find','finds','discovers','spots','notices'],
+    ['walk','walking','stroll','wander','march','go to','goes to','heading','walks','headed'],
+    ['enter','entering','steps into','goes inside','walk into'],
+    ['leave','leaving','exit','walks away','departs'],
+    ['come','comes','coming','approaches','approaching'],
+    ['stop','stops','halt','freeze','pauses'],
+  ];
+
+  for(const [key, ...synonyms] of checks){
+    const all = [key, ...synonyms];
+    if(all.some(w => txt.includes(w))){
+      const visual = ACTION_VISUALS[key] || ACTION_VISUALS[all[0]];
+      if(visual) return visual;
+    }
+  }
+  
+  // Location-specific defaults
+  if(location==='hospital' || location==='clinic') return ACTION_VISUALS.examine;
+  if(location==='market') return ACTION_VISUALS.buy;
+  if(location==='school') return ACTION_VISUALS.talk;
+  if(location==='checkpoint' || location==='police_station') return ACTION_VISUALS.arrive;
+  
+  return ACTION_VISUALS.talk; // default fallback
+}
 
 // ── STATE ─────────────────────────────────────────────────
 let scenes = [];
@@ -473,12 +588,14 @@ function showCharModal(name){
 function closeModal(){ document.getElementById('char-modal').classList.remove('show'); }
 
 // ── EXAMPLE STORY ─────────────────────────────────────────
-const EXAMPLE_STORY = `Brian and Zawadi are walking to school early in the morning. Mwalimu Hassan is waiting at the school gate with his books. Suddenly Inspector Kamau arrives in his police car with flashing lights. Inspector Kamau says "School is cancelled today! There is a big celebration!" Brian says "YES! No school today!" Zawadi jumps up and down with excitement. Mama Wanjiru comes running from the market and says "Brian! Get back inside right now!" Brian laughs and runs home through the market. Doctor Amara is standing outside the hospital shaking her head and smiling. Baba James sits under the mango tree and laughs at all the chaos.`;
+const EXAMPLE_STORY = `Brian wakes up late and runs out of the house still buttoning his shirt. He runs down the road toward school at full speed. Mwalimu Hassan is standing at the school gate checking his watch with a stern face. Brian arrives breathless and almost falls at the gate. Mwalimu Hassan shakes his head and points Brian inside. In class Brian sits down and pulls out his books. Suddenly Inspector Kamau bursts through the classroom door shouting loudly. Inspector Kamau says "Everyone come outside! There is a wild animal on the road!" All the children run outside screaming. Brian laughs and jumps over the fence. Mama Wanjiru is waiting outside the school and grabs Brian by the ear. Brian says "Mama please I can explain!" Mama Wanjiru drags Brian home as he cries big tears.`;
 
-function useExample(){
-  document.getElementById('story-input').value = EXAMPLE_STORY;
+const EXAMPLE_STORY_2 = `Zawadi goes to the market to buy vegetables for dinner. Merchant Fatuma shows her a basket of tomatoes and says "Only 200 shillings!" Zawadi shakes her head and says "Too expensive! I offer 50 shillings!" The two argue loudly in the market, both pointing fingers. Inspector Kamau walks past eating a mango and stops to watch them argue. Inspector Kamau laughs so hard he falls down dropping his mango. Doctor Amara runs over from the hospital to check if Inspector Kamau is hurt. Inspector Kamau sits up laughing and says "I am fine Doctor, these two are funnier than medicine!" Everyone at the market bursts out laughing. Zawadi buys the tomatoes for 100 shillings and walks home happily.`;
+
+function useExample(n){
+  document.getElementById('story-input').value = n===2 ? EXAMPLE_STORY_2 : EXAMPLE_STORY;
   switchTab('story', document.querySelectorAll('.tab')[1]);
-  toast('Example story loaded! Click "Generate Scenes" to continue', 'ok');
+  toast('Example story loaded! Click "Generate Scenes from Story"', 'ok');
 }
 
 // ── STORY PARSER ─────────────────────────────────────────
@@ -499,36 +616,36 @@ async function parseStory(){
     const systemPrompt = `You are a cartoon story scene planner. Break stories into Pixar-style animation scenes. Return ONLY valid JSON, nothing else.`;
     
     const charNames = Object.keys(CHARACTERS).join(', ');
-    const userPrompt = `Break this story into cartoon video scenes. 
-    
-Available characters: ${charNames}
-Each character has a unique look - use their exact names.
+    const userPrompt = `You are breaking a story into cartoon video scenes for a TikTok-style animated video.
+
+Available characters (use EXACT names): ${charNames}
 
 Story: "${storyText}"
 
-Return a JSON array where each element is a scene:
+For each scene, identify the KEY PHYSICAL ACTION happening — the most visually dramatic thing a camera would see. Be VERY specific about movement and body language.
+
+Return JSON:
 {
   "scenes": [
     {
-      "sceneNum": 1,
-      "caption": "Short punchy text shown on screen (max 10 words, dramatic/funny)",
-      "characters": ["Name1", "Name2"],
-      "action": "Describe exactly what happens visually in this scene (1-2 sentences)",
-      "location": "One word: market/river/hospital/school/forest/city/home/road/field/night/default",
-      "dialogue": "If a character speaks, include it here - or leave empty string",
-      "speaker": "Name of who speaks - or empty string",
-      "mood": "One word: happy/surprised/scared/angry/sad/funny/dramatic",
+      "caption": "Short punchy TikTok caption, max 8 words, dramatic or funny",
+      "characters": ["ExactName1", "ExactName2"],
+      "action": "VERY SPECIFIC physical description: WHAT the character is physically doing with their body. Include movement verbs. E.g: 'Brian walking briskly along dusty road with school bag bouncing on back, school building visible ahead' or 'Inspector Kamau stepping out of police car dramatically, slamming car door, pointing at group of people' or 'Mama Wanjiru running at full sprint toward Brian waving her arms shouting'",
+      "location": "Exact one word from: market/river/hospital/school/forest/city/home/road/field/night/checkpoint/default",
+      "dialogue": "Exact words spoken if any, empty string if none",
+      "speaker": "Character name who speaks, empty if none",
+      "mood": "One of: happy/surprised/scared/angry/sad/funny/dramatic",
       "cameraAngle": "One of: wide-shot/close-up/medium-shot/aerial-shot/dramatic-low-angle"
     }
   ]
 }
 
-Rules:
-- Create 1 scene per major action/moment
-- Keep it 5-10 scenes
-- Make captions punchy and fun like TikTok
-- Only use characters from the available list
-- Each scene must have clear visual action`;
+CRITICAL RULES:
+- 1 scene = 1 clear physical action moment
+- 6-9 scenes total
+- Action field MUST describe physical movement with action verbs (walking, running, arriving, shouting, laughing, eating, etc.)
+- Make captions punchy like viral TikTok videos
+- ONLY use character names from the available list above`;
 
     updateOverlayStep(0, 'done');
     updateOverlayStep(1, 'active');
@@ -647,58 +764,98 @@ function fallbackParse(text){
   };
 }
 
-// ── BUILD IMAGE PROMPT ────────────────────────────────────
+// ── BUILD IMAGE PROMPT — ACTION-FIRST ENGINE ──────────────
 function buildImgPrompt(scene, idx){
   const chars = Array.isArray(scene.characters) ? scene.characters.filter(c=>CHARACTERS[c]) : [];
-  const charDescs = chars.map(n => CHARACTERS[n].imgDesc).join(', and ');
-  const locDesc = LOCATIONS[scene.location] || LOCATIONS.default;
-  const moodDesc = {
-    happy:'joyful bright atmosphere',
-    surprised:'shocked wide eyes dramatic expression',
-    scared:'frightened tense atmosphere',
-    angry:'confrontational tense expressions',
-    sad:'somber emotional moment',
-    funny:'comedic exaggerated expressions',
-    dramatic:'cinematic dramatic moment'
-  }[scene.mood] || 'lively atmosphere';
-  const camDesc = {
-    'wide-shot':'wide establishing shot showing full scene and environment',
-    'close-up':'dramatic close-up shot on face showing emotion',
-    'medium-shot':'medium shot showing characters from waist up',
-    'aerial-shot':'aerial bird\'s eye view shot from above',
-    'dramatic-low-angle':'dramatic low angle shot looking up at character'
-  }[scene.cameraAngle] || 'medium shot';
-
-  const action = scene.action || '';
   
-  return `${charDescs || 'African cartoon character'} in ${locDesc}, ${action}, ${moodDesc}, ${camDesc}, Pixar 3D animation style, ultra high quality render, cinematic lighting, photorealistic 3D texture, vivid colors, 9:16 vertical composition, dramatic film lighting, no text, no watermark`.substring(0, 400);
+  // ① Character descriptions — specific appearance
+  const charDescs = chars.length
+    ? chars.map(n => CHARACTERS[n].imgDesc).join(' AND ')
+    : 'African cartoon character';
+
+  // ② Detect the SPECIFIC ACTION/MOTION happening
+  const actionVisual = detectActionVisual(scene.action || scene.caption || '', chars, scene.location || 'default');
+
+  // ③ Location/environment background
+  const locDesc = LOCATIONS[scene.location] || LOCATIONS.default;
+
+  // ④ Camera and lighting
+  const camAngle = scene.cameraAngle || 'medium-shot';
+  const camMap = {
+    'wide-shot':       'cinematic wide shot, both characters and full environment visible, establishing shot',
+    'close-up':        'dramatic extreme close-up on face, showing every emotion detail, tight crop',
+    'medium-shot':     'medium shot from waist up, characters clearly visible, background in focus',
+    'aerial-shot':     'aerial top-down overhead shot, bird\'s eye view, characters small below',
+    'dramatic-low-angle':'dramatic low angle shot looking up at character, hero perspective, powerful'
+  };
+  const camDesc = camMap[camAngle] || camMap['medium-shot'];
+
+  // ⑤ Mood atmosphere
+  const moodAtmos = {
+    happy:'warm golden sunlight, bright vivid colors, cheerful atmosphere',
+    surprised:'dramatic lighting, wide dramatic framing, shock atmosphere',
+    scared:'dark tense shadows, cool blue light, tense frightening atmosphere',
+    angry:'harsh sidelight, high contrast shadows, intense confrontational energy',
+    sad:'soft muted colors, overcast light, somber emotional atmosphere',
+    funny:'bright comedic lighting, exaggerated cartoon style, playful energy',
+    dramatic:'cinematic dramatic lighting, high contrast, epic atmosphere'
+  }[scene.mood] || 'warm natural lighting';
+
+  // ⑥ Assemble — ACTION is first and most prominent
+  const prompt = [
+    // WHAT IS HAPPENING — most important part
+    `${charDescs}`,
+    `ACTIVELY ${actionVisual}`,
+    // WHERE — detailed environment
+    `SET IN ${locDesc}`,
+    // HOW IT LOOKS
+    `${moodAtmos}`,
+    `${camDesc}`,
+    // STYLE LOCK
+    `Pixar 3D animation movie quality, ultra detailed render, subsurface skin scattering, ray-traced lighting, cinematic depth of field, photorealistic textures, vivid saturated colors, 9:16 vertical portrait composition, professional film still, no text no watermark no logo`
+  ].join(', ');
+
+  return prompt.substring(0, 500);
 }
 
-// ── IMAGE GENERATION ─────────────────────────────────────
+// ── IMAGE GENERATION — with retry ────────────────────────
 async function generateSceneImage(idx){
   const s = scenes[idx];
   if(!s) return;
   s.imgStatus = 'generating';
   updateSceneRow(idx);
+  if(curScene===idx) drawScenePreview(idx,0);
 
+  const seed = Math.floor(Math.random() * 999999);
   const prompt = encodeURIComponent(s.imgPrompt);
-  const seed = Math.floor(Math.random() * 99999);
-  const url = `https://image.pollinations.ai/prompt/${prompt}?width=540&height=960&seed=${seed}&model=flux&nologo=true&enhance=true`;
-
-  try {
-    await loadImg(url); // pre-load to confirm it works
-    s.imgUrl = url;
-    s.imgStatus = 'done';
-    if(!imgCache[idx]) imgCache[idx] = await loadImgEl(url);
-    if(curScene === idx) drawScenePreview(idx, 0);
-  } catch(e) {
-    s.imgStatus = 'error';
-    console.error('Image gen failed', e);
+  // Try flux first, fall back to turbo
+  const models = ['flux', 'flux-realism', 'turbo'];
+  
+  for(let attempt=0; attempt<3; attempt++){
+    const model = models[attempt] || 'flux';
+    const url = `https://image.pollinations.ai/prompt/${prompt}?width=540&height=960&seed=${seed+attempt}&model=${model}&nologo=true&enhance=true&safe=false`;
+    try {
+      await loadImg(url, 55000); // 55s timeout
+      s.imgUrl = url;
+      s.imgStatus = 'done';
+      imgCache[idx] = await loadImgEl(url);
+      if(curScene === idx) drawScenePreview(idx, 0);
+      updateSceneRow(idx);
+      return; // success
+    } catch(e) {
+      console.warn(`Attempt ${attempt+1} failed for scene ${idx}:`, e.message);
+      if(attempt < 2){
+        await new Promise(r=>setTimeout(r, 2000)); // wait before retry
+      }
+    }
   }
+  // All attempts failed
+  s.imgStatus = 'error';
   updateSceneRow(idx);
+  if(curScene===idx) drawScenePreview(idx,0);
 }
 
-function loadImg(url){ return new Promise((res,rej)=>{ const i=new Image(); i.crossOrigin='anonymous'; i.onload=()=>res(i); i.onerror=()=>rej(new Error('fail')); i.src=url; setTimeout(()=>rej(new Error('timeout')),40000); }); }
+function loadImg(url, ms=55000){ return new Promise((res,rej)=>{ const i=new Image(); i.crossOrigin='anonymous'; i.onload=()=>res(i); i.onerror=()=>rej(new Error('fail')); i.src=url; const t=setTimeout(()=>rej(new Error('timeout')),ms); i.onload=()=>{clearTimeout(t);res(i);}; }); }
 async function loadImgEl(url){ try{ const img=await loadImg(url); imgCache[url]=img; return img; }catch{ return null; } }
 
 async function generateAllImages(){
@@ -761,6 +918,7 @@ function buildSceneRowHTML(s, i){
       <div class="scene-text-row"><div class="label">Action</div><div class="val">${s.action}</div></div>
       ${s.dialogue?`<div class="scene-dialogue">"${s.dialogue}" <span style="font-style:normal;font-size:10px;opacity:.6">— ${s.speaker||s.characters[0]||''}</span></div>`:''}
       <div style="font-size:10px;color:var(--txt3)">${s.cameraAngle} · ${s.mood} mood</div>
+      <details style="margin-top:6px"><summary style="font-size:10px;color:var(--txt3);cursor:pointer">🔍 View Image Prompt</summary><div style="font-size:9px;color:var(--txt3);margin-top:4px;line-height:1.5;background:#0a0c14;padding:6px;border-radius:4px;word-break:break-word">${s.imgPrompt||'Not yet built'}</div></details>
     </div>
   </div>`;
 }
