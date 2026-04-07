@@ -3,1256 +3,1405 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>🎬 AI Cartoon Story Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<title>🎬 Cartoon Story Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-:root{
-  --bg:#08090e;--s1:#0f1117;--s2:#161923;--s3:#1d2130;
-  --bdr:#252a38;--bdr2:#2e3447;
-  --acc:#ff4d00;--acc2:#ff9500;--acc3:#ffca28;
-  --blue:#3d8ef8;--green:#22c55e;--purple:#a855f7;
-  --txt:#dde1f0;--txt2:#7a82a0;--txt3:#4a5070;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
-body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;overflow:hidden}
+:root{--bg:#07080d;--s1:#0e1018;--s2:#151820;--s3:#1c2030;--bdr:#222638;--bdr2:#2c3050;
+  --acc:#ff4500;--acc2:#ff8c00;--acc3:#ffd700;--blue:#4488ff;--green:#22dd66;--purple:#aa55ff;
+  --txt:#e0e4f8;--txt2:#6a7090;--txt3:#383c58}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif}
 
-/* ══ LAYOUT ══ */
-.app{display:grid;grid-template-columns:320px 1fr 280px;grid-template-rows:56px 1fr;height:100vh;overflow:hidden}
-.topbar{grid-column:1/-1;background:var(--s1);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 20px;gap:16px;z-index:50}
-.sidebar-left{grid-column:1;background:var(--s1);border-right:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
-.center{grid-column:2;background:var(--bg);overflow-y:auto;display:flex;flex-direction:column}
-.sidebar-right{grid-column:3;background:var(--s1);border-left:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
+.app{display:grid;grid-template-columns:300px 1fr 300px;grid-template-rows:52px 1fr;height:100vh}
 
-/* ══ TOPBAR ══ */
-.logo{font-family:'Bebas Neue';font-size:26px;letter-spacing:2px;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
-.topbar-badges{display:flex;gap:8px;margin-left:8px}
-.tbadge{background:rgba(255,77,0,.1);border:1px solid rgba(255,77,0,.25);color:var(--acc);padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.5px}
-.tbadge.b{background:rgba(61,142,248,.1);border-color:rgba(61,142,248,.25);color:var(--blue)}
-.tbadge.g{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25);color:var(--green)}
-.topbar-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+/* TOPBAR */
+.topbar{grid-column:1/-1;background:var(--s1);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 18px;gap:14px;z-index:100}
+.logo{font-family:'Bebas Neue';font-size:24px;letter-spacing:2px;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tbd{padding:3px 9px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:.4px}
+.tbd-o{background:rgba(255,69,0,.12);border:1px solid rgba(255,69,0,.3);color:var(--acc)}
+.tbd-b{background:rgba(68,136,255,.12);border:1px solid rgba(68,136,255,.3);color:var(--blue)}
+.tbd-g{background:rgba(34,221,102,.12);border:1px solid rgba(34,221,102,.3);color:var(--green)}
+.tbd-p{background:rgba(170,85,255,.12);border:1px solid rgba(170,85,255,.3);color:var(--purple)}
 
-/* ══ SECTION HEADERS ══ */
-.shead{padding:14px 16px 10px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--txt3);text-transform:uppercase;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:8px;flex-shrink:0}
-.shead-dot{width:3px;height:14px;border-radius:2px;background:linear-gradient(var(--acc),var(--acc2))}
+/* PANELS */
+.lpanel{background:var(--s1);border-right:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
+.cpanel{background:var(--bg);overflow-y:auto}
+.rpanel{background:var(--s1);border-left:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
 
-/* ══ CHARACTERS PANEL ══ */
-.char-list{padding:10px;display:flex;flex-direction:column;gap:6px}
-.char-card{background:var(--s2);border:1px solid var(--bdr);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .18s;position:relative}
-.char-card:hover{border-color:var(--bdr2);background:var(--s3)}
-.char-card.active{border-color:var(--acc);background:rgba(255,77,0,.06)}
-.char-avatar{width:42px;height:42px;border-radius:10px;overflow:hidden;border:2px solid var(--bdr2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;background:var(--s3)}
-.char-avatar img{width:100%;height:100%;object-fit:cover}
-.char-info{flex:1;min-width:0}
-.char-name{font-size:13px;font-weight:700;color:var(--txt)}
-.char-role{font-size:11px;color:var(--txt2);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.char-badge{font-size:9px;background:rgba(255,77,0,.15);color:var(--acc);padding:2px 6px;border-radius:4px;font-weight:700;margin-top:3px;display:inline-block}
-.char-preview-btn{font-size:13px;background:none;border:none;cursor:pointer;padding:4px;border-radius:6px;transition:.2s;color:var(--txt2)}
-.char-preview-btn:hover{background:var(--bdr);color:var(--txt)}
+.sh{padding:12px 14px 8px;font-size:10px;font-weight:700;letter-spacing:1.4px;color:var(--txt3);text-transform:uppercase;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:7px;flex-shrink:0}
+.sh-bar{width:3px;height:13px;border-radius:2px;background:linear-gradient(var(--acc),var(--acc2))}
 
-/* ══ STORY INPUT ══ */
-.story-box{padding:14px}
-.story-textarea{width:100%;background:#0a0c13;border:1px solid var(--bdr);color:var(--txt);padding:12px;border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;line-height:1.7;resize:none;height:180px;outline:none;transition:border-color .2s}
-.story-textarea:focus{border-color:rgba(255,77,0,.4)}
-.story-hints{margin-top:8px;font-size:10px;color:var(--txt3);line-height:1.7}
-.story-hints span{color:var(--acc);font-weight:700}
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--bdr);flex-shrink:0}
+.tab{padding:9px 13px;font-size:11px;font-weight:700;cursor:pointer;color:var(--txt3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.2s;letter-spacing:.3px;background:none;border-top:none;border-left:none;border-right:none}
+.tab.on{color:var(--acc);border-bottom-color:var(--acc)}
 
-/* ══ BUTTONS ══ */
-.btn{padding:9px 16px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;transition:all .2s;display:inline-flex;align-items:center;gap:6px;letter-spacing:.3px}
-.btn-fire{background:linear-gradient(135deg,#ff4d00,#ff9500);color:#fff;box-shadow:0 4px 16px rgba(255,77,0,.3)}
-.btn-fire:hover{filter:brightness(1.12);transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,77,0,.4)}
+/* CHARACTER CARDS */
+.clist{padding:8px;display:flex;flex-direction:column;gap:5px}
+.ccard{background:var(--s2);border:1px solid var(--bdr);border-radius:9px;padding:9px 11px;display:flex;align-items:center;gap:9px;cursor:pointer;transition:.15s}
+.ccard:hover{border-color:var(--bdr2);background:var(--s3)}
+.cavi{width:38px;height:38px;border-radius:8px;background:var(--s3);border:2px solid var(--bdr2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.cinf{flex:1;min-width:0}
+.cname{font-size:12px;font-weight:700}
+.crole{font-size:10px;color:var(--txt2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cvbadge{font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;margin-top:2px;display:inline-block}
+.cprev{background:none;border:none;cursor:pointer;color:var(--txt2);font-size:12px;padding:3px;border-radius:5px;transition:.15s}
+.cprev:hover{background:var(--bdr);color:var(--txt)}
+
+/* STORY INPUT */
+.sbox{padding:12px}
+.sta{width:100%;background:#090b12;border:1px solid var(--bdr);color:var(--txt);padding:10px;border-radius:9px;font-family:'Inter',sans-serif;font-size:12px;line-height:1.7;resize:none;height:160px;outline:none;transition:border-color .2s}
+.sta:focus{border-color:rgba(255,69,0,.4)}
+.hints{margin-top:7px;font-size:10px;color:var(--txt3);line-height:1.8}
+.hints span{color:var(--acc2);font-weight:700}
+.exbox{margin:8px 12px;background:rgba(68,136,255,.06);border:1px solid rgba(68,136,255,.15);border-radius:8px;padding:9px}
+.extitle{font-size:10px;font-weight:700;color:var(--blue);letter-spacing:.7px;margin-bottom:4px;text-transform:uppercase}
+.exbtn{font-size:10px;font-weight:700;color:var(--blue);background:rgba(68,136,255,.12);border:1px solid rgba(68,136,255,.2);padding:4px 10px;border-radius:5px;cursor:pointer;margin-top:5px;display:inline-block;font-family:'Inter',sans-serif;transition:.2s}
+.exbtn:hover{background:rgba(68,136,255,.22)}
+
+/* BUTTONS */
+.btn{padding:8px 14px;border-radius:7px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.btn-fire{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 3px 12px rgba(255,69,0,.28)}
+.btn-fire:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn-fire:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-.btn-outline{background:transparent;border:1px solid var(--bdr2);color:var(--txt2)}
-.btn-outline:hover{background:var(--s2);color:var(--txt);border-color:#444}
-.btn-blue{background:rgba(61,142,248,.15);border:1px solid rgba(61,142,248,.3);color:var(--blue)}
-.btn-blue:hover{background:rgba(61,142,248,.25)}
-.btn-green{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;box-shadow:0 4px 16px rgba(34,197,94,.25)}
-.btn-green:hover{filter:brightness(1.1);transform:translateY(-1px)}
-.btn-green:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.btn-full{width:100%;justify-content:center;padding:12px}
+.btn-out{background:transparent;border:1px solid var(--bdr2);color:var(--txt2)}
+.btn-out:hover{background:var(--s2);color:var(--txt)}
+.btn-grn{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;box-shadow:0 3px 12px rgba(34,197,94,.22)}
+.btn-grn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-grn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-full{width:100%;justify-content:center;padding:11px}
 
-/* ══ CENTER — SCENE PIPELINE ══ */
-.center-head{padding:16px 20px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:12px;flex-shrink:0}
-.center-head h2{font-family:'Bebas Neue';font-size:20px;letter-spacing:1px;color:var(--txt)}
-.scene-count-badge{background:var(--s2);border:1px solid var(--bdr2);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;color:var(--txt2)}
-.pipeline{padding:16px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
+/* CENTER PIPELINE */
+.chead{padding:14px 18px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.chead h2{font-family:'Bebas Neue';font-size:19px;letter-spacing:1px}
+.scbadge{background:var(--s2);border:1px solid var(--bdr2);padding:3px 9px;border-radius:12px;font-size:10px;font-weight:700;color:var(--txt2)}
+.pipe{padding:14px 18px;display:flex;flex-direction:column;gap:10px}
 
-/* ══ SCENE ROW ══ */
-.scene-row{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;overflow:hidden;transition:all .2s;cursor:pointer}
-.scene-row:hover{border-color:var(--bdr2)}
-.scene-row.active{border-color:rgba(255,77,0,.4);box-shadow:0 0 0 1px rgba(255,77,0,.15)}
-.scene-row-head{display:flex;align-items:center;gap:10px;padding:10px 14px}
-.scene-num{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.scene-char-chips{display:flex;gap:4px;flex:1;flex-wrap:wrap}
-.chip{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(61,142,248,.12);border:1px solid rgba(61,142,248,.2);color:var(--blue)}
-.chip.loc{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.2);color:var(--purple)}
-.chip.dia{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.2);color:var(--green)}
-.scene-actions{display:flex;gap:6px;margin-left:auto}
-.scene-action-btn{width:26px;height:26px;border-radius:6px;border:1px solid var(--bdr);background:var(--s2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:.15s;color:var(--txt2)}
-.scene-action-btn:hover{background:var(--s3);border-color:#444;color:var(--txt)}
-.scene-body{display:none;border-top:1px solid var(--bdr);padding:10px 14px;display:grid;grid-template-columns:100px 1fr;gap:10px}
-.scene-thumb{width:100px;height:178px;border-radius:8px;overflow:hidden;background:var(--s2);border:1px solid var(--bdr);flex-shrink:0;position:relative;display:flex;align-items:center;justify-content:center}
-.scene-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.scene-thumb-loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:10px;color:var(--txt2);text-align:center;padding:8px}
-.scene-details{display:flex;flex-direction:column;gap:8px}
-.scene-text-row{font-size:12px;line-height:1.6}
-.scene-text-row .label{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:2px}
-.scene-text-row .val{color:var(--txt2)}
-.scene-dialogue{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:6px;padding:6px 10px;font-size:12px;color:var(--green);font-style:italic}
-.spin{width:22px;height:22px;border:2.5px solid var(--bdr2);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.st-idle{background:var(--bdr2)}
-.st-gen{background:var(--acc2);animation:pulse .8s ease infinite}
-.st-done{background:var(--green)}
-.st-err{background:#ef4444}
+/* SCENE ROW */
+.srow{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .15s}
+.srow:hover{border-color:var(--bdr2)}
+.srow.active{border-color:rgba(255,69,0,.45);box-shadow:0 0 0 1px rgba(255,69,0,.12)}
+.srhead{display:flex;align-items:center;gap:8px;padding:9px 12px}
+.srnum{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.srchips{display:flex;gap:4px;flex:1;flex-wrap:wrap}
+.chip{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.chip-c{background:rgba(68,136,255,.12);border:1px solid rgba(68,136,255,.2);color:var(--blue)}
+.chip-l{background:rgba(170,85,255,.12);border:1px solid rgba(170,85,255,.2);color:var(--purple)}
+.chip-d{background:rgba(34,221,102,.1);border:1px solid rgba(34,221,102,.2);color:var(--green)}
+.sract{display:flex;gap:5px;margin-left:auto;align-items:center}
+.sdot{width:7px;height:7px;border-radius:50%}
+.sdot-i{background:var(--bdr2)}.sdot-g{background:var(--acc2);animation:pulse .8s infinite}.sdot-d{background:var(--green)}.sdot-e{background:#f44}
+.sabtn{width:24px;height:24px;border-radius:5px;border:1px solid var(--bdr);background:var(--s2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:.15s;color:var(--txt2)}
+.sabtn:hover{background:var(--s3);color:var(--txt)}
+.srbody{border-top:1px solid var(--bdr);padding:9px 12px;display:grid;grid-template-columns:88px 1fr;gap:9px}
+.sthumb{width:88px;height:156px;border-radius:7px;overflow:hidden;background:var(--s2);border:1px solid var(--bdr);position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sthumb img{width:100%;height:100%;object-fit:cover}
+.sthumb-ld{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:10px;color:var(--txt2);text-align:center;padding:6px}
+.sdet{display:flex;flex-direction:column;gap:6px}
+.sdet .lbl{font-size:9px;font-weight:700;color:var(--txt3);letter-spacing:.7px;text-transform:uppercase;margin-bottom:1px}
+.sdet .val{font-size:11px;color:var(--txt2);line-height:1.5}
+.sdia{background:rgba(34,221,102,.06);border:1px solid rgba(34,221,102,.15);border-radius:5px;padding:5px 9px;font-size:11px;color:var(--green);font-style:italic}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 
-/* ══ PREVIEW ══ */
-.preview-wrap{padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px}
-.phone-shell{width:220px;background:#111;border-radius:28px;border:3px solid #2a2a2a;box-shadow:0 20px 50px rgba(0,0,0,.7),inset 0 0 0 1px #333;position:relative;overflow:hidden;flex-shrink:0}
-.phone-notch{height:20px;background:#111;display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
-.notch-bar{width:50px;height:4px;background:#1a1a1a;border-radius:2px}
-#pcanv{width:214px;height:380px;display:block;background:#000;border-radius:0 0 20px 20px}
-.phone-btns{display:flex;gap:6px;width:100%}
-.pbtn{flex:1;padding:8px 6px;border-radius:8px;border:1px solid var(--bdr);background:var(--s2);color:var(--txt2);cursor:pointer;font-size:11px;font-weight:700;font-family:'Inter',sans-serif;transition:.18s;text-align:center}
+/* SPINNER */
+.spin{border:2.5px solid var(--bdr2);border-top-color:var(--acc);border-radius:50%;animation:spin .65s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* RIGHT PANEL — PHONE PREVIEW */
+.prev-wrap{padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.phone{width:210px;background:#0a0a0a;border-radius:24px;border:3px solid #1e1e1e;box-shadow:0 16px 48px rgba(0,0,0,.7),inset 0 0 0 1px #2a2a2a;overflow:hidden;position:relative}
+.pnotch{height:18px;background:#0a0a0a;display:flex;align-items:center;justify-content:center}
+.pnotch-bar{width:44px;height:4px;background:#1a1a1a;border-radius:2px}
+#pcanv{width:204px;height:362px;display:block;background:#000;border-radius:0 0 18px 18px}
+.pbtns{display:flex;gap:6px;width:100%}
+.pbtn{flex:1;padding:7px;border-radius:7px;border:1px solid var(--bdr);background:var(--s2);color:var(--txt2);cursor:pointer;font-size:11px;font-weight:700;font-family:'Inter',sans-serif;transition:.15s;text-align:center}
 .pbtn:hover{background:var(--s3);color:var(--txt)}
-.pbtn.prim{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent;color:#fff}
-.pbtn.prim:hover{filter:brightness(1.1)}
-.scene-ind{font-size:11px;color:var(--txt3);text-align:center}
+.pbtn.pp{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent;color:#fff}
+.pbtn.pp:hover{filter:brightness(1.1)}
+.scind{font-size:10px;color:var(--txt3);text-align:center}
 
-/* ══ RENDER ══ */
-.render-section{padding:14px;border-top:1px solid var(--bdr);margin-top:auto}
-.render-section h4{font-size:11px;font-weight:700;color:var(--txt2);letter-spacing:.8px;margin-bottom:10px;text-transform:uppercase}
-.prog-bar{height:5px;background:var(--bdr);border-radius:3px;overflow:hidden;margin:8px 0}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));border-radius:3px;transition:width .25s}
-.prog-txt{font-size:10px;color:var(--txt2);text-align:center}
-.dl-area{text-align:center;padding:10px 0}
-.dl-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:10px;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;text-decoration:none;box-shadow:0 4px 16px rgba(34,197,94,.3)}
+/* VOICE CONTROLS */
+.vsec{padding:12px;border-top:1px solid var(--bdr)}
+.vsec h4{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
+.vtest{display:flex;gap:6px;flex-wrap:wrap}
+.vtbtn{flex:1;padding:7px 5px;border-radius:6px;border:1px solid var(--bdr);background:var(--s2);color:var(--txt2);cursor:pointer;font-size:10px;font-weight:700;font-family:'Inter',sans-serif;min-width:60px;text-align:center;transition:.15s}
+.vtbtn:hover{background:var(--s3);color:var(--txt)}
 
-/* ══ TOAST ══ */
-.toast{position:fixed;bottom:20px;right:20px;background:var(--s2);border:1px solid var(--bdr2);border-radius:10px;padding:10px 16px;font-size:12px;font-weight:600;z-index:999;display:none;animation:fadeUp .3s ease;max-width:320px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.toast.err{border-color:rgba(239,68,68,.3);background:rgba(30,8,8,.9);color:#f87171}
-.toast.ok{border-color:rgba(34,197,94,.3);color:var(--green)}
+/* RENDER */
+.rsec{padding:12px;border-top:1px solid var(--bdr)}
+.rsec h4{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
+.pbar{height:5px;background:var(--bdr);border-radius:3px;overflow:hidden;margin:7px 0}
+.pfill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));border-radius:3px;transition:width .2s}
+.ptxt{font-size:10px;color:var(--txt2);text-align:center}
+.dlarea{text-align:center;padding:8px 0}
+.dlbtn{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:9px;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;font-family:'Bebas Neue';font-size:17px;letter-spacing:2px;text-decoration:none;box-shadow:0 3px 14px rgba(34,197,94,.28)}
 
-/* ══ LOADING OVERLAY ══ */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.overlay.show{display:flex}
-.overlay-box{background:var(--s2);border:1px solid var(--bdr2);border-radius:16px;padding:32px 40px;text-align:center;max-width:360px}
-.overlay-box .spin{width:40px;height:40px;border-width:4px;margin:0 auto 16px}
-.overlay-box h3{font-family:'Bebas Neue';font-size:22px;letter-spacing:1px;margin-bottom:6px;color:var(--acc2)}
-.overlay-box p{font-size:13px;color:var(--txt2);line-height:1.6}
-.overlay-steps{margin-top:16px;display:flex;flex-direction:column;gap:6px}
-.ost{padding:6px 12px;border-radius:6px;font-size:11px;text-align:left;display:flex;gap:8px;align-items:center}
-.ost.done{background:rgba(34,197,94,.1);color:var(--green)}
-.ost.active{background:rgba(255,149,0,.1);color:var(--acc2)}
-.ost.wait{background:var(--s1);color:var(--txt3)}
+/* OVERLAY */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+.ov.show{display:flex}
+.ovbox{background:var(--s2);border:1px solid var(--bdr2);border-radius:14px;padding:28px 36px;text-align:center;max-width:340px}
+.ovbox .spin{width:36px;height:36px;border-width:3.5px;margin:0 auto 14px}
+.ovbox h3{font-family:'Bebas Neue';font-size:20px;letter-spacing:1px;color:var(--acc2);margin-bottom:5px}
+.ovbox p{font-size:12px;color:var(--txt2);line-height:1.6}
 
-/* ══ CHAR DETAIL MODAL ══ */
-.char-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-.char-modal.show{display:flex}
-.char-modal-box{background:var(--s2);border:1px solid var(--bdr2);border-radius:16px;width:360px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.char-modal-img{width:100%;height:220px;object-fit:cover;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:64px}
-.char-modal-body{padding:18px}
-.char-modal-name{font-family:'Bebas Neue';font-size:26px;letter-spacing:1px;color:var(--acc2);margin-bottom:4px}
-.char-modal-role{font-size:12px;color:var(--txt2);margin-bottom:10px}
-.char-modal-desc{font-size:12px;color:var(--txt);line-height:1.7;background:var(--s1);padding:10px;border-radius:8px;border:1px solid var(--bdr)}
-.char-modal-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.5);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+/* TOAST */
+.toast{position:fixed;bottom:18px;right:18px;background:var(--s2);border:1px solid var(--bdr2);border-radius:9px;padding:9px 14px;font-size:12px;font-weight:600;z-index:500;display:none;animation:fadeUp .3s}
+.toast.ok{border-color:rgba(34,221,102,.3);color:var(--green)}
+.toast.err{border-color:rgba(244,68,68,.3);color:#f87171}
+@keyframes fadeUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
 
-/* ══ TABS ══ */
-.tabs{display:flex;border-bottom:1px solid var(--bdr);padding:0 16px;flex-shrink:0}
-.tab{padding:10px 14px;font-size:11px;font-weight:700;cursor:pointer;color:var(--txt3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.2s;letter-spacing:.3px}
-.tab.on{color:var(--acc);border-bottom-color:var(--acc)}
-.tab:hover{color:var(--txt2)}
+/* CHARACTER MODAL */
+.cmod{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:400;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
+.cmod.show{display:flex}
+.cmodbox{background:var(--s2);border:1px solid var(--bdr2);border-radius:14px;width:320px;overflow:hidden;position:relative}
+.cmodemi{height:160px;display:flex;align-items:center;justify-content:center;font-size:72px;background:var(--s3)}
+.cmodb{padding:16px}
+.cmodbtn{width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.5);border:none;color:#fff;cursor:pointer;position:absolute;top:10px;right:10px;font-size:13px;display:flex;align-items:center;justify-content:center}
 
-/* ══ STORY EXAMPLE ══ */
-.example-box{margin:10px 14px;background:rgba(61,142,248,.05);border:1px solid rgba(61,142,248,.15);border-radius:8px;padding:10px}
-.example-box p{font-size:11px;color:var(--txt2);line-height:1.6}
-.example-box .ex-title{font-size:10px;font-weight:700;color:var(--blue);letter-spacing:.8px;margin-bottom:4px;text-transform:uppercase}
-.use-example{font-size:10px;font-weight:700;color:var(--blue);background:rgba(61,142,248,.12);border:1px solid rgba(61,142,248,.2);padding:3px 10px;border-radius:4px;cursor:pointer;margin-top:6px;display:inline-block;font-family:'Inter',sans-serif}
-.use-example:hover{background:rgba(61,142,248,.22)}
+/* ADD-SCENE BTN */
+.add-sc{width:100%;padding:9px;background:none;border:1px dashed var(--bdr);color:var(--acc);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;border-radius:8px;transition:.2s;display:flex;align-items:center;justify-content:center;gap:5px}
+.add-sc:hover{border-color:var(--acc);background:rgba(255,69,0,.05)}
 
-/* ══ SCROLLBAR ══ */
-::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:3px}
-
-/* ══ RESPONSIVE ══ */
-@media(max-width:1100px){.app{grid-template-columns:280px 1fr 240px}}
-@media(max-width:860px){.app{grid-template-columns:1fr;grid-template-rows:56px auto 1fr auto};.sidebar-left,.sidebar-right{display:none}}
+/* empty state */
+.empty{text-align:center;padding:50px 20px;color:var(--txt3)}
+.empty .ei{font-size:52px;margin-bottom:12px}
 </style>
 </head>
 <body>
-
 <div class="app">
 
-<!-- ══ TOPBAR ══ -->
+<!-- TOPBAR -->
 <header class="topbar">
-  <div class="logo">🎬 AI Cartoon Story Studio</div>
-  <div class="topbar-badges">
-    <span class="tbadge">✨ Pixar Style</span>
-    <span class="tbadge b">🎭 10 Characters</span>
-    <span class="tbadge g">📱 9:16 Video</span>
-  </div>
-  <div class="topbar-right">
-    <button class="btn btn-outline" onclick="clearAll()" style="font-size:11px">🗑 Clear</button>
-    <button class="btn btn-green" onclick="renderVideo()" id="render-btn">🎬 Export Video</button>
+  <div class="logo">🎬 Cartoon Story Studio</div>
+  <span class="tbd tbd-o">✨ Pixar AI Scenes</span>
+  <span class="tbd tbd-b">🎭 Animated Characters</span>
+  <span class="tbd tbd-g">🗣 Voice Acting</span>
+  <span class="tbd tbd-p">📱 9:16 Video</span>
+  <div style="margin-left:auto;display:flex;gap:8px">
+    <button class="btn btn-out" onclick="clearAll()" style="font-size:11px">🗑 Clear</button>
+    <button class="btn btn-fire" id="genall-btn" onclick="generateAllImages()" style="display:none">🖼 Generate All Images</button>
+    <button class="btn btn-grn" onclick="renderVideo()" id="render-btn">🎬 Export Video</button>
   </div>
 </header>
 
-<!-- ══ LEFT SIDEBAR — CHARACTERS + STORY ══ -->
-<aside class="sidebar-left">
+<!-- LEFT — Characters + Story -->
+<aside class="lpanel">
   <div class="tabs">
-    <button class="tab on" onclick="switchTab('chars',this)">Characters</button>
-    <button class="tab" onclick="switchTab('story',this)">Write Story</button>
+    <button class="tab on" id="tab-c" onclick="swTab('chars')">🎭 Characters</button>
+    <button class="tab" id="tab-s" onclick="swTab('story')">✍️ Write Story</button>
   </div>
 
-  <!-- CHARACTERS TAB -->
-  <div id="tab-chars">
-    <div class="shead"><div class="shead-dot"></div>Your Cast — Use these names in your story</div>
-    <div class="char-list" id="char-list"></div>
+  <div id="pane-chars">
+    <div class="sh"><div class="sh-bar"></div>10 Characters — type their name in your story</div>
+    <div class="clist" id="char-list"></div>
   </div>
 
-  <!-- STORY TAB -->
-  <div id="tab-story" style="display:none">
-    <div style="padding:14px">
-      <div class="shead" style="margin:-14px -14px 12px;padding:10px 14px"><div class="shead-dot"></div>Write Your Story</div>
-      <textarea class="story-textarea" id="story-input" placeholder="Write your story here using the character names...
+  <div id="pane-story" style="display:none">
+    <div class="sbox">
+      <div class="sh" style="margin:-12px -12px 10px;padding:10px 12px"><div class="sh-bar"></div>Your Story</div>
+      <textarea class="sta" id="story-ta" placeholder="Write your story here. Use character names and describe what they DO.
 
-Example:
-Brian wakes up and goes to the market. Merchant Fatuma sells him mangoes. Inspector Kamau arrives and everyone is surprised..."></textarea>
-      <div class="story-hints">
-        Mention characters by name: <span>Brian, Zawadi, Mama Wanjiru, Inspector Kamau</span>, etc.<br/>
-        Add locations: <span>river, hospital, market, school, forest, city</span><br/>
-        Add dialogue: <span>Brian says "Hello!"</span>
+Good example:
+Brian wakes up in bed and stretches. He runs to school. Inspector Kamau drives up in his police car..."></textarea>
+      <div class="hints">
+        Characters: <span>Brian, Zawadi, Mama Wanjiru, Inspector Kamau, Doctor Amara, Chef Omondi, Mwalimu Hassan, Merchant Fatuma, Baba James, Ranger Kipchoge</span><br/>
+        Actions: <span>walks, runs, wakes up, arrives, talks, laughs, cries, eats, argues...</span>
       </div>
-      <div style="margin-top:10px;display:flex;gap:8px">
-        <button class="btn btn-fire btn-full" id="parse-btn" onclick="parseStory()">
-          ✨ Generate Scenes from Story
-        </button>
+      <div style="margin-top:10px">
+        <button class="btn btn-fire btn-full" id="parse-btn" onclick="parseStory()">✨ Generate Scenes from Story</button>
       </div>
     </div>
 
-    <div class="example-box">
-      <div class="ex-title">⚡ Quick Start — Ready Example</div>
-      <p>Brian runs late to school → Inspector Kamau bursts in → Mama Wanjiru grabs Brian's ear → chaos! 8 scenes, no setup needed.</p>
-      <button class="use-example" onclick="useExample(1)">🚀 Load Example &amp; Jump to Images →</button>
+    <div class="exbox">
+      <div class="extitle">⚡ Quick Start</div>
+      <p style="font-size:10px;color:var(--txt2);line-height:1.6">Brian is late, runs to school, Inspector Kamau bursts in, Mama Wanjiru drags Brian home — 8 action scenes ready instantly.</p>
+      <button class="exbtn" onclick="loadExample()">🚀 Load Example → Generate Images</button>
     </div>
   </div>
 </aside>
 
-<!-- ══ CENTER — SCENE PIPELINE ══ -->
-<main class="center">
-  <div class="center-head">
+<!-- CENTER — Scene Pipeline -->
+<main class="cpanel">
+  <div class="chead">
     <h2>🎬 Scene Pipeline</h2>
-    <span class="scene-count-badge" id="scene-count-badge">0 scenes</span>
-    <div style="margin-left:auto;display:flex;gap:8px">
-      <button class="btn btn-blue" onclick="generateAllImages()" id="gen-all-btn" style="display:none">🖼 Generate All Images</button>
-    </div>
+    <span class="scbadge" id="sc-badge">0 scenes</span>
   </div>
-
-  <div class="pipeline" id="pipeline">
-    <!-- Empty state -->
-    <div id="empty-state" style="text-align:center;padding:60px 20px;color:var(--txt3)">
-      <div style="font-size:64px;margin-bottom:16px">🎭</div>
-      <div style="font-family:'Bebas Neue';font-size:24px;letter-spacing:1px;color:var(--txt2);margin-bottom:8px">Your scenes appear here</div>
-      <div style="font-size:13px;line-height:1.7;max-width:360px;margin:0 auto">
-        Go to the <strong style="color:var(--acc)">Write Story</strong> tab on the left, type your story using character names, then click <strong style="color:var(--acc)">Generate Scenes</strong>
-      </div>
+  <div class="pipe" id="pipe">
+    <div class="empty" id="empty-st">
+      <div class="ei">🎭</div>
+      <div style="font-family:'Bebas Neue';font-size:20px;color:var(--txt2);margin-bottom:6px">Your scenes appear here</div>
+      <div style="font-size:12px;line-height:1.7;max-width:300px;margin:0 auto">Use the <strong style="color:var(--acc)">Write Story</strong> tab to type your story, then click <strong style="color:var(--acc)">Generate Scenes</strong></div>
     </div>
   </div>
 </main>
 
-<!-- ══ RIGHT SIDEBAR — PREVIEW + RENDER ══ -->
-<aside class="sidebar-right">
-  <div class="shead"><div class="shead-dot"></div>Preview</div>
-
-  <div class="preview-wrap">
-    <div class="phone-shell">
-      <div class="phone-notch"><div class="notch-bar"></div></div>
+<!-- RIGHT — Preview + Voice + Render -->
+<aside class="rpanel">
+  <div class="sh"><div class="sh-bar"></div>Preview</div>
+  <div class="prev-wrap">
+    <div class="phone">
+      <div class="pnotch"><div class="pnotch-bar"></div></div>
       <canvas id="pcanv" width="540" height="960"></canvas>
     </div>
-    <div class="phone-btns">
+    <div class="pbtns">
       <button class="pbtn" onclick="prevSc()">◀</button>
-      <button class="pbtn prim" id="play-btn" onclick="togglePlay()">▶ Play</button>
+      <button class="pbtn pp" id="play-btn" onclick="togglePlay()">▶ Play</button>
       <button class="pbtn" onclick="nextSc()">▶</button>
     </div>
-    <div class="scene-ind" id="scene-ind">Scene 0 / 0</div>
+    <div class="scind" id="sc-ind">Scene 0 / 0</div>
+    <button class="btn btn-fire btn-full" id="speak-btn" onclick="speakCurrentScene()" style="margin-top:4px">🔊 Speak This Scene</button>
   </div>
 
-  <div class="render-section">
-    <h4>🎬 Export</h4>
-    <div style="font-size:11px;color:var(--txt3);margin-bottom:10px;line-height:1.6">Generate all images, then export your video for TikTok & Reels</div>
-    <button class="btn btn-green btn-full" onclick="renderVideo()" id="render-btn2">🎬 Export Video (WebM)</button>
-    <div id="render-prog" style="display:none;margin-top:10px">
-      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-      <div class="prog-txt" id="prog-txt">Preparing...</div>
+  <div class="vsec">
+    <h4>🎙 Voice Test</h4>
+    <div class="vtest" id="voice-test-btns"></div>
+  </div>
+
+  <div class="rsec">
+    <h4>🎬 Export Video</h4>
+    <div style="font-size:10px;color:var(--txt3);margin-bottom:9px;line-height:1.6">Video includes animated characters + AI backgrounds + voice captions</div>
+    <button class="btn btn-grn btn-full" onclick="renderVideo()" id="render-btn2">🎬 Export Video (WebM)</button>
+    <div id="rprog" style="display:none;margin-top:9px">
+      <div class="pbar"><div class="pfill" id="pfill" style="width:0%"></div></div>
+      <div class="ptxt" id="ptxt">Preparing...</div>
     </div>
-    <div id="dl-area" style="display:none" class="dl-area">
-      <a id="dl-link" class="dl-btn" download="cartoon-story.webm">⬇ DOWNLOAD</a>
-      <div style="font-size:10px;color:var(--txt3);margin-top:6px">Works with TikTok · Reels · Shorts</div>
+    <div id="dlarea" style="display:none" class="dlarea">
+      <a id="dllink" class="dlbtn" download="cartoon.webm">⬇ DOWNLOAD</a>
+      <div style="font-size:10px;color:var(--txt3);margin-top:5px">TikTok · Reels · Shorts</div>
     </div>
   </div>
 </aside>
 </div>
 
-<!-- ══ LOADING OVERLAY ══ -->
-<div class="overlay" id="overlay">
-  <div class="overlay-box">
-    <div class="spin"></div>
-    <h3 id="ov-title">Analysing Story...</h3>
-    <p id="ov-msg">Please wait while AI reads your story and creates scenes</p>
-    <div class="overlay-steps" id="ov-steps"></div>
-  </div>
-</div>
-
-<!-- ══ CHARACTER MODAL ══ -->
-<div class="char-modal" id="char-modal" onclick="if(event.target===this)closeModal()">
-  <div class="char-modal-box" style="position:relative">
-    <div id="cm-img" class="char-modal-img"></div>
-    <div class="char-modal-body">
-      <div class="char-modal-name" id="cm-name"></div>
-      <div class="char-modal-role" id="cm-role"></div>
-      <div class="char-modal-desc" id="cm-desc"></div>
-      <button class="use-example" style="margin-top:10px;width:100%;text-align:center;display:block" onclick="closeModal()">Close</button>
-    </div>
-    <button class="char-modal-close" onclick="closeModal()">✕</button>
-  </div>
-</div>
-
-<!-- ══ TOAST ══ -->
+<!-- Overlays -->
+<div class="ov" id="ov"><div class="ovbox"><div class="spin" style="width:36px;height:36px;border-width:3.5px;margin:0 auto 14px"></div><h3 id="ov-title">Working...</h3><p id="ov-msg">Please wait</p></div></div>
+<div class="cmod" id="cmod" onclick="if(event.target===this)closeCmod()"><div class="cmodbox"><div class="cmodemi" id="cm-emi"></div><div class="cmodb"><div style="font-family:'Bebas Neue';font-size:22px;letter-spacing:1px;color:var(--acc2)" id="cm-name"></div><div style="font-size:11px;color:var(--txt2);margin-bottom:8px" id="cm-role"></div><div style="font-size:11px;color:var(--txt);line-height:1.7;background:var(--s1);padding:8px;border-radius:7px" id="cm-desc"></div><div style="font-size:10px;color:var(--txt3);margin-top:8px;padding:6px 8px;background:rgba(0,0,0,.3);border-radius:5px" id="cm-voice"></div></div><button class="cmodbtn" onclick="closeCmod()">✕</button></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
-// ════════════════════════════════════════════════════════════
-//  AI CARTOON STORY STUDIO — Full Engine
-// ════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════════
+//  CARTOON STORY STUDIO v4 — Animated Characters + Voices
+// ═══════════════════════════════════════════════════════════════════
 
-// ── 10 CHARACTERS ──────────────────────────────────────────
-const CHARACTERS = {
-  "Brian": {
-    emoji:"👦", role:"Curious Schoolboy",
-    age:"10-year-old",
-    imgDesc:"10-year-old African boy in blue school uniform, short natural black hair, bright curious brown eyes, big warm smile, small round face, dark brown skin",
-    fullDesc:"Brian is a 10-year-old African boy who loves adventure and always gets into funny situations. He wears a blue school uniform and has a big bright smile.",
-    color:"#3d8ef8"
+const CW=540, CH=960;
+const canvas=document.getElementById('pcanv');
+const ctx=canvas.getContext('2d');
+
+// ─── CHARACTER DEFINITIONS ─────────────────────────────────────────
+// Each has: emoji, role, look description, voice config, body colours
+const CHARS={
+  "Brian":{
+    emoji:"👦",role:"Curious Schoolboy",
+    look:"10-year-old African boy in blue school uniform, short natural hair, bright eyes",
+    desc:"Brian is a curious and adventurous 10-year-old. He gets into funny situations every day!",
+    // Body colours for canvas drawing
+    skin:"#8B4513",skinLight:"#A0522D",hair:"#1a0a00",
+    shirt:"#1565C0",pants:"#1a237e",shoes:"#111",
+    voice:{pitch:1.5,rate:1.15,name_hint:""},  // high child voice
+    size:0.75
   },
-  "Zawadi": {
-    emoji:"👧", role:"Brian's Best Friend",
-    age:"12-year-old",
-    imgDesc:"12-year-old African girl in school uniform, braided hair with colorful yellow and orange beads, cheerful dimpled smile, dark skin, expressive eyes",
-    fullDesc:"Zawadi is Brian's clever and cheerful best friend. She has beautiful braided hair with colorful beads and always has a dimpled smile.",
-    color:"#a855f7"
+  "Zawadi":{
+    emoji:"👧",role:"Brian's Best Friend",
+    look:"12-year-old African girl, braided hair with yellow beads, school uniform",
+    desc:"Zawadi is clever and cheerful with beautiful braided hair. Always has the best ideas.",
+    skin:"#6B3410",skinLight:"#8B4513",hair:"#0a0500",
+    shirt:"#7B1FA2",pants:"#4A148C",shoes:"#111",
+    voice:{pitch:1.6,rate:1.1,name_hint:""},
+    size:0.78
   },
-  "Mama Wanjiru": {
-    emoji:"👩", role:"Brian's Mother",
-    age:"middle-aged woman",
-    imgDesc:"middle-aged African woman, bright orange and green kitenge dress, colorful head wrap, kind warm face, full figure, carrying basket",
-    fullDesc:"Mama Wanjiru is Brian's caring but strict mother. She wears colorful traditional kitenge dresses and a head wrap, and always carries a shopping basket.",
-    color:"#f97316"
+  "Mama Wanjiru":{
+    emoji:"👩",role:"Brian's Mother",
+    look:"Middle-aged African woman, orange kitenge dress, colourful head wrap",
+    desc:"Brian's caring but strict Mama. She wears colourful traditional dresses and always knows best!",
+    skin:"#5C2A0A",skinLight:"#6B3410",hair:"#0a0300",
+    shirt:"#E65100",pants:"#BF360C",shoes:"#2a1500",
+    voice:{pitch:1.1,rate:0.92,name_hint:""},  // adult female
+    size:0.9
   },
-  "Inspector Kamau": {
-    emoji:"👮", role:"Funny Police Officer",
-    age:"fat middle-aged man",
-    imgDesc:"fat African police officer, dark navy blue uniform with badge, big black mustache, bald head, round chubby cheeks, stern expression that breaks into smile",
-    fullDesc:"Inspector Kamau is the town's cheerful but strict police officer. He is large with a big mustache and always arrives dramatically in his police car.",
-    color:"#1d4ed8"
+  "Inspector Kamau":{
+    emoji:"👮",role:"Police Officer",
+    look:"Fat African police officer, navy uniform with gold badge, big black mustache",
+    desc:"The town's dramatic police officer. Big belly, big mustache, big personality!",
+    skin:"#4A2208",skinLight:"#5C2A0A",hair:"#050200",
+    shirt:"#0D47A1",pants:"#1A237E",shoes:"#050a15",
+    voice:{pitch:0.7,rate:0.85,name_hint:""},  // deep authoritative
+    size:1.1,fat:true
   },
-  "Doctor Amara": {
-    emoji:"👩‍⚕️", role:"Town Doctor",
-    age:"35-year-old woman",
-    imgDesc:"35-year-old African woman doctor, white doctor coat, stethoscope around neck, round glasses, natural afro hair, confident smile, professional appearance",
-    fullDesc:"Doctor Amara is the town's brilliant and kind doctor. She wears her white coat and stethoscope everywhere and always has a calm, confident smile.",
-    color:"#22c55e"
+  "Doctor Amara":{
+    emoji:"👩‍⚕️",role:"Town Doctor",
+    look:"35-year-old woman doctor, white coat, stethoscope, round glasses, afro hair",
+    desc:"Dr Amara is brilliant and kind. Always calm no matter what chaos is happening!",
+    skin:"#5C2A0A",skinLight:"#6B3410",hair:"#0d0500",
+    shirt:"#FAFAFA",pants:"#455A64",shoes:"#263238",
+    voice:{pitch:1.15,rate:0.95,name_hint:""},
+    size:0.85
   },
-  "Chef Omondi": {
-    emoji:"👨‍🍳", role:"The Big Chef",
-    age:"large cheerful man",
-    imgDesc:"large fat African man in white chef uniform, tall white chef hat, big white apron with food stains, huge cheerful smile, round face, holding cooking spoon",
-    fullDesc:"Chef Omondi runs the town's best restaurant. He is large and jolly, always in his white chef uniform, and loves feeding everyone his special recipes.",
-    color:"#eab308"
+  "Chef Omondi":{
+    emoji:"👨‍🍳",role:"The Big Chef",
+    look:"Large fat African man, white chef uniform, tall chef hat, huge cheerful smile",
+    desc:"Chef Omondi loves food more than anything. His cooking smells drift all over town!",
+    skin:"#4A2208",skinLight:"#5C2A0A",hair:"#060300",
+    shirt:"#FAFAFA",pants:"#90A4AE",shoes:"#1a1a1a",
+    voice:{pitch:0.85,rate:0.88,name_hint:""},
+    size:1.05,fat:true
   },
-  "Mwalimu Hassan": {
-    emoji:"👨‍🏫", role:"The Teacher",
-    age:"tall elderly man",
-    imgDesc:"tall thin African male teacher, round glasses, formal white shirt and dark tie, carrying books, gentle wise smile, grey temples, kind eyes",
-    fullDesc:"Mwalimu Hassan is the wise and gentle schoolteacher. He is tall and thin, always in a formal shirt and tie, carrying books under his arm.",
-    color:"#06b6d4"
+  "Mwalimu Hassan":{
+    emoji:"👨‍🏫",role:"Schoolteacher",
+    look:"Tall thin African teacher, white shirt and tie, round glasses, carries books",
+    desc:"Mwalimu Hassan is stern but fair. He's taught every child in town!",
+    skin:"#5C2A0A",skinLight:"#6B3410",hair:"#111",
+    shirt:"#F5F5F5",pants:"#37474F",shoes:"#1a1a1a",
+    voice:{pitch:0.9,rate:0.88,name_hint:""},
+    size:0.95,thin:true
   },
-  "Merchant Fatuma": {
-    emoji:"👩‍🦱", role:"Market Merchant",
-    age:"energetic woman",
-    imgDesc:"energetic African market woman, bright colorful dress, white headscarf, big basket of fruits on head, loud expressive face, lots of colorful bracelets",
-    fullDesc:"Merchant Fatuma runs the busiest market stall in town. She is loud, energetic, and always has a tower of fresh fruits balanced on her head.",
-    color:"#ec4899"
+  "Merchant Fatuma":{
+    emoji:"👩‍🦱",role:"Market Merchant",
+    look:"Energetic African market woman, bright colourful dress, white headscarf, basket of fruit",
+    desc:"Merchant Fatuma sells the best fruit in town and shouts the loudest prices!",
+    skin:"#6B3410",skinLight:"#7A3D15",hair:"#0a0400",
+    shirt:"#F57F17",pants:"#E65100",shoes:"#1a0a00",
+    voice:{pitch:1.25,rate:1.12,name_hint:""},
+    size:0.88
   },
-  "Baba James": {
-    emoji:"👴", role:"Village Elder",
-    age:"elderly man",
-    imgDesc:"elderly African man, grey white hair and beard, traditional white kanzu robe, wooden walking stick, deeply lined wise face, peaceful smile, dignified posture",
-    fullDesc:"Baba James is the respected village elder. He wears a traditional white kanzu robe and carries his wooden walking stick everywhere, always calm and wise.",
-    color:"#78716c"
+  "Baba James":{
+    emoji:"👴",role:"Village Elder",
+    look:"Elderly African man, white kanzu robe, wooden walking stick, grey beard",
+    desc:"Baba James has seen everything. He always speaks slowly and wisely.",
+    skin:"#4A2208",skinLight:"#5C2A0A",hair:"#888",
+    shirt:"#EEEEEE",pants:"#BDBDBD",shoes:"#3a2a1a",
+    voice:{pitch:0.78,rate:0.75,name_hint:""},  // old slow voice
+    size:0.88
   },
-  "Ranger Kipchoge": {
-    emoji:"🦺", role:"Wildlife Ranger",
-    age:"athletic young man",
-    imgDesc:"athletic African ranger in khaki uniform, wide-brimmed khaki hat, binoculars around neck, boots, strong jaw, confident adventurous look, tall muscular build",
-    fullDesc:"Ranger Kipchoge protects the national park. He is tall and athletic in his khaki ranger uniform, always ready for adventure with binoculars around his neck.",
-    color:"#84cc16"
+  "Ranger Kipchoge":{
+    emoji:"🦺",role:"Wildlife Ranger",
+    look:"Athletic African ranger, khaki uniform, wide hat, binoculars around neck",
+    desc:"Ranger Kipchoge is strong and adventurous. He protects the national park!",
+    skin:"#5C2A0A",skinLight:"#6B3410",hair:"#0d0600",
+    shirt:"#795548",pants:"#5D4037",shoes:"#2a1a0a",
+    voice:{pitch:0.88,rate:0.98,name_hint:""},
+    size:1.0
   }
 };
 
-// ── LOCATION BACKGROUNDS (detailed environments) ─────────
-const LOCATIONS = {
-  "market":"vibrant African outdoor market background, colorful wooden stalls overflowing with tomatoes mangoes bananas, busy crowd of people, hanging cloth awnings in red yellow green, dusty ground, bright tropical midday sun, market signs, baskets and crates stacked high",
-  "river":"wide beautiful African river background, lush green trees and tall grass on muddy banks, sparkling water with gentle current, wooden dugout canoe tied to bank, dragonflies, golden late-afternoon sun reflecting off water surface, distant hills, papyrus reeds",
-  "hospital":"modern African hospital building background, white exterior walls with large RED CROSS sign, parked white ambulance with red cross, clean tiled entrance, potted plants, blue sky, patients and nurses visible near entrance, hospital sign overhead",
-  "school":"African primary school compound background, bright yellow and blue painted school building, children in blue and white school uniforms playing in compound, big old mango tree, concrete path, chalkboard visible through open window, school bell on wall",
-  "forest":"dense tropical African forest path background, enormous towering trees with thick canopy overhead, shafts of golden sunlight piercing through leaves, narrow red dirt footpath winding into forest, ferns and undergrowth, birds flying between branches, misty atmosphere",
-  "city":"bustling East African city street background, colourful matatu minibuses with graffiti, tall modern and colonial buildings, busy street vendors with carts, traffic jam, motorbike boda-bodas weaving through, overhead power cables, city noise energy, Nairobi CBD style",
-  "home":"warm African family home interior background, modest sitting room, bright patterned sofa with cushions, framed family photos on painted walls, old wooden TV cabinet, potted plants on windowsill, checked curtains, afternoon sunlight through window, clean swept floor",
-  "road":"long straight African tarmac road background stretching to vanishing point, dry savanna on both sides, flat-topped acacia trees, big dramatic blue sky with clouds, distant purple hills, road markings, telephone poles, birds on wire, warm golden light",
-  "police_station":"African police station background, grey concrete building with POLICE sign, blue and white police cars parked, uniformed officers, Kenyan flag, metal security fence, notice board with papers",
-  "checkpoint":"police roadblock checkpoint on highway, orange and white traffic barriers, police car with blue flashing lights, POLICE CHECKPOINT wooden sign, traffic cones, open dusty road stretching behind, clear sky",
-  "church":"African church interior or exterior, white-painted stone church building, wooden cross on roof, congregation in Sunday best clothes, colourful stained glass windows, open doors with light streaming in",
-  "field":"wide open African savanna field background, golden dry grass stretching to horizon, scattered flat-topped acacia trees, enormous blue sky with large white clouds, distant purple hills, Maasai Mara style landscape, heat haze shimmer",
-  "night":"African night exterior background, deep dark blue-black sky filled with brilliant stars and large moon, warm orange glow from cooking fire, fireflies, silhouette of acacia tree against moonlit sky, frogs and crickets ambiance",
-  "default":"East African landscape, clear blue sky with light clouds, green hills in distance, warm golden tropical sunlight, African countryside feel"
-};
+// ─── SPEECH SYNTHESIS ──────────────────────────────────────────────
+const synth = window.speechSynthesis;
+let availableVoices = [];
+function loadVoices(){
+  availableVoices = synth.getVoices();
+  // Prefer English voices
+}
+synth.onvoiceschanged = loadVoices;
+loadVoices();
 
-// ── ACTION VERB → VISUAL MOTION DESCRIPTIONS ────────────
-const ACTION_VISUALS = {
-  // Movement
-  walk:   "walking with natural stride, one foot forward, arms swinging, body in motion",
-  run:    "running at full sprint, arms pumping vigorously, feet barely touching ground, leaning forward with speed, motion blur on legs",
-  arrive: "just arriving, stepping out of vehicle or walking up, dramatic entrance pose, dust settling",
-  enter:  "stepping through doorway, one hand on door frame, pausing at entrance",
-  leave:  "walking away from camera, looking back over shoulder, departure motion",
-  go:     "walking purposefully toward destination, destination visible ahead in background",
-  come:   "walking briskly toward camera, getting closer, approaching with energy",
-  stop:   "stopping suddenly, feet planted, arms out for balance, surprised halt expression",
-  jump:   "jumping in the air, feet off ground, arms raised, mid-leap pose",
-  fall:   "tumbling and falling, arms flailing, shocked expression, ground approaching",
-  // Interaction
-  talk:   "facing each other directly, one character gesturing with hand while speaking, expressive open mouth, engaged listener leaning in",
-  say:    "speaking expressively, mouth open, one hand raised in talking gesture, face animated",
-  argue:  "two characters facing off, pointing fingers at each other, angry expressions, leaning forward aggressively",
-  laugh:  "throwing head back in loud laughter, hands on big belly, mouth wide open, eyes squinted with joy, shaking with laughter",
-  cry:    "crying with big cartoon tears streaming down face, hands covering face, hunched shoulders, trembling lip",
-  shout:  "shouting with mouth wide open, veins on forehead, arms raised, intense expression, other characters stepping back",
-  greet:  "waving enthusiastically with big smile, other character waving back happily, joyful reunion energy",
-  hug:    "two characters embracing in warm hug, arms wrapped around each other, happy smiling faces",
-  fight:  "dynamic fighting pose, fists raised, action stance, dramatic low angle, dust cloud around feet",
-  arrest: "police officer placing handcuffs on suspect's wrists, dramatic moment, suspect looking shocked, officer stern-faced",
-  // Actions
-  eat:    "eating enthusiastically, food in hand or on plate, chewing with exaggerated enjoyment, crumbs flying, eyes half-closed in satisfaction",
-  cook:   "cooking over fire or stove, big wooden spoon stirring pot, steam rising dramatically, focused concentration",
-  buy:    "at market stall, reaching forward to pick up item, handing over money coins, merchant smiling, goods displayed prominently",
-  sell:   "behind market stall, holding up goods to show customer, energetic selling gesture, big salesperson smile",
-  drive:  "sitting behind steering wheel, hands on wheel, looking forward at road, vehicle in motion",
-  chase:  "one character running fast chasing another, both in full sprint, arms pumping, determined expressions",
-  hide:   "crouching and hiding behind object, one eye peeking out cautiously, scared nervous expression",
-  find:   "discovering something, bending down or reaching forward, surprised wide eyes, pointing at discovery",
-  carry:  "carrying heavy load, arms around bundle, bent under weight, strained expression",
-  read:   "holding book or paper close to face, squinting in concentration, finger tracing lines",
-  sleep:  "lying down sleeping, eyes closed, gentle snoring expression, peaceful relaxed face",
-  pray:   "hands clasped together, head bowed, kneeling or standing respectfully, devout expression",
-  dance:  "dancing with raised arms, wide smile, feet moving, body swaying, celebration energy",
-  fall_sick: "looking ill, hand on forehead, pale sweating face, slumped posture, dizzy expression",
-  examine:"doctor leaning in close to examine patient, stethoscope on chest, focused professional expression, patient sitting nervously",
-  // Emotions
-  surprised:"jaw dropped open, eyes enormously wide, hands on cheeks in shock, stepping backward, exaggerated surprise expression",
-  scared: "trembling with fear, sweat drops flying, eyes darting around, knees knocking together, hair standing on end",
-  angry:  "face red with rage, fists clenched, steam from ears, teeth bared, eyebrows furrowed dramatically",
-  happy:  "beaming with joy, arms outstretched, jumping slightly, biggest smile showing teeth, radiant happy energy",
-  sad:    "drooping posture, downcast eyes, single tear on cheek, mouth turned down, dejected expression"
-};
+function getBestVoice(hint){
+  // Try to find an appropriate voice
+  const voices = synth.getVoices();
+  // Prefer any English voice
+  return voices.find(v=>v.lang.startsWith('en')) || voices[0] || null;
+}
 
-// ── DETECT ACTION FROM SCENE TEXT ────────────────────────
-function detectActionVisual(actionText, characters, location){
-  if(!actionText) return '';
-  const txt = actionText.toLowerCase();
-  
-  // Priority action matching (order matters)
-  const checks = [
-    ['arrest','handcuff','caught','apprehend'], 
-    ['chase','chasing','pursuing'],
-    ['fight','fighting','punch','kick','hit'],
-    ['run','running','sprint','flee','escape','rush'],
-    ['laugh','laughing','burst out','cackle','chuckle'],
-    ['cry','crying','weep','sob','tears'],
-    ['shout','shouting','scream','yell','screaming'],
-    ['argue','arguing','confront','quarrel'],
-    ['arrive','arriving','pulls up','drives up','comes in','shows up','steps out'],
-    ['fall','falling','trips','stumbles','collapses'],
-    ['jump','jumping','leap','bounce','hop'],
-    ['hide','hiding','crouches','sneaks'],
-    ['eat','eating','devour','feast','biting','munching'],
-    ['cook','cooking','stir','boil','fry'],
-    ['buy','buying','purchase','shopping','picks up'],
-    ['sell','selling','vendors','hawking'],
-    ['talk','talking','discuss','chat','conversation','face to face'],
-    ['say','says','tells','explains','announces','declares'],
-    ['greet','greeting','wave','welcome','hello','meet'],
-    ['hug','embrace','hold'],
-    ['carry','carrying','lift','holding heavy'],
-    ['drive','driving','steering'],
-    ['read','reading','studying','looking at paper'],
-    ['sleep','sleeping','napping','resting','lying'],
-    ['pray','praying','worship','church'],
-    ['dance','dancing','celebrate','party'],
-    ['examine','check','diagnose','inspect','treat','treating'],
-    ['find','finds','discovers','spots','notices'],
-    ['walk','walking','stroll','wander','march','go to','goes to','heading','walks','headed'],
-    ['enter','entering','steps into','goes inside','walk into'],
-    ['leave','leaving','exit','walks away','departs'],
-    ['come','comes','coming','approaches','approaching'],
-    ['stop','stops','halt','freeze','pauses'],
-  ];
-
-  for(const [key, ...synonyms] of checks){
-    const all = [key, ...synonyms];
-    if(all.some(w => txt.includes(w))){
-      const visual = ACTION_VISUALS[key] || ACTION_VISUALS[all[0]];
-      if(visual) return visual;
-    }
+function speakLine(text, charName, onEnd){
+  if(!text){ if(onEnd) onEnd(); return; }
+  synth.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  const ch = CHARS[charName];
+  if(ch){
+    utt.pitch = ch.voice.pitch;
+    utt.rate  = ch.voice.rate;
+    utt.volume = 1;
   }
-  
-  // Location-specific defaults
-  if(location==='hospital' || location==='clinic') return ACTION_VISUALS.examine;
-  if(location==='market') return ACTION_VISUALS.buy;
-  if(location==='school') return ACTION_VISUALS.talk;
-  if(location==='checkpoint' || location==='police_station') return ACTION_VISUALS.arrive;
-  
-  return ACTION_VISUALS.talk; // default fallback
+  const v = getBestVoice('');
+  if(v) utt.voice = v;
+  utt.onend = ()=>{ if(onEnd) onEnd(); };
+  utt.onerror = ()=>{ if(onEnd) onEnd(); };
+  synth.speak(utt);
 }
 
-// ── STATE ─────────────────────────────────────────────────
-let scenes = [];
-let curScene = -1;
-let playTimer = null;
-let playFrame = 0;
-let imgCache = {};
-const W=540,H=960;
-const canvas = document.getElementById('pcanv');
-const ctx = canvas.getContext('2d');
-
-// ── INIT ─────────────────────────────────────────────────
-function init(){
-  renderCharList();
-  drawEmptyPreview();
+function speakCurrentScene(){
+  if(curScene<0||curScene>=scenes.length) return;
+  const s=scenes[curScene];
+  if(s.dialogue&&s.speaker){
+    toast(`🗣 ${s.speaker}: "${s.dialogue.substring(0,30)}..."`, 'ok');
+    speakLine(s.dialogue, s.speaker);
+  } else {
+    // Narrate the action
+    const narrate = s.caption || s.action || '';
+    speakLine(narrate, s.characters[0]||'');
+    toast(`🔊 Narrating scene ${curScene+1}`, 'ok');
+  }
 }
 
-function renderCharList(){
-  const list = document.getElementById('char-list');
-  list.innerHTML = '';
-  Object.entries(CHARACTERS).forEach(([name, ch])=>{
-    const card = document.createElement('div');
-    card.className = 'char-card';
-    card.innerHTML = `
-      <div class="char-avatar" style="font-size:26px">${ch.emoji}</div>
-      <div class="char-info">
-        <div class="char-name">${name}</div>
-        <div class="char-role">${ch.role}</div>
-        <span class="char-badge" style="background:${ch.color}22;color:${ch.color};border:1px solid ${ch.color}44">Say "${name}"</span>
-      </div>
-      <button class="char-preview-btn" title="View Character" onclick="event.stopPropagation();showCharModal('${name}')">👁</button>
-    `;
-    card.addEventListener('click',()=>showCharModal(name));
-    list.appendChild(card);
+// Build voice test buttons
+function buildVoiceTestBtns(){
+  const wrap = document.getElementById('voice-test-btns');
+  wrap.innerHTML='';
+  Object.keys(CHARS).forEach(name=>{
+    const btn = document.createElement('button');
+    btn.className='vtbtn';
+    btn.textContent=CHARS[name].emoji+' '+name.split(' ')[0];
+    btn.title=`Test ${name}'s voice`;
+    btn.addEventListener('click',()=>{
+      btn.style.borderColor=CHARS[name].shirt;
+      speakLine(`Hello! I am ${name}.`, name, ()=>{ btn.style.borderColor=''; });
+    });
+    wrap.appendChild(btn);
   });
 }
+buildVoiceTestBtns();
 
-// ── TABS ─────────────────────────────────────────────────
-function switchTab(name, el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById('tab-chars').style.display = name==='chars'?'block':'none';
-  document.getElementById('tab-story').style.display = name==='story'?'block':'none';
+// ─── ANIMATED CHARACTER DRAWING ────────────────────────────────────
+// Draw a cartoon character doing an action on canvas
+// All positions in screen coords (scaled to 540×960)
+
+function drawCharacter(cx, cy, charName, action, frame, scale=1, flip=false){
+  const ch = CHARS[charName] || CHARS['Brian'];
+  const t = frame * 0.08; // time
+  const s = (ch.size||1) * scale;
+  const fat = ch.fat ? 1.35 : 1;
+  const thin = ch.thin ? 0.82 : 1;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  if(flip) ctx.scale(-1,1);
+
+  const bw = 32*s*fat*thin; // body width
+  const bh = 38*s;           // body height
+  const hw = 26*s*fat;       // head width
+  const hh = 28*s*fat;       // head height
+  const legH = 36*s;
+  const armH = 28*s;
+
+  // Shadow
+  ctx.fillStyle='rgba(0,0,0,0.22)';
+  ctx.beginPath();ctx.ellipse(0, legH+4, bw*0.9, 6, 0, 0, Math.PI*2);ctx.fill();
+
+  switch(action){
+    case 'walk':   drawWalk(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,false); break;
+    case 'run':    drawRun(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,false); break;
+    case 'stand':  drawStand(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
+    case 'talk':   drawTalk(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
+    case 'laugh':  drawLaugh(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
+    case 'cry':    drawCry(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
+    case 'wake':   drawWake(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
+    case 'arrive': drawArrive(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,frame); break;
+    case 'angry':  drawAngry(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
+    case 'eat':    drawEat(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
+    case 'shocked':drawShocked(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
+    case 'jump':   drawJump(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,frame); break;
+    default:       drawStand(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t);
+  }
+
+  ctx.restore();
 }
 
-// ── CHARACTER MODAL ───────────────────────────────────────
-function showCharModal(name){
-  const ch = CHARACTERS[name];
-  document.getElementById('cm-img').textContent = ch.emoji;
-  document.getElementById('cm-img').style.fontSize = '72px';
-  document.getElementById('cm-name').textContent = name;
-  document.getElementById('cm-role').textContent = ch.role + ' · ' + ch.age;
-  document.getElementById('cm-desc').textContent = ch.fullDesc;
-  document.getElementById('char-modal').classList.add('show');
+function drawStand(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
+  const bob = Math.sin(t)*2.5;
+  ctx.save(); ctx.translate(0, bob);
+  _drawLegs(ch,s,fat,bw,bh,legH, 0, 0);
+  _drawBody(ch,s,fat,thin,bw,bh);
+  _drawArms(ch,s,fat,thin,bw,bh,armH, Math.sin(t*0.5)*0.12, -Math.sin(t*0.5)*0.12);
+  _drawHead(ch,s,fat,hw,hh,bh, Math.sin(t*0.4)*3, 0, false, false);
+  ctx.restore();
 }
-function closeModal(){ document.getElementById('char-modal').classList.remove('show'); }
 
-// ── EXAMPLE STORY ─────────────────────────────────────────
-// ── PRE-BUILT EXAMPLE — loads instantly, no API call needed ─
-const EXAMPLE_SCENES = [
-  { caption:"Brian is LATE for school! 😱", characters:["Brian"], action:"Brian running full sprint down road school bag bouncing", location:"road", dialogue:"", speaker:"", mood:"scared", cameraAngle:"wide-shot",
-    imgPrompt:"African boy age 10 blue school uniform, running full sprint down African road, school bag bouncing, mouth open panicking, wide shot, Pixar 3D animation, cinematic lighting, 9:16 vertical" },
-  { caption:"Mwalimu is NOT happy 😤", characters:["Mwalimu Hassan"], action:"Mwalimu Hassan standing at school gate arms crossed checking watch", location:"school", dialogue:"", speaker:"", mood:"angry", cameraAngle:"medium-shot",
-    imgPrompt:"tall thin African teacher white shirt tie round glasses, standing at school gate arms crossed checking watch stern face, African school compound, medium shot, Pixar 3D animation, 9:16 vertical" },
-  { caption:"Brian skids to a stop! 💨", characters:["Brian","Mwalimu Hassan"], action:"Brian skidding to stop almost falling, Mwalimu pointing inside angrily", location:"school", dialogue:"You are 30 minutes late!", speaker:"Mwalimu Hassan", mood:"dramatic", cameraAngle:"medium-shot",
-    imgPrompt:"African boy age 10 skidding to stop almost falling at school gate, tall thin African teacher pointing inside with stern face, African school background, medium shot, Pixar 3D animation, 9:16 vertical" },
-  { caption:"Inspector Kamau BURSTS IN! 🚔", characters:["Inspector Kamau"], action:"Inspector Kamau kicking classroom door open arms wide, dramatic entrance", location:"school", dialogue:"Everyone come outside! NOW!", speaker:"Inspector Kamau", mood:"dramatic", cameraAngle:"dramatic-low-angle",
-    imgPrompt:"fat African police officer navy uniform gold badge big mustache, kicking classroom door open arms wide dramatic entrance, shocked children inside, dramatic low angle, Pixar 3D animation, cinematic, 9:16 vertical" },
-  { caption:"Children run out SCREAMING! 😂", characters:["Brian"], action:"Brian and children running out of school wildly cheering arms in air", location:"school", dialogue:"YESSS! No more school!", speaker:"Brian", mood:"happy", cameraAngle:"wide-shot",
-    imgPrompt:"African boy age 10 and school children running out of school cheering wildly, arms raised big smiles, African school compound blue sky, wide shot, Pixar 3D animation, bright sunshine, 9:16 vertical" },
-  { caption:"Mama Wanjiru APPEARS! 😳", characters:["Mama Wanjiru","Brian"], action:"Mama Wanjiru grabbing Brian by the ear, Brian yelping", location:"road", dialogue:"BRIAN! Where do you think you are going?!", speaker:"Mama Wanjiru", mood:"angry", cameraAngle:"medium-shot",
-    imgPrompt:"African middle-aged woman orange kitenge dress head wrap, grabbing African boy age 10 by the ear firmly, boy yelping in pain shocked face, African road, medium shot, Pixar 3D animation, 9:16 vertical" },
-  { caption:"Brian cries BIG tears 😭", characters:["Brian","Mama Wanjiru"], action:"Brian being dragged home crying giant cartoon tears, Mama marching", location:"road", dialogue:"Mama please I can explain!", speaker:"Brian", mood:"sad", cameraAngle:"wide-shot",
-    imgPrompt:"African boy age 10 crying huge cartoon tears being dragged along road by African woman in kitenge dress marching firmly, neighbors watching laughing, wide shot, Pixar 3D animation, 9:16 vertical" },
-  { caption:"Inspector Kamau laughs! 🤣", characters:["Inspector Kamau"], action:"Inspector Kamau bent over laughing uncontrollably slapping his big belly", location:"road", dialogue:"Ha ha ha! That boy never learns!", speaker:"Inspector Kamau", mood:"funny", cameraAngle:"medium-shot",
-    imgPrompt:"fat African police officer navy uniform, bent over laughing uncontrollably slapping his big belly, tears of laughter, police car behind him, African road, medium shot, Pixar 3D animation, 9:16 vertical" }
+function drawTalk(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
+  const bob = Math.sin(t)*2;
+  const mouthOpen = Math.abs(Math.sin(t*3))>0.5;
+  const armSwing = Math.sin(t)*0.45;
+  ctx.save(); ctx.translate(0, bob);
+  _drawLegs(ch,s,fat,bw,bh,legH, 0, 0);
+  _drawBody(ch,s,fat,thin,bw,bh);
+  _drawArms(ch,s,fat,thin,bw,bh,armH, armSwing, -0.15);
+  _drawHead(ch,s,fat,hw,hh,bh, Math.sin(t*0.8)*5, 0, mouthOpen, false);
+  ctx.restore();
+}
+
+function drawWalk(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
+  const legSwing = Math.sin(t*2)*22;
+  const armSwing = Math.sin(t*2)*0.5;
+  const bob = Math.abs(Math.sin(t*2))*4 - 2;
+  ctx.save(); ctx.translate(0, bob);
+  _drawLegs(ch,s,fat,bw,bh,legH, legSwing, -legSwing);
+  _drawBody(ch,s,fat,thin,bw,bh);
+  _drawArms(ch,s,fat,thin,bw,bh,armH, armSwing, -armSwing);
+  _drawHead(ch,s,fat,hw,hh,bh, 0, Math.sin(t*2)*2, false, false);
+  ctx.restore();
+}
+
+function drawRun(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
+  const legSwing = Math.sin(t*3.5)*38;
+  const armSwing = Math.sin(t*3.5)*0.8;
+  const bob = Math.abs(Math.sin(t*3.5))*8 - 4;
+  const lean = -0.18; // forward lean
+  ctx.save(); ctx.translate(0, bob); ctx.rotate(lean);
+  _drawLegs(ch,s,fat,bw,bh,legH, legSwing, -legSwing);
+  _drawBody(ch,s,fat,thin,bw,bh);
+  _drawArms(ch,s,fat,thin,bw,bh,armH, armSwing, -armSwing);
+  // Motion blur lines behind
+  ctx.restore();
+  // Speed lines
+  ctx.strokeStyle='rgba(255,255,255,0.25)';ctx.lineWidth=2;
+  for(let i=0;i<4;i++){
+    const lx=-80-i*18;const ly=(-40+i*18);
+    ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(lx-30,ly);ctx.stroke();
+  }
+  ctx.save(); ctx.translate(0, bob); ctx.rotate(lean);
+  _drawHead(ch,s,fat,hw,hh,bh, -8, -3, false, false);
+  ctx.restore();
+}
+
+function drawLaugh(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
+  const shake = Math.sin(t*5)*4;
+  const bellybounce = Math.abs(Math.sin(t*4))*6;
+  ctx.save(); ctx.translate(shake, -bellybounce*0.3);
+  _drawLegs(ch,s,fat,bw,bh,legH, 5, -5);
+  _drawBody(ch,s,fat,thin,bw+bellybounce*0.1,bh);
+  _drawArms(ch,s,fat,thin,bw,bh,armH, -0.6, 0.6); // arms on belly
+  _drawHead(ch,s,fat,hw,hh,bh, Math.sin(t*4)*12, 0, true, false);
+  // Laugh tears
+  if(Math.sin(t*3)>0){
+    ctx.fillStyle='rgba(150,200,255,0.7)';
+    ctx.beginPath();ctx.arc(-hw*0.35,-bh-hh*0.1, 3, 0, Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(hw*0.35,-bh-hh*0.1, 3, 0, Math.PI*2);ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawCry(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
+  const sob = Math.sin(t*2)*3;
+  ctx.save(); ctx.translate(0, sob);
+  _drawLegs(ch,s,fat,bw,bh,legH, 0, 0);
+  _drawBody(ch,s,fat,thin,bw,bh);
+  _drawArms(ch,s,fat,thin,bw,bh,armH, -0.7, 0.7); // arms covering face
+  _drawHead(ch,s,fat,hw,hh,bh, Math.sin(t)*10, 0, false, true);
+  // Big cartoon tears
+  const teary = -bh-hh*0.15;
+  ctx.fillStyle='rgba(100,180,255,0.9)';
+  ctx.beginPath();ctx.ellipse(-hw*0.3, teary+Math.sin(t*2)*8, 3.5, 6, 0, 0, Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.ellipse(hw*0.3, teary+Math.sin(t*2+1)*8, 3.5, 6, 0, 0, Math.PI*2);ctx.fill();
+  ctx.restore();
+}
+
+function drawWake(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
+  // Character stretching/waking up - sitting then standing
+  const stretchY = Math.min(t*4, 1);
+  const armStretch = -Math.PI*0.6 * stretchY;
+  const yOff = (1-stretchY)*20;
+  ctx.save(); ctx.translate(0, yOff);
+  _drawLegs(ch,s,fat,bw,bh,legH*stretchY, 15*stretchY, -15*stretchY);
+  _drawBody(ch,s,fat,thin,bw,bh*stretchY+8*(1-stretchY));
+  _drawArms(ch,s,fat,thin,bw,bh,armH, armStretch*0.7, armStretch);
+  _drawHead(ch,s,fat,hw,hh,bh, 0, Math.sin(t)*6*(1-stretchY*0.7), false, false);
+  // Z Z Z sleep bubbles while waking
+  if(stretchY<0.5){
+    ctx.font=`bold ${12*s}px sans-serif`;
+    ctx.fillStyle='rgba(255,255,255,0.7)';
+    ctx.fillText('z', hw+8, -bh-hh+10);
+    ctx.font=`bold ${9*s}px sans-serif`;
+    ctx.fillText('z', hw+16, -bh-hh);
+  }
+  ctx.restore();
+}
+
+function drawArrive(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,frame){
+  // Walk in from side, stop dramatically
+  const walkIn = Math.min(frame/20, 1);
+  const legSwing = Math.sin(t*2)*(1-walkIn)*22;
+  const bob = Math.abs(Math.sin(t*2))*(1-walkIn)*4-2;
+  // Arms out dramatically when arrived
+  const armL = walkIn>0.95 ? -0.7 : Math.sin(t*2)*0.5;
+  const armR = walkIn>0.95 ? 0.7  : -Math.sin(t*2)*0.5;
+  ctx.save(); ctx.translate(0, bob);
+  _drawLegs(ch,s,fat,bw,bh,legH, legSwing*(1-walkIn), -legSwing*(1-walkIn));
+  _drawBody(ch,s,fat,thin,bw,bh);
+  _drawArms(ch,s,fat,thin,bw,bh,armH, armL, armR);
+  _drawHead(ch,s,fat,hw,hh,bh, 0, Math.sin(t)*3*(1-walkIn), false, false);
+  ctx.restore();
+}
+
+function drawAngry(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
+  const shake = Math.sin(t*6)*3;
+  ctx.save(); ctx.translate(shake, 0);
+  _drawLegs(ch,s,fat,bw,bh,legH, 8, -8); // legs apart
+  _drawBody(ch,s,fat,thin,bw,bh);
+  _drawArms(ch,s,fat,thin,bw,bh,armH, 0.8, -0.8); // fists clenched up
+  _drawHead(ch,s,fat,hw,hh,bh, 0, 0, false, false, true); // angry face
+  // Anger veins/steam
+  ctx.fillStyle='rgba(255,100,100,0.8)';
+  ctx.font=`${11*s}px sans-serif`;
+  ctx.fillText('💢', hw, -bh-hh);
+  ctx.restore();
+}
+
+function drawEat(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
+  const chew = Math.sin(t*4);
+  const bob = Math.sin(t)*1.5;
+  ctx.save(); ctx.translate(0, bob);
+  _drawLegs(ch,s,fat,bw,bh,legH, 0, 0);
+  _drawBody(ch,s,fat,thin,bw,bh);
+  // One arm up holding food
+  _drawArms(ch,s,fat,thin,bw,bh,armH, -1.1, 0.1);
+  _drawHead(ch,s,fat,hw,hh,bh, 0, 0, chew>0, false);
+  // Food item
+  ctx.fillStyle='#f4a460';
+  ctx.beginPath();ctx.arc(bw*0.5-4, -bh-hh*0.4, 7*s, 0, Math.PI*2);ctx.fill();
+  ctx.restore();
+}
+
+function drawShocked(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
+  ctx.save();
+  ctx.translate(0, Math.sin(t*8)*2); // tremble
+  _drawLegs(ch,s,fat,bw,bh,legH, -5, 5);
+  _drawBody(ch,s,fat,thin,bw,bh);
+  _drawArms(ch,s,fat,thin,bw,bh,armH, -1.2, 1.2); // hands on cheeks
+  _drawHead(ch,s,fat,hw,hh,bh, 0, 0, true, false); // mouth open
+  // Stars / shock lines
+  for(let i=0;i<6;i++){
+    const ang=i/6*Math.PI*2+t;
+    const r=hw+10;
+    ctx.strokeStyle=`rgba(255,200,0,${0.5+Math.sin(t*3+i)*0.4})`;
+    ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(Math.cos(ang)*r,-bh-hh/2+Math.sin(ang)*r);
+    ctx.lineTo(Math.cos(ang)*(r+8),-bh-hh/2+Math.sin(ang)*(r+8));ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawJump(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,frame){
+  const jumpY = -Math.abs(Math.sin(frame*0.15))*50;
+  const legSpread = Math.abs(Math.sin(frame*0.15))*25;
+  ctx.save(); ctx.translate(0, jumpY);
+  _drawLegs(ch,s,fat,bw,bh,legH, legSpread, -legSpread);
+  _drawBody(ch,s,fat,thin,bw,bh);
+  _drawArms(ch,s,fat,thin,bw,bh,armH, -1.0, 1.0); // arms up
+  _drawHead(ch,s,fat,hw,hh,bh, 0, 0, true, false);
+  ctx.restore();
+}
+
+// ─── PRIMITIVE BODY PART DRAWERS ──────────────────────────────────
+function _drawLegs(ch,s,fat,bw,bh,legH, leftAng, rightAng){
+  const lw=10*s*fat;
+  const top=bh/2+2;
+  // Left leg
+  ctx.save();ctx.translate(-bw*0.25,top);ctx.rotate(leftAng*Math.PI/180);
+  ctx.fillStyle=ch.pants;
+  ctx.beginPath();ctx.roundRect(-lw/2,0,lw,legH*0.6,3);ctx.fill();
+  // Shoe
+  ctx.fillStyle=ch.shoes;
+  ctx.save();ctx.translate(0,legH*0.6);ctx.rotate(leftAng*-Math.PI/180*0.3);
+  ctx.beginPath();ctx.ellipse(lw*0.2,lw*0.3,lw*0.9,lw*0.5,0,0,Math.PI*2);ctx.fill();
+  ctx.restore();ctx.restore();
+  // Right leg
+  ctx.save();ctx.translate(bw*0.25,top);ctx.rotate(rightAng*Math.PI/180);
+  ctx.fillStyle=ch.pants;
+  ctx.beginPath();ctx.roundRect(-lw/2,0,lw,legH*0.6,3);ctx.fill();
+  ctx.fillStyle=ch.shoes;
+  ctx.save();ctx.translate(0,legH*0.6);ctx.rotate(rightAng*-Math.PI/180*0.3);
+  ctx.beginPath();ctx.ellipse(-lw*0.2,lw*0.3,lw*0.9,lw*0.5,0,0,Math.PI*2);ctx.fill();
+  ctx.restore();ctx.restore();
+}
+
+function _drawBody(ch,s,fat,thin,bw,bh){
+  // Torso
+  ctx.fillStyle=ch.shirt;
+  ctx.beginPath();ctx.roundRect(-bw/2,-bh/2,bw,bh,6*s);ctx.fill();
+  // Shading
+  ctx.fillStyle='rgba(0,0,0,0.1)';
+  ctx.beginPath();ctx.roundRect(-bw/2,-bh/2,bw*0.4,bh,6*s,0,0,6*s);ctx.fill();
+}
+
+function _drawArms(ch,s,fat,thin,bw,bh,armH,leftRot,rightRot){
+  const aw=9*s*fat;
+  // Left arm
+  ctx.save();ctx.translate(-bw/2,0);ctx.rotate(leftRot);
+  ctx.fillStyle=ch.shirt;
+  ctx.beginPath();ctx.roundRect(-aw,0,aw,armH,4);ctx.fill();
+  // Hand
+  ctx.fillStyle=ch.skin;
+  ctx.beginPath();ctx.arc(-aw/2,armH,aw*0.7,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+  // Right arm
+  ctx.save();ctx.translate(bw/2,0);ctx.rotate(rightRot);
+  ctx.fillStyle=ch.shirt;
+  ctx.beginPath();ctx.roundRect(0,0,aw,armH,4);ctx.fill();
+  ctx.fillStyle=ch.skin;
+  ctx.beginPath();ctx.arc(aw/2,armH,aw*0.7,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+}
+
+function _drawHead(ch,s,fat,hw,hh,bh, tiltDeg, shakeDeg, mouthOpen, sad, angry=false){
+  const headY = -bh/2-hh*0.55;
+  ctx.save();
+  ctx.translate(0, headY);
+  ctx.rotate((tiltDeg+shakeDeg)*Math.PI/180);
+  // Neck
+  ctx.fillStyle=ch.skin;
+  ctx.beginPath();ctx.roundRect(-6*s,-4,12*s,10,3);ctx.fill();
+  // Head
+  ctx.shadowColor='rgba(0,0,0,0.25)';ctx.shadowBlur=8;
+  ctx.fillStyle=ch.skin;
+  ctx.beginPath();ctx.ellipse(0,-hh*0.2,hw,hh,0,0,Math.PI*2);ctx.fill();
+  ctx.shadowBlur=0;
+  // Lighter forehead
+  ctx.fillStyle=ch.skinLight||ch.skin;
+  ctx.beginPath();ctx.ellipse(-hw*0.1,-hh*0.35,hw*0.6,hh*0.4,0,0,Math.PI*2);ctx.fill();
+  // Hair
+  ctx.fillStyle=ch.hair;
+  ctx.beginPath();ctx.ellipse(0,-hh*0.5,hw*0.95,hh*0.48,0,Math.PI,Math.PI*2);ctx.fill();
+  // Eyes
+  const eyeY=-hh*0.25;
+  ctx.fillStyle='#fff';
+  ctx.beginPath();ctx.ellipse(-hw*0.28,eyeY,hw*0.2,hh*0.16,0,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.ellipse(hw*0.28,eyeY,hw*0.2,hh*0.16,0,0,Math.PI*2);ctx.fill();
+  // Pupils
+  ctx.fillStyle='#1a0a00';
+  ctx.beginPath();ctx.arc(-hw*0.26,eyeY,hw*0.1,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(hw*0.28,eyeY,hw*0.1,0,Math.PI*2);ctx.fill();
+  // Eye shine
+  ctx.fillStyle='rgba(255,255,255,0.85)';
+  ctx.beginPath();ctx.arc(-hw*0.22,eyeY-hw*0.04,hw*0.04,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(hw*0.32,eyeY-hw*0.04,hw*0.04,0,Math.PI*2);ctx.fill();
+  // Eyebrows
+  ctx.strokeStyle=ch.hair;ctx.lineWidth=2.5*s;ctx.lineCap='round';
+  if(angry){
+    ctx.beginPath();ctx.moveTo(-hw*0.45,eyeY-hh*0.22);ctx.lineTo(-hw*0.12,eyeY-hh*0.14);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(hw*0.45,eyeY-hh*0.22);ctx.lineTo(hw*0.12,eyeY-hh*0.14);ctx.stroke();
+  } else {
+    ctx.beginPath();ctx.moveTo(-hw*0.44,eyeY-hh*0.17);ctx.lineTo(-hw*0.13,eyeY-hh*0.2);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(hw*0.44,eyeY-hh*0.17);ctx.lineTo(hw*0.13,eyeY-hh*0.2);ctx.stroke();
+  }
+  // Nose
+  ctx.fillStyle='rgba(0,0,0,0.15)';
+  ctx.beginPath();ctx.ellipse(0,-hh*0.05,hw*0.12,hh*0.08,0,0,Math.PI*2);ctx.fill();
+  // Mouth
+  ctx.strokeStyle='rgba(0,0,0,0.7)';ctx.lineWidth=2*s;ctx.lineCap='round';
+  if(mouthOpen){
+    ctx.fillStyle='#2a0a05';
+    ctx.beginPath();ctx.ellipse(0,hh*0.2,hw*0.3,hh*0.16,0,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#fff';
+    ctx.beginPath();ctx.roundRect(-hw*0.2,hh*0.12,hw*0.4,hh*0.1,2);ctx.fill();
+  } else if(sad){
+    ctx.beginPath();ctx.arc(0,hh*0.38,hw*0.22,Math.PI+0.3,-0.3);ctx.stroke();
+  } else {
+    ctx.beginPath();ctx.arc(0,hh*0.1,hw*0.22,-0.1,Math.PI+0.1);ctx.stroke();
+  }
+  // Cheeks
+  ctx.fillStyle='rgba(200,80,60,0.18)';
+  ctx.beginPath();ctx.ellipse(-hw*0.42,eyeY+hh*0.12,hw*0.18,hh*0.1,0,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.ellipse(hw*0.42,eyeY+hh*0.12,hw*0.18,hh*0.1,0,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+}
+
+// ─── ACTION BACKGROUNDS (gradient environments) ───────────────────
+const BG_SCENES={
+  wake:   {sky:'#FFB347',sky2:'#FF8C00',ground:'#8B6914',road:'#A0522D', name:'Bedroom Morning'},
+  walk:   {sky:'#87CEEB',sky2:'#B0E0FF',ground:'#5D8A3C',road:'#888',    name:'Road'},
+  run:    {sky:'#87CEEB',sky2:'#B0E0FF',ground:'#5D8A3C',road:'#777',    name:'Road'},
+  school: {sky:'#87CEEB',sky2:'#BADEFD',ground:'#6B8E23',road:'#aaa',    name:'School'},
+  market: {sky:'#FFA500',sky2:'#FF6347',ground:'#C2956C',road:'#B8860B',  name:'Market'},
+  home:   {sky:'#FFF3E0',sky2:'#FFE0B2',ground:'#8B4513',road:'#A0522D', name:'Home'},
+  road:   {sky:'#87CEEB',sky2:'#B0E0FF',ground:'#6B8E23',road:'#555',    name:'Road'},
+  hospital:{sky:'#E3F2FD',sky2:'#BBDEFB',ground:'#A5D6A7',road:'#bbb',   name:'Hospital'},
+  forest: {sky:'#2E7D32',sky2:'#1B5E20',ground:'#1B5E20',road:'#5D4037', name:'Forest'},
+  night:  {sky:'#0D1B2A',sky2:'#1a2a4a',ground:'#1a1a1a',road:'#222',    name:'Night'},
+  city:   {sky:'#7986CB',sky2:'#9FA8DA',ground:'#546E7A',road:'#444',    name:'City'},
+  arrive: {sky:'#87CEEB',sky2:'#B0E0FF',ground:'#5D8A3C',road:'#666',    name:'Road'},
+  default:{sky:'#87CEEB',sky2:'#B0E0FF',ground:'#5D8A3C',road:'#888',    name:'Outdoors'},
+};
+
+function drawBackground(bgKey, frame, imgEl){
+  const bg = BG_SCENES[bgKey] || BG_SCENES.default;
+  const t = frame*0.02;
+
+  if(imgEl){
+    // Ken Burns pan on AI image
+    ctx.save();
+    const sc = 1+0.05*(frame/120);
+    const px = Math.sin(frame*0.008)*12;
+    ctx.translate(CW/2+px,CH/2);ctx.scale(sc,sc);ctx.translate(-CW/2,-CH/2);
+    const iw=imgEl.naturalWidth||imgEl.width,ih=imgEl.naturalHeight||imgEl.height;
+    const iscale=Math.max(CW/iw,CH/ih);
+    ctx.drawImage(imgEl,(CW-iw*iscale)/2,(CH-ih*iscale)/2,iw*iscale,ih*iscale);
+    ctx.restore();
+    // dark bottom vignette for character to stand on
+    const vg=ctx.createLinearGradient(0,CH*0.55,0,CH);
+    vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,0.6)');
+    ctx.fillStyle=vg;ctx.fillRect(0,0,CW,CH);
+    return;
+  }
+
+  // Fallback: painted background
+  // Sky
+  const sg=ctx.createLinearGradient(0,0,0,CH*0.6);
+  sg.addColorStop(0,bg.sky);sg.addColorStop(1,bg.sky2);
+  ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
+
+  // Sun or moon
+  if(bgKey==='night'){
+    ctx.fillStyle='rgba(255,255,200,0.9)';
+    ctx.beginPath();ctx.arc(CW*0.8,CH*0.12,28,0,Math.PI*2);ctx.fill();
+    // Stars
+    for(let i=0;i<60;i++){
+      const sx=(i*157)%CW,sy=(i*83)%(CH*0.5);
+      ctx.fillStyle=`rgba(255,255,255,${0.3+0.6*Math.abs(Math.sin(t+i))})`;
+      ctx.fillRect(sx,sy,1.5,1.5);
+    }
+  } else {
+    ctx.fillStyle='rgba(255,220,50,0.9)';
+    for(let r=40;r>0;r-=10){
+      ctx.fillStyle=`rgba(255,220,50,${0.06*(40-r)/40+0.04})`;
+      ctx.beginPath();ctx.arc(CW*0.78,CH*0.12,r+40,0,Math.PI*2);ctx.fill();
+    }
+    ctx.fillStyle='#FFD700';ctx.beginPath();ctx.arc(CW*0.78,CH*0.12,30,0,Math.PI*2);ctx.fill();
+  }
+
+  // Clouds
+  if(bgKey!=='night'&&bgKey!=='forest'){
+    _cloud(ctx, CW*0.15+Math.sin(t*0.3)*10, CH*0.16, 80, 28);
+    _cloud(ctx, CW*0.6+Math.sin(t*0.2)*6,   CH*0.2,  60, 22);
+  }
+
+  // Hills
+  ctx.fillStyle='rgba(0,0,0,0.18)';
+  ctx.beginPath();ctx.moveTo(0,CH*0.52);
+  for(let x=0;x<=CW;x+=CW/8){ctx.lineTo(x,CH*0.52-60-Math.sin(x*0.015)*50-Math.cos(x*0.02)*30);}
+  ctx.lineTo(CW,CH*0.52);ctx.closePath();ctx.fill();
+
+  // Ground
+  const gg=ctx.createLinearGradient(0,CH*0.56,0,CH);
+  gg.addColorStop(0,bg.ground);gg.addColorStop(1,'rgba(0,0,0,0.5)');
+  ctx.fillStyle=gg;ctx.fillRect(0,CH*0.56,CW,CH);
+
+  // Road / floor
+  ctx.fillStyle=bg.road;
+  ctx.beginPath();ctx.moveTo(CW*0.3,CH*0.57);ctx.lineTo(CW*0.7,CH*0.57);
+  ctx.lineTo(CW,CH);ctx.lineTo(0,CH);ctx.closePath();ctx.fill();
+  // Road line
+  ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.lineWidth=3;
+  ctx.setLineDash([30,20]);
+  ctx.beginPath();ctx.moveTo(CW/2,CH*0.57);ctx.lineTo(CW/2,CH);ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Location-specific extras
+  if(bgKey==='school'){
+    // School building
+    ctx.fillStyle='#FFCC02';
+    ctx.fillRect(CW*0.1,CH*0.28,CW*0.35,CH*0.25);
+    ctx.fillStyle='#E74C3C';ctx.fillRect(CW*0.1,CH*0.22,CW*0.35,CH*0.07); // roof
+    ctx.fillStyle='#2980B9';ctx.fillRect(CW*0.2,CH*0.38,CW*0.12,CH*0.15); // door
+    ctx.fillStyle='rgba(0,0,0,0.5)';ctx.font=`bold ${14}px Poppins,sans-serif`;
+    ctx.textAlign='center';ctx.fillText('SCHOOL',CW*0.275,CH*0.32);ctx.textAlign='left';
+  }
+  if(bgKey==='market'){
+    // Market stalls
+    for(let i=0;i<3;i++){
+      ctx.fillStyle=['#E74C3C','#F39C12','#27AE60'][i];
+      ctx.fillRect(CW*(0.05+i*0.3),CH*0.35,CW*0.25,CH*0.18);
+      ctx.fillStyle='rgba(0,0,0,0.15)';ctx.fillRect(CW*(0.05+i*0.3),CH*0.35,CW*0.25,CH*0.04);
+    }
+  }
+  if(bgKey==='hospital'){
+    ctx.fillStyle='#ECF0F1';ctx.fillRect(CW*0.08,CH*0.2,CW*0.4,CH*0.35);
+    ctx.fillStyle='#E74C3C';ctx.font=`bold ${28}px sans-serif`;
+    ctx.textAlign='center';ctx.fillText('✚',CW*0.28,CH*0.32);ctx.textAlign='left';
+  }
+  if(bgKey==='home'||bgKey==='wake'){
+    ctx.fillStyle='#E8C5A0';ctx.fillRect(CW*0.08,CH*0.25,CW*0.42,CH*0.3);
+    ctx.fillStyle='#C0392B';ctx.fillRect(CW*0.05,CH*0.2,CW*0.48,CH*0.08);// roof
+    ctx.fillStyle='#85C1E9';ctx.fillRect(CW*0.18,CH*0.3,CW*0.12,CH*0.12);// window
+  }
+  if(bgKey==='night'){
+    // Fire / lantern glow
+    const fg=ctx.createRadialGradient(CW/2,CH*0.75,0,CW/2,CH*0.75,80);
+    fg.addColorStop(0,'rgba(255,120,0,0.35)');fg.addColorStop(1,'transparent');
+    ctx.fillStyle=fg;ctx.fillRect(0,0,CW,CH);
+  }
+}
+
+function _cloud(c,x,y,w,h){
+  c.fillStyle='rgba(255,255,255,0.82)';
+  c.beginPath();c.ellipse(x,y,w/2,h/2,0,0,Math.PI*2);c.fill();
+  c.beginPath();c.ellipse(x+w*0.28,y+h*0.08,w*0.3,h*0.42,0,0,Math.PI*2);c.fill();
+  c.beginPath();c.ellipse(x-w*0.28,y+h*0.1,w*0.27,h*0.38,0,0,Math.PI*2);c.fill();
+}
+
+// ─── ACTION MAP: story keywords → animation type + bgKey ─────────
+const ACTION_MAP=[
+  {keys:['wake','waking','wakes up','gets up','rises'],anim:'wake',bg:'wake'},
+  {keys:['run','running','sprint','sprinting','flee','rushing','races','bolts'],anim:'run',bg:'road'},
+  {keys:['walk','walking','walks','stroll','strolling','goes to','heading to','marches'],anim:'walk',bg:'road'},
+  {keys:['laugh','laughing','laughs','chuckle','giggles'],anim:'laugh',bg:'default'},
+  {keys:['cry','crying','cries','tears','sobbing','weeps'],anim:'cry',bg:'default'},
+  {keys:['arrive','arrives','arriving','steps out','drives up','pulls up','bursts in','bursts through'],anim:'arrive',bg:'road'},
+  {keys:['shout','shouting','shouts','yell','screaming','screams'],anim:'angry',bg:'default'},
+  {keys:['argue','arguing','argues','confront','quarrel','fight','fights'],anim:'angry',bg:'default'},
+  {keys:['shock','shocked','shocked','surprised','jaw drop'],anim:'shocked',bg:'default'},
+  {keys:['jump','jumping','jumps','leaps','cheer','cheering'],anim:'jump',bg:'default'},
+  {keys:['eat','eating','eats','devour','feast'],anim:'eat',bg:'market'},
+  {keys:['talk','talking','talks','says','said','tells','speak','speaking','explains','greet'],anim:'talk',bg:'default'},
 ];
 
-function useExample(n){
-  scenes = EXAMPLE_SCENES.map((s,i)=>({...s, sceneNum:i+1, imgUrl:null, imgStatus:'idle'}));
-  curScene = 0;
-  renderPipeline();
-  updateSceneCount();
-  drawScenePreview(0, 0);
-  document.getElementById('gen-all-btn').style.display = 'flex';
-  document.getElementById('empty-state').style.display = 'none';
-  document.getElementById('story-input').value = `Brian wakes up late and runs down the road toward school at full speed. Mwalimu Hassan is standing at the school gate with arms crossed checking his watch with a stern face. Brian skids to a stop at the gate almost falling over. Mwalimu Hassan says "You are 30 minutes late!" Suddenly Inspector Kamau bursts through the classroom door and shouts "Everyone come outside NOW!" All the children run out screaming and cheering. Brian shouts "YESSS no more school!" Suddenly Mama Wanjiru grabs Brian firmly by the ear. Mama Wanjiru says "BRIAN! Where do you think you are going?!" Brian cries big tears as Mama Wanjiru drags him home. Inspector Kamau bends over laughing and says "Ha ha ha! That boy never learns!"`;
-  toast(`✅ 8 scenes ready! Click "🖼 Generate All Images" to start!`, 'ok');
-}
-
-// ── STORY PARSER ─────────────────────────────────────────
-async function parseStory(){
-  const storyText = document.getElementById('story-input').value.trim();
-  if(!storyText){ toast('Please write a story first!', 'err'); return; }
-
-  showOverlay('Reading Your Story...', 'AI is breaking your story into cartoon scenes');
-  setOverlaySteps([
-    {label:'Detecting characters', state:'active'},
-    {label:'Splitting into scenes', state:'wait'},
-    {label:'Building image prompts', state:'wait'},
-    {label:'Preparing pipeline', state:'wait'}
-  ]);
-
-  try {
-    // Use Pollinations text API (free, no auth needed)
-    const systemPrompt = `You are a cartoon story scene planner. Break stories into Pixar-style animation scenes. Return ONLY valid JSON, nothing else.`;
-    
-    const charNames = Object.keys(CHARACTERS).join(', ');
-    const userPrompt = `You are breaking a story into cartoon video scenes for a TikTok-style animated video.
-
-Available characters (use EXACT names): ${charNames}
-
-Story: "${storyText}"
-
-For each scene, identify the KEY PHYSICAL ACTION happening — the most visually dramatic thing a camera would see. Be VERY specific about movement and body language.
-
-Return JSON:
-{
-  "scenes": [
-    {
-      "caption": "Short punchy TikTok caption, max 8 words, dramatic or funny",
-      "characters": ["ExactName1", "ExactName2"],
-      "action": "VERY SPECIFIC physical description: WHAT the character is physically doing with their body. Include movement verbs. E.g: 'Brian walking briskly along dusty road with school bag bouncing on back, school building visible ahead' or 'Inspector Kamau stepping out of police car dramatically, slamming car door, pointing at group of people' or 'Mama Wanjiru running at full sprint toward Brian waving her arms shouting'",
-      "location": "Exact one word from: market/river/hospital/school/forest/city/home/road/field/night/checkpoint/default",
-      "dialogue": "Exact words spoken if any, empty string if none",
-      "speaker": "Character name who speaks, empty if none",
-      "mood": "One of: happy/surprised/scared/angry/sad/funny/dramatic",
-      "cameraAngle": "One of: wide-shot/close-up/medium-shot/aerial-shot/dramatic-low-angle"
-    }
-  ]
-}
-
-CRITICAL RULES:
-- 1 scene = 1 clear physical action moment
-- 6-9 scenes total
-- Action field MUST describe physical movement with action verbs (walking, running, arriving, shouting, laughing, eating, etc.)
-- Make captions punchy like viral TikTok videos
-- ONLY use character names from the available list above`;
-
-    updateOverlayStep(0, 'done');
-    updateOverlayStep(1, 'active');
-
-    const response = await fetch('https://text.pollinations.ai/', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        messages: [
-          {role: 'system', content: systemPrompt},
-          {role: 'user', content: userPrompt}
-        ],
-        model: 'openai',
-        jsonMode: true,
-        seed: Math.floor(Math.random()*9999)
-      })
-    });
-
-    if(!response.ok) throw new Error(`API ${response.status}`);
-    const text = await response.text();
-    
-    updateOverlayStep(1, 'done');
-    updateOverlayStep(2, 'active');
-
-    let parsed;
-    try {
-      const clean = text.replace(/```json|```/g,'').trim();
-      parsed = JSON.parse(clean);
-    } catch(e) {
-      // Fallback: parse story manually
-      parsed = fallbackParse(storyText);
-    }
-
-    const rawScenes = parsed.scenes || parsed;
-    if(!Array.isArray(rawScenes) || !rawScenes.length) throw new Error('No scenes');
-
-    updateOverlayStep(2, 'done');
-    updateOverlayStep(3, 'active');
-
-    // Build scenes with image prompts
-    scenes = rawScenes.map((s, i) => ({
-      sceneNum: i+1,
-      caption: s.caption || `Scene ${i+1}`,
-      characters: Array.isArray(s.characters) ? s.characters.filter(c=>CHARACTERS[c]) : [],
-      action: s.action || '',
-      location: s.location || 'default',
-      dialogue: s.dialogue || '',
-      speaker: s.speaker || '',
-      mood: s.mood || 'happy',
-      cameraAngle: s.cameraAngle || 'medium-shot',
-      imgPrompt: buildImgPrompt(s, i),
-      imgUrl: null,
-      imgStatus: 'idle'
-    }));
-
-    updateOverlayStep(3, 'done');
-    await new Promise(r=>setTimeout(r,500));
-    hideOverlay();
-
-    curScene = 0;
-    renderPipeline();
-    updateSceneCount();
-    drawScenePreview(0, 0);
-    document.getElementById('gen-all-btn').style.display = 'flex';
-    toast(`✅ ${scenes.length} scenes created! Now click "Generate All Images"`, 'ok');
-
-  } catch(e) {
-    console.error(e);
-    hideOverlay();
-    // Try fallback
-    const fb = fallbackParse(storyText);
-    if(fb.scenes && fb.scenes.length){
-      scenes = fb.scenes.map((s,i)=>({...s, sceneNum:i+1, imgUrl:null, imgStatus:'idle', imgPrompt:buildImgPrompt(s,i)}));
-      curScene=0; renderPipeline(); updateSceneCount();
-      document.getElementById('gen-all-btn').style.display='flex';
-      toast(`Story parsed! ${scenes.length} scenes ready. Click "Generate All Images"`, 'ok');
-    } else {
-      toast('Could not parse story. Check your internet connection and try again.', 'err');
-    }
+function detectAnim(text){
+  const t=(text||'').toLowerCase();
+  for(const rule of ACTION_MAP){
+    if(rule.keys.some(k=>t.includes(k))) return {anim:rule.anim,bg:rule.bg};
   }
+  return {anim:'stand',bg:'default'};
 }
 
-// ── FALLBACK STORY PARSER (offline) ──────────────────────
-function fallbackParse(text){
-  const charNames = Object.keys(CHARACTERS);
-  const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-  const sceneGroups = [];
-  let cur = [];
-  
-  sentences.forEach((sent, i)=>{
-    cur.push(sent.trim());
-    if(cur.length >= 2 || i === sentences.length-1){
-      sceneGroups.push(cur.join(' '));
-      cur = [];
-    }
-  });
+// ─── SCENES STATE ─────────────────────────────────────────────────
+let scenes=[];
+let curScene=-1;
+let playTimer=null;
+let playFrame=0;
+let imgCache={};
 
-  return {
-    scenes: sceneGroups.map((grp, i) => {
-      const chars = charNames.filter(n => grp.includes(n));
-      const dialogueMatch = grp.match(/"([^"]+)"|says?\s+"([^"]+)"|says?\s+'([^']+)'/i);
-      const dialogue = dialogueMatch ? (dialogueMatch[1]||dialogueMatch[2]||dialogueMatch[3]) : '';
-      const speaker = chars.find(c=>grp.toLowerCase().includes(c.toLowerCase()+'says')||grp.toLowerCase().includes(c.toLowerCase()+' says')) || chars[0] || '';
-      const locMatch = Object.keys(LOCATIONS).find(l=>grp.toLowerCase().includes(l));
-      const words = grp.split(' ').slice(0,8).join(' ');
-      return {
-        caption: words.length > 5 ? words.replace(/[.!?,]/g,'')+'...' : 'Scene '+(i+1),
-        characters: chars.length ? chars : [charNames[0]],
-        action: grp,
-        location: locMatch || 'default',
-        dialogue, speaker,
-        mood: grp.match(/laugh|happy|joy|cheer/i)?'happy':grp.match(/scare|shock|surprise/i)?'surprised':'funny',
-        cameraAngle: i===0?'wide-shot':i%2===0?'close-up':'medium-shot'
-      };
-    })
-  };
-}
-
-// ── BUILD IMAGE PROMPT — SHORT & PUNCHY (under 200 chars) ─
-function buildImgPrompt(scene, idx){
-  const chars = Array.isArray(scene.characters) ? scene.characters.filter(c=>CHARACTERS[c]) : [];
-
-  // Pick first two characters max, use SHORT description
-  const SHORT_CHAR = {
-    "Brian":           "African boy age 10, blue school uniform, short hair, bright smile",
-    "Zawadi":          "African girl age 12, braided hair with beads, school uniform, dimples",
-    "Mama Wanjiru":    "African middle-aged woman, orange kitenge dress, colorful head wrap",
-    "Inspector Kamau": "fat African police officer, navy uniform, gold badge, big black mustache",
-    "Doctor Amara":    "African woman doctor, white coat, stethoscope, round glasses, afro hair",
-    "Chef Omondi":     "fat African man, white chef uniform, tall chef hat, big grin",
-    "Mwalimu Hassan":  "tall thin African male teacher, white shirt, tie, round glasses, books",
-    "Merchant Fatuma": "African market woman, colorful dress, white headscarf, basket of fruit",
-    "Baba James":      "elderly African man, white kanzu robe, wooden walking stick, grey beard",
-    "Ranger Kipchoge": "athletic African ranger, khaki uniform, wide hat, binoculars"
-  };
-  const charPart = chars.slice(0,2).map(n=>SHORT_CHAR[n]||n).join(' and ');
-
-  // VERY short action — just the key verb phrase
-  const actionVisual = detectActionVisual(scene.action||scene.caption||'', chars, scene.location||'default');
-  // Trim action to ~40 chars max
-  const shortAction = actionVisual.split(',')[0].substring(0, 50);
-
-  // Short location tag
-  const SHORT_LOC = {
-    market:'at busy African market stalls',
-    river:'at wide African river bank',
-    hospital:'outside African hospital',
-    school:'at African school gate',
-    forest:'on African forest path',
-    city:'on busy Nairobi city street',
-    home:'inside Kenyan family home',
-    road:'on African tarmac road',
-    field:'in African savanna field',
-    night:'at night under African stars',
-    checkpoint:'at police roadblock checkpoint',
-    police_station:'outside police station',
-    church:'at African church',
-    default:'in East Africa'
-  };
-  const locPart = SHORT_LOC[scene.location] || SHORT_LOC.default;
-
-  // Camera
-  const camShort = {
-    'wide-shot':'wide shot',
-    'close-up':'close-up shot',
-    'medium-shot':'medium shot',
-    'aerial-shot':'aerial view',
-    'dramatic-low-angle':'low angle dramatic shot'
-  }[scene.cameraAngle||'medium-shot'] || 'medium shot';
-
-  // Final prompt — kept under 220 chars BEFORE encoding
-  const prompt = `${charPart}, ${shortAction}, ${locPart}, ${camShort}, Pixar 3D animation, cinematic lighting, vivid colors, 9:16 vertical`;
-
-  return prompt.substring(0, 220);
-}
-
-// ── FIXED loadImg — no double-assignment bug ──────────────
-function loadImg(url, ms=60000){
-  return new Promise((res, rej)=>{
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    const timer = setTimeout(()=>{ img.src=''; rej(new Error('timeout')); }, ms);
-    img.onload  = ()=>{ clearTimeout(timer); res(img); };
-    img.onerror = ()=>{ clearTimeout(timer); rej(new Error('load error')); };
-    img.src = url;
-  });
-}
-async function loadImgEl(url){ try{ return await loadImg(url); }catch{ return null; } }
-
-// ── IMAGE GENERATION — sequential, 5s gap, 3 retries ─────
-async function generateSceneImage(idx){
-  const s = scenes[idx];
-  if(!s) return;
-  s.imgStatus = 'generating';
-  updateSceneRow(idx);
-  if(curScene===idx) drawScenePreview(idx, 0);
-
-  const seed = Math.floor(Math.random() * 99999);
-  // Use short encoded prompt
-  const encodedPrompt = encodeURIComponent(s.imgPrompt);
-  const models = ['flux', 'turbo', 'flux-realism'];
-
-  for(let attempt=0; attempt<3; attempt++){
-    const model = models[attempt];
-    const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=540&height=960&seed=${seed}&model=${model}&nologo=true`;
-    try {
-      const loaded = await loadImg(url, 60000);
-      s.imgUrl = url;
-      s.imgStatus = 'done';
-      imgCache[idx] = loaded;
-      if(curScene===idx) drawScenePreview(idx, 0);
-      updateSceneRow(idx);
-      return; // ✅ success — stop
-    } catch(e){
-      console.warn(`Scene ${idx+1} attempt ${attempt+1} failed (${model}): ${e.message}`);
-      if(attempt < 2) await new Promise(r=>setTimeout(r, 3000));
-    }
+// ─── RENDER A SINGLE FRAME ────────────────────────────────────────
+async function drawSceneFrame(idx, frame){
+  if(idx<0||idx>=scenes.length){
+    ctx.fillStyle='#0a0b0f';ctx.fillRect(0,0,CW,CH);
+    ctx.font='60px serif';ctx.textAlign='center';ctx.fillText('🎬',CW/2,CH/2);
+    ctx.textAlign='left';return;
   }
-  s.imgStatus = 'error';
-  updateSceneRow(idx);
-  if(curScene===idx) drawScenePreview(idx, 0);
-}
+  const s=scenes[idx];
+  const {anim, bg} = detectAnim(s.action||s.caption||'');
+  const bgKey = s.location||bg;
 
-async function generateAllImages(){
-  const btn = document.getElementById('gen-all-btn');
-  btn.disabled = true;
-  btn.innerHTML = '⏳ Generating...';
+  // 1. Draw background (AI image or painted)
+  const imgEl = imgCache[idx]||null;
+  drawBackground(bgKey, frame, imgEl);
 
-  for(let i=0; i<scenes.length; i++){
-    toast(`🎨 Scene ${i+1} of ${scenes.length} — generating...`, 'ok');
-    await generateSceneImage(i);
-    renderPipeline(); // refresh UI after each
-    if(i < scenes.length-1){
-      // Show countdown between scenes
-      for(let s=5; s>=1; s--){
-        document.getElementById('gen-all-btn').innerHTML=`⏳ Next in ${s}s...`;
-        await new Promise(r=>setTimeout(r,1000));
-      }
-    }
+  // 2. Draw animated character(s)
+  const mainChar = s.characters[0];
+  const secChar  = s.characters[1];
+
+  // Position based on how many characters
+  if(mainChar && CHARS[mainChar]){
+    const xPos = secChar ? CW*0.33 : CW*0.5;
+    const yPos = CH*0.74;
+    drawCharacter(xPos, yPos, mainChar, anim, frame, 1.4);
+  }
+  if(secChar && CHARS[secChar]){
+    // Second character does opposite/reaction action
+    const secAnim = (anim==='talk'||anim==='angry') ? 'talk' : 'stand';
+    drawCharacter(CW*0.67, CH*0.74, secChar, secAnim, frame, 1.4, true);
   }
 
-  const failed = scenes.filter(s=>s.imgStatus==='error').length;
-  const done   = scenes.filter(s=>s.imgStatus==='done').length;
-  btn.disabled = false;
-  btn.innerHTML = '🖼 Regenerate All Images';
-  if(failed > 0){
-    toast(`✅ ${done} done · ⚠️ ${failed} failed — click 🎨 on failed scenes to retry`, 'ok');
-  } else {
-    toast(`🎉 All ${done} scenes have images! Click "Export Video" now!`, 'ok');
+  // 3. Speech bubble (if dialogue)
+  if(s.dialogue && s.speaker && frame>15){
+    const alpha=Math.min(1,(frame-15)/10);
+    ctx.globalAlpha=alpha;
+    _drawSpeechBubble(s.dialogue, s.speaker, CW/2, CH*0.38);
+    ctx.globalAlpha=1;
   }
+
+  // 4. Caption bar
+  const capAlpha=Math.min(1,frame/12);
+  ctx.globalAlpha=capAlpha;
+  _drawCaption(s.caption||'');
+  ctx.globalAlpha=1;
+
+  // 5. HUD
+  _drawHUD(idx, s);
 }
 
-// ── RENDER PIPELINE ───────────────────────────────────────
-function renderPipeline(){
-  const pipe = document.getElementById('pipeline');
-  document.getElementById('empty-state').style.display = 'none';
-  pipe.innerHTML = '';
-
-  scenes.forEach((s, i) => {
-    const row = document.createElement('div');
-    row.className = 'scene-row' + (curScene===i?' active':'');
-    row.id = `sr-${i}`;
-    row.innerHTML = buildSceneRowHTML(s, i);
-    row.querySelector('.scene-row-head').addEventListener('click', ()=>selectScene(i));
-    pipe.appendChild(row);
-  });
-}
-
-function buildSceneRowHTML(s, i){
-  const charChips = s.characters.map(c=>`<span class="chip" style="background:${(CHARACTERS[c]||{color:'#3d8ef8'}).color}18;border-color:${(CHARACTERS[c]||{color:'#3d8ef8'}).color}35;color:${(CHARACTERS[c]||{color:'#3d8ef8'}).color}">${CHARACTERS[c]?CHARACTERS[c].emoji:''} ${c}</span>`).join('');
-  const locChip = `<span class="chip loc">📍 ${s.location}</span>`;
-  const diaChip = s.dialogue ? `<span class="chip dia">💬 Dialogue</span>` : '';
-  const statusMap = {idle:'st-idle',generating:'st-gen',done:'st-done',error:'st-err'};
-  const thumbContent = s.imgStatus==='done' && s.imgUrl
-    ? `<img src="${s.imgUrl}" alt="scene"/>`
-    : s.imgStatus==='generating'
-    ? `<div class="scene-thumb-loader"><div class="spin"></div>Generating...</div>`
-    : `<div class="scene-thumb-loader"><span style="font-size:20px">🎨</span><span>No image</span></div>`;
-
-  return `
-  <div class="scene-row-head">
-    <div class="scene-num">${i+1}</div>
-    <div class="scene-char-chips">${charChips}${locChip}${diaChip}</div>
-    <div class="scene-actions">
-      <div class="status-dot ${statusMap[s.imgStatus]||'st-idle'}" title="${s.imgStatus}" style="margin-right:4px;margin-top:4px"></div>
-      <button class="scene-action-btn" title="Generate image" onclick="event.stopPropagation();genOneImg(${i})">🎨</button>
-      <button class="scene-action-btn" title="Delete scene" onclick="event.stopPropagation();delScene(${i})">✕</button>
-    </div>
-  </div>
-  <div class="scene-body" style="display:grid">
-    <div class="scene-thumb">${thumbContent}</div>
-    <div class="scene-details">
-      <div class="scene-text-row"><div class="label">Caption</div><div class="val" style="font-weight:700;color:var(--txt)">${s.caption}</div></div>
-      <div class="scene-text-row"><div class="label">Action</div><div class="val">${s.action}</div></div>
-      ${s.dialogue?`<div class="scene-dialogue">"${s.dialogue}" <span style="font-style:normal;font-size:10px;opacity:.6">— ${s.speaker||s.characters[0]||''}</span></div>`:''}
-      <div style="font-size:10px;color:var(--txt3)">${s.cameraAngle} · ${s.mood} mood</div>
-      <details style="margin-top:6px"><summary style="font-size:10px;color:var(--txt3);cursor:pointer">🔍 View Image Prompt</summary><div style="font-size:9px;color:var(--txt3);margin-top:4px;line-height:1.5;background:#0a0c14;padding:6px;border-radius:4px;word-break:break-word">${s.imgPrompt||'Not yet built'}</div></details>
-    </div>
-  </div>`;
-}
-
-function updateSceneRow(i){
-  const row = document.getElementById(`sr-${i}`);
-  if(row){ row.innerHTML = buildSceneRowHTML(scenes[i], i); row.querySelector('.scene-row-head').addEventListener('click',()=>selectScene(i)); }
-}
-
-function updateSceneCount(){
-  document.getElementById('scene-count-badge').textContent = `${scenes.length} scene${scenes.length!==1?'s':''}`;
-  document.getElementById('scene-ind').textContent = `Scene ${Math.max(0,curScene+1)} / ${scenes.length}`;
-}
-
-function selectScene(i){
-  curScene = i;
-  document.querySelectorAll('.scene-row').forEach((r,j)=>r.classList.toggle('active',j===i));
-  drawScenePreview(i, 0);
-  document.getElementById('scene-ind').textContent = `Scene ${i+1} / ${scenes.length}`;
-}
-
-async function genOneImg(i){ await generateSceneImage(i); }
-function delScene(i){ scenes.splice(i,1); if(curScene>=scenes.length) curScene=scenes.length-1; renderPipeline(); updateSceneCount(); }
-
-// ── CANVAS PREVIEW ────────────────────────────────────────
-function drawEmptyPreview(){
-  ctx.fillStyle='#0a0b0f';ctx.fillRect(0,0,W,H);
-  ctx.font='72px serif';ctx.textAlign='center';ctx.fillText('🎬',W/2,H/2-20);
-  ctx.font='bold 28px Poppins,sans-serif';ctx.fillStyle='rgba(255,255,255,.25)';ctx.fillText('Your preview',W/2,H/2+50);
-  ctx.font='18px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,.15)';ctx.fillText('appears here',W/2,H/2+85);
+function _drawSpeechBubble(text, charName, x, y){
+  const ch=CHARS[charName];
+  const color=ch?ch.shirt:'#fff';
+  ctx.font='bold 28px Poppins,sans-serif';
+  // Word wrap
+  const words=text.split(' ');const maxW=360;const lh=38;
+  const lines=[];let cur='';
+  words.forEach(w=>{const tt=cur?cur+' '+w:w;if(ctx.measureText(tt).width>maxW){lines.push(cur);cur=w;}else cur=tt;});if(cur)lines.push(cur);
+  const bw=Math.min(430,maxW+40),bh=lines.length*lh+52;
+  const bx=x-bw/2,by=y-bh/2;
+  // Shadow
+  ctx.shadowColor='rgba(0,0,0,0.4)';ctx.shadowBlur=16;
+  // Bubble
+  _rrect(ctx,bx,by,bw,bh,16,'rgba(255,255,255,0.95)');
+  ctx.shadowBlur=0;
+  // Colour stripe top
+  _rrect(ctx,bx,by,bw,6,3,color);
+  // Speaker name
+  ctx.font='bold 13px Inter,sans-serif';ctx.fillStyle=color;
+  ctx.textAlign='center';ctx.fillText(charName,x,by+22);
+  // Text
+  ctx.font='bold 28px Poppins,sans-serif';ctx.fillStyle='#111';
+  lines.forEach((ln,i)=>ctx.fillText(ln,x,by+40+i*lh));
+  // Tail
+  ctx.fillStyle='rgba(255,255,255,0.95)';
+  ctx.beginPath();ctx.moveTo(x-10,by+bh);ctx.lineTo(x,by+bh+20);ctx.lineTo(x+10,by+bh);ctx.closePath();ctx.fill();
   ctx.textAlign='left';
 }
 
-async function drawScenePreview(idx, frame){
-  if(idx<0||idx>=scenes.length){ drawEmptyPreview(); return; }
-  const s = scenes[idx];
-
-  // Get image
-  let imgEl = null;
-  if(s.imgUrl && s.imgUrl!=='loading'){
-    imgEl = imgCache[idx] || await loadImgEl(s.imgUrl);
-    if(imgEl) imgCache[idx]=imgEl;
-  }
-
-  ctx.clearRect(0,0,W,H);
-
-  if(imgEl){
-    ctx.save();
-    // Ken Burns zoom
-    const t = Math.min(1, frame/120);
-    const sc = 1 + 0.06*t;
-    const px = Math.sin(t*Math.PI)*15;
-    ctx.translate(W/2+px, H/2);ctx.scale(sc,sc);ctx.translate(-W/2,-H/2);
-    const iw=imgEl.naturalWidth||imgEl.width, ih=imgEl.naturalHeight||imgEl.height;
-    const scale=Math.max(W/iw,H/ih);
-    const dw=iw*scale,dh=ih*scale;
-    ctx.drawImage(imgEl,(W-dw)/2,(H-dh)/2,dw,dh);
-    ctx.restore();
-    // Cinematic bars
-    ctx.fillStyle='rgba(0,0,0,.15)';ctx.fillRect(0,0,W,H);
-    // Gradient bottom for captions
-    const bg=ctx.createLinearGradient(0,H*.55,0,H);bg.addColorStop(0,'transparent');bg.addColorStop(1,'rgba(0,0,0,.85)');
-    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-    // Gradient top
-    const tg=ctx.createLinearGradient(0,0,0,H*.3);tg.addColorStop(0,'rgba(0,0,0,.5)');tg.addColorStop(1,'transparent');
-    ctx.fillStyle=tg;ctx.fillRect(0,0,W,H);
-  } else {
-    // Placeholder background
-    const g=ctx.createLinearGradient(0,0,0,H);
-    g.addColorStop(0,'#0d1522');g.addColorStop(1,'#060810');
-    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    // Grid pattern
-    ctx.strokeStyle='rgba(255,255,255,.03)';ctx.lineWidth=1;
-    for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-    for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-    if(s.imgStatus==='generating'){
-      ctx.font='44px serif';ctx.textAlign='center';ctx.fillText('⏳',W/2,H/2-20);
-      ctx.font='bold 22px Poppins,sans-serif';ctx.fillStyle='rgba(255,149,0,.7)';
-      ctx.fillText('Generating Image...',W/2,H/2+40);
-    } else {
-      ctx.font='44px serif';ctx.textAlign='center';ctx.fillText(s.characters[0]&&CHARACTERS[s.characters[0]]?CHARACTERS[s.characters[0]].emoji:'🎭',W/2,H/2-20);
-      ctx.font='bold 20px Poppins,sans-serif';ctx.fillStyle='rgba(255,255,255,.3)';
-      ctx.fillText('Click 🎨 to generate',W/2,H/2+40);
-    }
-    ctx.textAlign='left';
-  }
-
-  // ── DIALOGUE SPEECH BUBBLE ────────────────────────────
-  if(s.dialogue && frame > 10){
-    const alpha = Math.min(1,(frame-10)/15);
-    ctx.globalAlpha=alpha;
-    const speaker = s.speaker || s.characters[0] || '';
-    const charColor = CHARACTERS[speaker] ? CHARACTERS[speaker].color : '#fff';
-    drawSpeechBubble(ctx, s.dialogue, speaker, charColor, W/2, H*.38);
-    ctx.globalAlpha=1;
-  }
-
-  // ── CAPTION BAR ───────────────────────────────────────
-  if(s.caption){
-    const alpha = Math.min(1, frame/10);
-    ctx.globalAlpha=alpha;
-    drawCaptionBar(ctx, s.caption);
-    ctx.globalAlpha=1;
-  }
-
-  // ── SCENE NUMBER + CHARACTERS ─────────────────────────
-  ctx.globalAlpha=0.85;
-  // Scene number tag
-  ctx.fillStyle='rgba(0,0,0,.6)';
-  roundRect(ctx,16,48,58,34,8);ctx.fill();
-  ctx.font='bold 11px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,.5)';ctx.textAlign='left';ctx.fillText('SCENE',24,62);
-  ctx.font='bold 22px Bebas Neue,sans-serif';ctx.fillStyle='#fff';ctx.fillText(idx+1,24,82);
-
-  // Character emoji row
-  if(s.characters.length){
-    let cx=W-16;
-    s.characters.slice().reverse().forEach(name=>{
-      const ch=CHARACTERS[name];if(!ch)return;
-      ctx.font='22px serif';ctx.textAlign='right';ctx.fillText(ch.emoji,cx,72);
-      cx-=28;
-    });
-  }
-
-  // Handle
-  ctx.font='bold 17px Inter,sans-serif';ctx.textAlign='right';ctx.fillStyle='rgba(255,255,255,.45)';
-  ctx.shadowColor='rgba(0,0,0,.8)';ctx.shadowBlur=6;
-  ctx.fillText('@CartoonStudio',W-14,H-18);
-  ctx.shadowBlur=0;ctx.textAlign='left';ctx.globalAlpha=1;
-}
-
-function drawSpeechBubble(c,text,speaker,color,cx,cy){
-  c.font='bold 26px Poppins,sans-serif';
-  const words=text.split(' ');const maxW=360;const lineH=36;
+function _drawCaption(text){
+  if(!text) return;
+  const words=text.split(' ');const maxW=CW-80;const lh=44;
+  ctx.font='bold 30px Poppins,sans-serif';
   const lines=[];let cur='';
-  words.forEach(w=>{const t=cur?cur+' '+w:w;if(c.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;});if(cur)lines.push(cur);
-  const bw=Math.min(420,maxW+40),bh=lines.length*lineH+50;
-  const bx=cx-bw/2,by=cy-bh/2;
-  // Shadow
-  c.shadowColor='rgba(0,0,0,.5)';c.shadowBlur=18;
-  // Bubble body
-  roundRect(c,bx,by,bw,bh,18);
-  c.fillStyle='rgba(255,255,255,.95)';c.fill();
-  // Color top bar
-  roundRect(c,bx,by,bw,8,4);c.fillStyle=color;c.fill();
-  c.shadowBlur=0;
-  // Tail
-  c.beginPath();c.moveTo(cx-12,by+bh);c.lineTo(cx,by+bh+20);c.lineTo(cx+12,by+bh);c.fillStyle='rgba(255,255,255,.95)';c.fill();
-  // Speaker name
-  if(speaker){c.font='bold 13px Inter,sans-serif';c.fillStyle=color;c.textAlign='center';c.fillText(speaker,cx,by+26);}
-  // Text
-  c.font='bold 26px Poppins,sans-serif';c.fillStyle='#111';
-  lines.forEach((ln,i)=>{ c.textAlign='center'; c.fillText(ln,cx,by+(speaker?40:24)+i*lineH); });
-  c.textAlign='left';
-}
-
-function drawCaptionBar(c,text){
-  const words=text.split(' ');const lineH=46;const maxW=W-80;
-  c.font='bold 32px Poppins,sans-serif';
-  const lines=[];let cur='';
-  words.forEach(w=>{const t=cur?cur+' '+w:w;if(c.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;});if(cur)lines.push(cur);
-  const totalH=lines.length*lineH+32;
-  const by=H-totalH-50;
-  // Background
-  roundRect(c,16,by-4,W-32,totalH+4,12);
-  c.fillStyle='rgba(0,0,0,.72)';c.fill();
-  // Orange top stripe
-  const gr=c.createLinearGradient(16,0,W-16,0);gr.addColorStop(0,'#ff4d00');gr.addColorStop(1,'#ff9500');
-  roundRect(c,16,by-4,W-32,5,3);c.fillStyle=gr;c.fill();
-  // Text
-  c.textAlign='center';
+  words.forEach(w=>{const tt=cur?cur+' '+w:w;if(ctx.measureText(tt).width>maxW){lines.push(cur);cur=w;}else cur=tt;});if(cur)lines.push(cur);
+  const totalH=lines.length*lh+28;
+  const by=CH-totalH-55;
+  _rrect(ctx,16,by-6,CW-32,totalH+6,10,'rgba(0,0,0,0.7)');
+  // Orange stripe
+  const gr=ctx.createLinearGradient(16,0,CW-16,0);gr.addColorStop(0,CHARS['Brian']?'#ff4500':'#ff4500');gr.addColorStop(1,'#ff8c00');
+  _rrect(ctx,16,by-6,CW-32,5,3,gr);
+  ctx.textAlign='center';
   lines.forEach((ln,i)=>{
-    c.shadowColor='rgba(0,0,0,.9)';c.shadowBlur=8;
-    c.fillStyle='#fff';c.font='bold 32px Poppins,sans-serif';
-    c.fillText(ln,W/2,by+i*lineH+32);
+    ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=7;
+    ctx.fillStyle='#fff';ctx.font='bold 30px Poppins,sans-serif';
+    ctx.fillText(ln,CW/2,by+i*lh+26);
   });
-  c.shadowBlur=0;c.textAlign='left';
+  ctx.shadowBlur=0;ctx.textAlign='left';
 }
 
-function roundRect(c,x,y,w,h,r){
+function _drawHUD(idx, s){
+  // Scene number
+  _rrect(ctx,14,46,56,32,7,'rgba(0,0,0,0.55)');
+  ctx.font='bold 10px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,0.45)';ctx.fillText('SCENE',20,59);
+  ctx.font='bold 20px Bebas Neue,sans-serif';ctx.fillStyle='#fff';ctx.fillText(idx+1,20,78);
+  // Character emojis
+  let ex=CW-14;
+  (s.characters||[]).slice(0,3).reverse().forEach(n=>{
+    const ch=CHARS[n];if(!ch)return;
+    ctx.font='20px serif';ctx.textAlign='right';ctx.fillText(ch.emoji,ex,68);
+    ex-=26;
+  });
+  ctx.textAlign='left';
+  // Handle
+  ctx.font='bold 15px Inter,sans-serif';ctx.textAlign='right';
+  ctx.fillStyle='rgba(255,255,255,0.4)';ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=5;
+  ctx.fillText('@CartoonStudio',CW-12,CH-14);
+  ctx.shadowBlur=0;ctx.textAlign='left';
+}
+
+function _rrect(c,x,y,w,h,r,fill){
   c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.arcTo(x+w,y,x+w,y+r,r);
   c.lineTo(x+w,y+h-r);c.arcTo(x+w,y+h,x+w-r,y+h,r);c.lineTo(x+r,y+h);
   c.arcTo(x,y+h,x,y+h-r,r);c.lineTo(x,y+r);c.arcTo(x,y,x+r,y,r);c.closePath();
+  if(fill){c.fillStyle=fill;c.fill();}
 }
 
-// ── ANIMATION PLAYBACK ────────────────────────────────────
+// ─── PLAYBACK ─────────────────────────────────────────────────────
 function togglePlay(){
-  if(playTimer){ clearInterval(playTimer); playTimer=null; document.getElementById('play-btn').textContent='▶ Play'; return; }
+  if(playTimer){clearInterval(playTimer);playTimer=null;document.getElementById('play-btn').textContent='▶ Play';return;}
   document.getElementById('play-btn').textContent='⏹ Stop';
-  playFrame=0;let scIdx=Math.max(0,curScene);const FPD=30;let lf=0;
+  playFrame=0;
+  let scIdx=Math.max(0,curScene);
+  let lf=0;
+  const FPS=24;
+  const FPScene=FPS*5; // 5 seconds per scene
   playTimer=setInterval(async()=>{
-    await drawScenePreview(scIdx,lf);lf++;
-    if(lf>=FPD*4){lf=0;scIdx=(scIdx+1)%Math.max(1,scenes.length);curScene=scIdx;document.getElementById('scene-ind').textContent=`Scene ${scIdx+1} / ${scenes.length}`;}
-  },1000/FPD);
+    await drawSceneFrame(scIdx,lf);
+    lf++;
+    if(lf>=FPScene){
+      lf=0;
+      scIdx=(scIdx+1)%Math.max(1,scenes.length);
+      curScene=scIdx;
+      renderPipeline();
+      document.getElementById('sc-ind').textContent=`Scene ${scIdx+1} / ${scenes.length}`;
+      // Speak dialogue of new scene
+      const s=scenes[scIdx];
+      if(s&&s.dialogue&&s.speaker) speakLine(s.dialogue,s.speaker);
+    }
+    playFrame++;
+  },1000/FPS);
 }
-function prevSc(){if(curScene>0){curScene--;renderPipeline();drawScenePreview(curScene,0);document.getElementById('scene-ind').textContent=`Scene ${curScene+1} / ${scenes.length}`;}}
-function nextSc(){if(curScene<scenes.length-1){curScene++;renderPipeline();drawScenePreview(curScene,0);document.getElementById('scene-ind').textContent=`Scene ${curScene+1} / ${scenes.length}`;}}
 
-// ── VIDEO RENDER ──────────────────────────────────────────
+function prevSc(){ if(curScene>0){curScene--;renderPipeline();drawSceneFrame(curScene,0);} }
+function nextSc(){ if(curScene<scenes.length-1){curScene++;renderPipeline();drawSceneFrame(curScene,0);} }
+
+// ─── IMAGE GENERATION ─────────────────────────────────────────────
+function buildShortPrompt(s){
+  const SHORT={
+    "Brian":"African boy 10yo blue school uniform",
+    "Zawadi":"African girl 12yo braided hair with beads school uniform",
+    "Mama Wanjiru":"African middle-aged woman orange kitenge dress head wrap",
+    "Inspector Kamau":"fat African police officer navy uniform gold badge mustache",
+    "Doctor Amara":"African woman doctor white coat stethoscope round glasses",
+    "Chef Omondi":"fat African man white chef uniform tall chef hat",
+    "Mwalimu Hassan":"tall thin African teacher white shirt tie glasses",
+    "Merchant Fatuma":"African market woman colorful dress white headscarf basket fruit",
+    "Baba James":"elderly African man white kanzu robe walking stick grey beard",
+    "Ranger Kipchoge":"athletic African ranger khaki uniform wide hat binoculars"
+  };
+  const LOC={
+    wake:'inside African home bedroom',market:'African outdoor market stalls',
+    river:'African river bank',hospital:'outside African hospital',school:'African school compound',
+    forest:'tropical African forest path',city:'busy Nairobi city street',home:'inside Kenyan home',
+    road:'African road savanna',field:'African savanna field',night:'African night stars',
+    checkpoint:'police roadblock checkpoint',arrive:'African road'
+  };
+  const {anim}=detectAnim(s.action||s.caption||'');
+  const ANIM_WORDS={
+    wake:'waking up stretching in bed',run:'running full sprint arms pumping',
+    walk:'walking briskly forward',laugh:'laughing uncontrollably hands on belly',
+    cry:'crying big tears hands on face',arrive:'arriving dramatically stepping out',
+    angry:'shouting angrily pointing finger',shocked:'shocked jaw dropped eyes wide',
+    jump:'jumping in the air arms raised',eat:'eating enthusiastically',
+    talk:'talking expressively gesturing',stand:'standing confidently'
+  };
+  const chars=s.characters.slice(0,2).map(n=>SHORT[n]||n).join(' and ');
+  const loc=LOC[s.location]||'East Africa';
+  const act=ANIM_WORDS[anim]||anim;
+  return `${chars}, ${act}, ${loc}, Pixar 3D animation, cinematic, 9:16 vertical`.substring(0,200);
+}
+
+function loadImgFixed(url,ms=60000){
+  return new Promise((res,rej)=>{
+    const img=new Image();img.crossOrigin='anonymous';
+    const timer=setTimeout(()=>{img.src='';rej(new Error('timeout'));},ms);
+    img.onload=()=>{clearTimeout(timer);res(img);};
+    img.onerror=()=>{clearTimeout(timer);rej(new Error('error'));};
+    img.src=url;
+  });
+}
+
+async function generateSceneImage(idx){
+  const s=scenes[idx];if(!s)return;
+  s.imgStatus='generating';updateSceneRow(idx);
+  if(curScene===idx) drawSceneFrame(idx,0);
+
+  const seed=Math.floor(Math.random()*99999);
+  const prompt=encodeURIComponent(s.imgPrompt||buildShortPrompt(s));
+  const models=['flux','turbo'];
+
+  for(let a=0;a<2;a++){
+    const url=`https://image.pollinations.ai/prompt/${prompt}?width=540&height=960&seed=${seed}&model=${models[a]}&nologo=true`;
+    try{
+      const img=await loadImgFixed(url,60000);
+      s.imgUrl=url;s.imgStatus='done';imgCache[idx]=img;
+      if(curScene===idx) drawSceneFrame(idx,0);
+      updateSceneRow(idx);return;
+    }catch(e){
+      console.warn(`Scene ${idx+1} attempt ${a+1} failed:`,e.message);
+      if(a<1) await new Promise(r=>setTimeout(r,3000));
+    }
+  }
+  s.imgStatus='error';updateSceneRow(idx);
+}
+
+async function generateAllImages(){
+  const btn=document.getElementById('genall-btn');
+  btn.disabled=true;
+  for(let i=0;i<scenes.length;i++){
+    btn.innerHTML=`⏳ Scene ${i+1}/${scenes.length}...`;
+    toast(`🎨 Generating scene ${i+1} of ${scenes.length}...`,'ok');
+    await generateSceneImage(i);
+    renderPipeline();
+    if(i<scenes.length-1){
+      for(let c=5;c>=1;c--){btn.innerHTML=`⏳ Next in ${c}s...`;await new Promise(r=>setTimeout(r,1000));}
+    }
+  }
+  btn.disabled=false;btn.innerHTML='🖼 Generate All Images';
+  const done=scenes.filter(s=>s.imgStatus==='done').length;
+  const fail=scenes.filter(s=>s.imgStatus==='error').length;
+  toast(fail?`✅ ${done} done · ⚠️ ${fail} failed — click 🎨 to retry`:`🎉 All ${done} images ready! Click Export Video.`,'ok');
+}
+
+// ─── STORY PARSER ─────────────────────────────────────────────────
+async function parseStory(){
+  const text=document.getElementById('story-ta').value.trim();
+  if(!text){toast('Write a story first!','err');return;}
+  showOv('Reading Your Story...','Analysing scenes and characters...');
+  try{
+    const names=Object.keys(CHARS).join(', ');
+    const prompt=`Break this story into cartoon video scenes. Return ONLY valid JSON, no markdown.
+
+Characters available (use EXACT names): ${names}
+
+Story: "${text}"
+
+Return:
+{"scenes":[{"caption":"short punchy caption max 8 words","characters":["Name1"],"action":"specific physical action happening","location":"one of: wake/walk/run/school/market/home/road/hospital/forest/night/city/arrive/default","dialogue":"exact words spoken or empty","speaker":"who speaks or empty","mood":"happy/funny/angry/sad/surprised/dramatic"}]}
+
+Rules: 6-9 scenes, action must describe PHYSICAL MOVEMENT (e.g. 'Brian running full sprint to school gates', not 'Brian goes to school'), only use names from the list.`;
+
+    const resp=await fetch('https://text.pollinations.ai/',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:[{role:'user',content:prompt}],model:'openai',jsonMode:true,seed:Math.floor(Math.random()*9999)})
+    });
+    if(!resp.ok) throw new Error(resp.status);
+    const raw=await resp.text();
+    const clean=raw.replace(/```json|```/g,'').trim();
+    const parsed=JSON.parse(clean);
+    const rs=parsed.scenes||parsed;
+    if(!Array.isArray(rs)||!rs.length) throw new Error('no scenes');
+    scenes=rs.map((s,i)=>({...s,sceneNum:i+1,characters:(s.characters||[]).filter(c=>CHARS[c]),imgPrompt:buildShortPrompt({...s,characters:(s.characters||[]).filter(c=>CHARS[c])}),imgUrl:null,imgStatus:'idle'}));
+    finishParsed();
+  }catch(e){
+    console.error(e);
+    hideOv();
+    // Fallback manual parse
+    scenes=fallbackParse(text);
+    if(scenes.length) finishParsed();
+    else toast('Could not parse story. Try the example!','err');
+  }
+}
+
+function finishParsed(){
+  hideOv();curScene=0;renderPipeline();updateBadge();
+  drawSceneFrame(0,0);document.getElementById('genall-btn').style.display='flex';
+  document.getElementById('empty-st').style.display='none';
+  toast(`✅ ${scenes.length} scenes ready! Click "Generate All Images".`,'ok');
+}
+
+function fallbackParse(text){
+  const names=Object.keys(CHARS);
+  const sents=text.match(/[^.!?]+[.!?]+/g)||[text];
+  const groups=[];let cur=[];
+  sents.forEach((s,i)=>{cur.push(s.trim());if(cur.length>=2||i===sents.length-1){groups.push(cur.join(' '));cur=[];}});
+  return groups.map((g,i)=>{
+    const chars=names.filter(n=>g.includes(n));
+    const dm=g.match(/"([^"]+)"|says?\s+"([^"]+)"/i);
+    const {anim,bg}=detectAnim(g);
+    const loc=Object.keys(BG_SCENES).find(l=>g.toLowerCase().includes(l))||bg;
+    const s={caption:g.split(' ').slice(0,7).join(' ').replace(/[.!?]/g,'')+'...',characters:chars.length?chars:[names[0]],action:g,location:loc,dialogue:dm?(dm[1]||dm[2]||''):'',speaker:chars[0]||'',mood:'funny',sceneNum:i+1};
+    s.imgPrompt=buildShortPrompt(s);s.imgUrl=null;s.imgStatus='idle';
+    return s;
+  });
+}
+
+// ─── EXAMPLE — pre-built, no API needed ───────────────────────────
+const EX_SCENES=[
+  {caption:"Brian wakes up LATE! 😱",characters:["Brian"],action:"Brian waking up suddenly in bed stretching arms eyes wide",location:"wake",dialogue:"Oh no! I am late!",speaker:"Brian",mood:"surprised",sceneNum:1,
+   imgPrompt:"African boy 10yo blue school uniform, waking up suddenly in bed stretching arms eyes wide open, inside African home bedroom morning light, Pixar 3D animation, cinematic, 9:16 vertical"},
+  {caption:"Brian runs full speed! 💨",characters:["Brian"],action:"Brian running full sprint down road school bag bouncing",location:"road",dialogue:"",speaker:"",mood:"scared",sceneNum:2,
+   imgPrompt:"African boy 10yo blue school uniform, running full sprint down African road school bag bouncing, mouth open panicking, wide shot, Pixar 3D animation, 9:16 vertical"},
+  {caption:"Mwalimu is NOT happy 😤",characters:["Mwalimu Hassan"],action:"Mwalimu Hassan standing at school gate arms crossed checking watch",location:"school",dialogue:"You are 30 minutes late!",speaker:"Mwalimu Hassan",mood:"angry",sceneNum:3,
+   imgPrompt:"tall thin African teacher white shirt tie glasses, arms crossed at school gate checking watch stern face, African school compound, medium shot, Pixar 3D animation, 9:16 vertical"},
+  {caption:"Brian skids to a stop! 🚨",characters:["Brian","Mwalimu Hassan"],action:"Brian skidding stopping almost falling at gate, Mwalimu pointing inside",location:"school",dialogue:"Sorry Mwalimu! Sorry sorry sorry!",speaker:"Brian",mood:"scared",sceneNum:4,
+   imgPrompt:"African boy 10yo skidding stop at school gate almost falling, tall thin teacher pointing inside stern, African school compound, Pixar 3D animation, 9:16 vertical"},
+  {caption:"Inspector Kamau BURSTS IN! 🚔",characters:["Inspector Kamau"],action:"Inspector Kamau kicking door open arms wide dramatic entrance classroom",location:"school",dialogue:"Everyone outside! NOW!",speaker:"Inspector Kamau",mood:"dramatic",sceneNum:5,
+   imgPrompt:"fat African police officer navy uniform gold badge mustache, kicking classroom door open arms wide dramatic, shocked children inside, low angle dramatic, Pixar 3D animation, 9:16 vertical"},
+  {caption:"Children run out cheering! 🎉",characters:["Brian"],action:"Brian and children running out of school wildly cheering arms in air",location:"school",dialogue:"YESSS! No more school today!",speaker:"Brian",mood:"happy",sceneNum:6,
+   imgPrompt:"African boy 10yo and school children running out school wildly cheering arms raised big smiles, African school compound blue sky, wide shot, Pixar 3D animation, 9:16 vertical"},
+  {caption:"Mama Wanjiru APPEARS! 😳",characters:["Mama Wanjiru","Brian"],action:"Mama Wanjiru grabbing Brian by the ear firmly Brian yelping",location:"road",dialogue:"BRIAN! Where do you think you are going?!",speaker:"Mama Wanjiru",mood:"angry",sceneNum:7,
+   imgPrompt:"African woman orange kitenge dress, grabbing African boy by the ear firmly boy yelping in pain, African road, medium shot, Pixar 3D animation, 9:16 vertical"},
+  {caption:"Inspector Kamau laughs! 🤣",characters:["Inspector Kamau"],action:"Inspector Kamau laughing uncontrollably bending over slapping belly",location:"road",dialogue:"Ha ha ha! That boy never learns!",speaker:"Inspector Kamau",mood:"funny",sceneNum:8,
+   imgPrompt:"fat African police officer navy uniform, laughing uncontrollably bending over slapping big belly tears of laughter, police car behind, African road, Pixar 3D animation, 9:16 vertical"}
+];
+
+function loadExample(){
+  scenes=EX_SCENES.map(s=>({...s,imgUrl:null,imgStatus:'idle'}));
+  curScene=0;renderPipeline();updateBadge();
+  drawSceneFrame(0,0);
+  document.getElementById('genall-btn').style.display='flex';
+  document.getElementById('empty-st').style.display='none';
+  document.getElementById('story-ta').value=`Brian wakes up and says "Oh no I am late!" He runs full sprint down the road to school. Mwalimu Hassan is standing at the school gate with arms crossed checking his watch. Mwalimu says "You are 30 minutes late!" Brian skids to a stop nearly falling over and says "Sorry Mwalimu sorry sorry!" Suddenly Inspector Kamau kicks the classroom door open and shouts "Everyone outside NOW!" Brian and the children run out cheering. Brian shouts "YESSS no more school today!" Mama Wanjiru grabs Brian by the ear and says "BRIAN where do you think you are going?!" Inspector Kamau bends over laughing and says "Ha ha ha that boy never learns!"`;
+  swTab('story');
+  toast(`✅ 8 scenes loaded! Now click "Generate All Images" 👆`,'ok');
+}
+
+// ─── PIPELINE UI ──────────────────────────────────────────────────
+function renderPipeline(){
+  const pipe=document.getElementById('pipe');
+  if(!scenes.length){pipe.innerHTML='';document.getElementById('empty-st').style.display='block';return;}
+  document.getElementById('empty-st').style.display='none';
+  const html=scenes.map((s,i)=>sceneRowHTML(s,i)).join('');
+  pipe.innerHTML=`<div id="empty-st" style="display:none"></div>`+html;
+  scenes.forEach((_,i)=>{
+    const head=document.querySelector(`#sr-${i} .srhead`);
+    if(head) head.addEventListener('click',()=>selSc(i));
+  });
+}
+
+function sceneRowHTML(s,i){
+  const smap={idle:'sdot-i',generating:'sdot-g',done:'sdot-d',error:'sdot-e'};
+  const stxt={idle:'No image',generating:'Generating...',done:'Image ready',error:'Failed — retry'};
+  const chips=(s.characters||[]).map(n=>`<span class="chip chip-c">${CHARS[n]?CHARS[n].emoji:''} ${n}</span>`).join('');
+  const locchip=`<span class="chip chip-l">📍 ${s.location||'?'}</span>`;
+  const diachip=s.dialogue?`<span class="chip chip-d">💬</span>`:'';
+  const thumb=s.imgStatus==='done'&&s.imgUrl
+    ?`<img src="${s.imgUrl}" alt=""/>`
+    :s.imgStatus==='generating'
+    ?`<div class="sthumb-ld"><div class="spin" style="width:20px;height:20px;border-width:2px"></div>Generating...</div>`
+    :`<div class="sthumb-ld"><span style="font-size:18px">🎨</span><span>Click 🎨</span></div>`;
+  const {anim}=detectAnim(s.action||s.caption||'');
+  return `<div class="srow${curScene===i?' active':''}" id="sr-${i}">
+  <div class="srhead">
+    <div class="srnum">${i+1}</div>
+    <div class="srchips">${chips}${locchip}${diachip}</div>
+    <div class="sract">
+      <div class="sdot ${smap[s.imgStatus]||'sdot-i'}" title="${stxt[s.imgStatus]}"></div>
+      <button class="sabtn" title="Generate image" onclick="event.stopPropagation();genOne(${i})">🎨</button>
+      <button class="sabtn" title="Speak" onclick="event.stopPropagation();speakScene(${i})">🔊</button>
+      <button class="sabtn" title="Delete" onclick="event.stopPropagation();delSc(${i})">✕</button>
+    </div>
+  </div>
+  <div class="srbody">
+    <div class="sthumb">${thumb}</div>
+    <div class="sdet">
+      <div><div class="lbl">Caption</div><div class="val" style="font-weight:700;color:var(--txt)">${s.caption}</div></div>
+      <div><div class="lbl">Action</div><div class="val">${s.action}</div></div>
+      <div><div class="lbl">Animation</div><div class="val" style="color:var(--acc2)">🎭 ${anim}</div></div>
+      ${s.dialogue?`<div class="sdia">"${s.dialogue}" — <em>${s.speaker}</em></div>`:''}
+    </div>
+  </div>
+</div>`;
+}
+
+function updateSceneRow(i){renderPipeline();}
+function updateBadge(){
+  document.getElementById('sc-badge').textContent=`${scenes.length} scene${scenes.length!==1?'s':''}`;
+  document.getElementById('sc-ind').textContent=`Scene ${Math.max(0,curScene+1)} / ${scenes.length}`;
+}
+function selSc(i){curScene=i;renderPipeline();drawSceneFrame(i,0);document.getElementById('sc-ind').textContent=`Scene ${i+1} / ${scenes.length}`;}
+function delSc(i){scenes.splice(i,1);if(curScene>=scenes.length)curScene=scenes.length-1;renderPipeline();updateBadge();}
+async function genOne(i){await generateSceneImage(i);renderPipeline();}
+function speakScene(i){
+  const s=scenes[i];if(!s)return;
+  if(s.dialogue&&s.speaker) speakLine(s.dialogue,s.speaker);
+  else speakLine(s.caption,s.characters[0]||'');
+}
+
+// ─── VIDEO RENDER ─────────────────────────────────────────────────
 async function renderVideo(){
-  if(!scenes.length){toast('Write a story and generate scenes first!','err');return;}
-  const hasImg=scenes.some(s=>s.imgUrl&&s.imgStatus==='done');
-  if(!hasImg){toast('Generate images for at least some scenes first!','err');return;}
-
+  if(!scenes.length){toast('No scenes! Load example or write a story.','err');return;}
   const rbtn=document.getElementById('render-btn');const rbtn2=document.getElementById('render-btn2');
   rbtn.disabled=true;rbtn2.disabled=true;
-  const prog=document.getElementById('render-prog');prog.style.display='block';
-  document.getElementById('dl-area').style.display='none';
+  const rp=document.getElementById('rprog');rp.style.display='block';
+  document.getElementById('dlarea').style.display='none';
 
-  const FPS=30,DUR=4,fPerScene=DUR*FPS,total=scenes.length*fPerScene;
+  const FPS=24,DUR=5,FPS_scene=FPS*DUR;
+  const totalF=scenes.length*FPS_scene;
   const oc=document.createElement('canvas');oc.width=540;oc.height=960;
   const oc2=oc.getContext('2d');
   const stream=oc.captureStream(FPS);
   let mime='video/webm;codecs=vp9';if(!MediaRecorder.isTypeSupported(mime))mime='video/webm';
-  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4500000});
+  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4000000});
   const chunks=[];rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};rec.start(100);
 
-  // Preload all images
-  document.getElementById('prog-txt').textContent='Loading images...';
-  const imgs={};
-  for(let i=0;i<scenes.length;i++){
-    const s=scenes[i];
-    if(s.imgUrl&&s.imgStatus==='done'){try{imgs[i]=await loadImg(s.imgUrl);}catch{}}
-  }
+  // Temporarily use oc2 instead of ctx
+  const origCtx=ctx;
+  // Override draw to oc2
+  for(let f=0;f<totalF;f++){
+    const si=Math.floor(f/FPS_scene);
+    const lf=f%FPS_scene;
+    const s=scenes[si];
+    const {anim,bg}=detectAnim(s.action||s.caption||'');
+    const bgKey=s.location||bg;
+    const imgEl=imgCache[si]||null;
 
-  for(let f=0;f<total;f++){
-    const si=Math.floor(f/fPerScene),lf=f%fPerScene;
-    const s=scenes[si];const imgEl=imgs[si]||null;
     oc2.clearRect(0,0,540,960);
-
-    if(imgEl){
-      oc2.save();
-      const t=lf/Math.max(1,fPerScene-1);
-      const sc=1+0.06*t;const px=Math.sin(t*Math.PI)*15;
-      oc2.translate(270+px,480);oc2.scale(sc,sc);oc2.translate(-270,-480);
-      const iw=imgEl.naturalWidth||imgEl.width,ih=imgEl.naturalHeight||imgEl.height;
-      const scale=Math.max(540/iw,960/ih);
-      oc2.drawImage(imgEl,(540-iw*scale)/2,(960-ih*scale)/2,iw*scale,ih*scale);
-      oc2.restore();
-      // Overlays
-      const bg=oc2.createLinearGradient(0,528,0,960);bg.addColorStop(0,'transparent');bg.addColorStop(1,'rgba(0,0,0,.85)');
-      oc2.fillStyle=bg;oc2.fillRect(0,0,540,960);
-      const tg=oc2.createLinearGradient(0,0,0,288);tg.addColorStop(0,'rgba(0,0,0,.5)');tg.addColorStop(1,'transparent');
-      oc2.fillStyle=tg;oc2.fillRect(0,0,540,960);
-    } else {
-      const g=oc2.createLinearGradient(0,0,0,960);g.addColorStop(0,'#0d1522');g.addColorStop(1,'#060810');
-      oc2.fillStyle=g;oc2.fillRect(0,0,540,960);
+    // Draw to oc2 — replicate drawSceneFrame logic
+    _drawBGOnCtx(oc2,bgKey,lf,imgEl);
+    const mainChar=s.characters[0];const secChar=s.characters[1];
+    const cx2=secChar?540*0.33:270;
+    if(mainChar&&CHARS[mainChar]) _drawCharOnCtx(oc2,cx2,960*0.74,mainChar,anim,lf,1.4,false);
+    if(secChar&&CHARS[secChar])   _drawCharOnCtx(oc2,540*0.67,960*0.74,secChar,'talk',lf,1.4,true);
+    if(s.dialogue&&s.speaker&&lf>15){
+      const al=Math.min(1,(lf-15)/10);oc2.globalAlpha=al;
+      _drawBubbleOnCtx(oc2,s.dialogue,s.speaker,270,960*0.38);oc2.globalAlpha=1;
     }
+    const ca=Math.min(1,lf/12);oc2.globalAlpha=ca;
+    _drawCapOnCtx(oc2,s.caption||'');oc2.globalAlpha=1;
+    _drawHUDOnCtx(oc2,si,s);
 
-    // Dialogue
-    if(s.dialogue&&lf>10){
-      const alpha=Math.min(1,(lf-10)/15);oc2.globalAlpha=alpha;
-      const sp=s.speaker||s.characters[0]||'';
-      const color=CHARACTERS[sp]?CHARACTERS[sp].color:'#fff';
-      const words=s.dialogue.split(' ');const maxW=360;const lineH=36;
-      const lines=[];let cur='';
-      words.forEach(w=>{const t=cur?cur+' '+w:w;if(oc2.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;});if(cur)lines.push(cur);
-      const bw=Math.min(420,maxW+40),bh=lines.length*lineH+50;
-      const cx=270,cy=384,bx=cx-bw/2,by=cy-bh/2;
-      oc2.font='bold 26px Poppins,sans-serif';
-      oc2.shadowColor='rgba(0,0,0,.5)';oc2.shadowBlur=18;
-      roundRect(oc2,bx,by,bw,bh,18);oc2.fillStyle='rgba(255,255,255,.95)';oc2.fill();
-      roundRect(oc2,bx,by,bw,8,4);oc2.fillStyle=color;oc2.fill();
-      oc2.shadowBlur=0;
-      if(sp){oc2.font='bold 13px Inter,sans-serif';oc2.fillStyle=color;oc2.textAlign='center';oc2.fillText(sp,cx,by+26);}
-      oc2.font='bold 26px Poppins,sans-serif';oc2.fillStyle='#111';
-      lines.forEach((ln,i)=>{oc2.textAlign='center';oc2.fillText(ln,cx,by+(sp?40:24)+i*lineH);});
-      oc2.textAlign='left';oc2.globalAlpha=1;
-    }
-
-    // Caption
-    if(s.caption){
-      const alpha=Math.min(1,lf/10);oc2.globalAlpha=alpha;
-      const words=s.caption.split(' ');const maxW=460;const lineH=46;
-      oc2.font='bold 32px Poppins,sans-serif';
-      const lines=[];let cur='';
-      words.forEach(w=>{const t=cur?cur+' '+w:w;if(oc2.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;});if(cur)lines.push(cur);
-      const totalH=lines.length*lineH+32;
-      const by=960-totalH-50;
-      roundRect(oc2,16,by-4,508,totalH+4,12);oc2.fillStyle='rgba(0,0,0,.72)';oc2.fill();
-      const gr=oc2.createLinearGradient(16,0,524,0);gr.addColorStop(0,'#ff4d00');gr.addColorStop(1,'#ff9500');
-      roundRect(oc2,16,by-4,508,5,3);oc2.fillStyle=gr;oc2.fill();
-      oc2.textAlign='center';
-      lines.forEach((ln,i)=>{oc2.shadowColor='rgba(0,0,0,.9)';oc2.shadowBlur=8;oc2.fillStyle='#fff';oc2.font='bold 32px Poppins,sans-serif';oc2.fillText(ln,270,by+i*lineH+32);});
-      oc2.shadowBlur=0;oc2.textAlign='left';oc2.globalAlpha=1;
-    }
-
-    // Handle
-    oc2.font='bold 17px Inter,sans-serif';oc2.textAlign='right';oc2.fillStyle='rgba(255,255,255,.45)';
-    oc2.shadowColor='rgba(0,0,0,.8)';oc2.shadowBlur=6;oc2.fillText('@CartoonStudio',526,944);oc2.shadowBlur=0;oc2.textAlign='left';
-
-    const pct=Math.round(f/total*100);
-    document.getElementById('prog-fill').style.width=pct+'%';
-    document.getElementById('prog-txt').textContent=`Rendering ${pct}% · Scene ${si+1}/${scenes.length}`;
+    const pct=Math.round(f/totalF*100);
+    document.getElementById('pfill').style.width=pct+'%';
+    document.getElementById('ptxt').textContent=`Rendering ${pct}% · Scene ${si+1}/${scenes.length}`;
     if(f%4===0) await new Promise(r=>requestAnimationFrame(r));
   }
 
@@ -1260,39 +1409,101 @@ async function renderVideo(){
   rec.onstop=()=>{
     const blob=new Blob(chunks,{type:mime});
     const url=URL.createObjectURL(blob);
-    document.getElementById('dl-link').href=url;
-    document.getElementById('dl-area').style.display='block';
-    prog.style.display='none';
-    rbtn.disabled=false;rbtn2.disabled=false;
-    toast('🎬 Video ready! Click Download.','ok');
+    document.getElementById('dllink').href=url;
+    document.getElementById('dlarea').style.display='block';
+    rp.style.display='none';rbtn.disabled=false;rbtn2.disabled=false;
+    toast('🎬 Video exported! Click Download.','ok');
   };
 }
 
-// ── OVERLAY HELPERS ───────────────────────────────────────
-function showOverlay(title,msg){
-  document.getElementById('ov-title').textContent=title;
-  document.getElementById('ov-msg').textContent=msg;
-  document.getElementById('overlay').classList.add('show');
+// Render copies — same logic but using provided context
+function _drawBGOnCtx(c,bgKey,frame,imgEl){
+  const bg=BG_SCENES[bgKey]||BG_SCENES.default;
+  if(imgEl){
+    c.save();const sc=1+0.05*(frame/120);const px=Math.sin(frame*0.008)*12;
+    c.translate(270+px,480);c.scale(sc,sc);c.translate(-270,-480);
+    const iw=imgEl.naturalWidth||imgEl.width,ih=imgEl.naturalHeight||imgEl.height;
+    const is=Math.max(540/iw,960/ih);
+    c.drawImage(imgEl,(540-iw*is)/2,(960-ih*is)/2,iw*is,ih*is);c.restore();
+    const vg=c.createLinearGradient(0,528,0,960);vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,.6)');
+    c.fillStyle=vg;c.fillRect(0,0,540,960);return;
+  }
+  const sg=c.createLinearGradient(0,0,0,576);sg.addColorStop(0,bg.sky);sg.addColorStop(1,bg.sky2);
+  c.fillStyle=sg;c.fillRect(0,0,540,960);
+  c.fillStyle=bg.ground;c.fillRect(0,537,540,423);
+  c.fillStyle=bg.road;
+  c.beginPath();c.moveTo(162,548);c.lineTo(378,548);c.lineTo(540,960);c.lineTo(0,960);c.closePath();c.fill();
 }
-function hideOverlay(){ document.getElementById('overlay').classList.remove('show'); }
-function setOverlaySteps(steps){
-  const el=document.getElementById('ov-steps');
-  el.innerHTML=steps.map((s,i)=>`<div class="ost ${s.state}" id="ost-${i}">${s.state==='done'?'✅':s.state==='active'?'⏳':'⭕'} ${s.label}</div>`).join('');
+function _drawCharOnCtx(c,cx,cy,charName,action,frame,scale,flip){
+  // Swap ctx temporarily
+  const oldCanvas=canvas;
+  const saved={canvas,ctx};
+  // Draw to temp canvas then copy
+  const tc=document.createElement('canvas');tc.width=540;tc.height=960;
+  const tc2=tc.getContext('2d');
+  // We need to draw the character on tc2 then copy to c
+  // Since our draw functions use the global ctx, use a workaround:
+  const orig=ctx;
+  Object.assign(window,{ctx:tc2}); // temporarily replace
+  try{ drawCharacter(cx,cy,charName,action,frame,scale,flip); }catch(e){}
+  Object.assign(window,{ctx:orig});
+  c.drawImage(tc,0,0);
 }
-function updateOverlayStep(idx,state){
-  const el=document.getElementById(`ost-${idx}`);
-  if(el){el.className=`ost ${state}`;el.innerHTML=`${state==='done'?'✅':state==='active'?'⏳':'⭕'} ${el.textContent.slice(2)}`;}
+function _drawBubbleOnCtx(c,text,charName,x,y){
+  const tc=document.createElement('canvas');tc.width=540;tc.height=960;const tc2=tc.getContext('2d');
+  const orig=ctx;Object.assign(window,{ctx:tc2});
+  try{_drawSpeechBubble(text,charName,x,y);}catch(e){}
+  Object.assign(window,{ctx:orig});c.drawImage(tc,0,0);
+}
+function _drawCapOnCtx(c,text){
+  const tc=document.createElement('canvas');tc.width=540;tc.height=960;const tc2=tc.getContext('2d');
+  const orig=ctx;Object.assign(window,{ctx:tc2});
+  try{_drawCaption(text);}catch(e){}
+  Object.assign(window,{ctx:orig});c.drawImage(tc,0,0);
+}
+function _drawHUDOnCtx(c,idx,s){
+  const tc=document.createElement('canvas');tc.width=540;tc.height=960;const tc2=tc.getContext('2d');
+  const orig=ctx;Object.assign(window,{ctx:tc2});
+  try{_drawHUD(idx,s);}catch(e){}
+  Object.assign(window,{ctx:orig});c.drawImage(tc,0,0);
 }
 
-// ── TOAST ─────────────────────────────────────────────────
-function toast(msg,type=''){
-  const t=document.getElementById('toast');t.textContent=msg;
-  t.className='toast'+(type?' '+type:'');t.style.display='block';
-  clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',3500);
+// ─── OVERLAY / TOAST / TABS ────────────────────────────────────────
+function showOv(t,m){document.getElementById('ov-title').textContent=t;document.getElementById('ov-msg').textContent=m;document.getElementById('ov').classList.add('show');}
+function hideOv(){document.getElementById('ov').classList.remove('show');}
+function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(type||'');t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',3500);}
+function swTab(name){
+  ['chars','story'].forEach(n=>{
+    document.getElementById('tab-'+n).classList.toggle('on',n===name);
+    document.getElementById('pane-'+(n==='chars'?'chars':'story')).style.display=n===name?'block':'none';
+  });
+  // Fix: use correct IDs
+  document.getElementById('pane-chars').style.display=name==='chars'?'block':'none';
+  document.getElementById('pane-story').style.display=name==='story'?'block':'none';
 }
-function clearAll(){ if(confirm('Clear all scenes?')){ scenes=[]; curScene=-1; renderPipeline(); drawEmptyPreview(); document.getElementById('empty-state').style.display='block'; updateSceneCount(); document.getElementById('gen-all-btn').style.display='none'; }}
+function clearAll(){if(confirm('Clear all scenes?')){scenes=[];curScene=-1;renderPipeline();updateBadge();drawSceneFrame(-1,0);document.getElementById('genall-btn').style.display='none';imgCache={};}}
+function showCharModal(name){const ch=CHARS[name];if(!ch)return;document.getElementById('cm-emi').textContent=ch.emoji;document.getElementById('cm-name').textContent=name;document.getElementById('cm-role').textContent=ch.role+' · '+ch.look;document.getElementById('cm-desc').textContent=ch.desc;document.getElementById('cm-voice').textContent=`🎙 Voice: pitch ${ch.voice.pitch}, rate ${ch.voice.rate} — ${ch.voice.pitch<0.8?'Deep & slow':ch.voice.pitch>1.3?'High & fast':'Normal'}`;document.getElementById('cmod').classList.add('show');}
+function closeCmod(){document.getElementById('cmod').classList.remove('show');}
 
-init();
+// ─── CHAR LIST ────────────────────────────────────────────────────
+function buildCharList(){
+  const list=document.getElementById('char-list');
+  list.innerHTML=Object.entries(CHARS).map(([name,ch])=>`
+  <div class="ccard" onclick="showCharModal('${name}')">
+    <div class="cavi">${ch.emoji}</div>
+    <div class="cinf">
+      <div class="cname">${name}</div>
+      <div class="crole">${ch.role}</div>
+      <span class="cvbadge" style="background:${ch.shirt}22;color:${ch.shirt};border:1px solid ${ch.shirt}44">🎙 ${ch.voice.pitch>1.3?'High':ch.voice.pitch<0.85?'Deep':'Normal'} voice</span>
+    </div>
+    <button class="cprev" onclick="event.stopPropagation();speakLine('Hello! I am ${name}!','${name}')" title="Test voice">🔊</button>
+  </div>`).join('');
+}
+buildCharList();
+
+// ─── INIT ─────────────────────────────────────────────────────────
+drawSceneFrame(-1,0);
+updateBadge();
 </script>
 </body>
 </html>
