@@ -233,14 +233,9 @@ Brian wakes up and goes to the market. Merchant Fatuma sells him mangoes. Inspec
     </div>
 
     <div class="example-box">
-      <div class="ex-title">📖 Example 1 — School Chaos</div>
-      <p style="font-size:10px">Brian runs to school late, Inspector Kamau bursts in, Mama Wanjiru drags Brian home...</p>
-      <button class="use-example" onclick="useExample(1)">Use Example 1 →</button>
-    </div>
-    <div class="example-box" style="margin-top:0">
-      <div class="ex-title">📖 Example 2 — Market Argument</div>
-      <p style="font-size:10px">Zawadi argues with Merchant Fatuma over tomatoes, Inspector Kamau falls laughing...</p>
-      <button class="use-example" onclick="useExample(2)">Use Example 2 →</button>
+      <div class="ex-title">⚡ Quick Start — Ready Example</div>
+      <p>Brian runs late to school → Inspector Kamau bursts in → Mama Wanjiru grabs Brian's ear → chaos! 8 scenes, no setup needed.</p>
+      <button class="use-example" onclick="useExample(1)">🚀 Load Example &amp; Jump to Images →</button>
     </div>
   </div>
 </aside>
@@ -588,14 +583,36 @@ function showCharModal(name){
 function closeModal(){ document.getElementById('char-modal').classList.remove('show'); }
 
 // ── EXAMPLE STORY ─────────────────────────────────────────
-const EXAMPLE_STORY = `Brian wakes up late and runs out of the house still buttoning his shirt. He runs down the road toward school at full speed. Mwalimu Hassan is standing at the school gate checking his watch with a stern face. Brian arrives breathless and almost falls at the gate. Mwalimu Hassan shakes his head and points Brian inside. In class Brian sits down and pulls out his books. Suddenly Inspector Kamau bursts through the classroom door shouting loudly. Inspector Kamau says "Everyone come outside! There is a wild animal on the road!" All the children run outside screaming. Brian laughs and jumps over the fence. Mama Wanjiru is waiting outside the school and grabs Brian by the ear. Brian says "Mama please I can explain!" Mama Wanjiru drags Brian home as he cries big tears.`;
-
-const EXAMPLE_STORY_2 = `Zawadi goes to the market to buy vegetables for dinner. Merchant Fatuma shows her a basket of tomatoes and says "Only 200 shillings!" Zawadi shakes her head and says "Too expensive! I offer 50 shillings!" The two argue loudly in the market, both pointing fingers. Inspector Kamau walks past eating a mango and stops to watch them argue. Inspector Kamau laughs so hard he falls down dropping his mango. Doctor Amara runs over from the hospital to check if Inspector Kamau is hurt. Inspector Kamau sits up laughing and says "I am fine Doctor, these two are funnier than medicine!" Everyone at the market bursts out laughing. Zawadi buys the tomatoes for 100 shillings and walks home happily.`;
+// ── PRE-BUILT EXAMPLE — loads instantly, no API call needed ─
+const EXAMPLE_SCENES = [
+  { caption:"Brian is LATE for school! 😱", characters:["Brian"], action:"Brian running full sprint down road school bag bouncing", location:"road", dialogue:"", speaker:"", mood:"scared", cameraAngle:"wide-shot",
+    imgPrompt:"African boy age 10 blue school uniform, running full sprint down African road, school bag bouncing, mouth open panicking, wide shot, Pixar 3D animation, cinematic lighting, 9:16 vertical" },
+  { caption:"Mwalimu is NOT happy 😤", characters:["Mwalimu Hassan"], action:"Mwalimu Hassan standing at school gate arms crossed checking watch", location:"school", dialogue:"", speaker:"", mood:"angry", cameraAngle:"medium-shot",
+    imgPrompt:"tall thin African teacher white shirt tie round glasses, standing at school gate arms crossed checking watch stern face, African school compound, medium shot, Pixar 3D animation, 9:16 vertical" },
+  { caption:"Brian skids to a stop! 💨", characters:["Brian","Mwalimu Hassan"], action:"Brian skidding to stop almost falling, Mwalimu pointing inside angrily", location:"school", dialogue:"You are 30 minutes late!", speaker:"Mwalimu Hassan", mood:"dramatic", cameraAngle:"medium-shot",
+    imgPrompt:"African boy age 10 skidding to stop almost falling at school gate, tall thin African teacher pointing inside with stern face, African school background, medium shot, Pixar 3D animation, 9:16 vertical" },
+  { caption:"Inspector Kamau BURSTS IN! 🚔", characters:["Inspector Kamau"], action:"Inspector Kamau kicking classroom door open arms wide, dramatic entrance", location:"school", dialogue:"Everyone come outside! NOW!", speaker:"Inspector Kamau", mood:"dramatic", cameraAngle:"dramatic-low-angle",
+    imgPrompt:"fat African police officer navy uniform gold badge big mustache, kicking classroom door open arms wide dramatic entrance, shocked children inside, dramatic low angle, Pixar 3D animation, cinematic, 9:16 vertical" },
+  { caption:"Children run out SCREAMING! 😂", characters:["Brian"], action:"Brian and children running out of school wildly cheering arms in air", location:"school", dialogue:"YESSS! No more school!", speaker:"Brian", mood:"happy", cameraAngle:"wide-shot",
+    imgPrompt:"African boy age 10 and school children running out of school cheering wildly, arms raised big smiles, African school compound blue sky, wide shot, Pixar 3D animation, bright sunshine, 9:16 vertical" },
+  { caption:"Mama Wanjiru APPEARS! 😳", characters:["Mama Wanjiru","Brian"], action:"Mama Wanjiru grabbing Brian by the ear, Brian yelping", location:"road", dialogue:"BRIAN! Where do you think you are going?!", speaker:"Mama Wanjiru", mood:"angry", cameraAngle:"medium-shot",
+    imgPrompt:"African middle-aged woman orange kitenge dress head wrap, grabbing African boy age 10 by the ear firmly, boy yelping in pain shocked face, African road, medium shot, Pixar 3D animation, 9:16 vertical" },
+  { caption:"Brian cries BIG tears 😭", characters:["Brian","Mama Wanjiru"], action:"Brian being dragged home crying giant cartoon tears, Mama marching", location:"road", dialogue:"Mama please I can explain!", speaker:"Brian", mood:"sad", cameraAngle:"wide-shot",
+    imgPrompt:"African boy age 10 crying huge cartoon tears being dragged along road by African woman in kitenge dress marching firmly, neighbors watching laughing, wide shot, Pixar 3D animation, 9:16 vertical" },
+  { caption:"Inspector Kamau laughs! 🤣", characters:["Inspector Kamau"], action:"Inspector Kamau bent over laughing uncontrollably slapping his big belly", location:"road", dialogue:"Ha ha ha! That boy never learns!", speaker:"Inspector Kamau", mood:"funny", cameraAngle:"medium-shot",
+    imgPrompt:"fat African police officer navy uniform, bent over laughing uncontrollably slapping his big belly, tears of laughter, police car behind him, African road, medium shot, Pixar 3D animation, 9:16 vertical" }
+];
 
 function useExample(n){
-  document.getElementById('story-input').value = n===2 ? EXAMPLE_STORY_2 : EXAMPLE_STORY;
-  switchTab('story', document.querySelectorAll('.tab')[1]);
-  toast('Example story loaded! Click "Generate Scenes from Story"', 'ok');
+  scenes = EXAMPLE_SCENES.map((s,i)=>({...s, sceneNum:i+1, imgUrl:null, imgStatus:'idle'}));
+  curScene = 0;
+  renderPipeline();
+  updateSceneCount();
+  drawScenePreview(0, 0);
+  document.getElementById('gen-all-btn').style.display = 'flex';
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('story-input').value = `Brian wakes up late and runs down the road toward school at full speed. Mwalimu Hassan is standing at the school gate with arms crossed checking his watch with a stern face. Brian skids to a stop at the gate almost falling over. Mwalimu Hassan says "You are 30 minutes late!" Suddenly Inspector Kamau bursts through the classroom door and shouts "Everyone come outside NOW!" All the children run out screaming and cheering. Brian shouts "YESSS no more school!" Suddenly Mama Wanjiru grabs Brian firmly by the ear. Mama Wanjiru says "BRIAN! Where do you think you are going?!" Brian cries big tears as Mama Wanjiru drags him home. Inspector Kamau bends over laughing and says "Ha ha ha! That boy never learns!"`;
+  toast(`✅ 8 scenes ready! Click "🖼 Generate All Images" to start!`, 'ok');
 }
 
 // ── STORY PARSER ─────────────────────────────────────────
@@ -764,99 +781,110 @@ function fallbackParse(text){
   };
 }
 
-// ── BUILD IMAGE PROMPT — ACTION-FIRST ENGINE ──────────────
+// ── BUILD IMAGE PROMPT — SHORT & PUNCHY (under 200 chars) ─
 function buildImgPrompt(scene, idx){
   const chars = Array.isArray(scene.characters) ? scene.characters.filter(c=>CHARACTERS[c]) : [];
-  
-  // ① Character descriptions — specific appearance
-  const charDescs = chars.length
-    ? chars.map(n => CHARACTERS[n].imgDesc).join(' AND ')
-    : 'African cartoon character';
 
-  // ② Detect the SPECIFIC ACTION/MOTION happening
-  const actionVisual = detectActionVisual(scene.action || scene.caption || '', chars, scene.location || 'default');
-
-  // ③ Location/environment background
-  const locDesc = LOCATIONS[scene.location] || LOCATIONS.default;
-
-  // ④ Camera and lighting
-  const camAngle = scene.cameraAngle || 'medium-shot';
-  const camMap = {
-    'wide-shot':       'cinematic wide shot, both characters and full environment visible, establishing shot',
-    'close-up':        'dramatic extreme close-up on face, showing every emotion detail, tight crop',
-    'medium-shot':     'medium shot from waist up, characters clearly visible, background in focus',
-    'aerial-shot':     'aerial top-down overhead shot, bird\'s eye view, characters small below',
-    'dramatic-low-angle':'dramatic low angle shot looking up at character, hero perspective, powerful'
+  // Pick first two characters max, use SHORT description
+  const SHORT_CHAR = {
+    "Brian":           "African boy age 10, blue school uniform, short hair, bright smile",
+    "Zawadi":          "African girl age 12, braided hair with beads, school uniform, dimples",
+    "Mama Wanjiru":    "African middle-aged woman, orange kitenge dress, colorful head wrap",
+    "Inspector Kamau": "fat African police officer, navy uniform, gold badge, big black mustache",
+    "Doctor Amara":    "African woman doctor, white coat, stethoscope, round glasses, afro hair",
+    "Chef Omondi":     "fat African man, white chef uniform, tall chef hat, big grin",
+    "Mwalimu Hassan":  "tall thin African male teacher, white shirt, tie, round glasses, books",
+    "Merchant Fatuma": "African market woman, colorful dress, white headscarf, basket of fruit",
+    "Baba James":      "elderly African man, white kanzu robe, wooden walking stick, grey beard",
+    "Ranger Kipchoge": "athletic African ranger, khaki uniform, wide hat, binoculars"
   };
-  const camDesc = camMap[camAngle] || camMap['medium-shot'];
+  const charPart = chars.slice(0,2).map(n=>SHORT_CHAR[n]||n).join(' and ');
 
-  // ⑤ Mood atmosphere
-  const moodAtmos = {
-    happy:'warm golden sunlight, bright vivid colors, cheerful atmosphere',
-    surprised:'dramatic lighting, wide dramatic framing, shock atmosphere',
-    scared:'dark tense shadows, cool blue light, tense frightening atmosphere',
-    angry:'harsh sidelight, high contrast shadows, intense confrontational energy',
-    sad:'soft muted colors, overcast light, somber emotional atmosphere',
-    funny:'bright comedic lighting, exaggerated cartoon style, playful energy',
-    dramatic:'cinematic dramatic lighting, high contrast, epic atmosphere'
-  }[scene.mood] || 'warm natural lighting';
+  // VERY short action — just the key verb phrase
+  const actionVisual = detectActionVisual(scene.action||scene.caption||'', chars, scene.location||'default');
+  // Trim action to ~40 chars max
+  const shortAction = actionVisual.split(',')[0].substring(0, 50);
 
-  // ⑥ Assemble — ACTION is first and most prominent
-  const prompt = [
-    // WHAT IS HAPPENING — most important part
-    `${charDescs}`,
-    `ACTIVELY ${actionVisual}`,
-    // WHERE — detailed environment
-    `SET IN ${locDesc}`,
-    // HOW IT LOOKS
-    `${moodAtmos}`,
-    `${camDesc}`,
-    // STYLE LOCK
-    `Pixar 3D animation movie quality, ultra detailed render, subsurface skin scattering, ray-traced lighting, cinematic depth of field, photorealistic textures, vivid saturated colors, 9:16 vertical portrait composition, professional film still, no text no watermark no logo`
-  ].join(', ');
+  // Short location tag
+  const SHORT_LOC = {
+    market:'at busy African market stalls',
+    river:'at wide African river bank',
+    hospital:'outside African hospital',
+    school:'at African school gate',
+    forest:'on African forest path',
+    city:'on busy Nairobi city street',
+    home:'inside Kenyan family home',
+    road:'on African tarmac road',
+    field:'in African savanna field',
+    night:'at night under African stars',
+    checkpoint:'at police roadblock checkpoint',
+    police_station:'outside police station',
+    church:'at African church',
+    default:'in East Africa'
+  };
+  const locPart = SHORT_LOC[scene.location] || SHORT_LOC.default;
 
-  return prompt.substring(0, 500);
+  // Camera
+  const camShort = {
+    'wide-shot':'wide shot',
+    'close-up':'close-up shot',
+    'medium-shot':'medium shot',
+    'aerial-shot':'aerial view',
+    'dramatic-low-angle':'low angle dramatic shot'
+  }[scene.cameraAngle||'medium-shot'] || 'medium shot';
+
+  // Final prompt — kept under 220 chars BEFORE encoding
+  const prompt = `${charPart}, ${shortAction}, ${locPart}, ${camShort}, Pixar 3D animation, cinematic lighting, vivid colors, 9:16 vertical`;
+
+  return prompt.substring(0, 220);
 }
 
-// ── IMAGE GENERATION — with retry ────────────────────────
+// ── FIXED loadImg — no double-assignment bug ──────────────
+function loadImg(url, ms=60000){
+  return new Promise((res, rej)=>{
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    const timer = setTimeout(()=>{ img.src=''; rej(new Error('timeout')); }, ms);
+    img.onload  = ()=>{ clearTimeout(timer); res(img); };
+    img.onerror = ()=>{ clearTimeout(timer); rej(new Error('load error')); };
+    img.src = url;
+  });
+}
+async function loadImgEl(url){ try{ return await loadImg(url); }catch{ return null; } }
+
+// ── IMAGE GENERATION — sequential, 5s gap, 3 retries ─────
 async function generateSceneImage(idx){
   const s = scenes[idx];
   if(!s) return;
   s.imgStatus = 'generating';
   updateSceneRow(idx);
-  if(curScene===idx) drawScenePreview(idx,0);
+  if(curScene===idx) drawScenePreview(idx, 0);
 
-  const seed = Math.floor(Math.random() * 999999);
-  const prompt = encodeURIComponent(s.imgPrompt);
-  // Try flux first, fall back to turbo
-  const models = ['flux', 'flux-realism', 'turbo'];
-  
+  const seed = Math.floor(Math.random() * 99999);
+  // Use short encoded prompt
+  const encodedPrompt = encodeURIComponent(s.imgPrompt);
+  const models = ['flux', 'turbo', 'flux-realism'];
+
   for(let attempt=0; attempt<3; attempt++){
-    const model = models[attempt] || 'flux';
-    const url = `https://image.pollinations.ai/prompt/${prompt}?width=540&height=960&seed=${seed+attempt}&model=${model}&nologo=true&enhance=true&safe=false`;
+    const model = models[attempt];
+    const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=540&height=960&seed=${seed}&model=${model}&nologo=true`;
     try {
-      await loadImg(url, 55000); // 55s timeout
+      const loaded = await loadImg(url, 60000);
       s.imgUrl = url;
       s.imgStatus = 'done';
-      imgCache[idx] = await loadImgEl(url);
-      if(curScene === idx) drawScenePreview(idx, 0);
+      imgCache[idx] = loaded;
+      if(curScene===idx) drawScenePreview(idx, 0);
       updateSceneRow(idx);
-      return; // success
-    } catch(e) {
-      console.warn(`Attempt ${attempt+1} failed for scene ${idx}:`, e.message);
-      if(attempt < 2){
-        await new Promise(r=>setTimeout(r, 2000)); // wait before retry
-      }
+      return; // ✅ success — stop
+    } catch(e){
+      console.warn(`Scene ${idx+1} attempt ${attempt+1} failed (${model}): ${e.message}`);
+      if(attempt < 2) await new Promise(r=>setTimeout(r, 3000));
     }
   }
-  // All attempts failed
   s.imgStatus = 'error';
   updateSceneRow(idx);
-  if(curScene===idx) drawScenePreview(idx,0);
+  if(curScene===idx) drawScenePreview(idx, 0);
 }
-
-function loadImg(url, ms=55000){ return new Promise((res,rej)=>{ const i=new Image(); i.crossOrigin='anonymous'; i.onload=()=>res(i); i.onerror=()=>rej(new Error('fail')); i.src=url; const t=setTimeout(()=>rej(new Error('timeout')),ms); i.onload=()=>{clearTimeout(t);res(i);}; }); }
-async function loadImgEl(url){ try{ const img=await loadImg(url); imgCache[url]=img; return img; }catch{ return null; } }
 
 async function generateAllImages(){
   const btn = document.getElementById('gen-all-btn');
@@ -864,14 +892,27 @@ async function generateAllImages(){
   btn.innerHTML = '⏳ Generating...';
 
   for(let i=0; i<scenes.length; i++){
-    toast(`🎨 Generating scene ${i+1} of ${scenes.length}...`, 'ok');
+    toast(`🎨 Scene ${i+1} of ${scenes.length} — generating...`, 'ok');
     await generateSceneImage(i);
-    await new Promise(r=>setTimeout(r,300));
+    renderPipeline(); // refresh UI after each
+    if(i < scenes.length-1){
+      // Show countdown between scenes
+      for(let s=5; s>=1; s--){
+        document.getElementById('gen-all-btn').innerHTML=`⏳ Next in ${s}s...`;
+        await new Promise(r=>setTimeout(r,1000));
+      }
+    }
   }
 
+  const failed = scenes.filter(s=>s.imgStatus==='error').length;
+  const done   = scenes.filter(s=>s.imgStatus==='done').length;
   btn.disabled = false;
-  btn.innerHTML = '🖼 Re-generate All Images';
-  toast(`✅ All ${scenes.length} scenes have images! Export your video now.`, 'ok');
+  btn.innerHTML = '🖼 Regenerate All Images';
+  if(failed > 0){
+    toast(`✅ ${done} done · ⚠️ ${failed} failed — click 🎨 on failed scenes to retry`, 'ok');
+  } else {
+    toast(`🎉 All ${done} scenes have images! Click "Export Video" now!`, 'ok');
+  }
 }
 
 // ── RENDER PIPELINE ───────────────────────────────────────
