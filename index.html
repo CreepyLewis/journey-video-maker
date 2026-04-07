@@ -188,8 +188,8 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif}
 <!-- LEFT — Characters + Story -->
 <aside class="lpanel">
   <div class="tabs">
-    <button class="tab on" id="tab-c" onclick="swTab('chars')">🎭 Characters</button>
-    <button class="tab" id="tab-s" onclick="swTab('story')">✍️ Write Story</button>
+    <button class="tab on" id="tab-chars" onclick="swTab('chars')">🎭 Characters</button>
+    <button class="tab" id="tab-story" onclick="swTab('story')">✍️ Write Story</button>
   </div>
 
   <div id="pane-chars">
@@ -1473,13 +1473,10 @@ function showOv(t,m){document.getElementById('ov-title').textContent=t;document.
 function hideOv(){document.getElementById('ov').classList.remove('show');}
 function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(type||'');t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',3500);}
 function swTab(name){
-  ['chars','story'].forEach(n=>{
-    document.getElementById('tab-'+n).classList.toggle('on',n===name);
-    document.getElementById('pane-'+(n==='chars'?'chars':'story')).style.display=n===name?'block':'none';
-  });
-  // Fix: use correct IDs
-  document.getElementById('pane-chars').style.display=name==='chars'?'block':'none';
-  document.getElementById('pane-story').style.display=name==='story'?'block':'none';
+  document.getElementById('tab-chars').classList.toggle('on', name==='chars');
+  document.getElementById('tab-story').classList.toggle('on', name==='story');
+  document.getElementById('pane-chars').style.display = name==='chars' ? 'block' : 'none';
+  document.getElementById('pane-story').style.display = name==='story' ? 'block' : 'none';
 }
 function clearAll(){if(confirm('Clear all scenes?')){scenes=[];curScene=-1;renderPipeline();updateBadge();drawSceneFrame(-1,0);document.getElementById('genall-btn').style.display='none';imgCache={};}}
 function showCharModal(name){const ch=CHARS[name];if(!ch)return;document.getElementById('cm-emi').textContent=ch.emoji;document.getElementById('cm-name').textContent=name;document.getElementById('cm-role').textContent=ch.role+' · '+ch.look;document.getElementById('cm-desc').textContent=ch.desc;document.getElementById('cm-voice').textContent=`🎙 Voice: pitch ${ch.voice.pitch}, rate ${ch.voice.rate} — ${ch.voice.pitch<0.8?'Deep & slow':ch.voice.pitch>1.3?'High & fast':'Normal'}`;document.getElementById('cmod').classList.add('show');}
