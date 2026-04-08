@@ -9,58 +9,40 @@
 :root{--bg:#07080d;--s1:#0e1018;--s2:#151820;--s3:#1c2030;--bdr:#222638;--bdr2:#2c3050;
   --acc:#ff4500;--acc2:#ff8c00;--acc3:#ffd700;--blue:#4488ff;--green:#22dd66;--purple:#aa55ff;
   --txt:#e0e4f8;--txt2:#6a7090;--txt3:#383c58}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif}
-
 .app{display:grid;grid-template-columns:300px 1fr 300px;grid-template-rows:52px 1fr;height:100vh}
-
-/* TOPBAR */
-.topbar{grid-column:1/-1;background:var(--s1);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 18px;gap:14px;z-index:100}
+.topbar{grid-column:1/-1;background:var(--s1);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 18px;gap:12px;z-index:100}
 .logo{font-family:'Bebas Neue';font-size:24px;letter-spacing:2px;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.tbd{padding:3px 9px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:.4px}
+.tbd{padding:3px 8px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:.4px}
 .tbd-o{background:rgba(255,69,0,.12);border:1px solid rgba(255,69,0,.3);color:var(--acc)}
 .tbd-b{background:rgba(68,136,255,.12);border:1px solid rgba(68,136,255,.3);color:var(--blue)}
 .tbd-g{background:rgba(34,221,102,.12);border:1px solid rgba(34,221,102,.3);color:var(--green)}
 .tbd-p{background:rgba(170,85,255,.12);border:1px solid rgba(170,85,255,.3);color:var(--purple)}
-
-/* PANELS */
 .lpanel{background:var(--s1);border-right:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
 .cpanel{background:var(--bg);overflow-y:auto}
 .rpanel{background:var(--s1);border-left:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
-
-.sh{padding:12px 14px 8px;font-size:10px;font-weight:700;letter-spacing:1.4px;color:var(--txt3);text-transform:uppercase;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:7px;flex-shrink:0}
+.sh{padding:11px 14px 8px;font-size:10px;font-weight:700;letter-spacing:1.4px;color:var(--txt3);text-transform:uppercase;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:7px;flex-shrink:0}
 .sh-bar{width:3px;height:13px;border-radius:2px;background:linear-gradient(var(--acc),var(--acc2))}
-
-/* TABS */
 .tabs{display:flex;border-bottom:1px solid var(--bdr);flex-shrink:0}
-.tab{padding:9px 13px;font-size:11px;font-weight:700;cursor:pointer;color:var(--txt3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.2s;letter-spacing:.3px;background:none;border-top:none;border-left:none;border-right:none}
+.tab{padding:9px 13px;font-size:11px;font-weight:700;cursor:pointer;color:var(--txt3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.2s;background:none;border-top:none;border-left:none;border-right:none}
 .tab.on{color:var(--acc);border-bottom-color:var(--acc)}
-
-/* CHARACTER CARDS */
 .clist{padding:8px;display:flex;flex-direction:column;gap:5px}
 .ccard{background:var(--s2);border:1px solid var(--bdr);border-radius:9px;padding:9px 11px;display:flex;align-items:center;gap:9px;cursor:pointer;transition:.15s}
 .ccard:hover{border-color:var(--bdr2);background:var(--s3)}
 .cavi{width:38px;height:38px;border-radius:8px;background:var(--s3);border:2px solid var(--bdr2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.cinf{flex:1;min-width:0}
-.cname{font-size:12px;font-weight:700}
-.crole{font-size:10px;color:var(--txt2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cinf{flex:1;min-width:0}.cname{font-size:12px;font-weight:700}.crole{font-size:10px;color:var(--txt2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cvbadge{font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;margin-top:2px;display:inline-block}
 .cprev{background:none;border:none;cursor:pointer;color:var(--txt2);font-size:12px;padding:3px;border-radius:5px;transition:.15s}
 .cprev:hover{background:var(--bdr);color:var(--txt)}
-
-/* STORY INPUT */
 .sbox{padding:12px}
 .sta{width:100%;background:#090b12;border:1px solid var(--bdr);color:var(--txt);padding:10px;border-radius:9px;font-family:'Inter',sans-serif;font-size:12px;line-height:1.7;resize:none;height:160px;outline:none;transition:border-color .2s}
 .sta:focus{border-color:rgba(255,69,0,.4)}
-.hints{margin-top:7px;font-size:10px;color:var(--txt3);line-height:1.8}
-.hints span{color:var(--acc2);font-weight:700}
+.hints{margin-top:7px;font-size:10px;color:var(--txt3);line-height:1.8}.hints span{color:var(--acc2);font-weight:700}
 .exbox{margin:8px 12px;background:rgba(68,136,255,.06);border:1px solid rgba(68,136,255,.15);border-radius:8px;padding:9px}
 .extitle{font-size:10px;font-weight:700;color:var(--blue);letter-spacing:.7px;margin-bottom:4px;text-transform:uppercase}
 .exbtn{font-size:10px;font-weight:700;color:var(--blue);background:rgba(68,136,255,.12);border:1px solid rgba(68,136,255,.2);padding:4px 10px;border-radius:5px;cursor:pointer;margin-top:5px;display:inline-block;font-family:'Inter',sans-serif;transition:.2s}
 .exbtn:hover{background:rgba(68,136,255,.22)}
-
-/* BUTTONS */
 .btn{padding:8px 14px;border-radius:7px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;transition:.18s;display:inline-flex;align-items:center;gap:6px}
 .btn-fire{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 3px 12px rgba(255,69,0,.28)}
 .btn-fire:hover{filter:brightness(1.1);transform:translateY(-1px)}
@@ -71,17 +53,12 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif}
 .btn-grn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn-grn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .btn-full{width:100%;justify-content:center;padding:11px}
-
-/* CENTER PIPELINE */
 .chead{padding:14px 18px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px;flex-shrink:0}
 .chead h2{font-family:'Bebas Neue';font-size:19px;letter-spacing:1px}
 .scbadge{background:var(--s2);border:1px solid var(--bdr2);padding:3px 9px;border-radius:12px;font-size:10px;font-weight:700;color:var(--txt2)}
 .pipe{padding:14px 18px;display:flex;flex-direction:column;gap:10px}
-
-/* SCENE ROW */
 .srow{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .15s}
-.srow:hover{border-color:var(--bdr2)}
-.srow.active{border-color:rgba(255,69,0,.45);box-shadow:0 0 0 1px rgba(255,69,0,.12)}
+.srow:hover{border-color:var(--bdr2)}.srow.active{border-color:rgba(255,69,0,.45)}
 .srhead{display:flex;align-items:center;gap:8px;padding:9px 12px}
 .srnum{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .srchips{display:flex;gap:4px;flex:1;flex-wrap:wrap}
@@ -103,14 +80,10 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif}
 .sdet .val{font-size:11px;color:var(--txt2);line-height:1.5}
 .sdia{background:rgba(34,221,102,.06);border:1px solid rgba(34,221,102,.15);border-radius:5px;padding:5px 9px;font-size:11px;color:var(--green);font-style:italic}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
-
-/* SPINNER */
 .spin{border:2.5px solid var(--bdr2);border-top-color:var(--acc);border-radius:50%;animation:spin .65s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* RIGHT PANEL — PHONE PREVIEW */
 .prev-wrap{padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px}
-.phone{width:210px;background:#0a0a0a;border-radius:24px;border:3px solid #1e1e1e;box-shadow:0 16px 48px rgba(0,0,0,.7),inset 0 0 0 1px #2a2a2a;overflow:hidden;position:relative}
+.phone{width:210px;background:#0a0a0a;border-radius:24px;border:3px solid #1e1e1e;box-shadow:0 16px 48px rgba(0,0,0,.7),inset 0 0 0 1px #2a2a2a;overflow:hidden}
 .pnotch{height:18px;background:#0a0a0a;display:flex;align-items:center;justify-content:center}
 .pnotch-bar{width:44px;height:4px;background:#1a1a1a;border-radius:2px}
 #pcanv{width:204px;height:362px;display:block;background:#000;border-radius:0 0 18px 18px}
@@ -120,108 +93,82 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif}
 .pbtn.pp{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent;color:#fff}
 .pbtn.pp:hover{filter:brightness(1.1)}
 .scind{font-size:10px;color:var(--txt3);text-align:center}
-
-/* VOICE CONTROLS */
 .vsec{padding:12px;border-top:1px solid var(--bdr)}
 .vsec h4{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
-.vtest{display:flex;gap:6px;flex-wrap:wrap}
-.vtbtn{flex:1;padding:7px 5px;border-radius:6px;border:1px solid var(--bdr);background:var(--s2);color:var(--txt2);cursor:pointer;font-size:10px;font-weight:700;font-family:'Inter',sans-serif;min-width:60px;text-align:center;transition:.15s}
+.vtest{display:flex;gap:5px;flex-wrap:wrap}
+.vtbtn{padding:6px 8px;border-radius:6px;border:1px solid var(--bdr);background:var(--s2);color:var(--txt2);cursor:pointer;font-size:10px;font-weight:700;font-family:'Inter',sans-serif;transition:.15s}
 .vtbtn:hover{background:var(--s3);color:var(--txt)}
-
-/* RENDER */
 .rsec{padding:12px;border-top:1px solid var(--bdr)}
 .rsec h4{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
 .pbar{height:5px;background:var(--bdr);border-radius:3px;overflow:hidden;margin:7px 0}
 .pfill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));border-radius:3px;transition:width .2s}
 .ptxt{font-size:10px;color:var(--txt2);text-align:center}
-.dlarea{text-align:center;padding:8px 0}
 .dlbtn{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:9px;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;font-family:'Bebas Neue';font-size:17px;letter-spacing:2px;text-decoration:none;box-shadow:0 3px 14px rgba(34,197,94,.28)}
-
-/* OVERLAY */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
 .ov.show{display:flex}
 .ovbox{background:var(--s2);border:1px solid var(--bdr2);border-radius:14px;padding:28px 36px;text-align:center;max-width:340px}
-.ovbox .spin{width:36px;height:36px;border-width:3.5px;margin:0 auto 14px}
 .ovbox h3{font-family:'Bebas Neue';font-size:20px;letter-spacing:1px;color:var(--acc2);margin-bottom:5px}
 .ovbox p{font-size:12px;color:var(--txt2);line-height:1.6}
-
-/* TOAST */
 .toast{position:fixed;bottom:18px;right:18px;background:var(--s2);border:1px solid var(--bdr2);border-radius:9px;padding:9px 14px;font-size:12px;font-weight:600;z-index:500;display:none;animation:fadeUp .3s}
-.toast.ok{border-color:rgba(34,221,102,.3);color:var(--green)}
-.toast.err{border-color:rgba(244,68,68,.3);color:#f87171}
+.toast.ok{border-color:rgba(34,221,102,.3);color:var(--green)}.toast.err{border-color:rgba(244,68,68,.3);color:#f87171}
 @keyframes fadeUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-
-/* CHARACTER MODAL */
 .cmod{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:400;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
 .cmod.show{display:flex}
 .cmodbox{background:var(--s2);border:1px solid var(--bdr2);border-radius:14px;width:320px;overflow:hidden;position:relative}
 .cmodemi{height:160px;display:flex;align-items:center;justify-content:center;font-size:72px;background:var(--s3)}
 .cmodb{padding:16px}
 .cmodbtn{width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.5);border:none;color:#fff;cursor:pointer;position:absolute;top:10px;right:10px;font-size:13px;display:flex;align-items:center;justify-content:center}
-
-/* ADD-SCENE BTN */
-.add-sc{width:100%;padding:9px;background:none;border:1px dashed var(--bdr);color:var(--acc);font-family:'Inter',sans-serif;font-size:12px;font-weight:700;cursor:pointer;border-radius:8px;transition:.2s;display:flex;align-items:center;justify-content:center;gap:5px}
-.add-sc:hover{border-color:var(--acc);background:rgba(255,69,0,.05)}
-
-/* empty state */
 .empty{text-align:center;padding:50px 20px;color:var(--txt3)}
 .empty .ei{font-size:52px;margin-bottom:12px}
+/* narrator bar */
+.narrbar{background:rgba(0,0,0,.7);border:1px solid rgba(255,140,0,.3);border-radius:8px;padding:8px 12px;margin-top:6px;width:100%;font-size:11px;color:var(--acc2);display:flex;align-items:center;gap:7px;min-height:36px}
+.narrbar .pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--acc2);flex-shrink:0}
+.narrbar.speaking .pulse-dot{animation:pulse .5s infinite}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:3px}
 </style>
 </head>
 <body>
 <div class="app">
-
-<!-- TOPBAR -->
 <header class="topbar">
   <div class="logo">🎬 Cartoon Story Studio</div>
-  <span class="tbd tbd-o">✨ Pixar AI Scenes</span>
-  <span class="tbd tbd-b">🎭 Animated Characters</span>
-  <span class="tbd tbd-g">🗣 Voice Acting</span>
-  <span class="tbd tbd-p">📱 9:16 Video</span>
+  <span class="tbd tbd-o">✨ Pixar AI</span>
+  <span class="tbd tbd-b">🎭 Animated</span>
+  <span class="tbd tbd-g">🗣 Voices</span>
+  <span class="tbd tbd-p">🎙 Narrator</span>
   <div style="margin-left:auto;display:flex;gap:8px">
     <button class="btn btn-out" onclick="clearAll()" style="font-size:11px">🗑 Clear</button>
-    <button class="btn btn-fire" id="genall-btn" onclick="generateAllImages()" style="display:none">🖼 Generate All Images</button>
+    <button class="btn btn-fire" id="genall-btn" onclick="generateAllImages()" style="display:none">🖼 Generate Images</button>
     <button class="btn btn-grn" onclick="renderVideo()" id="render-btn">🎬 Export Video</button>
   </div>
 </header>
 
-<!-- LEFT — Characters + Story -->
 <aside class="lpanel">
   <div class="tabs">
     <button class="tab on" id="tab-chars" onclick="swTab('chars')">🎭 Characters</button>
     <button class="tab" id="tab-story" onclick="swTab('story')">✍️ Write Story</button>
   </div>
-
   <div id="pane-chars">
-    <div class="sh"><div class="sh-bar"></div>10 Characters — type their name in your story</div>
+    <div class="sh"><div class="sh-bar"></div>10 Characters — use their names in your story</div>
     <div class="clist" id="char-list"></div>
   </div>
-
   <div id="pane-story" style="display:none">
     <div class="sbox">
       <div class="sh" style="margin:-12px -12px 10px;padding:10px 12px"><div class="sh-bar"></div>Your Story</div>
-      <textarea class="sta" id="story-ta" placeholder="Write your story here. Use character names and describe what they DO.
+      <textarea class="sta" id="story-ta" placeholder="Write your story here. Use character names and describe actions.
 
-Good example:
-Brian wakes up in bed and stretches. He runs to school. Inspector Kamau drives up in his police car..."></textarea>
-      <div class="hints">
-        Characters: <span>Brian, Zawadi, Mama Wanjiru, Inspector Kamau, Doctor Amara, Chef Omondi, Mwalimu Hassan, Merchant Fatuma, Baba James, Ranger Kipchoge</span><br/>
-        Actions: <span>walks, runs, wakes up, arrives, talks, laughs, cries, eats, argues...</span>
-      </div>
-      <div style="margin-top:10px">
-        <button class="btn btn-fire btn-full" id="parse-btn" onclick="parseStory()">✨ Generate Scenes from Story</button>
-      </div>
+Example:
+Brian wakes up late and runs to school. Inspector Kamau arrives in his police car..."></textarea>
+      <div class="hints">Characters: <span>Brian, Zawadi, Mama Wanjiru, Inspector Kamau, Doctor Amara, Chef Omondi, Mwalimu Hassan, Merchant Fatuma, Baba James, Ranger Kipchoge</span></div>
+      <div style="margin-top:10px"><button class="btn btn-fire btn-full" id="parse-btn" onclick="parseStory()">✨ Generate Scenes from Story</button></div>
     </div>
-
     <div class="exbox">
       <div class="extitle">⚡ Quick Start</div>
-      <p style="font-size:10px;color:var(--txt2);line-height:1.6">Brian is late, runs to school, Inspector Kamau bursts in, Mama Wanjiru drags Brian home — 8 action scenes ready instantly.</p>
+      <p style="font-size:10px;color:var(--txt2);line-height:1.6">Brian late for school → runs → Inspector Kamau bursts in → Mama Wanjiru drags Brian home. 8 action scenes, no setup.</p>
       <button class="exbtn" onclick="loadExample()">🚀 Load Example → Generate Images</button>
     </div>
   </div>
 </aside>
 
-<!-- CENTER — Scene Pipeline -->
 <main class="cpanel">
   <div class="chead">
     <h2>🎬 Scene Pipeline</h2>
@@ -230,13 +177,12 @@ Brian wakes up in bed and stretches. He runs to school. Inspector Kamau drives u
   <div class="pipe" id="pipe">
     <div class="empty" id="empty-st">
       <div class="ei">🎭</div>
-      <div style="font-family:'Bebas Neue';font-size:20px;color:var(--txt2);margin-bottom:6px">Your scenes appear here</div>
-      <div style="font-size:12px;line-height:1.7;max-width:300px;margin:0 auto">Use the <strong style="color:var(--acc)">Write Story</strong> tab to type your story, then click <strong style="color:var(--acc)">Generate Scenes</strong></div>
+      <div style="font-family:'Bebas Neue';font-size:20px;color:var(--txt2);margin-bottom:6px">Scenes appear here</div>
+      <div style="font-size:12px;line-height:1.7;max-width:280px;margin:0 auto">Use <strong style="color:var(--acc)">Write Story</strong> tab to write your story, then click <strong style="color:var(--acc)">Generate Scenes</strong></div>
     </div>
   </div>
 </main>
 
-<!-- RIGHT — Preview + Voice + Render -->
 <aside class="rpanel">
   <div class="sh"><div class="sh-bar"></div>Preview</div>
   <div class="prev-wrap">
@@ -250,23 +196,29 @@ Brian wakes up in bed and stretches. He runs to school. Inspector Kamau drives u
       <button class="pbtn" onclick="nextSc()">▶</button>
     </div>
     <div class="scind" id="sc-ind">Scene 0 / 0</div>
-    <button class="btn btn-fire btn-full" id="speak-btn" onclick="speakCurrentScene()" style="margin-top:4px">🔊 Speak This Scene</button>
+    <!-- Narrator display -->
+    <div class="narrbar" id="narrbar">
+      <div class="pulse-dot"></div>
+      <span id="narr-text" style="line-height:1.4">Narrator will speak here during playback</span>
+    </div>
   </div>
 
   <div class="vsec">
     <h4>🎙 Voice Test</h4>
     <div class="vtest" id="voice-test-btns"></div>
+    <div style="margin-top:8px">
+      <button class="btn btn-out btn-full" style="font-size:11px" onclick="speakCurrentScene()">🔊 Speak This Scene</button>
+    </div>
   </div>
 
   <div class="rsec">
-    <h4>🎬 Export Video</h4>
-    <div style="font-size:10px;color:var(--txt3);margin-bottom:9px;line-height:1.6">Video includes animated characters + AI backgrounds + voice captions</div>
+    <h4>🎬 Export</h4>
     <button class="btn btn-grn btn-full" onclick="renderVideo()" id="render-btn2">🎬 Export Video (WebM)</button>
     <div id="rprog" style="display:none;margin-top:9px">
       <div class="pbar"><div class="pfill" id="pfill" style="width:0%"></div></div>
       <div class="ptxt" id="ptxt">Preparing...</div>
     </div>
-    <div id="dlarea" style="display:none" class="dlarea">
+    <div id="dlarea" style="display:none;text-align:center;padding:8px 0">
       <a id="dllink" class="dlbtn" download="cartoon.webm">⬇ DOWNLOAD</a>
       <div style="font-size:10px;color:var(--txt3);margin-top:5px">TikTok · Reels · Shorts</div>
     </div>
@@ -274,881 +226,1398 @@ Brian wakes up in bed and stretches. He runs to school. Inspector Kamau drives u
 </aside>
 </div>
 
-<!-- Overlays -->
 <div class="ov" id="ov"><div class="ovbox"><div class="spin" style="width:36px;height:36px;border-width:3.5px;margin:0 auto 14px"></div><h3 id="ov-title">Working...</h3><p id="ov-msg">Please wait</p></div></div>
 <div class="cmod" id="cmod" onclick="if(event.target===this)closeCmod()"><div class="cmodbox"><div class="cmodemi" id="cm-emi"></div><div class="cmodb"><div style="font-family:'Bebas Neue';font-size:22px;letter-spacing:1px;color:var(--acc2)" id="cm-name"></div><div style="font-size:11px;color:var(--txt2);margin-bottom:8px" id="cm-role"></div><div style="font-size:11px;color:var(--txt);line-height:1.7;background:var(--s1);padding:8px;border-radius:7px" id="cm-desc"></div><div style="font-size:10px;color:var(--txt3);margin-top:8px;padding:6px 8px;background:rgba(0,0,0,.3);border-radius:5px" id="cm-voice"></div></div><button class="cmodbtn" onclick="closeCmod()">✕</button></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════════
-//  CARTOON STORY STUDIO v4 — Animated Characters + Voices
-// ═══════════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════
+//  CARTOON STORY STUDIO v5 — Pro Characters · Rich Backgrounds · Narrator
+// ══════════════════════════════════════════════════════════════════
 
-const CW=540, CH=960;
+const CW=540,CH=960;
 const canvas=document.getElementById('pcanv');
 const ctx=canvas.getContext('2d');
 
-// ─── CHARACTER DEFINITIONS ─────────────────────────────────────────
-// Each has: emoji, role, look description, voice config, body colours
+// ── CHARACTERS ──────────────────────────────────────────────────
 const CHARS={
-  "Brian":{
-    emoji:"👦",role:"Curious Schoolboy",
-    look:"10-year-old African boy in blue school uniform, short natural hair, bright eyes",
-    desc:"Brian is a curious and adventurous 10-year-old. He gets into funny situations every day!",
-    // Body colours for canvas drawing
-    skin:"#8B4513",skinLight:"#A0522D",hair:"#1a0a00",
-    shirt:"#1565C0",pants:"#1a237e",shoes:"#111",
-    voice:{pitch:1.5,rate:1.15,name_hint:""},  // high child voice
-    size:0.75
-  },
-  "Zawadi":{
-    emoji:"👧",role:"Brian's Best Friend",
-    look:"12-year-old African girl, braided hair with yellow beads, school uniform",
-    desc:"Zawadi is clever and cheerful with beautiful braided hair. Always has the best ideas.",
-    skin:"#6B3410",skinLight:"#8B4513",hair:"#0a0500",
-    shirt:"#7B1FA2",pants:"#4A148C",shoes:"#111",
-    voice:{pitch:1.6,rate:1.1,name_hint:""},
-    size:0.78
-  },
-  "Mama Wanjiru":{
-    emoji:"👩",role:"Brian's Mother",
-    look:"Middle-aged African woman, orange kitenge dress, colourful head wrap",
-    desc:"Brian's caring but strict Mama. She wears colourful traditional dresses and always knows best!",
-    skin:"#5C2A0A",skinLight:"#6B3410",hair:"#0a0300",
-    shirt:"#E65100",pants:"#BF360C",shoes:"#2a1500",
-    voice:{pitch:1.1,rate:0.92,name_hint:""},  // adult female
-    size:0.9
-  },
-  "Inspector Kamau":{
-    emoji:"👮",role:"Police Officer",
-    look:"Fat African police officer, navy uniform with gold badge, big black mustache",
-    desc:"The town's dramatic police officer. Big belly, big mustache, big personality!",
-    skin:"#4A2208",skinLight:"#5C2A0A",hair:"#050200",
-    shirt:"#0D47A1",pants:"#1A237E",shoes:"#050a15",
-    voice:{pitch:0.7,rate:0.85,name_hint:""},  // deep authoritative
-    size:1.1,fat:true
-  },
-  "Doctor Amara":{
-    emoji:"👩‍⚕️",role:"Town Doctor",
-    look:"35-year-old woman doctor, white coat, stethoscope, round glasses, afro hair",
-    desc:"Dr Amara is brilliant and kind. Always calm no matter what chaos is happening!",
-    skin:"#5C2A0A",skinLight:"#6B3410",hair:"#0d0500",
-    shirt:"#FAFAFA",pants:"#455A64",shoes:"#263238",
-    voice:{pitch:1.15,rate:0.95,name_hint:""},
-    size:0.85
-  },
-  "Chef Omondi":{
-    emoji:"👨‍🍳",role:"The Big Chef",
-    look:"Large fat African man, white chef uniform, tall chef hat, huge cheerful smile",
-    desc:"Chef Omondi loves food more than anything. His cooking smells drift all over town!",
-    skin:"#4A2208",skinLight:"#5C2A0A",hair:"#060300",
-    shirt:"#FAFAFA",pants:"#90A4AE",shoes:"#1a1a1a",
-    voice:{pitch:0.85,rate:0.88,name_hint:""},
-    size:1.05,fat:true
-  },
-  "Mwalimu Hassan":{
-    emoji:"👨‍🏫",role:"Schoolteacher",
-    look:"Tall thin African teacher, white shirt and tie, round glasses, carries books",
-    desc:"Mwalimu Hassan is stern but fair. He's taught every child in town!",
-    skin:"#5C2A0A",skinLight:"#6B3410",hair:"#111",
-    shirt:"#F5F5F5",pants:"#37474F",shoes:"#1a1a1a",
-    voice:{pitch:0.9,rate:0.88,name_hint:""},
-    size:0.95,thin:true
-  },
-  "Merchant Fatuma":{
-    emoji:"👩‍🦱",role:"Market Merchant",
-    look:"Energetic African market woman, bright colourful dress, white headscarf, basket of fruit",
-    desc:"Merchant Fatuma sells the best fruit in town and shouts the loudest prices!",
-    skin:"#6B3410",skinLight:"#7A3D15",hair:"#0a0400",
-    shirt:"#F57F17",pants:"#E65100",shoes:"#1a0a00",
-    voice:{pitch:1.25,rate:1.12,name_hint:""},
-    size:0.88
-  },
-  "Baba James":{
-    emoji:"👴",role:"Village Elder",
-    look:"Elderly African man, white kanzu robe, wooden walking stick, grey beard",
-    desc:"Baba James has seen everything. He always speaks slowly and wisely.",
-    skin:"#4A2208",skinLight:"#5C2A0A",hair:"#888",
-    shirt:"#EEEEEE",pants:"#BDBDBD",shoes:"#3a2a1a",
-    voice:{pitch:0.78,rate:0.75,name_hint:""},  // old slow voice
-    size:0.88
-  },
-  "Ranger Kipchoge":{
-    emoji:"🦺",role:"Wildlife Ranger",
-    look:"Athletic African ranger, khaki uniform, wide hat, binoculars around neck",
-    desc:"Ranger Kipchoge is strong and adventurous. He protects the national park!",
-    skin:"#5C2A0A",skinLight:"#6B3410",hair:"#0d0600",
-    shirt:"#795548",pants:"#5D4037",shoes:"#2a1a0a",
-    voice:{pitch:0.88,rate:0.98,name_hint:""},
-    size:1.0
-  }
+  "Brian":{emoji:"👦",role:"Schoolboy",desc:"A curious 10-year-old African boy who loves adventure and always gets into funny situations.",
+    skin:"#C68642",skinD:"#A0522D",skinHL:"#DEB887",hair:"#1a0800",shirt:"#1565C0",pants:"#0D47A1",shoes:"#212121",
+    voice:{pitch:1.55,rate:1.12},size:0.72,fat:false,thin:false},
+  "Zawadi":{emoji:"👧",role:"Best Friend",desc:"Brian's clever best friend. Braided hair with colourful beads and always a dimpled smile.",
+    skin:"#A0522D",skinD:"#8B4513",skinHL:"#CD853F",hair:"#0d0400",shirt:"#880E4F",pants:"#6A1B9A",shoes:"#1a1a1a",
+    voice:{pitch:1.65,rate:1.08},size:0.74,fat:false,thin:false},
+  "Mama Wanjiru":{emoji:"👩",role:"Brian's Mother",desc:"Brian's caring but strict Mama. Wears colourful traditional kitenge dresses.",
+    skin:"#8B4513",skinD:"#6B3410",skinHL:"#A0522D",hair:"#0a0300",shirt:"#E65100",pants:"#BF360C",shoes:"#2a1000",
+    voice:{pitch:1.05,rate:0.90},size:0.92,fat:false,thin:false},
+  "Inspector Kamau":{emoji:"👮",role:"Police Officer",desc:"The town's dramatic police officer. Big belly, big mustache, big personality!",
+    skin:"#6B3410",skinD:"#4A2208",skinHL:"#8B4513",hair:"#050200",shirt:"#0D47A1",pants:"#1A237E",shoes:"#050a15",
+    voice:{pitch:0.68,rate:0.82},size:1.05,fat:true,thin:false},
+  "Doctor Amara":{emoji:"👩‍⚕️",role:"Town Doctor",desc:"Dr Amara is brilliant and calm. Always in her white coat with stethoscope.",
+    skin:"#8B4513",skinD:"#6B3410",skinHL:"#A0522D",hair:"#0d0500",shirt:"#FAFAFA",pants:"#455A64",shoes:"#263238",
+    voice:{pitch:1.12,rate:0.93},size:0.86,fat:false,thin:false},
+  "Chef Omondi":{emoji:"👨‍🍳",role:"The Big Chef",desc:"Chef Omondi loves food more than anything. Always cheerful in his chef uniform.",
+    skin:"#5C2A0A",skinD:"#3E1A07",skinHL:"#7A3A10",hair:"#060300",shirt:"#FAFAFA",pants:"#78909C",shoes:"#1a1a1a",
+    voice:{pitch:0.82,rate:0.86},size:1.0,fat:true,thin:false},
+  "Mwalimu Hassan":{emoji:"👨‍🏫",role:"Schoolteacher",desc:"Stern but fair. Mwalimu Hassan taught every child in town. Tall, thin, always with books.",
+    skin:"#7A3D15",skinD:"#5C2A0A",skinHL:"#9A5020",hair:"#111",shirt:"#F5F5F5",pants:"#37474F",shoes:"#1a1a1a",
+    voice:{pitch:0.88,rate:0.86},size:0.94,fat:false,thin:true},
+  "Merchant Fatuma":{emoji:"👩‍🦱",role:"Market Merchant",desc:"Sells the best fruit in town and shouts the loudest prices. Bright colourful dress.",
+    skin:"#8B4513",skinD:"#6B3410",skinHL:"#A5682A",hair:"#0a0400",shirt:"#F57F17",pants:"#E65100",shoes:"#1a0a00",
+    voice:{pitch:1.28,rate:1.15},size:0.88,fat:false,thin:false},
+  "Baba James":{emoji:"👴",role:"Village Elder",desc:"The respected village elder. Always calm and wise in his white kanzu robe.",
+    skin:"#5C2A0A",skinD:"#3E1A07",skinHL:"#7A3A10",hair:"#888",shirt:"#EEEEEE",pants:"#BDBDBD",shoes:"#3a2a1a",
+    voice:{pitch:0.76,rate:0.72},size:0.88,fat:false,thin:false},
+  "Ranger Kipchoge":{emoji:"🦺",role:"Wildlife Ranger",desc:"Strong and adventurous. Protects the national park in his khaki ranger uniform.",
+    skin:"#7A3D15",skinD:"#5C2A0A",skinHL:"#9A5020",hair:"#0d0600",shirt:"#6D4C41",pants:"#4E342E",shoes:"#2a1a0a",
+    voice:{pitch:0.90,rate:0.97},size:1.0,fat:false,thin:false}
 };
 
-// ─── SPEECH SYNTHESIS ──────────────────────────────────────────────
-const synth = window.speechSynthesis;
-let availableVoices = [];
-function loadVoices(){
-  availableVoices = synth.getVoices();
-  // Prefer English voices
-}
-synth.onvoiceschanged = loadVoices;
-loadVoices();
+// ── NARRATOR VOICE ──────────────────────────────────────────────
+const synth=window.speechSynthesis;
+let narratorActive=false;
 
-function getBestVoice(hint){
-  // Try to find an appropriate voice
-  const voices = synth.getVoices();
-  // Prefer any English voice
-  return voices.find(v=>v.lang.startsWith('en')) || voices[0] || null;
+function getBestVoice(wantDeep){
+  const voices=synth.getVoices();
+  // Prefer english
+  const eng=voices.filter(v=>v.lang.startsWith('en'));
+  return eng[0]||voices[0]||null;
 }
 
-function speakLine(text, charName, onEnd){
-  if(!text){ if(onEnd) onEnd(); return; }
+function speakLine(text,charName,cb){
+  if(!text){if(cb)cb();return;}
   synth.cancel();
-  const utt = new SpeechSynthesisUtterance(text);
-  const ch = CHARS[charName];
-  if(ch){
-    utt.pitch = ch.voice.pitch;
-    utt.rate  = ch.voice.rate;
-    utt.volume = 1;
-  }
-  const v = getBestVoice('');
-  if(v) utt.voice = v;
-  utt.onend = ()=>{ if(onEnd) onEnd(); };
-  utt.onerror = ()=>{ if(onEnd) onEnd(); };
+  const utt=new SpeechSynthesisUtterance(text);
+  const ch=CHARS[charName];
+  if(ch){utt.pitch=ch.voice.pitch;utt.rate=ch.voice.rate;}
+  else{utt.pitch=1.0;utt.rate=1.0;}
+  utt.volume=1;
+  const v=getBestVoice(ch&&ch.voice.pitch<0.85);
+  if(v)utt.voice=v;
+  utt.onend=()=>{if(cb)cb();};
+  utt.onerror=()=>{if(cb)cb();};
   synth.speak(utt);
 }
 
-function speakCurrentScene(){
-  if(curScene<0||curScene>=scenes.length) return;
-  const s=scenes[curScene];
-  if(s.dialogue&&s.speaker){
-    toast(`🗣 ${s.speaker}: "${s.dialogue.substring(0,30)}..."`, 'ok');
-    speakLine(s.dialogue, s.speaker);
-  } else {
-    // Narrate the action
-    const narrate = s.caption || s.action || '';
-    speakLine(narrate, s.characters[0]||'');
-    toast(`🔊 Narrating scene ${curScene+1}`, 'ok');
-  }
+function speakNarrator(text,cb){
+  if(!text){if(cb)cb();return;}
+  synth.cancel();
+  const utt=new SpeechSynthesisUtterance(text);
+  utt.pitch=1.0;utt.rate=0.95;utt.volume=1;
+  const voices=synth.getVoices();
+  // Try to pick a clear English narrator voice
+  const v=voices.find(v=>v.name.includes('Google')&&v.lang==='en-US')
+         ||voices.find(v=>v.lang==='en-US')
+         ||voices.find(v=>v.lang.startsWith('en'))
+         ||voices[0];
+  if(v)utt.voice=v;
+  utt.onend=()=>{narratorActive=false;document.getElementById('narrbar').classList.remove('speaking');if(cb)cb();};
+  utt.onerror=()=>{narratorActive=false;if(cb)cb();};
+  narratorActive=true;
+  document.getElementById('narrbar').classList.add('speaking');
+  document.getElementById('narr-text').textContent=text;
+  synth.speak(utt);
 }
 
-// Build voice test buttons
+function buildNarration(s){
+  // Craft a rich narrator sentence from scene data
+  const chars=s.characters||[];
+  const charStr=chars.length===1?chars[0]:chars.length===2?`${chars[0]} and ${chars[1]}`:chars.join(', ');
+  const loc=s.location?` at the ${s.location.replace(/_/g,' ')}`:'';
+  const action=s.action?s.action.replace(/brian|zawadi|mama wanjiru|inspector kamau|doctor amara|chef omondi|mwalimu hassan|merchant fatuma|baba james|ranger kipchoge/gi,'').trim():'';
+  let narr='';
+  if(s.dialogue&&s.speaker){
+    narr=`${charStr}${loc}. ${s.speaker} says — ${s.dialogue}`;
+  } else {
+    narr=`${charStr}${loc}. ${action||s.caption||''}`;
+  }
+  return narr;
+}
+
+function speakCurrentScene(){
+  if(curScene<0||curScene>=scenes.length)return;
+  const s=scenes[curScene];
+  speakNarrator(buildNarration(s));
+}
+
+// ── VOICE TEST BUTTONS ───────────────────────────────────────────
 function buildVoiceTestBtns(){
-  const wrap = document.getElementById('voice-test-btns');
-  wrap.innerHTML='';
+  const wrap=document.getElementById('voice-test-btns');wrap.innerHTML='';
   Object.keys(CHARS).forEach(name=>{
-    const btn = document.createElement('button');
-    btn.className='vtbtn';
+    const btn=document.createElement('button');btn.className='vtbtn';
     btn.textContent=CHARS[name].emoji+' '+name.split(' ')[0];
-    btn.title=`Test ${name}'s voice`;
-    btn.addEventListener('click',()=>{
-      btn.style.borderColor=CHARS[name].shirt;
-      speakLine(`Hello! I am ${name}.`, name, ()=>{ btn.style.borderColor=''; });
-    });
+    btn.addEventListener('click',()=>speakLine(`Hello! I am ${name}.`,name));
     wrap.appendChild(btn);
   });
 }
-buildVoiceTestBtns();
 
-// ─── ANIMATED CHARACTER DRAWING ────────────────────────────────────
-// Draw a cartoon character doing an action on canvas
-// All positions in screen coords (scaled to 540×960)
+// ══════════════════════════════════════════════════════════════════
+//  PROFESSIONAL CHARACTER RENDERER
+// ══════════════════════════════════════════════════════════════════
 
-function drawCharacter(cx, cy, charName, action, frame, scale=1, flip=false){
-  const ch = CHARS[charName] || CHARS['Brian'];
-  const t = frame * 0.08; // time
-  const s = (ch.size||1) * scale;
-  const fat = ch.fat ? 1.35 : 1;
-  const thin = ch.thin ? 0.82 : 1;
+function drawChar(C, charName, anim, frame){
+  // C = canvas context, already translated to character center-bottom
+  const ch=CHARS[charName]||CHARS['Brian'];
+  const s=ch.size;
+  const fatMul=ch.fat?1.32:ch.thin?0.82:1.0;
+  const t=frame*0.09;
 
-  ctx.save();
-  ctx.translate(cx, cy);
-  if(flip) ctx.scale(-1,1);
+  C.save();
+  switch(anim){
+    case 'walk':   _animWalk(C,ch,s,fatMul,t,frame);break;
+    case 'run':    _animRun(C,ch,s,fatMul,t,frame);break;
+    case 'talk':   _animTalk(C,ch,s,fatMul,t,frame);break;
+    case 'laugh':  _animLaugh(C,ch,s,fatMul,t,frame);break;
+    case 'cry':    _animCry(C,ch,s,fatMul,t,frame);break;
+    case 'wake':   _animWake(C,ch,s,fatMul,t,frame);break;
+    case 'run_scared': _animRun(C,ch,s,fatMul,t,frame,true);break;
+    case 'angry':  _animAngry(C,ch,s,fatMul,t,frame);break;
+    case 'arrive': _animArrive(C,ch,s,fatMul,t,frame);break;
+    case 'jump':   _animJump(C,ch,s,fatMul,t,frame);break;
+    case 'eat':    _animEat(C,ch,s,fatMul,t,frame);break;
+    case 'shocked':_animShocked(C,ch,s,fatMul,t,frame);break;
+    case 'drag':   _animWalk(C,ch,s,fatMul,t,frame);break;
+    default:       _animStand(C,ch,s,fatMul,t,frame);
+  }
+  C.restore();
+}
 
-  const bw = 32*s*fat*thin; // body width
-  const bh = 38*s;           // body height
-  const hw = 26*s*fat;       // head width
-  const hh = 28*s*fat;       // head height
-  const legH = 36*s;
-  const armH = 28*s;
+// ── CORE BODY DRAWING ────────────────────────────────────────────
+function _body(C,ch,s,fm,bw,bh,legAngleL,legAngleR,armAngleL,armAngleR,headTilt,mouthState,eyeState,extra){
+  const lw=11*s*fm, lh=42*s, aw=10*s*fm, ah=32*s;
+  const hw=28*s*fm, hh=32*s*fm;
+  const by=-bh*0.5; // body center y (top of body is -bh)
+  const legTop=bh*0.5;
 
-  // Shadow
-  ctx.fillStyle='rgba(0,0,0,0.22)';
-  ctx.beginPath();ctx.ellipse(0, legH+4, bw*0.9, 6, 0, 0, Math.PI*2);ctx.fill();
+  // ── LEGS ──
+  ['L','R'].forEach((side,i)=>{
+    const ang=(i===0?legAngleL:legAngleR)*Math.PI/180;
+    const lx=(i===0?-1:1)*bw*0.25;
+    C.save();C.translate(lx,legTop);C.rotate(ang);
+    // Upper leg
+    C.fillStyle=ch.pants;
+    _roundRect(C,-lw/2,0,lw,lh*0.55,4);C.fill();
+    // Knee joint
+    C.fillStyle=ch.pants;
+    C.beginPath();C.arc(0,lh*0.55,lw*0.52,0,Math.PI*2);C.fill();
+    // Lower leg
+    _roundRect(C,-lw*0.45,lh*0.55,lw*0.9,lh*0.42,3);C.fill();
+    // Shoe
+    C.save();C.translate(0,lh*0.97);
+    C.fillStyle=ch.shoes;
+    C.shadowColor='rgba(0,0,0,0.3)';C.shadowBlur=4;
+    C.beginPath();C.ellipse(lw*0.15,3,lw*0.95,lw*0.52,0,0,Math.PI*2);C.fill();
+    C.shadowBlur=0;
+    // Shoe highlight
+    C.fillStyle='rgba(255,255,255,0.12)';
+    C.beginPath();C.ellipse(lw*0.05,-1,lw*0.55,lw*0.2,0,0,Math.PI*2);C.fill();
+    C.restore();C.restore();
+  });
 
-  switch(action){
-    case 'walk':   drawWalk(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,false); break;
-    case 'run':    drawRun(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,false); break;
-    case 'stand':  drawStand(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
-    case 'talk':   drawTalk(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
-    case 'laugh':  drawLaugh(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
-    case 'cry':    drawCry(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
-    case 'wake':   drawWake(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
-    case 'arrive': drawArrive(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,frame); break;
-    case 'angry':  drawAngry(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
-    case 'eat':    drawEat(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
-    case 'shocked':drawShocked(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t); break;
-    case 'jump':   drawJump(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,frame); break;
-    default:       drawStand(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t);
+  // ── BODY/TORSO ──
+  C.shadowColor='rgba(0,0,0,0.25)';C.shadowBlur=10;
+  // Main torso
+  C.fillStyle=ch.shirt;
+  _roundRect(C,-bw/2,-bh/2,bw,bh,8*s);C.fill();
+  C.shadowBlur=0;
+  // Side shading
+  const bodyShade=C.createLinearGradient(-bw/2,-bh/2,bw/2,-bh/2);
+  bodyShade.addColorStop(0,'rgba(0,0,0,0.18)');
+  bodyShade.addColorStop(0.3,'rgba(0,0,0,0)');
+  bodyShade.addColorStop(0.7,'rgba(0,0,0,0)');
+  bodyShade.addColorStop(1,'rgba(0,0,0,0.22)');
+  C.fillStyle=bodyShade;_roundRect(C,-bw/2,-bh/2,bw,bh,8*s);C.fill();
+  // Shirt details — collar
+  C.fillStyle='rgba(255,255,255,0.15)';
+  C.beginPath();C.moveTo(-bw*0.12,-bh/2);C.lineTo(0,-bh/2+8*s);C.lineTo(bw*0.12,-bh/2);C.closePath();C.fill();
+  // Fat belly button
+  if(ch.fat){
+    C.fillStyle='rgba(0,0,0,0.12)';
+    C.beginPath();C.arc(0,bh*0.1,4*s,0,Math.PI*2);C.fill();
   }
 
-  ctx.restore();
-}
+  // ── ARMS ──
+  ['L','R'].forEach((side,i)=>{
+    const ang=(i===0?armAngleL:armAngleR);
+    const ax=(i===0?-bw/2:bw/2);
+    C.save();C.translate(ax,-bh*0.25);C.rotate(ang);
+    // Upper arm
+    C.fillStyle=ch.shirt;
+    C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=5;
+    _roundRect(C,(i===0?-aw:0),0,aw,ah*0.55,5);C.fill();
+    C.shadowBlur=0;
+    // Elbow
+    C.fillStyle=ch.shirt;
+    C.beginPath();C.arc((i===0?-aw/2:aw/2),ah*0.55,aw*0.5,0,Math.PI*2);C.fill();
+    // Lower arm / forearm
+    C.fillStyle=ch.skin;
+    _roundRect(C,(i===0?-aw*0.8+aw*0.1:aw*0.1),ah*0.55,aw*0.7,ah*0.42,4);C.fill();
+    // Hand
+    C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=5;
+    C.fillStyle=ch.skin;
+    C.beginPath();C.arc((i===0?-aw*0.45:aw*0.45),ah,aw*0.52,0,Math.PI*2);C.fill();
+    C.shadowBlur=0;
+    // Knuckle lines
+    C.strokeStyle=ch.skinD;C.lineWidth=0.8;
+    for(let k=0;k<3;k++){
+      const kx=(i===0?-aw*0.45:aw*0.45)+(k-1)*aw*0.18;
+      C.beginPath();C.arc(kx,ah,aw*0.12,Math.PI*0.2,Math.PI*0.8);C.stroke();
+    }
+    C.restore();
+  });
 
-function drawStand(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
-  const bob = Math.sin(t)*2.5;
-  ctx.save(); ctx.translate(0, bob);
-  _drawLegs(ch,s,fat,bw,bh,legH, 0, 0);
-  _drawBody(ch,s,fat,thin,bw,bh);
-  _drawArms(ch,s,fat,thin,bw,bh,armH, Math.sin(t*0.5)*0.12, -Math.sin(t*0.5)*0.12);
-  _drawHead(ch,s,fat,hw,hh,bh, Math.sin(t*0.4)*3, 0, false, false);
-  ctx.restore();
-}
-
-function drawTalk(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
-  const bob = Math.sin(t)*2;
-  const mouthOpen = Math.abs(Math.sin(t*3))>0.5;
-  const armSwing = Math.sin(t)*0.45;
-  ctx.save(); ctx.translate(0, bob);
-  _drawLegs(ch,s,fat,bw,bh,legH, 0, 0);
-  _drawBody(ch,s,fat,thin,bw,bh);
-  _drawArms(ch,s,fat,thin,bw,bh,armH, armSwing, -0.15);
-  _drawHead(ch,s,fat,hw,hh,bh, Math.sin(t*0.8)*5, 0, mouthOpen, false);
-  ctx.restore();
-}
-
-function drawWalk(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
-  const legSwing = Math.sin(t*2)*22;
-  const armSwing = Math.sin(t*2)*0.5;
-  const bob = Math.abs(Math.sin(t*2))*4 - 2;
-  ctx.save(); ctx.translate(0, bob);
-  _drawLegs(ch,s,fat,bw,bh,legH, legSwing, -legSwing);
-  _drawBody(ch,s,fat,thin,bw,bh);
-  _drawArms(ch,s,fat,thin,bw,bh,armH, armSwing, -armSwing);
-  _drawHead(ch,s,fat,hw,hh,bh, 0, Math.sin(t*2)*2, false, false);
-  ctx.restore();
-}
-
-function drawRun(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
-  const legSwing = Math.sin(t*3.5)*38;
-  const armSwing = Math.sin(t*3.5)*0.8;
-  const bob = Math.abs(Math.sin(t*3.5))*8 - 4;
-  const lean = -0.18; // forward lean
-  ctx.save(); ctx.translate(0, bob); ctx.rotate(lean);
-  _drawLegs(ch,s,fat,bw,bh,legH, legSwing, -legSwing);
-  _drawBody(ch,s,fat,thin,bw,bh);
-  _drawArms(ch,s,fat,thin,bw,bh,armH, armSwing, -armSwing);
-  // Motion blur lines behind
-  ctx.restore();
-  // Speed lines
-  ctx.strokeStyle='rgba(255,255,255,0.25)';ctx.lineWidth=2;
-  for(let i=0;i<4;i++){
-    const lx=-80-i*18;const ly=(-40+i*18);
-    ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(lx-30,ly);ctx.stroke();
-  }
-  ctx.save(); ctx.translate(0, bob); ctx.rotate(lean);
-  _drawHead(ch,s,fat,hw,hh,bh, -8, -3, false, false);
-  ctx.restore();
-}
-
-function drawLaugh(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
-  const shake = Math.sin(t*5)*4;
-  const bellybounce = Math.abs(Math.sin(t*4))*6;
-  ctx.save(); ctx.translate(shake, -bellybounce*0.3);
-  _drawLegs(ch,s,fat,bw,bh,legH, 5, -5);
-  _drawBody(ch,s,fat,thin,bw+bellybounce*0.1,bh);
-  _drawArms(ch,s,fat,thin,bw,bh,armH, -0.6, 0.6); // arms on belly
-  _drawHead(ch,s,fat,hw,hh,bh, Math.sin(t*4)*12, 0, true, false);
-  // Laugh tears
-  if(Math.sin(t*3)>0){
-    ctx.fillStyle='rgba(150,200,255,0.7)';
-    ctx.beginPath();ctx.arc(-hw*0.35,-bh-hh*0.1, 3, 0, Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.arc(hw*0.35,-bh-hh*0.1, 3, 0, Math.PI*2);ctx.fill();
-  }
-  ctx.restore();
-}
-
-function drawCry(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
-  const sob = Math.sin(t*2)*3;
-  ctx.save(); ctx.translate(0, sob);
-  _drawLegs(ch,s,fat,bw,bh,legH, 0, 0);
-  _drawBody(ch,s,fat,thin,bw,bh);
-  _drawArms(ch,s,fat,thin,bw,bh,armH, -0.7, 0.7); // arms covering face
-  _drawHead(ch,s,fat,hw,hh,bh, Math.sin(t)*10, 0, false, true);
-  // Big cartoon tears
-  const teary = -bh-hh*0.15;
-  ctx.fillStyle='rgba(100,180,255,0.9)';
-  ctx.beginPath();ctx.ellipse(-hw*0.3, teary+Math.sin(t*2)*8, 3.5, 6, 0, 0, Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.ellipse(hw*0.3, teary+Math.sin(t*2+1)*8, 3.5, 6, 0, 0, Math.PI*2);ctx.fill();
-  ctx.restore();
-}
-
-function drawWake(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
-  // Character stretching/waking up - sitting then standing
-  const stretchY = Math.min(t*4, 1);
-  const armStretch = -Math.PI*0.6 * stretchY;
-  const yOff = (1-stretchY)*20;
-  ctx.save(); ctx.translate(0, yOff);
-  _drawLegs(ch,s,fat,bw,bh,legH*stretchY, 15*stretchY, -15*stretchY);
-  _drawBody(ch,s,fat,thin,bw,bh*stretchY+8*(1-stretchY));
-  _drawArms(ch,s,fat,thin,bw,bh,armH, armStretch*0.7, armStretch);
-  _drawHead(ch,s,fat,hw,hh,bh, 0, Math.sin(t)*6*(1-stretchY*0.7), false, false);
-  // Z Z Z sleep bubbles while waking
-  if(stretchY<0.5){
-    ctx.font=`bold ${12*s}px sans-serif`;
-    ctx.fillStyle='rgba(255,255,255,0.7)';
-    ctx.fillText('z', hw+8, -bh-hh+10);
-    ctx.font=`bold ${9*s}px sans-serif`;
-    ctx.fillText('z', hw+16, -bh-hh);
-  }
-  ctx.restore();
-}
-
-function drawArrive(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,frame){
-  // Walk in from side, stop dramatically
-  const walkIn = Math.min(frame/20, 1);
-  const legSwing = Math.sin(t*2)*(1-walkIn)*22;
-  const bob = Math.abs(Math.sin(t*2))*(1-walkIn)*4-2;
-  // Arms out dramatically when arrived
-  const armL = walkIn>0.95 ? -0.7 : Math.sin(t*2)*0.5;
-  const armR = walkIn>0.95 ? 0.7  : -Math.sin(t*2)*0.5;
-  ctx.save(); ctx.translate(0, bob);
-  _drawLegs(ch,s,fat,bw,bh,legH, legSwing*(1-walkIn), -legSwing*(1-walkIn));
-  _drawBody(ch,s,fat,thin,bw,bh);
-  _drawArms(ch,s,fat,thin,bw,bh,armH, armL, armR);
-  _drawHead(ch,s,fat,hw,hh,bh, 0, Math.sin(t)*3*(1-walkIn), false, false);
-  ctx.restore();
-}
-
-function drawAngry(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
-  const shake = Math.sin(t*6)*3;
-  ctx.save(); ctx.translate(shake, 0);
-  _drawLegs(ch,s,fat,bw,bh,legH, 8, -8); // legs apart
-  _drawBody(ch,s,fat,thin,bw,bh);
-  _drawArms(ch,s,fat,thin,bw,bh,armH, 0.8, -0.8); // fists clenched up
-  _drawHead(ch,s,fat,hw,hh,bh, 0, 0, false, false, true); // angry face
-  // Anger veins/steam
-  ctx.fillStyle='rgba(255,100,100,0.8)';
-  ctx.font=`${11*s}px sans-serif`;
-  ctx.fillText('💢', hw, -bh-hh);
-  ctx.restore();
-}
-
-function drawEat(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
-  const chew = Math.sin(t*4);
-  const bob = Math.sin(t)*1.5;
-  ctx.save(); ctx.translate(0, bob);
-  _drawLegs(ch,s,fat,bw,bh,legH, 0, 0);
-  _drawBody(ch,s,fat,thin,bw,bh);
-  // One arm up holding food
-  _drawArms(ch,s,fat,thin,bw,bh,armH, -1.1, 0.1);
-  _drawHead(ch,s,fat,hw,hh,bh, 0, 0, chew>0, false);
-  // Food item
-  ctx.fillStyle='#f4a460';
-  ctx.beginPath();ctx.arc(bw*0.5-4, -bh-hh*0.4, 7*s, 0, Math.PI*2);ctx.fill();
-  ctx.restore();
-}
-
-function drawShocked(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t){
-  ctx.save();
-  ctx.translate(0, Math.sin(t*8)*2); // tremble
-  _drawLegs(ch,s,fat,bw,bh,legH, -5, 5);
-  _drawBody(ch,s,fat,thin,bw,bh);
-  _drawArms(ch,s,fat,thin,bw,bh,armH, -1.2, 1.2); // hands on cheeks
-  _drawHead(ch,s,fat,hw,hh,bh, 0, 0, true, false); // mouth open
-  // Stars / shock lines
-  for(let i=0;i<6;i++){
-    const ang=i/6*Math.PI*2+t;
-    const r=hw+10;
-    ctx.strokeStyle=`rgba(255,200,0,${0.5+Math.sin(t*3+i)*0.4})`;
-    ctx.lineWidth=2;
-    ctx.beginPath();ctx.moveTo(Math.cos(ang)*r,-bh-hh/2+Math.sin(ang)*r);
-    ctx.lineTo(Math.cos(ang)*(r+8),-bh-hh/2+Math.sin(ang)*(r+8));ctx.stroke();
-  }
-  ctx.restore();
-}
-
-function drawJump(cx,cy,ch,s,fat,thin,bw,bh,hw,hh,legH,armH,t,frame){
-  const jumpY = -Math.abs(Math.sin(frame*0.15))*50;
-  const legSpread = Math.abs(Math.sin(frame*0.15))*25;
-  ctx.save(); ctx.translate(0, jumpY);
-  _drawLegs(ch,s,fat,bw,bh,legH, legSpread, -legSpread);
-  _drawBody(ch,s,fat,thin,bw,bh);
-  _drawArms(ch,s,fat,thin,bw,bh,armH, -1.0, 1.0); // arms up
-  _drawHead(ch,s,fat,hw,hh,bh, 0, 0, true, false);
-  ctx.restore();
-}
-
-// ─── PRIMITIVE BODY PART DRAWERS ──────────────────────────────────
-function _drawLegs(ch,s,fat,bw,bh,legH, leftAng, rightAng){
-  const lw=10*s*fat;
-  const top=bh/2+2;
-  // Left leg
-  ctx.save();ctx.translate(-bw*0.25,top);ctx.rotate(leftAng*Math.PI/180);
-  ctx.fillStyle=ch.pants;
-  ctx.beginPath();ctx.roundRect(-lw/2,0,lw,legH*0.6,3);ctx.fill();
-  // Shoe
-  ctx.fillStyle=ch.shoes;
-  ctx.save();ctx.translate(0,legH*0.6);ctx.rotate(leftAng*-Math.PI/180*0.3);
-  ctx.beginPath();ctx.ellipse(lw*0.2,lw*0.3,lw*0.9,lw*0.5,0,0,Math.PI*2);ctx.fill();
-  ctx.restore();ctx.restore();
-  // Right leg
-  ctx.save();ctx.translate(bw*0.25,top);ctx.rotate(rightAng*Math.PI/180);
-  ctx.fillStyle=ch.pants;
-  ctx.beginPath();ctx.roundRect(-lw/2,0,lw,legH*0.6,3);ctx.fill();
-  ctx.fillStyle=ch.shoes;
-  ctx.save();ctx.translate(0,legH*0.6);ctx.rotate(rightAng*-Math.PI/180*0.3);
-  ctx.beginPath();ctx.ellipse(-lw*0.2,lw*0.3,lw*0.9,lw*0.5,0,0,Math.PI*2);ctx.fill();
-  ctx.restore();ctx.restore();
-}
-
-function _drawBody(ch,s,fat,thin,bw,bh){
-  // Torso
-  ctx.fillStyle=ch.shirt;
-  ctx.beginPath();ctx.roundRect(-bw/2,-bh/2,bw,bh,6*s);ctx.fill();
-  // Shading
-  ctx.fillStyle='rgba(0,0,0,0.1)';
-  ctx.beginPath();ctx.roundRect(-bw/2,-bh/2,bw*0.4,bh,6*s,0,0,6*s);ctx.fill();
-}
-
-function _drawArms(ch,s,fat,thin,bw,bh,armH,leftRot,rightRot){
-  const aw=9*s*fat;
-  // Left arm
-  ctx.save();ctx.translate(-bw/2,0);ctx.rotate(leftRot);
-  ctx.fillStyle=ch.shirt;
-  ctx.beginPath();ctx.roundRect(-aw,0,aw,armH,4);ctx.fill();
-  // Hand
-  ctx.fillStyle=ch.skin;
-  ctx.beginPath();ctx.arc(-aw/2,armH,aw*0.7,0,Math.PI*2);ctx.fill();
-  ctx.restore();
-  // Right arm
-  ctx.save();ctx.translate(bw/2,0);ctx.rotate(rightRot);
-  ctx.fillStyle=ch.shirt;
-  ctx.beginPath();ctx.roundRect(0,0,aw,armH,4);ctx.fill();
-  ctx.fillStyle=ch.skin;
-  ctx.beginPath();ctx.arc(aw/2,armH,aw*0.7,0,Math.PI*2);ctx.fill();
-  ctx.restore();
-}
-
-function _drawHead(ch,s,fat,hw,hh,bh, tiltDeg, shakeDeg, mouthOpen, sad, angry=false){
-  const headY = -bh/2-hh*0.55;
-  ctx.save();
-  ctx.translate(0, headY);
-  ctx.rotate((tiltDeg+shakeDeg)*Math.PI/180);
+  // ── HEAD ──
+  C.save();C.translate(0,-bh/2-hh*0.38);C.rotate(headTilt*Math.PI/180);
   // Neck
-  ctx.fillStyle=ch.skin;
-  ctx.beginPath();ctx.roundRect(-6*s,-4,12*s,10,3);ctx.fill();
-  // Head
-  ctx.shadowColor='rgba(0,0,0,0.25)';ctx.shadowBlur=8;
-  ctx.fillStyle=ch.skin;
-  ctx.beginPath();ctx.ellipse(0,-hh*0.2,hw,hh,0,0,Math.PI*2);ctx.fill();
-  ctx.shadowBlur=0;
-  // Lighter forehead
-  ctx.fillStyle=ch.skinLight||ch.skin;
-  ctx.beginPath();ctx.ellipse(-hw*0.1,-hh*0.35,hw*0.6,hh*0.4,0,0,Math.PI*2);ctx.fill();
-  // Hair
-  ctx.fillStyle=ch.hair;
-  ctx.beginPath();ctx.ellipse(0,-hh*0.5,hw*0.95,hh*0.48,0,Math.PI,Math.PI*2);ctx.fill();
-  // Eyes
-  const eyeY=-hh*0.25;
-  ctx.fillStyle='#fff';
-  ctx.beginPath();ctx.ellipse(-hw*0.28,eyeY,hw*0.2,hh*0.16,0,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.ellipse(hw*0.28,eyeY,hw*0.2,hh*0.16,0,0,Math.PI*2);ctx.fill();
-  // Pupils
-  ctx.fillStyle='#1a0a00';
-  ctx.beginPath();ctx.arc(-hw*0.26,eyeY,hw*0.1,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.arc(hw*0.28,eyeY,hw*0.1,0,Math.PI*2);ctx.fill();
-  // Eye shine
-  ctx.fillStyle='rgba(255,255,255,0.85)';
-  ctx.beginPath();ctx.arc(-hw*0.22,eyeY-hw*0.04,hw*0.04,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.arc(hw*0.32,eyeY-hw*0.04,hw*0.04,0,Math.PI*2);ctx.fill();
-  // Eyebrows
-  ctx.strokeStyle=ch.hair;ctx.lineWidth=2.5*s;ctx.lineCap='round';
-  if(angry){
-    ctx.beginPath();ctx.moveTo(-hw*0.45,eyeY-hh*0.22);ctx.lineTo(-hw*0.12,eyeY-hh*0.14);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(hw*0.45,eyeY-hh*0.22);ctx.lineTo(hw*0.12,eyeY-hh*0.14);ctx.stroke();
+  C.fillStyle=ch.skin;
+  _roundRect(C,-7*s,-5*s,14*s,12*s,4);C.fill();
+  // Head base (slightly squashed sphere for cartoon look)
+  C.shadowColor='rgba(0,0,0,0.3)';C.shadowBlur=12;
+  C.fillStyle=ch.skin;
+  C.beginPath();C.ellipse(0,0,hw,hh,0,0,Math.PI*2);C.fill();
+  C.shadowBlur=0;
+  // Face highlight (lighter zone)
+  const faceHL=C.createRadialGradient(-hw*0.1,-hh*0.15,0,-hw*0.1,-hh*0.15,hw*0.8);
+  faceHL.addColorStop(0,ch.skinHL);faceHL.addColorStop(0.6,'transparent');
+  C.fillStyle=faceHL;C.beginPath();C.ellipse(0,0,hw,hh,0,0,Math.PI*2);C.fill();
+  // Chin shadow
+  const chinShade=C.createLinearGradient(0,hh*0.4,0,hh);
+  chinShade.addColorStop(0,'rgba(0,0,0,0)');chinShade.addColorStop(1,'rgba(0,0,0,0.18)');
+  C.fillStyle=chinShade;C.beginPath();C.ellipse(0,0,hw,hh,0,0,Math.PI*2);C.fill();
+
+  // ── HAIR ──
+  C.fillStyle=ch.hair;
+  if(charName==='Zawadi'||charName==='Merchant Fatuma'){
+    // Braided hair
+    C.beginPath();C.ellipse(0,-hh*0.42,hw*0.98,hh*0.52,0,Math.PI,Math.PI*2);C.fill();
+    // Braid details
+    C.fillStyle='rgba(255,255,255,0.06)';
+    for(let b=0;b<5;b++){
+      const bx=-hw*0.6+b*hw*0.3;
+      C.beginPath();C.arc(bx,-hh*0.65,hw*0.1,0,Math.PI*2);C.fill();
+    }
+    // Beads
+    const beadColors=['#FFD700','#FF6347','#32CD32','#1E90FF','#FF69B4'];
+    beadColors.forEach((col,b)=>{
+      C.fillStyle=col;
+      C.beginPath();C.arc(-hw*0.5+b*hw*0.25,-hh*0.72,3.5,0,Math.PI*2);C.fill();
+    });
+  } else if(charName==='Baba James'){
+    // White hair + beard
+    C.fillStyle='#cccccc';
+    C.beginPath();C.ellipse(0,-hh*0.38,hw*0.9,hh*0.45,0,Math.PI,Math.PI*2);C.fill();
+    C.fillStyle='#d8d8d8';
+    C.beginPath();C.ellipse(0,hh*0.3,hw*0.45,hh*0.28,0,0,Math.PI*2);C.fill();
+  } else if(charName==='Inspector Kamau'||charName==='Chef Omondi'){
+    // Short tight hair
+    C.beginPath();C.ellipse(0,-hh*0.35,hw*0.96,hh*0.44,0,Math.PI,Math.PI*2);C.fill();
+    // Mustache for Kamau
+    if(charName==='Inspector Kamau'){
+      C.fillStyle='#0a0500';
+      C.beginPath();C.ellipse(-hw*0.15,hh*0.08,hw*0.22,hh*0.08,0.2,0,Math.PI*2);C.fill();
+      C.beginPath();C.ellipse(hw*0.15,hh*0.08,hw*0.22,hh*0.08,-0.2,0,Math.PI*2);C.fill();
+    }
+    // Chef hat
+    if(charName==='Chef Omondi'){
+      C.fillStyle='#FAFAFA';
+      _roundRect(C,-hw*0.7,-hh*0.96,hw*1.4,hh*0.5,8);C.fill();
+      C.beginPath();C.ellipse(0,-hh*0.55,hw*0.85,hh*0.28,0,0,Math.PI*2);C.fill();
+    }
+    // Police cap for Kamau
+    if(charName==='Inspector Kamau'){
+      C.fillStyle='#0D47A1';
+      _roundRect(C,-hw*0.85,-hh*0.88,hw*1.7,hh*0.38,6);C.fill();
+      C.fillStyle='#0a3080';
+      _roundRect(C,-hw*1.0,-hh*0.54,hw*2.0,hh*0.12,3);C.fill();
+      C.fillStyle='#FFD700';
+      C.beginPath();C.arc(0,-hh*0.72,6,0,Math.PI*2);C.fill();
+    }
+    // Teacher glasses for Mwalimu
+  } else if(charName==='Mwalimu Hassan'){
+    C.beginPath();C.ellipse(0,-hh*0.38,hw*0.92,hh*0.44,0,Math.PI,Math.PI*2);C.fill();
   } else {
-    ctx.beginPath();ctx.moveTo(-hw*0.44,eyeY-hh*0.17);ctx.lineTo(-hw*0.13,eyeY-hh*0.2);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(hw*0.44,eyeY-hh*0.17);ctx.lineTo(hw*0.13,eyeY-hh*0.2);ctx.stroke();
+    // Default natural hair
+    C.beginPath();C.ellipse(0,-hh*0.38,hw*0.96,hh*0.5,0,Math.PI,Math.PI*2);C.fill();
+    // Hair texture lines
+    C.strokeStyle='rgba(255,255,255,0.05)';C.lineWidth=1.5;
+    for(let hl=0;hl<3;hl++){
+      C.beginPath();C.arc(0,-hh*0.2,hw*(0.4+hl*0.2),Math.PI*1.1,Math.PI*1.9);C.stroke();
+    }
   }
-  // Nose
-  ctx.fillStyle='rgba(0,0,0,0.15)';
-  ctx.beginPath();ctx.ellipse(0,-hh*0.05,hw*0.12,hh*0.08,0,0,Math.PI*2);ctx.fill();
-  // Mouth
-  ctx.strokeStyle='rgba(0,0,0,0.7)';ctx.lineWidth=2*s;ctx.lineCap='round';
-  if(mouthOpen){
-    ctx.fillStyle='#2a0a05';
-    ctx.beginPath();ctx.ellipse(0,hh*0.2,hw*0.3,hh*0.16,0,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='#fff';
-    ctx.beginPath();ctx.roundRect(-hw*0.2,hh*0.12,hw*0.4,hh*0.1,2);ctx.fill();
-  } else if(sad){
-    ctx.beginPath();ctx.arc(0,hh*0.38,hw*0.22,Math.PI+0.3,-0.3);ctx.stroke();
+
+  // Ranger hat
+  if(charName==='Ranger Kipchoge'){
+    C.fillStyle='#795548';
+    C.beginPath();C.ellipse(0,-hh*0.52,hw*1.15,hh*0.22,0,0,Math.PI*2);C.fill();
+    _roundRect(C,-hw*0.75,-hh*0.88,hw*1.5,hh*0.42,4);C.fill();
+  }
+
+  // ── EYES ──
+  const eyeY=-hh*0.18;
+  const eyeAngry=extra&&extra.angry;
+  const eyeSad=extra&&extra.sad;
+  const eyeWide=extra&&extra.wide;
+  const eyeClosed=extra&&extra.closed;
+
+  // Eye whites
+  C.fillStyle='#fff';
+  C.shadowColor='rgba(0,0,0,0.1)';C.shadowBlur=3;
+  C.beginPath();
+  if(eyeClosed){
+    C.fillStyle=ch.skin; // closed eyes = skin lines
   } else {
-    ctx.beginPath();ctx.arc(0,hh*0.1,hw*0.22,-0.1,Math.PI+0.1);ctx.stroke();
+    C.ellipse(-hw*0.29,eyeY,hw*0.22,hh*(eyeWide?0.2:0.16),0,0,Math.PI*2);C.fill();
+    C.beginPath();C.ellipse(hw*0.29,eyeY,hw*0.22,hh*(eyeWide?0.2:0.16),0,0,Math.PI*2);C.fill();
   }
-  // Cheeks
-  ctx.fillStyle='rgba(200,80,60,0.18)';
-  ctx.beginPath();ctx.ellipse(-hw*0.42,eyeY+hh*0.12,hw*0.18,hh*0.1,0,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.ellipse(hw*0.42,eyeY+hh*0.12,hw*0.18,hh*0.1,0,0,Math.PI*2);ctx.fill();
-  ctx.restore();
+  C.shadowBlur=0;
+
+  if(eyeClosed){
+    // Sleeping/closed: curved line
+    C.strokeStyle=ch.skinD;C.lineWidth=2.5;C.lineCap='round';
+    C.beginPath();C.arc(-hw*0.29,eyeY+2,hw*0.16,Math.PI*0.05,Math.PI*0.95);C.stroke();
+    C.beginPath();C.arc(hw*0.29,eyeY+2,hw*0.16,Math.PI*0.05,Math.PI*0.95);C.stroke();
+  } else {
+    // Iris
+    const irisColor=ch.hair==='#888'?'#8888aa':'#2a1200';
+    C.fillStyle=irisColor;
+    C.beginPath();C.arc(-hw*0.29,eyeY,hw*0.13,0,Math.PI*2);C.fill();
+    C.beginPath();C.arc(hw*0.29,eyeY,hw*0.13,0,Math.PI*2);C.fill();
+    // Pupil
+    C.fillStyle='#000';
+    C.beginPath();C.arc(-hw*0.29,eyeY,hw*0.07,0,Math.PI*2);C.fill();
+    C.beginPath();C.arc(hw*0.29,eyeY,hw*0.07,0,Math.PI*2);C.fill();
+    // Eye shine (2 dots per eye for pro look)
+    C.fillStyle='rgba(255,255,255,0.95)';
+    C.beginPath();C.arc(-hw*0.25,eyeY-hw*0.06,hw*0.05,0,Math.PI*2);C.fill();
+    C.beginPath();C.arc(-hw*0.34,eyeY+hw*0.01,hw*0.025,0,Math.PI*2);C.fill();
+    C.beginPath();C.arc(hw*0.33,eyeY-hw*0.06,hw*0.05,0,Math.PI*2);C.fill();
+    C.beginPath();C.arc(hw*0.24,eyeY+hw*0.01,hw*0.025,0,Math.PI*2);C.fill();
+    // Eyelashes (upper lash line)
+    C.strokeStyle='rgba(0,0,0,0.7)';C.lineWidth=2;C.lineCap='round';
+    C.beginPath();C.ellipse(-hw*0.29,eyeY,hw*0.22,hh*0.16,0,Math.PI*1.1,Math.PI*1.9);C.stroke();
+    C.beginPath();C.ellipse(hw*0.29,eyeY,hw*0.22,hh*0.16,0,Math.PI*1.1,Math.PI*1.9);C.stroke();
+  }
+
+  // ── EYEBROWS ──
+  C.strokeStyle=ch.hair==='#888'?'#aaa':ch.hair;
+  C.lineWidth=3*s;C.lineCap='round';
+  if(eyeAngry){
+    C.beginPath();C.moveTo(-hw*0.48,eyeY-hh*0.24);C.lineTo(-hw*0.1,eyeY-hh*0.14);C.stroke();
+    C.beginPath();C.moveTo(hw*0.48,eyeY-hh*0.24);C.lineTo(hw*0.1,eyeY-hh*0.14);C.stroke();
+  } else if(eyeSad){
+    C.beginPath();C.moveTo(-hw*0.44,eyeY-hh*0.15);C.lineTo(-hw*0.1,eyeY-hh*0.22);C.stroke();
+    C.beginPath();C.moveTo(hw*0.44,eyeY-hh*0.15);C.lineTo(hw*0.1,eyeY-hh*0.22);C.stroke();
+  } else {
+    C.beginPath();C.moveTo(-hw*0.46,eyeY-hh*0.2);C.lineTo(-hw*0.11,eyeY-hh*0.23);C.stroke();
+    C.beginPath();C.moveTo(hw*0.46,eyeY-hh*0.2);C.lineTo(hw*0.11,eyeY-hh*0.23);C.stroke();
+  }
+
+  // Glasses for Mwalimu Hassan
+  if(charName==='Mwalimu Hassan'){
+    C.strokeStyle='#888';C.lineWidth=2.5;C.fillStyle='rgba(180,220,255,0.18)';
+    C.beginPath();C.ellipse(-hw*0.29,eyeY,hw*0.27,hh*0.22,0,0,Math.PI*2);C.fill();C.stroke();
+    C.beginPath();C.ellipse(hw*0.29,eyeY,hw*0.27,hh*0.22,0,0,Math.PI*2);C.fill();C.stroke();
+    C.beginPath();C.moveTo(-hw*0.02,eyeY);C.lineTo(hw*0.02,eyeY);C.stroke();
+    C.beginPath();C.moveTo(-hw*0.56,eyeY-2);C.lineTo(-hw*0.7,eyeY-3);C.stroke();
+    C.beginPath();C.moveTo(hw*0.56,eyeY-2);C.lineTo(hw*0.7,eyeY-3);C.stroke();
+  }
+
+  // ── NOSE ──
+  C.fillStyle=ch.skinD;C.globalAlpha=0.4;
+  C.beginPath();C.ellipse(0,hh*0.08,hw*0.11,hh*0.09,0,0,Math.PI*2);C.fill();
+  C.globalAlpha=1;
+
+  // ── CHEEKS ──
+  C.fillStyle='rgba(200,70,50,0.16)';
+  C.beginPath();C.ellipse(-hw*0.44,eyeY+hh*0.15,hw*0.2,hh*0.1,0,0,Math.PI*2);C.fill();
+  C.beginPath();C.ellipse(hw*0.44,eyeY+hh*0.15,hw*0.2,hh*0.1,0,0,Math.PI*2);C.fill();
+
+  // ── MOUTH ──
+  C.strokeStyle='rgba(0,0,0,0.65)';C.lineCap='round';C.lineWidth=2.5*s;
+  if(mouthState==='open'||mouthState==='laugh'){
+    C.fillStyle=mouthState==='laugh'?'#1a0500':'#2a0800';
+    C.beginPath();C.ellipse(0,hh*0.28,hw*0.35,hh*0.18,0,0,Math.PI*2);C.fill();
+    // Teeth
+    C.fillStyle='#fff';
+    C.beginPath();
+    _roundRect(C,-hw*0.28,hh*0.18,hw*0.56,hh*0.12,2);C.fill();
+    // Tongue for laugh
+    if(mouthState==='laugh'){
+      C.fillStyle='#e06060';
+      C.beginPath();C.ellipse(0,hh*0.34,hw*0.2,hh*0.1,0,0,Math.PI*2);C.fill();
+    }
+  } else if(mouthState==='sad'){
+    C.beginPath();C.arc(0,hh*0.42,hw*0.26,Math.PI+0.25,-0.25);C.stroke();
+  } else if(mouthState==='flat'){
+    C.beginPath();C.moveTo(-hw*0.22,hh*0.28);C.lineTo(hw*0.22,hh*0.28);C.stroke();
+  } else {
+    // Default smile
+    C.beginPath();C.arc(0,hh*0.12,hw*0.28,-0.05,Math.PI+0.05);C.stroke();
+  }
+  C.restore(); // restore from head translate
 }
 
-// ─── ACTION BACKGROUNDS (gradient environments) ───────────────────
-const BG_SCENES={
-  wake:   {sky:'#FFB347',sky2:'#FF8C00',ground:'#8B6914',road:'#A0522D', name:'Bedroom Morning'},
-  walk:   {sky:'#87CEEB',sky2:'#B0E0FF',ground:'#5D8A3C',road:'#888',    name:'Road'},
-  run:    {sky:'#87CEEB',sky2:'#B0E0FF',ground:'#5D8A3C',road:'#777',    name:'Road'},
-  school: {sky:'#87CEEB',sky2:'#BADEFD',ground:'#6B8E23',road:'#aaa',    name:'School'},
-  market: {sky:'#FFA500',sky2:'#FF6347',ground:'#C2956C',road:'#B8860B',  name:'Market'},
-  home:   {sky:'#FFF3E0',sky2:'#FFE0B2',ground:'#8B4513',road:'#A0522D', name:'Home'},
-  road:   {sky:'#87CEEB',sky2:'#B0E0FF',ground:'#6B8E23',road:'#555',    name:'Road'},
-  hospital:{sky:'#E3F2FD',sky2:'#BBDEFB',ground:'#A5D6A7',road:'#bbb',   name:'Hospital'},
-  forest: {sky:'#2E7D32',sky2:'#1B5E20',ground:'#1B5E20',road:'#5D4037', name:'Forest'},
-  night:  {sky:'#0D1B2A',sky2:'#1a2a4a',ground:'#1a1a1a',road:'#222',    name:'Night'},
-  city:   {sky:'#7986CB',sky2:'#9FA8DA',ground:'#546E7A',road:'#444',    name:'City'},
-  arrive: {sky:'#87CEEB',sky2:'#B0E0FF',ground:'#5D8A3C',road:'#666',    name:'Road'},
-  default:{sky:'#87CEEB',sky2:'#B0E0FF',ground:'#5D8A3C',road:'#888',    name:'Outdoors'},
-};
+// ── ANIMATION POSES ─────────────────────────────────────────────
+function _animStand(C,ch,s,fm,t){
+  const bw=40*s*fm,bh=52*s;
+  const bob=Math.sin(t*0.7)*2.5;
+  C.save();C.translate(0,bob);
+  _body(C,ch,s,fm,bw,bh,0,0,0.08,−0.08,Math.sin(t*0.5)*2,'smile',false,{});
+  C.restore();
+}
 
-function drawBackground(bgKey, frame, imgEl){
-  const bg = BG_SCENES[bgKey] || BG_SCENES.default;
-  const t = frame*0.02;
+function _animWalk(C,ch,s,fm,t,frame){
+  const bw=40*s*fm,bh=52*s;
+  const leg=Math.sin(t*2.2)*28;
+  const arm=Math.sin(t*2.2)*0.55;
+  const bob=Math.abs(Math.sin(t*2.2))*4-2;
+  C.save();C.translate(0,bob);
+  _body(C,ch,s,fm,bw,bh,leg,-leg,arm,-arm,Math.sin(t*1.5)*3,'smile',false,{});
+  C.restore();
+}
 
+function _animRun(C,ch,s,fm,t,frame,scared=false){
+  const bw=40*s*fm,bh=52*s;
+  const leg=Math.sin(t*3.5)*42;
+  const arm=Math.sin(t*3.5)*0.85;
+  const bob=Math.abs(Math.sin(t*3.5))*8-4;
+  const lean=-0.22;
+  C.save();C.translate(0,bob);C.rotate(lean);
+  _body(C,ch,s,fm,bw,bh,leg,-leg,arm,-arm,-8,scared?'open':'smile',false,{wide:scared});
+  C.restore();
+  // Speed lines
+  C.save();C.translate(0,bob);
+  C.strokeStyle='rgba(255,255,255,0.3)';C.lineWidth=2.5;C.lineCap='round';
+  for(let i=0;i<5;i++){
+    C.globalAlpha=0.5-i*0.08;
+    const ly=-20+i*22;const lx=-60-i*12;
+    C.beginPath();C.moveTo(lx,ly);C.lineTo(lx-28-i*5,ly);C.stroke();
+  }
+  C.globalAlpha=1;C.restore();
+}
+
+function _animTalk(C,ch,s,fm,t,frame){
+  const bw=40*s*fm,bh=52*s;
+  const bob=Math.sin(t)*2;
+  const mouthOpen=Math.abs(Math.sin(t*3.2))>0.45;
+  const armSwing=Math.sin(t)*0.5;
+  C.save();C.translate(0,bob);
+  _body(C,ch,s,fm,bw,bh,0,0,armSwing,-0.1,Math.sin(t*0.8)*5,mouthOpen?'open':'smile',false,{});
+  C.restore();
+}
+
+function _animLaugh(C,ch,s,fm,t,frame){
+  const bw=40*s*fm,bh=52*s;
+  const shake=Math.sin(t*5)*4;
+  const belly=Math.abs(Math.sin(t*4))*7;
+  C.save();C.translate(shake,-belly*0.3);
+  _body(C,ch,s,fm,bw+belly*0.05,bh,-5,5,-0.7,0.7,Math.sin(t*4)*14,'laugh',false,{});
+  // Laugh tears
+  if(Math.sin(t*3)>0.2){
+    const hw=28*s*fm;
+    C.fillStyle='rgba(140,195,255,0.85)';
+    C.beginPath();C.ellipse(-hw*0.38,-bh/2-32*s*fm+Math.sin(t*2)*10,3,6,0.1,0,Math.PI*2);C.fill();
+    C.beginPath();C.ellipse(hw*0.38,-bh/2-32*s*fm+Math.sin(t*2+0.8)*10,3,6,-0.1,0,Math.PI*2);C.fill();
+  }
+  C.restore();
+}
+
+function _animCry(C,ch,s,fm,t,frame){
+  const bw=40*s*fm,bh=52*s;
+  const sob=Math.sin(t*2)*3;
+  C.save();C.translate(0,sob);
+  _body(C,ch,s,fm,bw,bh,0,0,-0.8,0.8,Math.sin(t)*8,'sad',false,{sad:true});
+  // Big cartoon tears
+  const hw=28*s*fm;
+  C.fillStyle='rgba(100,180,255,0.9)';
+  for(let d=0;d<3;d++){
+    const dy=-bh/2-32*s*fm+Math.sin(t*2+d)*18+d*16;
+    C.beginPath();C.ellipse(-hw*0.32,dy,3.5,7,0.05,0,Math.PI*2);C.fill();
+    C.beginPath();C.ellipse(hw*0.32,dy,3.5,7,-0.05,0,Math.PI*2);C.fill();
+  }
+  C.restore();
+}
+
+function _animWake(C,ch,s,fm,t,frame){
+  const bw=40*s*fm,bh=52*s;
+  const prog=Math.min(frame/28,1);
+  const eyeState=prog<0.3?{closed:true}:prog<0.6?{}:{};
+  const armRaise=-Math.PI*0.55*prog;
+  const yOff=(1-prog)*18;
+  C.save();C.translate(0,yOff);
+  _body(C,ch,s,fm,bw,bh*Math.max(0.5,prog)+(1-prog)*8,0,0,armRaise*0.7,armRaise,
+    Math.sin(t)*(1-prog)*6,'smile',false,eyeState);
+  // Z bubbles
+  if(prog<0.45){
+    const hw=28*s*fm;
+    C.font=`bold ${14*s}px sans-serif`;C.fillStyle='rgba(200,220,255,0.8)';
+    C.fillText('z',hw+10,-bh/2-40*s*fm+Math.sin(frame*0.1)*5);
+    C.font=`bold ${10*s}px sans-serif`;
+    C.fillText('z',hw+20,-bh/2-55*s*fm+Math.sin(frame*0.1+1)*4);
+    C.font=`bold ${7*s}px sans-serif`;
+    C.fillText('z',hw+28,-bh/2-67*s*fm+Math.sin(frame*0.1+2)*3);
+  }
+  C.restore();
+}
+
+function _animArrive(C,ch,s,fm,t,frame){
+  const bw=40*s*fm,bh=52*s;
+  const prog=Math.min(frame/25,1);
+  const legSwing=Math.sin(t*2)*(1-prog)*26;
+  const bob=Math.abs(Math.sin(t*2))*(1-prog)*4-2;
+  const armL=prog>0.9?-0.75:Math.sin(t*2)*0.5;
+  const armR=prog>0.9?0.75:-Math.sin(t*2)*0.5;
+  // Dust cloud on arrival
+  if(prog>0.85){
+    C.fillStyle='rgba(180,150,100,0.3)';
+    for(let d=0;d<4;d++){
+      C.beginPath();C.arc(-30+d*20,-bh*0.6,(8-d)*3,0,Math.PI*2);C.fill();
+    }
+  }
+  C.save();C.translate(0,bob);
+  _body(C,ch,s,fm,bw,bh,legSwing*(1-prog),-legSwing*(1-prog),armL,armR,
+    Math.sin(t)*3*(1-prog),'smile',false,{});
+  C.restore();
+}
+
+function _animAngry(C,ch,s,fm,t,frame){
+  const bw=40*s*fm,bh=52*s;
+  const shake=Math.sin(t*7)*3.5;
+  C.save();C.translate(shake,0);
+  _body(C,ch,s,fm,bw,bh,10,-10,0.9,-0.9,0,'flat',false,{angry:true});
+  // Anger symbols
+  const hw=28*s*fm;
+  C.font=`${16*s}px sans-serif`;
+  C.fillText('💢',hw,-bh/2-40*s*fm+Math.sin(t*4)*3);
+  // Steam lines
+  C.strokeStyle='rgba(255,150,50,0.7)';C.lineWidth=2;C.lineCap='round';
+  for(let i=0;i<3;i++){
+    C.beginPath();
+    C.moveTo(-hw*0.3+i*hw*0.3,-bh/2-42*s*fm);
+    C.lineTo(-hw*0.3+i*hw*0.3+Math.sin(i)*4,-bh/2-55*s*fm);
+    C.stroke();
+  }
+  C.restore();
+}
+
+function _animJump(C,ch,s,fm,t,frame){
+  const bw=40*s*fm,bh=52*s;
+  const jumpY=-Math.abs(Math.sin(frame*0.14))*60;
+  const legSpread=Math.abs(Math.sin(frame*0.14))*30;
+  C.save();C.translate(0,jumpY);
+  _body(C,ch,s,fm,bw,bh,legSpread,-legSpread,-1.05,1.05,0,'open',false,{wide:true});
+  C.restore();
+  // Jump dust on landing
+  if(jumpY>-8){
+    C.fillStyle='rgba(180,150,100,0.4)';
+    for(let d=0;d<5;d++){
+      C.beginPath();C.arc(-40+d*20,0,(6-d)*3,0,Math.PI*2);C.fill();
+    }
+  }
+}
+
+function _animShocked(C,ch,s,fm,t,frame){
+  const bw=40*s*fm,bh=52*s;
+  const tremb=Math.sin(t*9)*2.5;
+  C.save();C.translate(tremb,0);
+  _body(C,ch,s,fm,bw,bh,-6,6,-1.3,1.3,0,'open',false,{wide:true});
+  // Shock burst rays
+  const hw=28*s*fm;
+  for(let i=0;i<8;i++){
+    const ang=i/8*Math.PI*2+t*0.5;
+    const r=hw+12;
+    C.strokeStyle=`rgba(255,220,0,${0.5+Math.sin(t*3+i)*0.4})`;
+    C.lineWidth=2.5;
+    C.beginPath();
+    C.moveTo(Math.cos(ang)*r,-bh/2-32*s*fm+Math.sin(ang)*r);
+    C.lineTo(Math.cos(ang)*(r+10),-bh/2-32*s*fm+Math.sin(ang)*(r+10));
+    C.stroke();
+  }
+  C.restore();
+}
+
+function _animEat(C,ch,s,fm,t,frame){
+  const bw=40*s*fm,bh=52*s;
+  const chew=Math.abs(Math.sin(t*4))>0.5;
+  const bob=Math.sin(t)*1.5;
+  C.save();C.translate(0,bob);
+  _body(C,ch,s,fm,bw,bh,0,0,-1.15,0.1,0,chew?'open':'smile',false,{});
+  // Food
+  const hw=28*s*fm;
+  C.fillStyle='#F4A460';C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=5;
+  C.beginPath();C.arc(hw*0.6,-bh/2-20*s*fm,9*s,0,Math.PI*2);C.fill();
+  C.shadowBlur=0;
+  C.fillStyle='#FF6347';
+  C.beginPath();C.arc(hw*0.6,-bh/2-22*s*fm,5*s,0,Math.PI*2);C.fill();
+  // Aroma wisps
+  if(Math.sin(t*2)>0){
+    C.strokeStyle='rgba(255,200,100,0.4)';C.lineWidth=1.5;C.lineCap='round';
+    C.beginPath();C.moveTo(hw*0.55,-bh/2-32*s*fm);
+    C.quadraticCurveTo(hw*0.7,-bh/2-45*s*fm,hw*0.55,-bh/2-55*s*fm);C.stroke();
+  }
+  C.restore();
+}
+
+// ── HELPER: rounded rect ──────────────────────────────────────────
+function _roundRect(C,x,y,w,h,r){
+  C.beginPath();
+  C.moveTo(x+r,y);C.lineTo(x+w-r,y);C.arcTo(x+w,y,x+w,y+r,r);
+  C.lineTo(x+w,y+h-r);C.arcTo(x+w,y+h,x+w-r,y+h,r);
+  C.lineTo(x+r,y+h);C.arcTo(x,y+h,x,y+h-r,r);
+  C.lineTo(x,y+r);C.arcTo(x,y,x+r,y,r);C.closePath();
+}
+
+// ── FIX: missing negative number syntax ──────────────────────────
+const m0_08=0.08,mn0_08=-0.08;
+
+// ══════════════════════════════════════════════════════════════════
+//  RICH BACKGROUND PAINTER
+// ══════════════════════════════════════════════════════════════════
+
+function drawBackground(C, bgKey, frame, imgEl){
+  const t=frame*0.018;
   if(imgEl){
-    // Ken Burns pan on AI image
-    ctx.save();
-    const sc = 1+0.05*(frame/120);
-    const px = Math.sin(frame*0.008)*12;
-    ctx.translate(CW/2+px,CH/2);ctx.scale(sc,sc);ctx.translate(-CW/2,-CH/2);
+    // AI image with Ken Burns
+    C.save();
+    const sc=1+0.05*(frame/120);
+    const px=Math.sin(frame*0.007)*14;
+    C.translate(CW/2+px,CH/2);C.scale(sc,sc);C.translate(-CW/2,-CH/2);
     const iw=imgEl.naturalWidth||imgEl.width,ih=imgEl.naturalHeight||imgEl.height;
-    const iscale=Math.max(CW/iw,CH/ih);
-    ctx.drawImage(imgEl,(CW-iw*iscale)/2,(CH-ih*iscale)/2,iw*iscale,ih*iscale);
-    ctx.restore();
-    // dark bottom vignette for character to stand on
-    const vg=ctx.createLinearGradient(0,CH*0.55,0,CH);
-    vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,0.6)');
-    ctx.fillStyle=vg;ctx.fillRect(0,0,CW,CH);
+    const is=Math.max(CW/iw,CH/ih);
+    C.drawImage(imgEl,(CW-iw*is)/2,(CH-ih*is)/2,iw*is,ih*is);
+    C.restore();
+    // Rich vignette
+    const vg=C.createRadialGradient(CW/2,CH*0.4,CW*0.3,CW/2,CH*0.5,CW*0.9);
+    vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,0.4)');
+    C.fillStyle=vg;C.fillRect(0,0,CW,CH);
+    // Bottom darken for character
+    const bg2=C.createLinearGradient(0,CH*0.5,0,CH);
+    bg2.addColorStop(0,'transparent');bg2.addColorStop(1,'rgba(0,0,0,0.65)');
+    C.fillStyle=bg2;C.fillRect(0,0,CW,CH);
     return;
   }
 
-  // Fallback: painted background
-  // Sky
-  const sg=ctx.createLinearGradient(0,0,0,CH*0.6);
-  sg.addColorStop(0,bg.sky);sg.addColorStop(1,bg.sky2);
-  ctx.fillStyle=sg;ctx.fillRect(0,0,CW,CH);
-
-  // Sun or moon
-  if(bgKey==='night'){
-    ctx.fillStyle='rgba(255,255,200,0.9)';
-    ctx.beginPath();ctx.arc(CW*0.8,CH*0.12,28,0,Math.PI*2);ctx.fill();
-    // Stars
-    for(let i=0;i<60;i++){
-      const sx=(i*157)%CW,sy=(i*83)%(CH*0.5);
-      ctx.fillStyle=`rgba(255,255,255,${0.3+0.6*Math.abs(Math.sin(t+i))})`;
-      ctx.fillRect(sx,sy,1.5,1.5);
-    }
-  } else {
-    ctx.fillStyle='rgba(255,220,50,0.9)';
-    for(let r=40;r>0;r-=10){
-      ctx.fillStyle=`rgba(255,220,50,${0.06*(40-r)/40+0.04})`;
-      ctx.beginPath();ctx.arc(CW*0.78,CH*0.12,r+40,0,Math.PI*2);ctx.fill();
-    }
-    ctx.fillStyle='#FFD700';ctx.beginPath();ctx.arc(CW*0.78,CH*0.12,30,0,Math.PI*2);ctx.fill();
+  switch(bgKey){
+    case 'wake':case 'home': _bgHome(C,t,frame,bgKey==='wake'); break;
+    case 'school':           _bgSchool(C,t,frame); break;
+    case 'market':           _bgMarket(C,t,frame); break;
+    case 'road':case 'walk':case 'run':case 'arrive': _bgRoad(C,t,frame); break;
+    case 'hospital':         _bgHospital(C,t,frame); break;
+    case 'forest':           _bgForest(C,t,frame); break;
+    case 'night':            _bgNight(C,t,frame); break;
+    case 'city':             _bgCity(C,t,frame); break;
+    case 'checkpoint':       _bgCheckpoint(C,t,frame); break;
+    default:                 _bgRoad(C,t,frame);
   }
+}
 
-  // Clouds
-  if(bgKey!=='night'&&bgKey!=='forest'){
-    _cloud(ctx, CW*0.15+Math.sin(t*0.3)*10, CH*0.16, 80, 28);
-    _cloud(ctx, CW*0.6+Math.sin(t*0.2)*6,   CH*0.2,  60, 22);
+function _skyGrad(C,top,bot){
+  const g=C.createLinearGradient(0,0,0,CH*0.62);
+  g.addColorStop(0,top);g.addColorStop(1,bot);
+  C.fillStyle=g;C.fillRect(0,0,CW,CH);
+}
+function _ground(C,col1,col2){
+  const g=C.createLinearGradient(0,CH*0.56,0,CH);
+  g.addColorStop(0,col1);g.addColorStop(1,col2);
+  C.fillStyle=g;C.fillRect(0,CH*0.56,CW,CH);
+}
+function _sun(C,x,y,r,col='#FFD700'){
+  // Glow
+  const glow=C.createRadialGradient(x,y,r*0.5,x,y,r*2.5);
+  glow.addColorStop(0,'rgba(255,220,50,0.35)');glow.addColorStop(1,'transparent');
+  C.fillStyle=glow;C.fillRect(0,0,CW,CH*0.4);
+  // Rays
+  C.save();C.translate(x,y);
+  for(let i=0;i<12;i++){
+    const a=i/12*Math.PI*2;
+    C.strokeStyle='rgba(255,210,50,0.25)';C.lineWidth=3;
+    C.beginPath();C.moveTo(Math.cos(a)*r,Math.sin(a)*r);C.lineTo(Math.cos(a)*(r+22),Math.sin(a)*(r+22));C.stroke();
   }
+  C.restore();
+  C.fillStyle=col;C.beginPath();C.arc(x,y,r,0,Math.PI*2);C.fill();
+  C.fillStyle='rgba(255,255,200,0.6)';C.beginPath();C.arc(x-r*0.2,y-r*0.2,r*0.45,0,Math.PI*2);C.fill();
+}
+function _cloud(C,x,y,w,h,alpha=0.88){
+  C.fillStyle=`rgba(255,255,255,${alpha})`;
+  C.shadowColor='rgba(0,0,0,0.08)';C.shadowBlur=8;
+  C.beginPath();C.ellipse(x,y,w*0.5,h*0.5,0,0,Math.PI*2);C.fill();
+  C.beginPath();C.ellipse(x+w*0.32,y+h*0.08,w*0.34,h*0.42,0,0,Math.PI*2);C.fill();
+  C.beginPath();C.ellipse(x-w*0.3,y+h*0.1,w*0.3,h*0.38,0,0,Math.PI*2);C.fill();
+  C.beginPath();C.ellipse(x+w*0.1,y-h*0.22,w*0.24,h*0.32,0,0,Math.PI*2);C.fill();
+  C.shadowBlur=0;
+}
+function _hills(C,col,yBase,amp){
+  C.fillStyle=col;C.beginPath();C.moveTo(0,yBase);
+  for(let x=0;x<=CW;x+=CW/12)C.lineTo(x,yBase-amp-Math.sin(x*0.013)*amp*0.8-Math.cos(x*0.022)*amp*0.5);
+  C.lineTo(CW,CH);C.lineTo(0,CH);C.closePath();C.fill();
+}
+function _road(C,roadCol,lineCol,t){
+  C.fillStyle=roadCol;
+  C.beginPath();C.moveTo(CW*0.28,CH*0.57);C.lineTo(CW*0.72,CH*0.57);C.lineTo(CW,CH);C.lineTo(0,CH);C.closePath();C.fill();
+  // Road edge lines
+  C.strokeStyle='rgba(255,255,255,0.15)';C.lineWidth=2;
+  C.beginPath();C.moveTo(CW*0.28,CH*0.57);C.lineTo(0,CH);C.stroke();
+  C.beginPath();C.moveTo(CW*0.72,CH*0.57);C.lineTo(CW,CH);C.stroke();
+  // Centre dashes (animated)
+  C.strokeStyle=lineCol;C.lineWidth=3;C.setLineDash([28,18]);
+  C.lineDashOffset=-t*60%46;
+  C.beginPath();C.moveTo(CW/2,CH*0.57);C.lineTo(CW/2,CH);C.stroke();
+  C.setLineDash([]);
+}
+function _tree(C,x,y,h,trunkW,leafColor){
+  // Trunk
+  C.fillStyle='#5D4037';
+  _roundRect(C,x-trunkW/2,y-h*0.35,trunkW,h*0.4,3);C.fill();
+  // Canopy layers
+  C.fillStyle=leafColor;
+  C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=8;
+  C.beginPath();C.moveTo(x,y-h);C.lineTo(x-h*0.42,y-h*0.45);C.lineTo(x+h*0.42,y-h*0.45);C.closePath();C.fill();
+  C.beginPath();C.moveTo(x,y-h*0.72);C.lineTo(x-h*0.52,y-h*0.18);C.lineTo(x+h*0.52,y-h*0.18);C.closePath();C.fill();
+  // Highlight
+  C.fillStyle='rgba(255,255,255,0.12)';
+  C.beginPath();C.moveTo(x-h*0.08,y-h);C.lineTo(x-h*0.32,y-h*0.5);C.lineTo(x,y-h*0.52);C.closePath();C.fill();
+  C.shadowBlur=0;
+}
 
-  // Hills
-  ctx.fillStyle='rgba(0,0,0,0.18)';
-  ctx.beginPath();ctx.moveTo(0,CH*0.52);
-  for(let x=0;x<=CW;x+=CW/8){ctx.lineTo(x,CH*0.52-60-Math.sin(x*0.015)*50-Math.cos(x*0.02)*30);}
-  ctx.lineTo(CW,CH*0.52);ctx.closePath();ctx.fill();
-
+function _bgRoad(C,t,frame){
+  _skyGrad(C,'#5BB8F5','#A8D8EA');
+  _sun(C,CW*0.8,CH*0.12,32);
+  _cloud(C,CW*0.12+Math.sin(t*0.4)*8,CH*0.17,90,34,0.9);
+  _cloud(C,CW*0.58+Math.sin(t*0.3)*6,CH*0.22,68,26,0.85);
+  _cloud(C,CW*0.38+Math.sin(t*0.25)*5,CH*0.14,52,20,0.8);
+  // Far hills
+  _hills(C,'#4a7a3a',CH*0.56,55);
+  // Mid hills
+  _hills(C,'#5a9a46',CH*0.60,35);
   // Ground
-  const gg=ctx.createLinearGradient(0,CH*0.56,0,CH);
-  gg.addColorStop(0,bg.ground);gg.addColorStop(1,'rgba(0,0,0,0.5)');
-  ctx.fillStyle=gg;ctx.fillRect(0,CH*0.56,CW,CH);
+  _ground(C,'#6aa84f','#3d6e2a');
+  // Grass texture strips
+  C.fillStyle='rgba(255,255,255,0.06)';
+  for(let i=0;i<6;i++) C.fillRect(CW*(0.08+i*0.15),CH*0.57,CW*0.06,2);
+  _road(C,'#556070','rgba(255,240,150,0.55)',t);
+  // Side bushes
+  C.fillStyle='#3d7a2a';
+  for(let b=0;b<5;b++){C.beginPath();C.arc(b*CW*0.22+20,CH*0.58,10+b*2,Math.PI,Math.PI*2);C.fill();}
+  for(let b=0;b<5;b++){C.beginPath();C.arc(b*CW*0.22+CW*0.62,CH*0.58,10+b*2,Math.PI,Math.PI*2);C.fill();}
+  // Trees
+  _tree(C,CW*0.08,CH*0.56,90,12,'#2d6e1e');
+  _tree(C,CW*0.88,CH*0.56,80,10,'#358025');
+  _tree(C,CW*0.92,CH*0.52,60,8,'#2d6e1e');
+}
 
-  // Road / floor
-  ctx.fillStyle=bg.road;
-  ctx.beginPath();ctx.moveTo(CW*0.3,CH*0.57);ctx.lineTo(CW*0.7,CH*0.57);
-  ctx.lineTo(CW,CH);ctx.lineTo(0,CH);ctx.closePath();ctx.fill();
-  // Road line
-  ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.lineWidth=3;
-  ctx.setLineDash([30,20]);
-  ctx.beginPath();ctx.moveTo(CW/2,CH*0.57);ctx.lineTo(CW/2,CH);ctx.stroke();
-  ctx.setLineDash([]);
+function _bgSchool(C,t,frame){
+  _skyGrad(C,'#64B5F6','#BBDEFB');
+  _sun(C,CW*0.85,CH*0.1,28,'#FDD835');
+  _cloud(C,CW*0.1+Math.sin(t*0.3)*6,CH*0.16,78,28,0.88);
+  _cloud(C,CW*0.62+Math.sin(t*0.2)*5,CH*0.2,60,22,0.82);
+  _hills(C,'#5a9a46',CH*0.55,40);
+  _ground(C,'#7cb55a','#4a8e35');
+  _road(C,'#8a9aa0','rgba(255,255,255,0.4)',t);
+  // School building — main
+  C.fillStyle='#FFF176';
+  C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=12;
+  _roundRect(C,CW*0.05,CH*0.22,CW*0.5,CH*0.32,6);C.fill();C.shadowBlur=0;
+  // Roof
+  C.fillStyle='#E53935';
+  C.beginPath();C.moveTo(CW*0.02,CH*0.24);C.lineTo(CW*0.3,CH*0.12);C.lineTo(CW*0.58,CH*0.24);C.closePath();C.fill();
+  // Roof highlight
+  C.fillStyle='rgba(255,255,255,0.15)';
+  C.beginPath();C.moveTo(CW*0.12,CH*0.22);C.lineTo(CW*0.3,CH*0.13);C.lineTo(CW*0.3,CH*0.22);C.closePath();C.fill();
+  // Windows
+  C.fillStyle='#90CAF9';C.strokeStyle='#1565C0';C.lineWidth=2;
+  [[0.1,0.27],[0.22,0.27],[0.38,0.27],[0.1,0.37],[0.22,0.37],[0.38,0.37]].forEach(([wx,wy])=>{
+    _roundRect(C,CW*wx,CH*wy,CW*0.09,CH*0.07,3);C.fill();C.stroke();
+    // Window shine
+    C.fillStyle='rgba(255,255,255,0.35)';
+    C.fillRect(CW*wx+3,CH*wy+3,CW*0.03,CH*0.025);
+    C.fillStyle='#90CAF9';
+  });
+  // Door
+  C.fillStyle='#1565C0';
+  _roundRect(C,CW*0.25,CH*0.41,CW*0.1,CH*0.14,8);C.fill();
+  C.fillStyle='#FFD700';C.beginPath();C.arc(CW*0.34,CH*0.485,3,0,Math.PI*2);C.fill();
+  // SCHOOL sign
+  C.fillStyle='rgba(0,0,0,0.7)';
+  C.font=`bold ${16}px Poppins,sans-serif`;C.textAlign='center';
+  C.fillText('ST. MARY SCHOOL',CW*0.3,CH*0.265);C.textAlign='left';
+  // School gate
+  C.strokeStyle='#795548';C.lineWidth=5;
+  C.beginPath();C.moveTo(CW*0.58,CH*0.35);C.lineTo(CW*0.58,CH*0.58);C.stroke();
+  C.beginPath();C.moveTo(CW*0.66,CH*0.35);C.lineTo(CW*0.66,CH*0.58);C.stroke();
+  C.beginPath();C.moveTo(CW*0.55,CH*0.35);C.lineTo(CW*0.69,CH*0.35);C.stroke();
+  // Mango tree
+  _tree(C,CW*0.82,CH*0.55,100,14,'#2E7D32');
+  // Flowers
+  ['#FF5252','#FFD740','#69F0AE'].forEach((col,i)=>{
+    C.fillStyle=col;C.beginPath();C.arc(CW*(0.6+i*0.05),CH*0.57,5,0,Math.PI*2);C.fill();
+  });
+}
 
-  // Location-specific extras
-  if(bgKey==='school'){
-    // School building
-    ctx.fillStyle='#FFCC02';
-    ctx.fillRect(CW*0.1,CH*0.28,CW*0.35,CH*0.25);
-    ctx.fillStyle='#E74C3C';ctx.fillRect(CW*0.1,CH*0.22,CW*0.35,CH*0.07); // roof
-    ctx.fillStyle='#2980B9';ctx.fillRect(CW*0.2,CH*0.38,CW*0.12,CH*0.15); // door
-    ctx.fillStyle='rgba(0,0,0,0.5)';ctx.font=`bold ${14}px Poppins,sans-serif`;
-    ctx.textAlign='center';ctx.fillText('SCHOOL',CW*0.275,CH*0.32);ctx.textAlign='left';
-  }
-  if(bgKey==='market'){
-    // Market stalls
-    for(let i=0;i<3;i++){
-      ctx.fillStyle=['#E74C3C','#F39C12','#27AE60'][i];
-      ctx.fillRect(CW*(0.05+i*0.3),CH*0.35,CW*0.25,CH*0.18);
-      ctx.fillStyle='rgba(0,0,0,0.15)';ctx.fillRect(CW*(0.05+i*0.3),CH*0.35,CW*0.25,CH*0.04);
+function _bgMarket(C,t,frame){
+  _skyGrad(C,'#FF8F00','#FFCA28');
+  _sun(C,CW*0.75,CH*0.1,36,'#FF6F00');
+  _cloud(C,CW*0.15+Math.sin(t*0.3)*6,CH*0.18,70,24,0.75);
+  _hills(C,'#8d6e4a',CH*0.56,38);
+  _ground(C,'#a1887f','#6d4c41');
+  // Market stalls
+  const stallCols=[['#E53935','#EF9A9A'],['#F57F17','#FFE082'],['#2E7D32','#A5D6A7'],['#1565C0','#90CAF9']];
+  stallCols.forEach(([col,light],i)=>{
+    const sx=CW*(0.02+i*0.25);const sw=CW*0.23;const sy=CH*0.28;
+    // Stall frame
+    C.fillStyle='#5D4037';
+    C.fillRect(sx,sy,8,CH*0.28);C.fillRect(sx+sw-8,sy,8,CH*0.28);
+    // Canopy
+    C.fillStyle=col;C.shadowColor='rgba(0,0,0,0.15)';C.shadowBlur=6;
+    C.beginPath();C.moveTo(sx-8,sy);C.lineTo(sx+sw+8,sy);
+    C.lineTo(sx+sw,sy+CH*0.07);C.lineTo(sx,sy+CH*0.07);C.closePath();C.fill();
+    // Canopy stripe
+    C.fillStyle=light;
+    for(let s2=0;s2<5;s2++){
+      C.beginPath();C.moveTo(sx+s2*(sw+16)/5,sy);C.lineTo(sx+s2*(sw+16)/5+8,sy+CH*0.07);
+      C.lineTo(sx+s2*(sw+16)/5+12,sy+CH*0.07);C.lineTo(sx+s2*(sw+16)/5+4,sy);C.closePath();C.fill();
+    }
+    C.shadowBlur=0;
+    // Table
+    C.fillStyle='#795548';
+    _roundRect(C,sx,sy+CH*0.07,sw,CH*0.1,4);C.fill();
+    // Produce
+    const items=['🍅','🌽','🍌','🥬','🍊'];
+    items.slice(0,4).forEach((item,j)=>{
+      C.font=`${16}px serif`;C.fillText(item,sx+6+j*sw*0.25,sy+CH*0.15);
+    });
+  });
+  // Hanging goods string
+  C.strokeStyle='#5D4037';C.lineWidth=2;
+  C.beginPath();C.moveTo(0,CH*0.26);C.lineTo(CW,CH*0.26);C.stroke();
+  // Dirt ground with dust effect
+  C.fillStyle='rgba(160,120,80,0.25)';
+  for(let d=0;d<8;d++){C.beginPath();C.arc(d*70+20,CH*0.58,(5+d%3)*2,0,Math.PI*2);C.fill();}
+}
+
+function _bgHospital(C,t,frame){
+  _skyGrad(C,'#E3F2FD','#BBDEFB');
+  _sun(C,CW*0.82,CH*0.1,26,'#FDD835');
+  _cloud(C,CW*0.1+Math.sin(t*0.3)*5,CH*0.15,72,26,0.85);
+  _hills(C,'#81C784',CH*0.56,35);
+  _ground(C,'#A5D6A7','#66BB6A');
+  _road(C,'#90A4AE','rgba(255,255,255,0.4)',t);
+  // Hospital building
+  C.fillStyle='#FAFAFA';C.shadowColor='rgba(0,0,0,0.15)';C.shadowBlur=14;
+  _roundRect(C,CW*0.04,CH*0.16,CW*0.56,CH*0.38,8);C.fill();C.shadowBlur=0;
+  // Horizontal stripes
+  C.fillStyle='#E3F2FD';
+  C.fillRect(CW*0.04,CH*0.24,CW*0.56,CH*0.04);
+  C.fillRect(CW*0.04,CH*0.35,CW*0.56,CH*0.04);
+  // Red cross sign
+  C.fillStyle='#E53935';
+  C.fillRect(CW*0.22,CH*0.18,CW*0.12,CH*0.06);
+  C.fillRect(CW*0.26,CH*0.14,CW*0.04,CH*0.14);
+  // HOSPITAL text
+  C.fillStyle='#1565C0';C.font=`bold 14px Poppins,sans-serif`;C.textAlign='center';
+  C.fillText('COUNTY HOSPITAL',CW*0.32,CH*0.165);C.textAlign='left';
+  // Windows
+  C.fillStyle='#BBDEFB';C.strokeStyle='#90CAF9';C.lineWidth=1.5;
+  [[0.07,0.26],[0.19,0.26],[0.33,0.26],[0.45,0.26],[0.07,0.38],[0.19,0.38],[0.33,0.38],[0.45,0.38]].forEach(([wx,wy])=>{
+    _roundRect(C,CW*wx,CH*wy,CW*0.1,CH*0.07,2);C.fill();C.stroke();
+  });
+  // Ambulance
+  C.fillStyle='#FFFFFF';C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=6;
+  _roundRect(C,CW*0.62,CH*0.42,CW*0.28,CH*0.12,5);C.fill();C.shadowBlur=0;
+  C.fillStyle='#E53935';C.fillRect(CW*0.67,CH*0.44,CW*0.1,CH*0.04);C.fillRect(CW*0.7,CH*0.41,CW*0.04,CH*0.10);
+  // Ambulance wheel
+  C.fillStyle='#212121';
+  C.beginPath();C.arc(CW*0.67,CH*0.54,CW*0.03,0,Math.PI*2);C.fill();
+  C.beginPath();C.arc(CW*0.86,CH*0.54,CW*0.03,0,Math.PI*2);C.fill();
+}
+
+function _bgHome(C,t,frame,isMorning){
+  // Interior scene
+  const wallCol=isMorning?'#FFF3E0':'#FBE9E7';
+  C.fillStyle=wallCol;C.fillRect(0,0,CW,CH);
+  // Wall pattern
+  C.fillStyle='rgba(0,0,0,0.02)';
+  for(let x=0;x<CW;x+=40) C.fillRect(x,0,1,CH);
+  for(let y=0;y<CH;y+=40) C.fillRect(0,y,CW,1);
+  // Floor
+  const fl=C.createLinearGradient(0,CH*0.7,0,CH);
+  fl.addColorStop(0,'#8D6E63');fl.addColorStop(1,'#5D4037');
+  C.fillStyle=fl;C.fillRect(0,CH*0.7,CW,CH);
+  // Floor tiles
+  C.strokeStyle='rgba(255,255,255,0.12)';C.lineWidth=1;
+  for(let x=0;x<CW;x+=54) C.strokeRect(x,CH*0.7,54,CH*0.3);
+  for(let y=CH*0.7;y<CH;y+=54) C.strokeRect(0,y,CW,54);
+  // Back wall stripe
+  C.fillStyle='rgba(0,0,0,0.04)';C.fillRect(0,CH*0.68,CW,4);
+  // Big window
+  C.fillStyle='rgba(0,0,0,0.12)';_roundRect(C,CW*0.55,CH*0.08,CW*0.38,CH*0.42,6);C.fill();
+  C.fillStyle=isMorning?'#FFF9C4':'#FFCC02';
+  _roundRect(C,CW*0.55,CH*0.08,CW*0.38,CH*0.42,6);C.fill();
+  // Window frame
+  C.strokeStyle='#5D4037';C.lineWidth=4;_roundRect(C,CW*0.55,CH*0.08,CW*0.38,CH*0.42,6);C.stroke();
+  C.beginPath();C.moveTo(CW*0.74,CH*0.08);C.lineTo(CW*0.74,CH*0.5);C.stroke();
+  C.beginPath();C.moveTo(CW*0.55,CH*0.29);C.lineTo(CW*0.93,CH*0.29);C.stroke();
+  // Morning sunrays through window
+  if(isMorning){
+    C.fillStyle='rgba(255,235,100,0.08)';
+    for(let r=0;r<4;r++){
+      C.beginPath();C.moveTo(CW*0.74,CH*0.08);
+      C.lineTo(CW*(0.4+r*0.15),CH*0.7);C.lineTo(CW*(0.4+r*0.15+0.12),CH*0.7);
+      C.closePath();C.fill();
     }
   }
-  if(bgKey==='hospital'){
-    ctx.fillStyle='#ECF0F1';ctx.fillRect(CW*0.08,CH*0.2,CW*0.4,CH*0.35);
-    ctx.fillStyle='#E74C3C';ctx.font=`bold ${28}px sans-serif`;
-    ctx.textAlign='center';ctx.fillText('✚',CW*0.28,CH*0.32);ctx.textAlign='left';
+  // Bed (for wake scene)
+  if(isMorning){
+    C.fillStyle='#FF8A65';_roundRect(C,CW*0.02,CH*0.5,CW*0.48,CH*0.2,6);C.fill();
+    C.fillStyle='#FFCCBC';_roundRect(C,CW*0.02,CH*0.5,CW*0.22,CH*0.2,6);C.fill();// pillow
+    // Blanket pattern
+    C.strokeStyle='rgba(200,80,30,0.4)';C.lineWidth=2;
+    for(let s2=0;s2<5;s2++) C.strokeRect(CW*(0.04+s2*0.09),CH*0.52,CW*0.08,CH*0.16);
   }
-  if(bgKey==='home'||bgKey==='wake'){
-    ctx.fillStyle='#E8C5A0';ctx.fillRect(CW*0.08,CH*0.25,CW*0.42,CH*0.3);
-    ctx.fillStyle='#C0392B';ctx.fillRect(CW*0.05,CH*0.2,CW*0.48,CH*0.08);// roof
-    ctx.fillStyle='#85C1E9';ctx.fillRect(CW*0.18,CH*0.3,CW*0.12,CH*0.12);// window
+  // Picture frames on wall
+  [[0.04,0.1,'#FF7043'],[0.18,0.08,'#42A5F5'],[0.34,0.12,'#66BB6A']].forEach(([fx,fy,fc])=>{
+    C.strokeStyle='#5D4037';C.lineWidth=3;
+    _roundRect(C,CW*fx,CH*fy,CW*0.1,CH*0.14,2);C.stroke();
+    C.fillStyle=fc;_roundRect(C,CW*fx+3,CH*fy+3,CW*0.1-6,CH*0.14-6,2);C.fill();
+  });
+  // TV
+  C.fillStyle='#212121';_roundRect(C,CW*0.03,CH*0.42,CW*0.38,CH*0.22,8);C.fill();
+  C.fillStyle='#424242';_roundRect(C,CW*0.05,CH*0.44,CW*0.34,CH*0.18,4);C.fill();
+  C.fillStyle='rgba(0,80,200,0.3)';_roundRect(C,CW*0.05,CH*0.44,CW*0.34,CH*0.18,4);C.fill();
+}
+
+function _bgForest(C,t,frame){
+  // Deep jungle
+  C.fillStyle='#1B5E20';C.fillRect(0,0,CW,CH);
+  // Canopy gradient
+  const cg=C.createLinearGradient(0,0,0,CH*0.5);
+  cg.addColorStop(0,'#1B5E20');cg.addColorStop(1,'#2E7D32');
+  C.fillStyle=cg;C.fillRect(0,0,CW,CH*0.5);
+  // Sunlight shafts
+  C.fillStyle='rgba(255,235,100,0.07)';
+  for(let i=0;i<6;i++){
+    const sx=CW*(0.1+i*0.16)+Math.sin(t+i)*10;
+    C.save();C.translate(sx,0);C.rotate(0.05+i*0.02);
+    C.fillRect(-15,0,30,CH*0.7);C.restore();
   }
-  if(bgKey==='night'){
-    // Fire / lantern glow
-    const fg=ctx.createRadialGradient(CW/2,CH*0.75,0,CW/2,CH*0.75,80);
-    fg.addColorStop(0,'rgba(255,120,0,0.35)');fg.addColorStop(1,'transparent');
-    ctx.fillStyle=fg;ctx.fillRect(0,0,CW,CH);
+  // Far trees
+  for(let i=0;i<8;i++) _tree(C,CW*i/7,CH*0.52,100+i%3*20,12,'#1B5E20');
+  // Ground
+  const gg=C.createLinearGradient(0,CH*0.56,0,CH);
+  gg.addColorStop(0,'#2E7D32');gg.addColorStop(1,'#1B5E20');
+  C.fillStyle=gg;C.fillRect(0,CH*0.56,CW,CH);
+  // Dirt path
+  C.fillStyle='#5D4037';
+  C.beginPath();C.moveTo(CW*0.35,CH*0.57);C.lineTo(CW*0.65,CH*0.57);C.lineTo(CW*0.58,CH);C.lineTo(CW*0.42,CH);C.closePath();C.fill();
+  // Path stones
+  C.fillStyle='rgba(255,255,255,0.12)';
+  for(let s2=0;s2<5;s2++){C.beginPath();C.ellipse(CW*0.5+Math.sin(s2)*20,CH*(0.65+s2*0.07),12,6,0.1,0,Math.PI*2);C.fill();}
+  // Near trees
+  _tree(C,CW*0.04,CH*0.56,120,16,'#2E7D32');
+  _tree(C,CW*0.88,CH*0.56,110,14,'#1B5E20');
+  // Ferns
+  C.fillStyle='#388E3C';
+  for(let f=0;f<12;f++){
+    const fx=CW*(0.05+f*0.08),fy=CH*0.57;
+    C.beginPath();C.ellipse(fx,fy,15,8,f%2===0?0.4:-0.4,0,Math.PI*2);C.fill();
+  }
+  // Fireflies
+  for(let i=0;i<12;i++){
+    const fx=(i*137+frame*0.4)%CW;
+    const fy=CH*0.2+(i*83)%(CH*0.35);
+    const glow=0.3+Math.abs(Math.sin(frame*0.05+i))*0.7;
+    C.fillStyle=`rgba(200,255,100,${glow})`;
+    C.beginPath();C.arc(fx,fy,2.5,0,Math.PI*2);C.fill();
   }
 }
 
-function _cloud(c,x,y,w,h){
-  c.fillStyle='rgba(255,255,255,0.82)';
-  c.beginPath();c.ellipse(x,y,w/2,h/2,0,0,Math.PI*2);c.fill();
-  c.beginPath();c.ellipse(x+w*0.28,y+h*0.08,w*0.3,h*0.42,0,0,Math.PI*2);c.fill();
-  c.beginPath();c.ellipse(x-w*0.28,y+h*0.1,w*0.27,h*0.38,0,0,Math.PI*2);c.fill();
+function _bgNight(C,t,frame){
+  const sg=C.createLinearGradient(0,0,0,CH*0.65);
+  sg.addColorStop(0,'#0A0E2A');sg.addColorStop(1,'#1a2a4a');
+  C.fillStyle=sg;C.fillRect(0,0,CW,CH);
+  // Stars
+  for(let i=0;i<120;i++){
+    const sx=(i*157+3)%CW;const sy=(i*83+7)%(CH*0.55);
+    const blink=0.3+0.7*Math.abs(Math.sin(frame*0.03+i));
+    C.fillStyle=`rgba(255,255,240,${blink})`;
+    const sr=i%5===0?2:1;
+    C.beginPath();C.arc(sx,sy,sr,0,Math.PI*2);C.fill();
+  }
+  // Moon
+  C.shadowColor='rgba(200,220,255,0.6)';C.shadowBlur=25;
+  C.fillStyle='#F5F5DC';C.beginPath();C.arc(CW*0.8,CH*0.1,30,0,Math.PI*2);C.fill();
+  C.fillStyle='#E8E8C8';C.beginPath();C.arc(CW*0.8-8,CH*0.1-6,10,0,Math.PI*2);C.fill();
+  C.shadowBlur=0;
+  // Moon glow
+  const mg=C.createRadialGradient(CW*0.8,CH*0.1,20,CW*0.8,CH*0.1,120);
+  mg.addColorStop(0,'rgba(200,220,255,0.2)');mg.addColorStop(1,'transparent');
+  C.fillStyle=mg;C.fillRect(0,0,CW,CH*0.4);
+  // Hills silhouette
+  C.fillStyle='#0d1530';
+  C.beginPath();C.moveTo(0,CH*0.58);
+  for(let x=0;x<=CW;x+=CW/10) C.lineTo(x,CH*0.56-50-Math.sin(x*0.014)*40);
+  C.lineTo(CW,CH);C.lineTo(0,CH);C.closePath();C.fill();
+  // Ground
+  C.fillStyle='#0f1a0f';C.fillRect(0,CH*0.6,CW,CH);
+  // Campfire glow
+  const fg=C.createRadialGradient(CW/2,CH*0.72,0,CW/2,CH*0.72,110);
+  fg.addColorStop(0,'rgba(255,120,30,0.4)');fg.addColorStop(0.5,'rgba(255,80,0,0.15)');fg.addColorStop(1,'transparent');
+  C.fillStyle=fg;C.fillRect(0,0,CW,CH);
+  // Fire
+  C.fillStyle='#FF6F00';C.beginPath();C.ellipse(CW/2,CH*0.72,18,12,0,0,Math.PI*2);C.fill();
+  C.fillStyle='#FF8F00';C.beginPath();C.ellipse(CW/2,CH*0.70,12,18+Math.sin(frame*0.15)*4,0,0,Math.PI*2);C.fill();
+  C.fillStyle='#FFD54F';C.beginPath();C.ellipse(CW/2,CH*0.68,6,12+Math.sin(frame*0.2)*3,0,0,Math.PI*2);C.fill();
+  // Logs
+  C.fillStyle='#5D4037';
+  C.save();C.translate(CW/2,CH*0.74);C.rotate(0.4);C.fillRect(-24,-4,48,8);C.restore();
+  C.save();C.translate(CW/2,CH*0.74);C.rotate(-0.4);C.fillRect(-24,-4,48,8);C.restore();
+  // Acacia silhouette
+  C.fillStyle='#0a1208';_tree(C,CW*0.12,CH*0.56,90,10,'#0a1208');
+  C.fillStyle='#0a1208';_tree(C,CW*0.85,CH*0.56,80,9,'#0a1208');
 }
 
-// ─── ACTION MAP: story keywords → animation type + bgKey ─────────
+function _bgCity(C,t,frame){
+  _skyGrad(C,'#90A4AE','#B0BEC5');
+  _sun(C,CW*0.75,CH*0.1,25,'#FFCA28');
+  // Buildings
+  const bldgs=[
+    {x:0.0,w:0.15,h:0.55,col:'#546E7A',win:'#FFEE58'},{x:0.14,w:0.12,h:0.45,col:'#607D8B',win:'#80D8FF'},
+    {x:0.25,w:0.18,h:0.65,col:'#455A64',win:'#FFEE58'},{x:0.42,w:0.14,h:0.5,col:'#546E7A',win:'#80D8FF'},
+    {x:0.55,w:0.2,h:0.7,col:'#37474F',win:'#FFCA28'},{x:0.74,w:0.14,h:0.48,col:'#607D8B',win:'#FFEE58'},
+    {x:0.87,w:0.13,h:0.58,col:'#455A64',win:'#80D8FF'}
+  ];
+  bldgs.forEach(b=>{
+    C.fillStyle=b.col;C.fillRect(CW*b.x,CH*(1-b.h)-CH*0.04,CW*b.w,CH*b.h);
+    // Windows grid
+    for(let wr=0;wr<8;wr++) for(let wc=0;wc<3;wc++){
+      const wx=CW*b.x+8+wc*(CW*b.w/3);
+      const wy=CH*(1-b.h)-CH*0.04+12+wr*CH*0.07;
+      if(wy<CH*0.57){
+        C.fillStyle=Math.random()>0.3?b.win:'rgba(0,0,0,0.3)';
+        C.fillRect(wx,wy,CW*b.w/3-8,CH*0.05);
+      }
+    }
+  });
+  _ground(C,'#546E7A','#37474F');
+  _road(C,'#37474F','rgba(255,255,255,0.5)',t);
+  // Matatu
+  C.fillStyle='#F4511E';_roundRect(C,CW*0.1,CH*0.58,CW*0.22,CH*0.1,5);C.fill();
+  C.fillStyle='#212121';C.beginPath();C.arc(CW*0.16,CH*0.68,CW*0.025,0,Math.PI*2);C.fill();
+  C.beginPath();C.arc(CW*0.28,CH*0.68,CW*0.025,0,Math.PI*2);C.fill();
+  C.fillStyle='#BBDEFB';C.fillRect(CW*0.12,CH*0.59,CW*0.06,CH*0.06);
+  C.fillStyle='#FFD740';C.fillText('ROUTE 11 NAIROBI',CW*0.12,CH*0.599);
+  // Power lines
+  C.strokeStyle='rgba(0,0,0,0.4)';C.lineWidth=1.5;
+  C.beginPath();C.moveTo(0,CH*0.35);C.lineTo(CW,CH*0.35);C.stroke();
+  for(let p=0;p<8;p++){
+    C.beginPath();C.moveTo(CW*p/7,CH*0.32);C.lineTo(CW*p/7,CH*0.38);C.stroke();
+  }
+}
+
+function _bgCheckpoint(C,t,frame){
+  _bgRoad(C,t,frame);
+  // Police car
+  C.fillStyle='#0D47A1';_roundRect(C,CW*0.55,CH*0.42,CW*0.35,CH*0.14,6);C.fill();
+  C.fillStyle='#FAFAFA';C.fillRect(CW*0.62,CH*0.44,CW*0.14,CH*0.08);// windshield
+  // Lights flashing
+  const fl=frame%20<10;
+  C.fillStyle=fl?'#E53935':'rgba(200,0,0,0.3)';
+  C.beginPath();C.arc(CW*0.65,CH*0.41,8,0,Math.PI*2);C.fill();
+  C.fillStyle=fl?'rgba(0,0,200,0.3)':'#1565C0';
+  C.beginPath();C.arc(CW*0.76,CH*0.41,8,0,Math.PI*2);C.fill();
+  if(fl){
+    const gfl=C.createRadialGradient(CW*0.65,CH*0.41,4,CW*0.65,CH*0.41,50);
+    gfl.addColorStop(0,'rgba(255,0,0,0.25)');gfl.addColorStop(1,'transparent');
+    C.fillStyle=gfl;C.fillRect(0,0,CW,CH*0.5);
+  }
+  // Barriers
+  const barCols=['#E53935','#FFFFFF'];
+  for(let b=0;b<8;b++){
+    C.fillStyle=barCols[b%2];C.fillRect(CW*0.02+b*(CW*0.06),CH*0.55,CW*0.055,CH*0.04);
+  }
+  // POLICE CHECKPOINT sign
+  C.fillStyle='#FFFFFF';_roundRect(C,CW*0.1,CH*0.47,CW*0.3,CH*0.06,4);C.fill();
+  C.strokeStyle='#E53935';C.lineWidth=2;_roundRect(C,CW*0.1,CH*0.47,CW*0.3,CH*0.06,4);C.stroke();
+  C.fillStyle='#D32F2F';C.font=`bold 13px Poppins,sans-serif`;C.textAlign='center';
+  C.fillText('POLICE CHECKPOINT',CW*0.25,CH*0.510);C.textAlign='left';
+  // Cones
+  [0.05,0.15,0.5].forEach(cx=>{
+    C.fillStyle='#FF6F00';
+    C.beginPath();C.moveTo(CW*cx,CH*0.59);C.lineTo(CW*cx-8,CH*0.59);C.lineTo(CW*cx-3,CH*0.52);C.lineTo(CW*cx+3,CH*0.52);C.lineTo(CW*cx+8,CH*0.59);C.closePath();C.fill();
+    C.fillStyle='#FFF';C.fillRect(CW*cx-8,CH*0.555,16,3);
+  });
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  SCENE FRAME RENDERER
+// ══════════════════════════════════════════════════════════════════
+
 const ACTION_MAP=[
-  {keys:['wake','waking','wakes up','gets up','rises'],anim:'wake',bg:'wake'},
-  {keys:['run','running','sprint','sprinting','flee','rushing','races','bolts'],anim:'run',bg:'road'},
-  {keys:['walk','walking','walks','stroll','strolling','goes to','heading to','marches'],anim:'walk',bg:'road'},
-  {keys:['laugh','laughing','laughs','chuckle','giggles'],anim:'laugh',bg:'default'},
-  {keys:['cry','crying','cries','tears','sobbing','weeps'],anim:'cry',bg:'default'},
-  {keys:['arrive','arrives','arriving','steps out','drives up','pulls up','bursts in','bursts through'],anim:'arrive',bg:'road'},
-  {keys:['shout','shouting','shouts','yell','screaming','screams'],anim:'angry',bg:'default'},
-  {keys:['argue','arguing','argues','confront','quarrel','fight','fights'],anim:'angry',bg:'default'},
-  {keys:['shock','shocked','shocked','surprised','jaw drop'],anim:'shocked',bg:'default'},
-  {keys:['jump','jumping','jumps','leaps','cheer','cheering'],anim:'jump',bg:'default'},
+  {keys:['wake','waking','wakes up','gets up'],anim:'wake',bg:'wake'},
+  {keys:['run','running','sprint','flee','rush','races'],anim:'run',bg:'road'},
+  {keys:['runs scared','scared','panick'],anim:'run_scared',bg:'road'},
+  {keys:['laugh','laughing','laughs','chuckle'],anim:'laugh',bg:'default'},
+  {keys:['cry','crying','cries','tears','sob'],anim:'cry',bg:'default'},
+  {keys:['arrive','arrives','arriving','steps out','drives up','bursts in','bursts through','pulls up'],anim:'arrive',bg:'road'},
+  {keys:['shout','shouting','shouts','yell','screaming','screams','angry','argues','argue'],anim:'angry',bg:'default'},
+  {keys:['shock','shocked','surprised','jaw drop'],anim:'shocked',bg:'default'},
+  {keys:['jump','jumping','jumps','leap','cheer','cheering'],anim:'jump',bg:'default'},
   {keys:['eat','eating','eats','devour','feast'],anim:'eat',bg:'market'},
-  {keys:['talk','talking','talks','says','said','tells','speak','speaking','explains','greet'],anim:'talk',bg:'default'},
+  {keys:['walk','walking','walks','stroll','goes to','heading','march'],anim:'walk',bg:'road'},
+  {keys:['talk','talking','talks','says','said','tells','speak','explains','greet','discuss'],anim:'talk',bg:'default'},
 ];
 
 function detectAnim(text){
-  const t=(text||'').toLowerCase();
-  for(const rule of ACTION_MAP){
-    if(rule.keys.some(k=>t.includes(k))) return {anim:rule.anim,bg:rule.bg};
-  }
+  const tx=(text||'').toLowerCase();
+  for(const r of ACTION_MAP) if(r.keys.some(k=>tx.includes(k))) return {anim:r.anim,bg:r.bg};
   return {anim:'stand',bg:'default'};
 }
 
-// ─── SCENES STATE ─────────────────────────────────────────────────
-let scenes=[];
-let curScene=-1;
-let playTimer=null;
-let playFrame=0;
-let imgCache={};
+let scenes=[];let curScene=-1;let playTimer=null;let imgCache={};
 
-// ─── RENDER A SINGLE FRAME ────────────────────────────────────────
-async function drawSceneFrame(idx, frame){
+async function drawSceneFrame(idx,frame){
+  ctx.clearRect(0,0,CW,CH);
   if(idx<0||idx>=scenes.length){
-    ctx.fillStyle='#0a0b0f';ctx.fillRect(0,0,CW,CH);
-    ctx.font='60px serif';ctx.textAlign='center';ctx.fillText('🎬',CW/2,CH/2);
-    ctx.textAlign='left';return;
+    // Empty state
+    const eg=ctx.createLinearGradient(0,0,0,CH);
+    eg.addColorStop(0,'#0a0d1a');eg.addColorStop(1,'#0d1520');
+    ctx.fillStyle=eg;ctx.fillRect(0,0,CW,CH);
+    ctx.font='72px serif';ctx.textAlign='center';ctx.fillText('🎬',CW/2,CH/2-20);
+    ctx.font='bold 24px Poppins,sans-serif';ctx.fillStyle='rgba(255,255,255,0.2)';
+    ctx.fillText('Your Preview',CW/2,CH/2+40);ctx.textAlign='left';return;
   }
   const s=scenes[idx];
-  const {anim, bg} = detectAnim(s.action||s.caption||'');
-  const bgKey = s.location||bg;
+  const {anim,bg}=detectAnim(s.action||s.caption||'');
+  const bgKey=s.location||bg;
+  const imgEl=imgCache[idx]||null;
 
-  // 1. Draw background (AI image or painted)
-  const imgEl = imgCache[idx]||null;
-  drawBackground(bgKey, frame, imgEl);
+  // 1. Background
+  drawBackground(ctx,bgKey,frame,imgEl);
 
-  // 2. Draw animated character(s)
-  const mainChar = s.characters[0];
-  const secChar  = s.characters[1];
+  // 2. Characters
+  const chars=s.characters||[];
+  const count=chars.length;
+  const positions=count===1?[CW*0.5]:count===2?[CW*0.32,CW*0.68]:[CW*0.22,CW*0.5,CW*0.78];
+  const anims=count===1?[anim]:count===2?[anim,'talk']:[anim,'talk','stand'];
 
-  // Position based on how many characters
-  if(mainChar && CHARS[mainChar]){
-    const xPos = secChar ? CW*0.33 : CW*0.5;
-    const yPos = CH*0.74;
-    drawCharacter(xPos, yPos, mainChar, anim, frame, 1.4);
-  }
-  if(secChar && CHARS[secChar]){
-    // Second character does opposite/reaction action
-    const secAnim = (anim==='talk'||anim==='angry') ? 'talk' : 'stand';
-    drawCharacter(CW*0.67, CH*0.74, secChar, secAnim, frame, 1.4, true);
-  }
+  chars.slice(0,3).forEach((name,i)=>{
+    if(!CHARS[name])return;
+    const px=positions[i];const py=CH*0.76;
+    const flip=i>0&&count>1; // second char faces left
+    ctx.save();
+    if(flip){ctx.translate(px,py);ctx.scale(-1,1);ctx.translate(-px,-py);}
+    ctx.translate(0,0);
+    // Shadow under character
+    ctx.fillStyle='rgba(0,0,0,0.2)';ctx.beginPath();
+    const cs=CHARS[name].size*(CHARS[name].fat?1.3:1);
+    ctx.ellipse(px,py+2,28*cs,8,0,0,Math.PI*2);ctx.fill();
+    // Draw character
+    ctx.save();ctx.translate(px,py);
+    drawChar(ctx,name,anims[i]||'stand',frame);
+    ctx.restore();
+    ctx.restore();
+  });
 
-  // 3. Speech bubble (if dialogue)
-  if(s.dialogue && s.speaker && frame>15){
-    const alpha=Math.min(1,(frame-15)/10);
+  // 3. Speech bubble
+  if(s.dialogue&&s.speaker&&frame>18){
+    const alpha=Math.min(1,(frame-18)/12);
     ctx.globalAlpha=alpha;
-    _drawSpeechBubble(s.dialogue, s.speaker, CW/2, CH*0.38);
+    drawSpeechBubble(ctx,s.dialogue,s.speaker,CW/2,CH*0.35);
     ctx.globalAlpha=1;
   }
 
-  // 4. Caption bar
-  const capAlpha=Math.min(1,frame/12);
+  // 4. Caption
+  const capAlpha=Math.min(1,frame/14);
   ctx.globalAlpha=capAlpha;
-  _drawCaption(s.caption||'');
+  drawCaption(ctx,s.caption||'');
   ctx.globalAlpha=1;
 
   // 5. HUD
-  _drawHUD(idx, s);
+  drawHUD(ctx,idx,s);
 }
 
-function _drawSpeechBubble(text, charName, x, y){
+function drawSpeechBubble(C,text,charName,x,y){
   const ch=CHARS[charName];
-  const color=ch?ch.shirt:'#fff';
-  ctx.font='bold 28px Poppins,sans-serif';
-  // Word wrap
-  const words=text.split(' ');const maxW=360;const lh=38;
+  const accentColor=ch?ch.shirt:'#FF4500';
+  C.font='bold 27px Poppins,sans-serif';
+  const words=text.split(' ');const maxW=370;const lh=38;
   const lines=[];let cur='';
-  words.forEach(w=>{const tt=cur?cur+' '+w:w;if(ctx.measureText(tt).width>maxW){lines.push(cur);cur=w;}else cur=tt;});if(cur)lines.push(cur);
-  const bw=Math.min(430,maxW+40),bh=lines.length*lh+52;
-  const bx=x-bw/2,by=y-bh/2;
-  // Shadow
-  ctx.shadowColor='rgba(0,0,0,0.4)';ctx.shadowBlur=16;
+  words.forEach(w=>{const tt=cur?cur+' '+w:w;if(C.measureText(tt).width>maxW){lines.push(cur);cur=w;}else cur=tt;});if(cur)lines.push(cur);
+  const bw=Math.min(440,maxW+50),bh=lines.length*lh+58;
+  const bx=Math.max(8,x-bw/2),by=Math.max(8,y-bh/2);
+  // Drop shadow
+  C.shadowColor='rgba(0,0,0,0.35)';C.shadowBlur=18;C.shadowOffsetY=4;
   // Bubble
-  _rrect(ctx,bx,by,bw,bh,16,'rgba(255,255,255,0.95)');
-  ctx.shadowBlur=0;
-  // Colour stripe top
-  _rrect(ctx,bx,by,bw,6,3,color);
-  // Speaker name
-  ctx.font='bold 13px Inter,sans-serif';ctx.fillStyle=color;
-  ctx.textAlign='center';ctx.fillText(charName,x,by+22);
-  // Text
-  ctx.font='bold 28px Poppins,sans-serif';ctx.fillStyle='#111';
-  lines.forEach((ln,i)=>ctx.fillText(ln,x,by+40+i*lh));
+  _roundRect(C,bx,by,bw,bh,18);C.fillStyle='rgba(255,255,255,0.97)';C.fill();
+  C.shadowColor='transparent';C.shadowBlur=0;C.shadowOffsetY=0;
+  // Accent top stripe
+  _roundRect(C,bx,by,bw,7,18);C.fillStyle=accentColor;C.fill();
+  C.fillRect(bx,by+7,bw,3); // flatten bottom of stripe
+  // Speaker name tag
+  C.fillStyle=accentColor;
+  _roundRect(C,bx+12,by+14,C.measureText(charName).width+18,22,8);C.fill();
+  C.fillStyle='#fff';C.font='bold 12px Inter,sans-serif';C.textAlign='left';
+  C.fillText(charName,bx+21,by+29);
+  // Text lines
+  C.font='bold 27px Poppins,sans-serif';C.fillStyle='#111';C.textAlign='center';
+  lines.forEach((ln,i)=>C.fillText(ln,x,by+44+i*lh));
   // Tail
-  ctx.fillStyle='rgba(255,255,255,0.95)';
-  ctx.beginPath();ctx.moveTo(x-10,by+bh);ctx.lineTo(x,by+bh+20);ctx.lineTo(x+10,by+bh);ctx.closePath();ctx.fill();
-  ctx.textAlign='left';
+  C.fillStyle='rgba(255,255,255,0.97)';
+  C.beginPath();C.moveTo(x-12,by+bh);C.lineTo(x,by+bh+22);C.lineTo(x+12,by+bh);C.closePath();C.fill();
+  C.textAlign='left';
 }
 
-function _drawCaption(text){
-  if(!text) return;
-  const words=text.split(' ');const maxW=CW-80;const lh=44;
-  ctx.font='bold 30px Poppins,sans-serif';
+function drawCaption(C,text){
+  if(!text)return;
+  C.font='bold 30px Poppins,sans-serif';
+  const words=text.split(' ');const maxW=CW-90;const lh=44;
   const lines=[];let cur='';
-  words.forEach(w=>{const tt=cur?cur+' '+w:w;if(ctx.measureText(tt).width>maxW){lines.push(cur);cur=w;}else cur=tt;});if(cur)lines.push(cur);
-  const totalH=lines.length*lh+28;
-  const by=CH-totalH-55;
-  _rrect(ctx,16,by-6,CW-32,totalH+6,10,'rgba(0,0,0,0.7)');
-  // Orange stripe
-  const gr=ctx.createLinearGradient(16,0,CW-16,0);gr.addColorStop(0,CHARS['Brian']?'#ff4500':'#ff4500');gr.addColorStop(1,'#ff8c00');
-  _rrect(ctx,16,by-6,CW-32,5,3,gr);
-  ctx.textAlign='center';
+  words.forEach(w=>{const tt=cur?cur+' '+w:w;if(C.measureText(tt).width>maxW){lines.push(cur);cur=w;}else cur=tt;});if(cur)lines.push(cur);
+  const totalH=lines.length*lh+32;const by=CH-totalH-52;
+  // Glass morphism bg
+  C.shadowColor='rgba(0,0,0,0.4)';C.shadowBlur=12;
+  _roundRect(C,14,by-8,CW-28,totalH+8,12);
+  C.fillStyle='rgba(10,10,20,0.78)';C.fill();
+  C.shadowBlur=0;
+  // Accent gradient stripe
+  const ag=C.createLinearGradient(14,0,CW-14,0);
+  ag.addColorStop(0,'#ff4500');ag.addColorStop(0.5,'#ff8c00');ag.addColorStop(1,'#ffd700');
+  _roundRect(C,14,by-8,CW-28,5,3);C.fillStyle=ag;C.fill();
+  C.textAlign='center';
   lines.forEach((ln,i)=>{
-    ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=7;
-    ctx.fillStyle='#fff';ctx.font='bold 30px Poppins,sans-serif';
-    ctx.fillText(ln,CW/2,by+i*lh+26);
+    // Text outline
+    C.strokeStyle='rgba(0,0,0,0.9)';C.lineWidth=4;C.lineJoin='round';
+    C.strokeText(ln,CW/2,by+i*lh+28);
+    C.fillStyle='#fff';C.font='bold 30px Poppins,sans-serif';
+    C.fillText(ln,CW/2,by+i*lh+28);
   });
-  ctx.shadowBlur=0;ctx.textAlign='left';
+  C.textAlign='left';
 }
 
-function _drawHUD(idx, s){
-  // Scene number
-  _rrect(ctx,14,46,56,32,7,'rgba(0,0,0,0.55)');
-  ctx.font='bold 10px Inter,sans-serif';ctx.fillStyle='rgba(255,255,255,0.45)';ctx.fillText('SCENE',20,59);
-  ctx.font='bold 20px Bebas Neue,sans-serif';ctx.fillStyle='#fff';ctx.fillText(idx+1,20,78);
-  // Character emojis
+function drawHUD(C,idx,s){
+  // Scene pill
+  C.shadowColor='rgba(0,0,0,0.5)';C.shadowBlur=8;
+  _roundRect(C,14,44,64,34,8);C.fillStyle='rgba(0,0,0,0.62)';C.fill();
+  C.shadowBlur=0;
+  C.font='bold 10px Inter,sans-serif';C.fillStyle='rgba(255,255,255,0.45)';C.fillText('SCENE',20,57);
+  C.font='bold 20px Bebas Neue,sans-serif';C.fillStyle='#fff';C.fillText(idx+1,20,76);
+  // Character emojis top right
   let ex=CW-14;
   (s.characters||[]).slice(0,3).reverse().forEach(n=>{
-    const ch=CHARS[n];if(!ch)return;
-    ctx.font='20px serif';ctx.textAlign='right';ctx.fillText(ch.emoji,ex,68);
-    ex-=26;
+    if(!CHARS[n])return;
+    C.font='20px serif';C.textAlign='right';C.fillText(CHARS[n].emoji,ex,66);ex-=28;
   });
-  ctx.textAlign='left';
-  // Handle
-  ctx.font='bold 15px Inter,sans-serif';ctx.textAlign='right';
-  ctx.fillStyle='rgba(255,255,255,0.4)';ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=5;
-  ctx.fillText('@CartoonStudio',CW-12,CH-14);
-  ctx.shadowBlur=0;ctx.textAlign='left';
+  C.textAlign='left';
+  // Handle watermark
+  C.font='bold 15px Inter,sans-serif';C.textAlign='right';
+  C.shadowColor='rgba(0,0,0,0.8)';C.shadowBlur=6;
+  C.fillStyle='rgba(255,255,255,0.38)';
+  C.fillText('@CartoonStudio',CW-12,CH-14);
+  C.shadowBlur=0;C.textAlign='left';
+  // Location name top centre
+  const locName=(s.location||'').replace(/_/g,' ').toUpperCase();
+  if(locName){
+    C.font='bold 11px Inter,sans-serif';C.textAlign='center';
+    C.fillStyle='rgba(255,255,255,0.28)';
+    C.fillText('📍 '+locName,CW/2,30);C.textAlign='left';
+  }
 }
 
-function _rrect(c,x,y,w,h,r,fill){
-  c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.arcTo(x+w,y,x+w,y+r,r);
-  c.lineTo(x+w,y+h-r);c.arcTo(x+w,y+h,x+w-r,y+h,r);c.lineTo(x+r,y+h);
-  c.arcTo(x,y+h,x,y+h-r,r);c.lineTo(x,y+r);c.arcTo(x,y,x+r,y,r);c.closePath();
-  if(fill){c.fillStyle=fill;c.fill();}
-}
-
-// ─── PLAYBACK ─────────────────────────────────────────────────────
+// ── PLAYBACK ────────────────────────────────────────────────────
 function togglePlay(){
-  if(playTimer){clearInterval(playTimer);playTimer=null;document.getElementById('play-btn').textContent='▶ Play';return;}
+  if(playTimer){
+    clearInterval(playTimer);playTimer=null;
+    synth.cancel();narratorActive=false;
+    document.getElementById('play-btn').textContent='▶ Play';
+    document.getElementById('narrbar').classList.remove('speaking');
+    return;
+  }
   document.getElementById('play-btn').textContent='⏹ Stop';
-  playFrame=0;
-  let scIdx=Math.max(0,curScene);
-  let lf=0;
-  const FPS=24;
-  const FPScene=FPS*5; // 5 seconds per scene
+  let scIdx=Math.max(0,curScene);let lf=0;const FPS=24;const FPScene=FPS*6;
+  let spokScene=-1;
   playTimer=setInterval(async()=>{
     await drawSceneFrame(scIdx,lf);
+    // Trigger narrator + character voice at start of each scene
+    if(spokScene!==scIdx){
+      spokScene=scIdx;
+      const s=scenes[scIdx];
+      if(s){
+        // Narrate scene description first, then character dialogue
+        const narr=buildNarration(s);
+        document.getElementById('narr-text').textContent=narr;
+        speakNarrator(narr,()=>{
+          if(s.dialogue&&s.speaker&&playTimer){
+            setTimeout(()=>speakLine(s.dialogue,s.speaker),300);
+          }
+        });
+      }
+    }
     lf++;
     if(lf>=FPScene){
-      lf=0;
-      scIdx=(scIdx+1)%Math.max(1,scenes.length);
-      curScene=scIdx;
-      renderPipeline();
+      lf=0;scIdx=(scIdx+1)%Math.max(1,scenes.length);
+      curScene=scIdx;renderPipeline();
       document.getElementById('sc-ind').textContent=`Scene ${scIdx+1} / ${scenes.length}`;
-      // Speak dialogue of new scene
-      const s=scenes[scIdx];
-      if(s&&s.dialogue&&s.speaker) speakLine(s.dialogue,s.speaker);
     }
-    playFrame++;
   },1000/FPS);
 }
+function prevSc(){if(curScene>0){curScene--;renderPipeline();drawSceneFrame(curScene,0);updateInd();}}
+function nextSc(){if(curScene<scenes.length-1){curScene++;renderPipeline();drawSceneFrame(curScene,0);updateInd();}}
+function updateInd(){document.getElementById('sc-ind').textContent=`Scene ${Math.max(0,curScene+1)} / ${scenes.length}`;}
 
-function prevSc(){ if(curScene>0){curScene--;renderPipeline();drawSceneFrame(curScene,0);} }
-function nextSc(){ if(curScene<scenes.length-1){curScene++;renderPipeline();drawSceneFrame(curScene,0);} }
-
-// ─── IMAGE GENERATION ─────────────────────────────────────────────
-function buildShortPrompt(s){
-  const SHORT={
-    "Brian":"African boy 10yo blue school uniform",
-    "Zawadi":"African girl 12yo braided hair with beads school uniform",
-    "Mama Wanjiru":"African middle-aged woman orange kitenge dress head wrap",
-    "Inspector Kamau":"fat African police officer navy uniform gold badge mustache",
-    "Doctor Amara":"African woman doctor white coat stethoscope round glasses",
-    "Chef Omondi":"fat African man white chef uniform tall chef hat",
-    "Mwalimu Hassan":"tall thin African teacher white shirt tie glasses",
-    "Merchant Fatuma":"African market woman colorful dress white headscarf basket fruit",
-    "Baba James":"elderly African man white kanzu robe walking stick grey beard",
-    "Ranger Kipchoge":"athletic African ranger khaki uniform wide hat binoculars"
-  };
-  const LOC={
-    wake:'inside African home bedroom',market:'African outdoor market stalls',
-    river:'African river bank',hospital:'outside African hospital',school:'African school compound',
-    forest:'tropical African forest path',city:'busy Nairobi city street',home:'inside Kenyan home',
-    road:'African road savanna',field:'African savanna field',night:'African night stars',
-    checkpoint:'police roadblock checkpoint',arrive:'African road'
-  };
-  const {anim}=detectAnim(s.action||s.caption||'');
-  const ANIM_WORDS={
-    wake:'waking up stretching in bed',run:'running full sprint arms pumping',
-    walk:'walking briskly forward',laugh:'laughing uncontrollably hands on belly',
-    cry:'crying big tears hands on face',arrive:'arriving dramatically stepping out',
-    angry:'shouting angrily pointing finger',shocked:'shocked jaw dropped eyes wide',
-    jump:'jumping in the air arms raised',eat:'eating enthusiastically',
-    talk:'talking expressively gesturing',stand:'standing confidently'
-  };
-  const chars=s.characters.slice(0,2).map(n=>SHORT[n]||n).join(' and ');
-  const loc=LOC[s.location]||'East Africa';
-  const act=ANIM_WORDS[anim]||anim;
-  return `${chars}, ${act}, ${loc}, Pixar 3D animation, cinematic, 9:16 vertical`.substring(0,200);
+function speakCurrentScene(){
+  if(curScene<0||curScene>=scenes.length)return;
+  const s=scenes[curScene];
+  speakNarrator(buildNarration(s),()=>{
+    if(s.dialogue&&s.speaker) setTimeout(()=>speakLine(s.dialogue,s.speaker),200);
+  });
 }
 
-function loadImgFixed(url,ms=60000){
+function buildNarration(s){
+  const chars=(s.characters||[]);
+  const cStr=chars.length===1?chars[0]:chars.length===2?`${chars[0]} and ${chars[1]}`:chars.join(', ');
+  const locMap={wake:'in the bedroom',market:'at the market',school:'at school',road:'on the road',hospital:'at the hospital',home:'at home',forest:'in the forest',night:'at night',city:'in the city',checkpoint:'at the police checkpoint',river:'at the river',field:'in the field'};
+  const locStr=locMap[s.location]||'';
+  let narr='';
+  if(s.dialogue&&s.speaker){
+    const others=chars.filter(c=>c!==s.speaker);
+    narr=`${cStr}${locStr?' '+locStr:''}. ${s.speaker} says: ${s.dialogue}`;
+  } else {
+    narr=`${cStr}${locStr?' '+locStr:''}. ${(s.action||s.caption||'').replace(/[.!?]*$/,'')}.`;
+  }
+  return narr;
+}
+
+// ── IMAGE GENERATION ────────────────────────────────────────────
+function buildShortPrompt(s){
+  const SHORT={
+    "Brian":"African boy age 10 blue school uniform short hair",
+    "Zawadi":"African girl age 12 braided hair with colourful beads school dress",
+    "Mama Wanjiru":"African middle-aged woman orange kitenge traditional dress head wrap",
+    "Inspector Kamau":"fat African police officer navy blue uniform gold badge big black mustache",
+    "Doctor Amara":"African woman doctor white coat stethoscope round glasses natural afro",
+    "Chef Omondi":"fat African man white chef uniform tall chef hat big smile",
+    "Mwalimu Hassan":"tall thin African teacher white shirt tie round glasses books",
+    "Merchant Fatuma":"African market woman colourful dress white headscarf basket fruits",
+    "Baba James":"elderly African man white kanzu robe wooden walking stick grey beard",
+    "Ranger Kipchoge":"athletic African ranger khaki uniform wide brimmed hat binoculars"
+  };
+  const LOC={wake:'inside cosy African home bedroom morning light',market:'vibrant African outdoor market colourful stalls',
+    river:'wide African river green banks',hospital:'outside clean African hospital red cross sign',school:'African primary school yellow building mango tree',
+    forest:'tropical African forest path green canopy',city:'busy Nairobi city street matatus',home:'inside warm Kenyan family home',
+    road:'African tarmac road savanna acacia trees',field:'African savanna field big sky',night:'African night sky stars campfire',
+    checkpoint:'police roadblock checkpoint desert road'};
+  const {anim}=detectAnim(s.action||s.caption||'');
+  const ACTS={wake:'waking up stretching arms in bed',run:'running full sprint arms pumping',run_scared:'running panicked arms flailing',
+    walk:'walking briskly forward',laugh:'laughing uncontrollably head thrown back',cry:'crying big tears hands on face',
+    arrive:'arriving dramatically stepping forward arms wide',angry:'shouting angrily pointing finger shaking fist',
+    shocked:'shocked jaw dropped eyes wide open hands on cheeks',jump:'jumping in the air arms raised celebrating',
+    eat:'eating enthusiastically food in hand',talk:'talking expressively gesturing with hands',stand:'standing confidently'};
+  const chars=(s.characters||[]).slice(0,2).map(n=>SHORT[n]||n).join(' and ');
+  const loc=LOC[s.location]||'East Africa outdoor';
+  const act=ACTS[anim]||anim;
+  return `${chars}, ${act}, ${loc}, Pixar 3D animation style, cinematic lighting, vivid colours, 9:16 vertical portrait`.substring(0,210);
+}
+
+function loadImgFx(url,ms=62000){
   return new Promise((res,rej)=>{
     const img=new Image();img.crossOrigin='anonymous';
     const timer=setTimeout(()=>{img.src='';rej(new Error('timeout'));},ms);
@@ -1162,34 +1631,27 @@ async function generateSceneImage(idx){
   const s=scenes[idx];if(!s)return;
   s.imgStatus='generating';updateSceneRow(idx);
   if(curScene===idx) drawSceneFrame(idx,0);
-
   const seed=Math.floor(Math.random()*99999);
   const prompt=encodeURIComponent(s.imgPrompt||buildShortPrompt(s));
-  const models=['flux','turbo'];
-
   for(let a=0;a<2;a++){
-    const url=`https://image.pollinations.ai/prompt/${prompt}?width=540&height=960&seed=${seed}&model=${models[a]}&nologo=true`;
+    const model=a===0?'flux':'turbo';
+    const url=`https://image.pollinations.ai/prompt/${prompt}?width=540&height=960&seed=${seed}&model=${model}&nologo=true`;
     try{
-      const img=await loadImgFixed(url,60000);
+      const img=await loadImgFx(url);
       s.imgUrl=url;s.imgStatus='done';imgCache[idx]=img;
       if(curScene===idx) drawSceneFrame(idx,0);
       updateSceneRow(idx);return;
-    }catch(e){
-      console.warn(`Scene ${idx+1} attempt ${a+1} failed:`,e.message);
-      if(a<1) await new Promise(r=>setTimeout(r,3000));
-    }
+    }catch(e){console.warn(`Scene ${idx+1} attempt ${a+1} failed:`,e.message);if(a<1)await new Promise(r=>setTimeout(r,3000));}
   }
   s.imgStatus='error';updateSceneRow(idx);
 }
 
 async function generateAllImages(){
-  const btn=document.getElementById('genall-btn');
-  btn.disabled=true;
+  const btn=document.getElementById('genall-btn');btn.disabled=true;
   for(let i=0;i<scenes.length;i++){
     btn.innerHTML=`⏳ Scene ${i+1}/${scenes.length}...`;
     toast(`🎨 Generating scene ${i+1} of ${scenes.length}...`,'ok');
-    await generateSceneImage(i);
-    renderPipeline();
+    await generateSceneImage(i);renderPipeline();
     if(i<scenes.length-1){
       for(let c=5;c>=1;c--){btn.innerHTML=`⏳ Next in ${c}s...`;await new Promise(r=>setTimeout(r,1000));}
     }
@@ -1197,56 +1659,38 @@ async function generateAllImages(){
   btn.disabled=false;btn.innerHTML='🖼 Generate All Images';
   const done=scenes.filter(s=>s.imgStatus==='done').length;
   const fail=scenes.filter(s=>s.imgStatus==='error').length;
-  toast(fail?`✅ ${done} done · ⚠️ ${fail} failed — click 🎨 to retry`:`🎉 All ${done} images ready! Click Export Video.`,'ok');
+  toast(fail?`✅ ${done} done · ⚠️ ${fail} failed — click 🎨 to retry`:`🎉 All ${done} images ready! Export your video.`,'ok');
 }
 
-// ─── STORY PARSER ─────────────────────────────────────────────────
+// ── STORY PARSER ───────────────────────────────────────────────
 async function parseStory(){
   const text=document.getElementById('story-ta').value.trim();
   if(!text){toast('Write a story first!','err');return;}
-  showOv('Reading Your Story...','Analysing scenes and characters...');
+  showOv('Reading Your Story...','AI is analysing scenes and characters...');
   try{
     const names=Object.keys(CHARS).join(', ');
-    const prompt=`Break this story into cartoon video scenes. Return ONLY valid JSON, no markdown.
-
-Characters available (use EXACT names): ${names}
-
+    const prompt=`Break this story into cartoon TikTok scenes. Return ONLY valid JSON.
+Characters (use EXACT names): ${names}
 Story: "${text}"
-
-Return:
-{"scenes":[{"caption":"short punchy caption max 8 words","characters":["Name1"],"action":"specific physical action happening","location":"one of: wake/walk/run/school/market/home/road/hospital/forest/night/city/arrive/default","dialogue":"exact words spoken or empty","speaker":"who speaks or empty","mood":"happy/funny/angry/sad/surprised/dramatic"}]}
-
-Rules: 6-9 scenes, action must describe PHYSICAL MOVEMENT (e.g. 'Brian running full sprint to school gates', not 'Brian goes to school'), only use names from the list.`;
-
-    const resp=await fetch('https://text.pollinations.ai/',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:[{role:'user',content:prompt}],model:'openai',jsonMode:true,seed:Math.floor(Math.random()*9999)})
-    });
-    if(!resp.ok) throw new Error(resp.status);
+Return: {"scenes":[{"caption":"short punchy max 8 words","characters":["Name1"],"action":"specific physical movement description","location":"one of: wake/walk/school/market/home/road/hospital/forest/night/city/checkpoint/default","dialogue":"exact words or empty","speaker":"name or empty","mood":"happy/funny/angry/sad/surprised/dramatic"}]}
+Rules: 6-9 scenes, action MUST describe physical movement with verbs, punchy TikTok captions.`;
+    const resp=await fetch('https://text.pollinations.ai/',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({messages:[{role:'user',content:prompt}],model:'openai',jsonMode:true,seed:Math.floor(Math.random()*9999)})});
+    if(!resp.ok)throw new Error(resp.status);
     const raw=await resp.text();
-    const clean=raw.replace(/```json|```/g,'').trim();
-    const parsed=JSON.parse(clean);
+    const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
     const rs=parsed.scenes||parsed;
-    if(!Array.isArray(rs)||!rs.length) throw new Error('no scenes');
-    scenes=rs.map((s,i)=>({...s,sceneNum:i+1,characters:(s.characters||[]).filter(c=>CHARS[c]),imgPrompt:buildShortPrompt({...s,characters:(s.characters||[]).filter(c=>CHARS[c])}),imgUrl:null,imgStatus:'idle'}));
+    if(!Array.isArray(rs)||!rs.length)throw new Error('no scenes');
+    scenes=rs.map((s,i)=>({...s,sceneNum:i+1,characters:(s.characters||[]).filter(c=>CHARS[c]),
+      imgPrompt:buildShortPrompt({...s,characters:(s.characters||[]).filter(c=>CHARS[c])}),imgUrl:null,imgStatus:'idle'}));
     finishParsed();
   }catch(e){
-    console.error(e);
-    hideOv();
-    // Fallback manual parse
-    scenes=fallbackParse(text);
-    if(scenes.length) finishParsed();
+    console.error(e);hideOv();
+    const fb=fallbackParse(text);
+    if(fb.length){scenes=fb;finishParsed();}
     else toast('Could not parse story. Try the example!','err');
   }
 }
-
-function finishParsed(){
-  hideOv();curScene=0;renderPipeline();updateBadge();
-  drawSceneFrame(0,0);document.getElementById('genall-btn').style.display='flex';
-  document.getElementById('empty-st').style.display='none';
-  toast(`✅ ${scenes.length} scenes ready! Click "Generate All Images".`,'ok');
-}
-
 function fallbackParse(text){
   const names=Object.keys(CHARS);
   const sents=text.match(/[^.!?]+[.!?]+/g)||[text];
@@ -1256,150 +1700,173 @@ function fallbackParse(text){
     const chars=names.filter(n=>g.includes(n));
     const dm=g.match(/"([^"]+)"|says?\s+"([^"]+)"/i);
     const {anim,bg}=detectAnim(g);
-    const loc=Object.keys(BG_SCENES).find(l=>g.toLowerCase().includes(l))||bg;
-    const s={caption:g.split(' ').slice(0,7).join(' ').replace(/[.!?]/g,'')+'...',characters:chars.length?chars:[names[0]],action:g,location:loc,dialogue:dm?(dm[1]||dm[2]||''):'',speaker:chars[0]||'',mood:'funny',sceneNum:i+1};
-    s.imgPrompt=buildShortPrompt(s);s.imgUrl=null;s.imgStatus='idle';
-    return s;
+    const loc=Object.keys({wake:1,school:1,market:1,hospital:1,forest:1,night:1,city:1,checkpoint:1,road:1,home:1}).find(l=>g.toLowerCase().includes(l))||bg;
+    const s={caption:g.split(' ').slice(0,7).join(' ').replace(/[.!?]/g,'')+'...',
+      characters:chars.length?chars:[names[0]],action:g,location:loc,
+      dialogue:dm?(dm[1]||dm[2]||''):'',speaker:chars[0]||'',mood:'funny',sceneNum:i+1};
+    s.imgPrompt=buildShortPrompt(s);s.imgUrl=null;s.imgStatus='idle';return s;
   });
 }
+function finishParsed(){
+  hideOv();curScene=0;renderPipeline();updateBadge();drawSceneFrame(0,0);
+  document.getElementById('genall-btn').style.display='flex';document.getElementById('empty-st').style.display='none';
+  toast(`✅ ${scenes.length} scenes ready! Click "Generate All Images".`,'ok');
+}
 
-// ─── EXAMPLE — pre-built, no API needed ───────────────────────────
-const EX_SCENES=[
-  {caption:"Brian wakes up LATE! 😱",characters:["Brian"],action:"Brian waking up suddenly in bed stretching arms eyes wide",location:"wake",dialogue:"Oh no! I am late!",speaker:"Brian",mood:"surprised",sceneNum:1,
-   imgPrompt:"African boy 10yo blue school uniform, waking up suddenly in bed stretching arms eyes wide open, inside African home bedroom morning light, Pixar 3D animation, cinematic, 9:16 vertical"},
-  {caption:"Brian runs full speed! 💨",characters:["Brian"],action:"Brian running full sprint down road school bag bouncing",location:"road",dialogue:"",speaker:"",mood:"scared",sceneNum:2,
-   imgPrompt:"African boy 10yo blue school uniform, running full sprint down African road school bag bouncing, mouth open panicking, wide shot, Pixar 3D animation, 9:16 vertical"},
-  {caption:"Mwalimu is NOT happy 😤",characters:["Mwalimu Hassan"],action:"Mwalimu Hassan standing at school gate arms crossed checking watch",location:"school",dialogue:"You are 30 minutes late!",speaker:"Mwalimu Hassan",mood:"angry",sceneNum:3,
-   imgPrompt:"tall thin African teacher white shirt tie glasses, arms crossed at school gate checking watch stern face, African school compound, medium shot, Pixar 3D animation, 9:16 vertical"},
-  {caption:"Brian skids to a stop! 🚨",characters:["Brian","Mwalimu Hassan"],action:"Brian skidding stopping almost falling at gate, Mwalimu pointing inside",location:"school",dialogue:"Sorry Mwalimu! Sorry sorry sorry!",speaker:"Brian",mood:"scared",sceneNum:4,
-   imgPrompt:"African boy 10yo skidding stop at school gate almost falling, tall thin teacher pointing inside stern, African school compound, Pixar 3D animation, 9:16 vertical"},
-  {caption:"Inspector Kamau BURSTS IN! 🚔",characters:["Inspector Kamau"],action:"Inspector Kamau kicking door open arms wide dramatic entrance classroom",location:"school",dialogue:"Everyone outside! NOW!",speaker:"Inspector Kamau",mood:"dramatic",sceneNum:5,
-   imgPrompt:"fat African police officer navy uniform gold badge mustache, kicking classroom door open arms wide dramatic, shocked children inside, low angle dramatic, Pixar 3D animation, 9:16 vertical"},
-  {caption:"Children run out cheering! 🎉",characters:["Brian"],action:"Brian and children running out of school wildly cheering arms in air",location:"school",dialogue:"YESSS! No more school today!",speaker:"Brian",mood:"happy",sceneNum:6,
-   imgPrompt:"African boy 10yo and school children running out school wildly cheering arms raised big smiles, African school compound blue sky, wide shot, Pixar 3D animation, 9:16 vertical"},
-  {caption:"Mama Wanjiru APPEARS! 😳",characters:["Mama Wanjiru","Brian"],action:"Mama Wanjiru grabbing Brian by the ear firmly Brian yelping",location:"road",dialogue:"BRIAN! Where do you think you are going?!",speaker:"Mama Wanjiru",mood:"angry",sceneNum:7,
-   imgPrompt:"African woman orange kitenge dress, grabbing African boy by the ear firmly boy yelping in pain, African road, medium shot, Pixar 3D animation, 9:16 vertical"},
-  {caption:"Inspector Kamau laughs! 🤣",characters:["Inspector Kamau"],action:"Inspector Kamau laughing uncontrollably bending over slapping belly",location:"road",dialogue:"Ha ha ha! That boy never learns!",speaker:"Inspector Kamau",mood:"funny",sceneNum:8,
-   imgPrompt:"fat African police officer navy uniform, laughing uncontrollably bending over slapping big belly tears of laughter, police car behind, African road, Pixar 3D animation, 9:16 vertical"}
+// ── PRE-BUILT EXAMPLE ──────────────────────────────────────────
+const EX=[
+  {caption:"Brian wakes up LATE! 😱",characters:["Brian"],action:"Brian waking up suddenly in bed arms stretching wide eyes open shocked",location:"wake",dialogue:"Oh no! I am SO late!",speaker:"Brian",mood:"surprised",sceneNum:1,
+   imgPrompt:"African boy 10yo blue school uniform, waking up suddenly in bed stretching arms wide eyes open, inside cosy African home bedroom morning sunlight, Pixar 3D animation cinematic, 9:16 vertical"},
+  {caption:"Brian runs full speed! 💨",characters:["Brian"],action:"Brian running full sprint down road school bag bouncing wildly mouth open panicking",location:"road",dialogue:"",speaker:"",mood:"scared",sceneNum:2,
+   imgPrompt:"African boy 10yo blue school uniform, running full sprint down African road school bag bouncing wildly mouth open panicking, wide shot morning light, Pixar 3D animation, 9:16 vertical"},
+  {caption:"Mwalimu is NOT happy 😤",characters:["Mwalimu Hassan"],action:"Mwalimu Hassan standing arms crossed at school gate checking watch stern disapproving face",location:"school",dialogue:"You are THIRTY minutes late, Brian!",speaker:"Mwalimu Hassan",mood:"angry",sceneNum:3,
+   imgPrompt:"tall thin African teacher white shirt tie glasses, standing arms crossed at school gate checking watch stern disapproving face, African school compound mango tree, Pixar 3D animation, 9:16 vertical"},
+  {caption:"Brian skids to a stop! 😬",characters:["Brian","Mwalimu Hassan"],action:"Brian skidding stopping almost falling at school gate breathless, Mwalimu pointing inside angrily",location:"school",dialogue:"Sorry Mwalimu! Sorry sorry SORRY!",speaker:"Brian",mood:"scared",sceneNum:4,
+   imgPrompt:"African boy 10yo skidding to stop at school gate breathless almost falling, tall thin African teacher pointing inside angry, African school compound, Pixar 3D animation, 9:16 vertical"},
+  {caption:"Inspector Kamau BURSTS IN! 🚔",characters:["Inspector Kamau"],action:"Inspector Kamau kicking classroom door open arms spread wide dramatic entrance police uniform",location:"school",dialogue:"EVERYONE OUTSIDE! This is an emergency!",speaker:"Inspector Kamau",mood:"dramatic",sceneNum:5,
+   imgPrompt:"fat African police officer navy uniform gold badge mustache, dramatically kicking classroom door open arms wide, shocked children inside school, dramatic low angle, Pixar 3D animation, 9:16 vertical"},
+  {caption:"Children run out screaming! 🎉",characters:["Brian"],action:"Brian and children running wildly out of school cheering jumping arms in the air",location:"school",dialogue:"YESSS! No more school today!",speaker:"Brian",mood:"happy",sceneNum:6,
+   imgPrompt:"African boy 10yo and school children running out of school wildly cheering arms raised big smiles, African school compound blue sky sunshine, Pixar 3D animation wide shot, 9:16 vertical"},
+  {caption:"Mama Wanjiru APPEARS! 😳",characters:["Mama Wanjiru","Brian"],action:"Mama Wanjiru grabbing Brian firmly by the ear Brian yelping in pain",location:"road",dialogue:"BRIAN! Where do you think you are going?!",speaker:"Mama Wanjiru",mood:"angry",sceneNum:7,
+   imgPrompt:"African middle-aged woman orange kitenge dress head wrap, grabbing African boy by ear firmly boy yelping pain face, African road, Pixar 3D animation medium shot, 9:16 vertical"},
+  {caption:"Inspector Kamau CRACKS UP! 🤣",characters:["Inspector Kamau"],action:"Inspector Kamau bending over laughing uncontrollably slapping big belly tears streaming down face",location:"road",dialogue:"Ha ha ha! That boy will NEVER learn!",speaker:"Inspector Kamau",mood:"funny",sceneNum:8,
+   imgPrompt:"fat African police officer navy uniform, bending over laughing uncontrollably slapping big belly tears of laughter, police car behind, African road sunny, Pixar 3D animation, 9:16 vertical"}
 ];
 
 function loadExample(){
-  scenes=EX_SCENES.map(s=>({...s,imgUrl:null,imgStatus:'idle'}));
-  curScene=0;renderPipeline();updateBadge();
-  drawSceneFrame(0,0);
+  scenes=EX.map(s=>({...s,imgUrl:null,imgStatus:'idle'}));
+  curScene=0;renderPipeline();updateBadge();drawSceneFrame(0,0);
   document.getElementById('genall-btn').style.display='flex';
   document.getElementById('empty-st').style.display='none';
-  document.getElementById('story-ta').value=`Brian wakes up and says "Oh no I am late!" He runs full sprint down the road to school. Mwalimu Hassan is standing at the school gate with arms crossed checking his watch. Mwalimu says "You are 30 minutes late!" Brian skids to a stop nearly falling over and says "Sorry Mwalimu sorry sorry!" Suddenly Inspector Kamau kicks the classroom door open and shouts "Everyone outside NOW!" Brian and the children run out cheering. Brian shouts "YESSS no more school today!" Mama Wanjiru grabs Brian by the ear and says "BRIAN where do you think you are going?!" Inspector Kamau bends over laughing and says "Ha ha ha that boy never learns!"`;
+  document.getElementById('story-ta').value=`Brian wakes up and shouts "Oh no I am SO late!" He runs full sprint down the road with his school bag bouncing wildly. Mwalimu Hassan stands at the school gate with arms crossed checking his watch and says "You are THIRTY minutes late Brian!" Brian skids to a stop almost falling and says "Sorry Mwalimu sorry sorry SORRY!" Suddenly Inspector Kamau kicks the classroom door open dramatically and shouts "EVERYONE OUTSIDE! This is an emergency!" Brian and all the children run out of school cheering and jumping. Brian shouts "YESSS no more school today!" Then Mama Wanjiru grabs Brian by the ear firmly and says "BRIAN! Where do you think you are going?!" Inspector Kamau bends over laughing and slapping his belly and says "Ha ha ha! That boy will NEVER learn!"`;
   swTab('story');
-  toast(`✅ 8 scenes loaded! Now click "Generate All Images" 👆`,'ok');
+  toast(`✅ 8 scenes loaded! Click "🖼 Generate All Images" in the top bar!`,'ok');
 }
 
-// ─── PIPELINE UI ──────────────────────────────────────────────────
+// ── PIPELINE UI ───────────────────────────────────────────────
 function renderPipeline(){
   const pipe=document.getElementById('pipe');
   if(!scenes.length){pipe.innerHTML='';document.getElementById('empty-st').style.display='block';return;}
   document.getElementById('empty-st').style.display='none';
-  const html=scenes.map((s,i)=>sceneRowHTML(s,i)).join('');
-  pipe.innerHTML=`<div id="empty-st" style="display:none"></div>`+html;
+  pipe.innerHTML=scenes.map((s,i)=>sceneHTML(s,i)).join('');
   scenes.forEach((_,i)=>{
-    const head=document.querySelector(`#sr-${i} .srhead`);
-    if(head) head.addEventListener('click',()=>selSc(i));
+    const h=document.querySelector(`#sr-${i} .srhead`);
+    if(h)h.addEventListener('click',()=>selSc(i));
   });
 }
-
-function sceneRowHTML(s,i){
+function sceneHTML(s,i){
   const smap={idle:'sdot-i',generating:'sdot-g',done:'sdot-d',error:'sdot-e'};
-  const stxt={idle:'No image',generating:'Generating...',done:'Image ready',error:'Failed — retry'};
   const chips=(s.characters||[]).map(n=>`<span class="chip chip-c">${CHARS[n]?CHARS[n].emoji:''} ${n}</span>`).join('');
-  const locchip=`<span class="chip chip-l">📍 ${s.location||'?'}</span>`;
-  const diachip=s.dialogue?`<span class="chip chip-d">💬</span>`:'';
-  const thumb=s.imgStatus==='done'&&s.imgUrl
-    ?`<img src="${s.imgUrl}" alt=""/>`
-    :s.imgStatus==='generating'
-    ?`<div class="sthumb-ld"><div class="spin" style="width:20px;height:20px;border-width:2px"></div>Generating...</div>`
-    :`<div class="sthumb-ld"><span style="font-size:18px">🎨</span><span>Click 🎨</span></div>`;
   const {anim}=detectAnim(s.action||s.caption||'');
+  const thumb=s.imgStatus==='done'&&s.imgUrl?`<img src="${s.imgUrl}" alt=""/>`
+    :s.imgStatus==='generating'?`<div class="sthumb-ld"><div class="spin" style="width:20px;height:20px;border-width:2px"></div>Generating...</div>`
+    :`<div class="sthumb-ld"><span style="font-size:18px">🎨</span><span>Click 🎨</span></div>`;
   return `<div class="srow${curScene===i?' active':''}" id="sr-${i}">
-  <div class="srhead">
-    <div class="srnum">${i+1}</div>
-    <div class="srchips">${chips}${locchip}${diachip}</div>
-    <div class="sract">
-      <div class="sdot ${smap[s.imgStatus]||'sdot-i'}" title="${stxt[s.imgStatus]}"></div>
-      <button class="sabtn" title="Generate image" onclick="event.stopPropagation();genOne(${i})">🎨</button>
-      <button class="sabtn" title="Speak" onclick="event.stopPropagation();speakScene(${i})">🔊</button>
-      <button class="sabtn" title="Delete" onclick="event.stopPropagation();delSc(${i})">✕</button>
-    </div>
+<div class="srhead">
+  <div class="srnum">${i+1}</div>
+  <div class="srchips">${chips}<span class="chip chip-l">📍 ${s.location||'?'}</span>${s.dialogue?'<span class="chip chip-d">💬</span>':''}</div>
+  <div class="sract">
+    <div class="sdot ${smap[s.imgStatus]||'sdot-i'}"></div>
+    <button class="sabtn" onclick="event.stopPropagation();genOne(${i})" title="Generate image">🎨</button>
+    <button class="sabtn" onclick="event.stopPropagation();speakSceneIdx(${i})" title="Speak">🔊</button>
+    <button class="sabtn" onclick="event.stopPropagation();delSc(${i})" title="Delete">✕</button>
   </div>
-  <div class="srbody">
-    <div class="sthumb">${thumb}</div>
-    <div class="sdet">
-      <div><div class="lbl">Caption</div><div class="val" style="font-weight:700;color:var(--txt)">${s.caption}</div></div>
-      <div><div class="lbl">Action</div><div class="val">${s.action}</div></div>
-      <div><div class="lbl">Animation</div><div class="val" style="color:var(--acc2)">🎭 ${anim}</div></div>
-      ${s.dialogue?`<div class="sdia">"${s.dialogue}" — <em>${s.speaker}</em></div>`:''}
-    </div>
+</div>
+<div class="srbody">
+  <div class="sthumb">${thumb}</div>
+  <div class="sdet">
+    <div><div class="lbl">Caption</div><div class="val" style="font-weight:700;color:var(--txt)">${s.caption}</div></div>
+    <div><div class="lbl">Action · <span style="color:var(--acc2)">${anim}</span></div><div class="val">${s.action||'—'}</div></div>
+    ${s.dialogue?`<div class="sdia">"${s.dialogue}"<span style="font-style:normal;font-size:10px;opacity:.6"> — ${s.speaker}</span></div>`:''}
   </div>
-</div>`;
+</div></div>`;
 }
-
 function updateSceneRow(i){renderPipeline();}
-function updateBadge(){
-  document.getElementById('sc-badge').textContent=`${scenes.length} scene${scenes.length!==1?'s':''}`;
-  document.getElementById('sc-ind').textContent=`Scene ${Math.max(0,curScene+1)} / ${scenes.length}`;
-}
-function selSc(i){curScene=i;renderPipeline();drawSceneFrame(i,0);document.getElementById('sc-ind').textContent=`Scene ${i+1} / ${scenes.length}`;}
+function updateBadge(){document.getElementById('sc-badge').textContent=`${scenes.length} scene${scenes.length!==1?'s':''}`;updateInd();}
+function selSc(i){curScene=i;renderPipeline();drawSceneFrame(i,0);updateInd();}
 function delSc(i){scenes.splice(i,1);if(curScene>=scenes.length)curScene=scenes.length-1;renderPipeline();updateBadge();}
 async function genOne(i){await generateSceneImage(i);renderPipeline();}
-function speakScene(i){
-  const s=scenes[i];if(!s)return;
-  if(s.dialogue&&s.speaker) speakLine(s.dialogue,s.speaker);
-  else speakLine(s.caption,s.characters[0]||'');
-}
+function speakSceneIdx(i){const s=scenes[i];if(!s)return;speakNarrator(buildNarration(s),()=>{if(s.dialogue&&s.speaker)setTimeout(()=>speakLine(s.dialogue,s.speaker),200);});}
 
-// ─── VIDEO RENDER ─────────────────────────────────────────────────
+// ── VIDEO RENDER ──────────────────────────────────────────────
 async function renderVideo(){
-  if(!scenes.length){toast('No scenes! Load example or write a story.','err');return;}
+  if(!scenes.length){toast('No scenes! Load example or write story first.','err');return;}
   const rbtn=document.getElementById('render-btn');const rbtn2=document.getElementById('render-btn2');
   rbtn.disabled=true;rbtn2.disabled=true;
   const rp=document.getElementById('rprog');rp.style.display='block';
   document.getElementById('dlarea').style.display='none';
-
-  const FPS=24,DUR=5,FPS_scene=FPS*DUR;
-  const totalF=scenes.length*FPS_scene;
+  const FPS=24,DUR=6,FPS_sc=FPS*DUR,total=scenes.length*FPS_sc;
   const oc=document.createElement('canvas');oc.width=540;oc.height=960;
   const oc2=oc.getContext('2d');
   const stream=oc.captureStream(FPS);
   let mime='video/webm;codecs=vp9';if(!MediaRecorder.isTypeSupported(mime))mime='video/webm';
-  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:4000000});
+  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:5000000});
   const chunks=[];rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};rec.start(100);
 
-  // Temporarily use oc2 instead of ctx
+  // Preload images into offscreen
+  document.getElementById('ptxt').textContent='Loading images...';
+  const imgs={};
+  for(let i=0;i<scenes.length;i++){
+    const s=scenes[i];if(s.imgUrl&&s.imgStatus==='done'){try{imgs[i]=imgCache[i]||await loadImgFx(s.imgUrl);}catch{}}
+  }
+
+  // Render each frame to offscreen canvas
   const origCtx=ctx;
-  // Override draw to oc2
-  for(let f=0;f<totalF;f++){
-    const si=Math.floor(f/FPS_scene);
-    const lf=f%FPS_scene;
+  for(let f=0;f<total;f++){
+    const si=Math.floor(f/FPS_sc),lf=f%FPS_sc;
     const s=scenes[si];
     const {anim,bg}=detectAnim(s.action||s.caption||'');
     const bgKey=s.location||bg;
-    const imgEl=imgCache[si]||null;
-
     oc2.clearRect(0,0,540,960);
-    // Draw to oc2 — replicate drawSceneFrame logic
-    _drawBGOnCtx(oc2,bgKey,lf,imgEl);
-    const mainChar=s.characters[0];const secChar=s.characters[1];
-    const cx2=secChar?540*0.33:270;
-    if(mainChar&&CHARS[mainChar]) _drawCharOnCtx(oc2,cx2,960*0.74,mainChar,anim,lf,1.4,false);
-    if(secChar&&CHARS[secChar])   _drawCharOnCtx(oc2,540*0.67,960*0.74,secChar,'talk',lf,1.4,true);
-    if(s.dialogue&&s.speaker&&lf>15){
-      const al=Math.min(1,(lf-15)/10);oc2.globalAlpha=al;
-      _drawBubbleOnCtx(oc2,s.dialogue,s.speaker,270,960*0.38);oc2.globalAlpha=1;
-    }
-    const ca=Math.min(1,lf/12);oc2.globalAlpha=ca;
-    _drawCapOnCtx(oc2,s.caption||'');oc2.globalAlpha=1;
-    _drawHUDOnCtx(oc2,si,s);
+    // Use temp ctx swap trick
+    const savedCtx=ctx;
+    // Draw everything to oc2 by temporarily replacing global ctx
+    (function(){
+      const c=oc2;
+      // BG
+      drawBackground(c,bgKey,lf,imgs[si]||null);
+      // Characters
+      const chars=s.characters||[];const count=chars.length;
+      const positions=count===1?[270]:count===2?[270*0.62,270*1.36]:[270*0.42,270,270*1.56];
+      const anims=count===1?[anim]:count===2?[anim,'talk']:[anim,'talk','stand'];
+      chars.slice(0,3).forEach((name,i2)=>{
+        if(!CHARS[name])return;
+        const px=positions[i2];const py=960*0.76;
+        const flip=i2>0&&count>1;
+        c.save();if(flip){c.translate(px,py);c.scale(-1,1);c.translate(-px,-py);}
+        const cs=CHARS[name].size*(CHARS[name].fat?1.3:1);
+        c.fillStyle='rgba(0,0,0,0.2)';c.beginPath();c.ellipse(px,py+2,28*cs,8,0,0,Math.PI*2);c.fill();
+        // Draw char on temp canvas then composite
+        const tc=document.createElement('canvas');tc.width=540;tc.height=960;
+        const tc2=tc.getContext('2d');
+        // Replace global ctx, draw, restore
+        window.ctx=tc2;
+        try{tc2.save();tc2.translate(px,py);drawChar(tc2,name,anims[i2]||'stand',lf);tc2.restore();}catch(ex){}
+        window.ctx=savedCtx;
+        c.drawImage(tc,0,0);
+        c.restore();
+      });
+      // Speech bubble
+      if(s.dialogue&&s.speaker&&lf>18){
+        const al=Math.min(1,(lf-18)/12);c.globalAlpha=al;
+        const tc=document.createElement('canvas');tc.width=540;tc.height=960;const tc2=tc.getContext('2d');
+        window.ctx=savedCtx;drawSpeechBubble(tc2,s.dialogue,s.speaker,270,960*0.35);
+        c.drawImage(tc,0,0);c.globalAlpha=1;
+      }
+      // Caption
+      const ca=Math.min(1,lf/14);c.globalAlpha=ca;
+      const tc2c=document.createElement('canvas');tc2c.width=540;tc2c.height=960;
+      window.ctx=savedCtx;drawCaption(tc2c.getContext('2d'),s.caption||'');
+      const tc2ctx=tc2c.getContext('2d');drawCaption(tc2ctx,s.caption||'');
+      c.drawImage(tc2c,0,0);c.globalAlpha=1;
+      // HUD
+      window.ctx=savedCtx;
+      const hudTc=document.createElement('canvas');hudTc.width=540;hudTc.height=960;
+      const hudCtx=hudTc.getContext('2d');drawHUD(hudCtx,si,s);c.drawImage(hudTc,0,0);
+      window.ctx=savedCtx;
+    })();
 
-    const pct=Math.round(f/totalF*100);
+    const pct=Math.round(f/total*100);
     document.getElementById('pfill').style.width=pct+'%';
     document.getElementById('ptxt').textContent=`Rendering ${pct}% · Scene ${si+1}/${scenes.length}`;
     if(f%4===0) await new Promise(r=>requestAnimationFrame(r));
@@ -1407,8 +1874,7 @@ async function renderVideo(){
 
   rec.stop();
   rec.onstop=()=>{
-    const blob=new Blob(chunks,{type:mime});
-    const url=URL.createObjectURL(blob);
+    const blob=new Blob(chunks,{type:mime});const url=URL.createObjectURL(blob);
     document.getElementById('dllink').href=url;
     document.getElementById('dlarea').style.display='block';
     rp.style.display='none';rbtn.disabled=false;rbtn2.disabled=false;
@@ -1416,89 +1882,38 @@ async function renderVideo(){
   };
 }
 
-// Render copies — same logic but using provided context
-function _drawBGOnCtx(c,bgKey,frame,imgEl){
-  const bg=BG_SCENES[bgKey]||BG_SCENES.default;
-  if(imgEl){
-    c.save();const sc=1+0.05*(frame/120);const px=Math.sin(frame*0.008)*12;
-    c.translate(270+px,480);c.scale(sc,sc);c.translate(-270,-480);
-    const iw=imgEl.naturalWidth||imgEl.width,ih=imgEl.naturalHeight||imgEl.height;
-    const is=Math.max(540/iw,960/ih);
-    c.drawImage(imgEl,(540-iw*is)/2,(960-ih*is)/2,iw*is,ih*is);c.restore();
-    const vg=c.createLinearGradient(0,528,0,960);vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,.6)');
-    c.fillStyle=vg;c.fillRect(0,0,540,960);return;
-  }
-  const sg=c.createLinearGradient(0,0,0,576);sg.addColorStop(0,bg.sky);sg.addColorStop(1,bg.sky2);
-  c.fillStyle=sg;c.fillRect(0,0,540,960);
-  c.fillStyle=bg.ground;c.fillRect(0,537,540,423);
-  c.fillStyle=bg.road;
-  c.beginPath();c.moveTo(162,548);c.lineTo(378,548);c.lineTo(540,960);c.lineTo(0,960);c.closePath();c.fill();
-}
-function _drawCharOnCtx(c,cx,cy,charName,action,frame,scale,flip){
-  // Swap ctx temporarily
-  const oldCanvas=canvas;
-  const saved={canvas,ctx};
-  // Draw to temp canvas then copy
-  const tc=document.createElement('canvas');tc.width=540;tc.height=960;
-  const tc2=tc.getContext('2d');
-  // We need to draw the character on tc2 then copy to c
-  // Since our draw functions use the global ctx, use a workaround:
-  const orig=ctx;
-  Object.assign(window,{ctx:tc2}); // temporarily replace
-  try{ drawCharacter(cx,cy,charName,action,frame,scale,flip); }catch(e){}
-  Object.assign(window,{ctx:orig});
-  c.drawImage(tc,0,0);
-}
-function _drawBubbleOnCtx(c,text,charName,x,y){
-  const tc=document.createElement('canvas');tc.width=540;tc.height=960;const tc2=tc.getContext('2d');
-  const orig=ctx;Object.assign(window,{ctx:tc2});
-  try{_drawSpeechBubble(text,charName,x,y);}catch(e){}
-  Object.assign(window,{ctx:orig});c.drawImage(tc,0,0);
-}
-function _drawCapOnCtx(c,text){
-  const tc=document.createElement('canvas');tc.width=540;tc.height=960;const tc2=tc.getContext('2d');
-  const orig=ctx;Object.assign(window,{ctx:tc2});
-  try{_drawCaption(text);}catch(e){}
-  Object.assign(window,{ctx:orig});c.drawImage(tc,0,0);
-}
-function _drawHUDOnCtx(c,idx,s){
-  const tc=document.createElement('canvas');tc.width=540;tc.height=960;const tc2=tc.getContext('2d');
-  const orig=ctx;Object.assign(window,{ctx:tc2});
-  try{_drawHUD(idx,s);}catch(e){}
-  Object.assign(window,{ctx:orig});c.drawImage(tc,0,0);
-}
-
-// ─── OVERLAY / TOAST / TABS ────────────────────────────────────────
+// ── UI HELPERS ────────────────────────────────────────────────
 function showOv(t,m){document.getElementById('ov-title').textContent=t;document.getElementById('ov-msg').textContent=m;document.getElementById('ov').classList.add('show');}
 function hideOv(){document.getElementById('ov').classList.remove('show');}
-function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(type||'');t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',3500);}
+function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(type||'');t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',3800);}
 function swTab(name){
-  document.getElementById('tab-chars').classList.toggle('on', name==='chars');
-  document.getElementById('tab-story').classList.toggle('on', name==='story');
-  document.getElementById('pane-chars').style.display = name==='chars' ? 'block' : 'none';
-  document.getElementById('pane-story').style.display = name==='story' ? 'block' : 'none';
+  document.getElementById('tab-chars').classList.toggle('on',name==='chars');
+  document.getElementById('tab-story').classList.toggle('on',name==='story');
+  document.getElementById('pane-chars').style.display=name==='chars'?'block':'none';
+  document.getElementById('pane-story').style.display=name==='story'?'block':'none';
 }
-function clearAll(){if(confirm('Clear all scenes?')){scenes=[];curScene=-1;renderPipeline();updateBadge();drawSceneFrame(-1,0);document.getElementById('genall-btn').style.display='none';imgCache={};}}
-function showCharModal(name){const ch=CHARS[name];if(!ch)return;document.getElementById('cm-emi').textContent=ch.emoji;document.getElementById('cm-name').textContent=name;document.getElementById('cm-role').textContent=ch.role+' · '+ch.look;document.getElementById('cm-desc').textContent=ch.desc;document.getElementById('cm-voice').textContent=`🎙 Voice: pitch ${ch.voice.pitch}, rate ${ch.voice.rate} — ${ch.voice.pitch<0.8?'Deep & slow':ch.voice.pitch>1.3?'High & fast':'Normal'}`;document.getElementById('cmod').classList.add('show');}
+function clearAll(){if(confirm('Clear all scenes?')){scenes=[];curScene=-1;renderPipeline();updateBadge();drawSceneFrame(-1,0);document.getElementById('genall-btn').style.display='none';imgCache={};synth.cancel();}}
+function showCharModal(name){const ch=CHARS[name];if(!ch)return;document.getElementById('cm-emi').textContent=ch.emoji;document.getElementById('cm-name').textContent=name;document.getElementById('cm-role').textContent=ch.role;document.getElementById('cm-desc').textContent=ch.desc;document.getElementById('cm-voice').textContent=`🎙 Voice pitch: ${ch.voice.pitch} · rate: ${ch.voice.rate} — ${ch.voice.pitch<0.85?'Deep voice':ch.voice.pitch>1.3?'High voice':'Normal voice'}`;document.getElementById('cmod').classList.add('show');}
 function closeCmod(){document.getElementById('cmod').classList.remove('show');}
 
-// ─── CHAR LIST ────────────────────────────────────────────────────
+// ── BUILD CHAR LIST ──────────────────────────────────────────
 function buildCharList(){
-  const list=document.getElementById('char-list');
-  list.innerHTML=Object.entries(CHARS).map(([name,ch])=>`
-  <div class="ccard" onclick="showCharModal('${name}')">
-    <div class="cavi">${ch.emoji}</div>
-    <div class="cinf">
-      <div class="cname">${name}</div>
-      <div class="crole">${ch.role}</div>
-      <span class="cvbadge" style="background:${ch.shirt}22;color:${ch.shirt};border:1px solid ${ch.shirt}44">🎙 ${ch.voice.pitch>1.3?'High':ch.voice.pitch<0.85?'Deep':'Normal'} voice</span>
-    </div>
-    <button class="cprev" onclick="event.stopPropagation();speakLine('Hello! I am ${name}!','${name}')" title="Test voice">🔊</button>
-  </div>`).join('');
+  document.getElementById('char-list').innerHTML=Object.entries(CHARS).map(([name,ch])=>`
+<div class="ccard" onclick="showCharModal('${name}')">
+  <div class="cavi">${ch.emoji}</div>
+  <div class="cinf">
+    <div class="cname">${name}</div>
+    <div class="crole">${ch.role}</div>
+    <span class="cvbadge" style="background:${ch.shirt}22;color:${ch.shirt};border:1px solid ${ch.shirt}44">🎙 ${ch.voice.pitch>1.3?'High':ch.voice.pitch<0.85?'Deep':'Normal'} voice</span>
+  </div>
+  <button class="cprev" onclick="event.stopPropagation();speakLine('Hello, I am ${name}!','${name}')" title="Test voice">🔊</button>
+</div>`).join('');
 }
-buildCharList();
 
-// ─── INIT ─────────────────────────────────────────────────────────
+// ── INIT ─────────────────────────────────────────────────────
+buildCharList();
+buildVoiceTestBtns();
+synth.onvoiceschanged=buildVoiceTestBtns;
 drawSceneFrame(-1,0);
 updateBadge();
 </script>
