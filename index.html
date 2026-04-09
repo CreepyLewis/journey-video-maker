@@ -3,1919 +3,939 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>🎬 Cartoon Story Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<title>🎬 Story Video Maker</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#07080d;--s1:#0e1018;--s2:#151820;--s3:#1c2030;--bdr:#222638;--bdr2:#2c3050;
-  --acc:#ff4500;--acc2:#ff8c00;--acc3:#ffd700;--blue:#4488ff;--green:#22dd66;--purple:#aa55ff;
-  --txt:#e0e4f8;--txt2:#6a7090;--txt3:#383c58}
-*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;overflow:hidden}
-body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif}
-.app{display:grid;grid-template-columns:300px 1fr 300px;grid-template-rows:52px 1fr;height:100vh}
-.topbar{grid-column:1/-1;background:var(--s1);border-bottom:1px solid var(--bdr);display:flex;align-items:center;padding:0 18px;gap:12px;z-index:100}
-.logo{font-family:'Bebas Neue';font-size:24px;letter-spacing:2px;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.tbd{padding:3px 8px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:.4px}
-.tbd-o{background:rgba(255,69,0,.12);border:1px solid rgba(255,69,0,.3);color:var(--acc)}
-.tbd-b{background:rgba(68,136,255,.12);border:1px solid rgba(68,136,255,.3);color:var(--blue)}
-.tbd-g{background:rgba(34,221,102,.12);border:1px solid rgba(34,221,102,.3);color:var(--green)}
-.tbd-p{background:rgba(170,85,255,.12);border:1px solid rgba(170,85,255,.3);color:var(--purple)}
+:root{
+  --bg:#08090e;--s1:#0f1117;--s2:#161923;--bdr:#232536;--bdr2:#2e3250;
+  --acc:#00d4ff;--acc2:#0099cc;--grn:#22dd66;--red:#ff4444;
+  --txt:#e0e4f8;--txt2:#6a7090;--txt3:#383c58
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;display:flex;flex-direction:column}
+
+/* ── TOP BAR ── */
+.topbar{background:var(--s1);border-bottom:1px solid var(--bdr);padding:0 20px;height:52px;display:flex;align-items:center;gap:14px;flex-shrink:0;z-index:50}
+.logo{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;background:linear-gradient(90deg,var(--acc),#7b66ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tbadge{padding:3px 9px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:.4px}
+.t1{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);color:var(--acc)}
+.t2{background:rgba(34,221,102,.1);border:1px solid rgba(34,221,102,.25);color:var(--grn)}
+
+/* ── MAIN LAYOUT ── */
+.main{display:grid;grid-template-columns:360px 1fr 260px;flex:1;overflow:hidden;min-height:0}
+
+/* ── PANELS ── */
 .lpanel{background:var(--s1);border-right:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
-.cpanel{background:var(--bg);overflow-y:auto}
+.cpanel{background:var(--bg);overflow-y:auto;display:flex;flex-direction:column}
 .rpanel{background:var(--s1);border-left:1px solid var(--bdr);overflow-y:auto;display:flex;flex-direction:column}
-.sh{padding:11px 14px 8px;font-size:10px;font-weight:700;letter-spacing:1.4px;color:var(--txt3);text-transform:uppercase;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:7px;flex-shrink:0}
-.sh-bar{width:3px;height:13px;border-radius:2px;background:linear-gradient(var(--acc),var(--acc2))}
-.tabs{display:flex;border-bottom:1px solid var(--bdr);flex-shrink:0}
-.tab{padding:9px 13px;font-size:11px;font-weight:700;cursor:pointer;color:var(--txt3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.2s;background:none;border-top:none;border-left:none;border-right:none}
-.tab.on{color:var(--acc);border-bottom-color:var(--acc)}
-.clist{padding:8px;display:flex;flex-direction:column;gap:5px}
-.ccard{background:var(--s2);border:1px solid var(--bdr);border-radius:9px;padding:9px 11px;display:flex;align-items:center;gap:9px;cursor:pointer;transition:.15s}
-.ccard:hover{border-color:var(--bdr2);background:var(--s3)}
-.cavi{width:38px;height:38px;border-radius:8px;background:var(--s3);border:2px solid var(--bdr2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.cinf{flex:1;min-width:0}.cname{font-size:12px;font-weight:700}.crole{font-size:10px;color:var(--txt2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cvbadge{font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;margin-top:2px;display:inline-block}
-.cprev{background:none;border:none;cursor:pointer;color:var(--txt2);font-size:12px;padding:3px;border-radius:5px;transition:.15s}
-.cprev:hover{background:var(--bdr);color:var(--txt)}
-.sbox{padding:12px}
-.sta{width:100%;background:#090b12;border:1px solid var(--bdr);color:var(--txt);padding:10px;border-radius:9px;font-family:'Inter',sans-serif;font-size:12px;line-height:1.7;resize:none;height:160px;outline:none;transition:border-color .2s}
-.sta:focus{border-color:rgba(255,69,0,.4)}
-.hints{margin-top:7px;font-size:10px;color:var(--txt3);line-height:1.8}.hints span{color:var(--acc2);font-weight:700}
-.exbox{margin:8px 12px;background:rgba(68,136,255,.06);border:1px solid rgba(68,136,255,.15);border-radius:8px;padding:9px}
-.extitle{font-size:10px;font-weight:700;color:var(--blue);letter-spacing:.7px;margin-bottom:4px;text-transform:uppercase}
-.exbtn{font-size:10px;font-weight:700;color:var(--blue);background:rgba(68,136,255,.12);border:1px solid rgba(68,136,255,.2);padding:4px 10px;border-radius:5px;cursor:pointer;margin-top:5px;display:inline-block;font-family:'Inter',sans-serif;transition:.2s}
-.exbtn:hover{background:rgba(68,136,255,.22)}
-.btn{padding:8px 14px;border-radius:7px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;transition:.18s;display:inline-flex;align-items:center;gap:6px}
-.btn-fire{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 3px 12px rgba(255,69,0,.28)}
-.btn-fire:hover{filter:brightness(1.1);transform:translateY(-1px)}
-.btn-fire:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-.btn-out{background:transparent;border:1px solid var(--bdr2);color:var(--txt2)}
-.btn-out:hover{background:var(--s2);color:var(--txt)}
-.btn-grn{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;box-shadow:0 3px 12px rgba(34,197,94,.22)}
+
+.sh{padding:11px 16px 8px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--txt3);text-transform:uppercase;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:7px;flex-shrink:0}
+.shd{width:3px;height:13px;border-radius:2px;background:linear-gradient(var(--acc),#7b66ff)}
+
+/* ── STORY INPUT ── */
+.sbox{padding:14px}
+.sta{width:100%;background:#090b12;border:1px solid var(--bdr);color:var(--txt);padding:11px 13px;border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;line-height:1.75;resize:none;height:200px;outline:none;transition:border-color .2s}
+.sta:focus{border-color:rgba(0,212,255,.4)}
+.hints{margin-top:8px;font-size:10px;color:var(--txt3);line-height:1.8}
+.hints b{color:var(--acc);font-weight:700}
+
+/* ── VOICE SETTINGS ── */
+.vset{padding:14px;border-bottom:1px solid var(--bdr)}
+.vset h4{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--txt3);text-transform:uppercase;margin-bottom:10px}
+.vrow{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.vrow label{font-size:11px;color:var(--txt2);width:60px;flex-shrink:0}
+.vrow input[type=range]{flex:1;accent-color:var(--acc)}
+.vrow span{font-size:11px;color:var(--acc);width:30px;text-align:right}
+.vsel{width:100%;background:#090b12;border:1px solid var(--bdr);color:var(--txt);padding:7px 10px;border-radius:7px;font-size:12px;outline:none}
+.vsel option{background:#0f1117}
+
+/* ── BUTTONS ── */
+.btn{padding:9px 15px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.btn-pri{background:linear-gradient(135deg,var(--acc),#7b66ff);color:#fff;box-shadow:0 3px 14px rgba(0,212,255,.25)}
+.btn-pri:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-pri:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-grn{background:linear-gradient(135deg,#16a34a,var(--grn));color:#fff;box-shadow:0 3px 12px rgba(34,221,102,.2)}
 .btn-grn:hover{filter:brightness(1.1);transform:translateY(-1px)}
 .btn-grn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-out{background:transparent;border:1px solid var(--bdr2);color:var(--txt2)}
+.btn-out:hover{background:var(--s2);color:var(--txt)}
 .btn-full{width:100%;justify-content:center;padding:11px}
-.chead{padding:14px 18px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px;flex-shrink:0}
-.chead h2{font-family:'Bebas Neue';font-size:19px;letter-spacing:1px}
-.scbadge{background:var(--s2);border:1px solid var(--bdr2);padding:3px 9px;border-radius:12px;font-size:10px;font-weight:700;color:var(--txt2)}
-.pipe{padding:14px 18px;display:flex;flex-direction:column;gap:10px}
-.srow{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .15s}
-.srow:hover{border-color:var(--bdr2)}.srow.active{border-color:rgba(255,69,0,.45)}
-.srhead{display:flex;align-items:center;gap:8px;padding:9px 12px}
-.srnum{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.srchips{display:flex;gap:4px;flex:1;flex-wrap:wrap}
-.chip{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
-.chip-c{background:rgba(68,136,255,.12);border:1px solid rgba(68,136,255,.2);color:var(--blue)}
-.chip-l{background:rgba(170,85,255,.12);border:1px solid rgba(170,85,255,.2);color:var(--purple)}
-.chip-d{background:rgba(34,221,102,.1);border:1px solid rgba(34,221,102,.2);color:var(--green)}
-.sract{display:flex;gap:5px;margin-left:auto;align-items:center}
+.btn-red{background:linear-gradient(135deg,#c62828,var(--red));color:#fff}
+
+/* ── SCENE LIST ── */
+.scenelist{padding:10px;display:flex;flex-direction:column;gap:7px;flex:1}
+.scard{background:var(--s2);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;cursor:pointer;transition:.15s}
+.scard:hover{border-color:var(--bdr2)}
+.scard.active{border-color:rgba(0,212,255,.4);background:rgba(0,212,255,.04)}
+.scard-head{display:flex;align-items:center;gap:9px;padding:9px 12px}
+.snum{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--acc),#7b66ff);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.scard-title{font-size:12px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scard-acts{display:flex;gap:4px;align-items:center;margin-left:auto}
 .sdot{width:7px;height:7px;border-radius:50%}
-.sdot-i{background:var(--bdr2)}.sdot-g{background:var(--acc2);animation:pulse .8s infinite}.sdot-d{background:var(--green)}.sdot-e{background:#f44}
-.sabtn{width:24px;height:24px;border-radius:5px;border:1px solid var(--bdr);background:var(--s2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:.15s;color:var(--txt2)}
-.sabtn:hover{background:var(--s3);color:var(--txt)}
-.srbody{border-top:1px solid var(--bdr);padding:9px 12px;display:grid;grid-template-columns:88px 1fr;gap:9px}
-.sthumb{width:88px;height:156px;border-radius:7px;overflow:hidden;background:var(--s2);border:1px solid var(--bdr);position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.si{background:var(--bdr2)}.sg{background:#ff9800;animation:pulse .8s infinite}.sd{background:var(--grn)}.se{background:var(--red)}
+.sacbtn{width:22px;height:22px;border-radius:5px;border:1px solid var(--bdr);background:var(--s1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;transition:.15s;color:var(--txt2)}
+.sacbtn:hover{background:var(--s2);color:var(--txt)}
+.scard-body{border-top:1px solid var(--bdr);padding:8px 12px;display:grid;grid-template-columns:72px 1fr;gap:8px}
+.sthumb{width:72px;height:128px;border-radius:6px;overflow:hidden;background:var(--s1);border:1px solid var(--bdr);position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .sthumb img{width:100%;height:100%;object-fit:cover}
-.sthumb-ld{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:10px;color:var(--txt2);text-align:center;padding:6px}
-.sdet{display:flex;flex-direction:column;gap:6px}
-.sdet .lbl{font-size:9px;font-weight:700;color:var(--txt3);letter-spacing:.7px;text-transform:uppercase;margin-bottom:1px}
-.sdet .val{font-size:11px;color:var(--txt2);line-height:1.5}
-.sdia{background:rgba(34,221,102,.06);border:1px solid rgba(34,221,102,.15);border-radius:5px;padding:5px 9px;font-size:11px;color:var(--green);font-style:italic}
+.sthumb-ld{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10px;color:var(--txt2);padding:5px;text-align:center}
+.snarr{font-size:11px;color:var(--txt2);line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 .spin{border:2.5px solid var(--bdr2);border-top-color:var(--acc);border-radius:50%;animation:spin .65s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.prev-wrap{padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px}
-.phone{width:210px;background:#0a0a0a;border-radius:24px;border:3px solid #1e1e1e;box-shadow:0 16px 48px rgba(0,0,0,.7),inset 0 0 0 1px #2a2a2a;overflow:hidden}
-.pnotch{height:18px;background:#0a0a0a;display:flex;align-items:center;justify-content:center}
-.pnotch-bar{width:44px;height:4px;background:#1a1a1a;border-radius:2px}
-#pcanv{width:204px;height:362px;display:block;background:#000;border-radius:0 0 18px 18px}
-.pbtns{display:flex;gap:6px;width:100%}
-.pbtn{flex:1;padding:7px;border-radius:7px;border:1px solid var(--bdr);background:var(--s2);color:var(--txt2);cursor:pointer;font-size:11px;font-weight:700;font-family:'Inter',sans-serif;transition:.15s;text-align:center}
-.pbtn:hover{background:var(--s3);color:var(--txt)}
-.pbtn.pp{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent;color:#fff}
-.pbtn.pp:hover{filter:brightness(1.1)}
-.scind{font-size:10px;color:var(--txt3);text-align:center}
-.vsec{padding:12px;border-top:1px solid var(--bdr)}
-.vsec h4{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
-.vtest{display:flex;gap:5px;flex-wrap:wrap}
-.vtbtn{padding:6px 8px;border-radius:6px;border:1px solid var(--bdr);background:var(--s2);color:var(--txt2);cursor:pointer;font-size:10px;font-weight:700;font-family:'Inter',sans-serif;transition:.15s}
-.vtbtn:hover{background:var(--s3);color:var(--txt)}
-.rsec{padding:12px;border-top:1px solid var(--bdr)}
-.rsec h4{font-size:10px;font-weight:700;color:var(--txt3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
-.pbar{height:5px;background:var(--bdr);border-radius:3px;overflow:hidden;margin:7px 0}
-.pfill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));border-radius:3px;transition:width .2s}
-.ptxt{font-size:10px;color:var(--txt2);text-align:center}
-.dlbtn{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:9px;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;font-family:'Bebas Neue';font-size:17px;letter-spacing:2px;text-decoration:none;box-shadow:0 3px 14px rgba(34,197,94,.28)}
+
+/* ── CENTER — PHONE PREVIEW ── */
+.preview-area{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:20px;gap:14px;flex:1}
+.phone-wrap{position:relative}
+.phone{width:240px;background:#000;border-radius:30px;border:3px solid #1e1e1e;box-shadow:0 20px 60px rgba(0,0,0,.7),inset 0 0 0 1px #2a2a2a;overflow:hidden;flex-shrink:0}
+.pnotch{height:20px;background:#000;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pnotch-b{width:46px;height:4px;background:#1a1a1a;border-radius:2px}
+#pcanv{width:234px;height:416px;display:block;background:#000}
+.phone-bottom{height:16px;background:#000;border-radius:0 0 24px 24px}
+
+/* Controls under phone */
+.pcontrols{display:flex;gap:8px;width:240px}
+.pcbtn{flex:1;padding:9px;border-radius:9px;border:1px solid var(--bdr);background:var(--s2);color:var(--txt2);cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;transition:.15s;text-align:center}
+.pcbtn:hover{background:var(--s1);color:var(--txt)}
+.pcbtn.play{background:linear-gradient(135deg,var(--acc),#7b66ff);border-color:transparent;color:#fff}
+.pcbtn.play:hover{filter:brightness(1.1)}
+.pcbtn.stop{background:linear-gradient(135deg,#c62828,var(--red));border-color:transparent;color:#fff}
+/* Progress bar */
+.progbar{width:240px;height:4px;background:var(--bdr);border-radius:2px;overflow:hidden}
+.progfill{height:100%;background:linear-gradient(90deg,var(--acc),#7b66ff);border-radius:2px;transition:width .15s}
+.scene-info{font-size:11px;color:var(--txt3);text-align:center}
+
+/* ── RIGHT — RENDER ── */
+.rsec{padding:14px;display:flex;flex-direction:column;gap:10px}
+.rsec h4{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--txt3);text-transform:uppercase;margin-bottom:4px}
+.rbar{height:5px;background:var(--bdr);border-radius:3px;overflow:hidden;margin:6px 0}
+.rfill{height:100%;background:linear-gradient(90deg,var(--acc),#7b66ff);border-radius:3px;transition:width .2s}
+.rtxt{font-size:10px;color:var(--txt2);text-align:center}
+.dlbtn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:10px;background:linear-gradient(135deg,#16a34a,var(--grn));color:#fff;font-family:'Bebas Neue';font-size:17px;letter-spacing:2px;text-decoration:none;box-shadow:0 3px 12px rgba(34,221,102,.25)}
+.dlbtn:hover{filter:brightness(1.1)}
+.tip{font-size:10px;color:var(--txt3);line-height:1.7;background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.1);border-radius:7px;padding:9px}
+.tip b{color:var(--acc)}
+
+/* ── OVERLAYS ── */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
 .ov.show{display:flex}
-.ovbox{background:var(--s2);border:1px solid var(--bdr2);border-radius:14px;padding:28px 36px;text-align:center;max-width:340px}
-.ovbox h3{font-family:'Bebas Neue';font-size:20px;letter-spacing:1px;color:var(--acc2);margin-bottom:5px}
-.ovbox p{font-size:12px;color:var(--txt2);line-height:1.6}
-.toast{position:fixed;bottom:18px;right:18px;background:var(--s2);border:1px solid var(--bdr2);border-radius:9px;padding:9px 14px;font-size:12px;font-weight:600;z-index:500;display:none;animation:fadeUp .3s}
-.toast.ok{border-color:rgba(34,221,102,.3);color:var(--green)}.toast.err{border-color:rgba(244,68,68,.3);color:#f87171}
+.ovbox{background:var(--s2);border:1px solid var(--bdr2);border-radius:14px;padding:30px 40px;text-align:center;max-width:360px;width:90%}
+.ovbox h3{font-family:'Bebas Neue';font-size:22px;letter-spacing:1px;color:var(--acc);margin-bottom:6px}
+.ovbox p{font-size:12px;color:var(--txt2);line-height:1.7}
+.ovsteps{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.ost{padding:6px 12px;border-radius:6px;font-size:11px;display:flex;gap:8px;align-items:center}
+.ost.done{background:rgba(34,221,102,.1);color:var(--grn)}
+.ost.active{background:rgba(0,212,255,.1);color:var(--acc)}
+.ost.wait{background:var(--s1);color:var(--txt3)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:18px;right:18px;background:var(--s2);border:1px solid var(--bdr2);border-radius:9px;padding:9px 14px;font-size:12px;font-weight:600;z-index:500;display:none;animation:fadeUp .3s;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.toast.ok{border-color:rgba(34,221,102,.3);color:var(--grn)}
+.toast.err{border-color:rgba(255,68,68,.3);color:var(--red)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-.cmod{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:400;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
-.cmod.show{display:flex}
-.cmodbox{background:var(--s2);border:1px solid var(--bdr2);border-radius:14px;width:320px;overflow:hidden;position:relative}
-.cmodemi{height:160px;display:flex;align-items:center;justify-content:center;font-size:72px;background:var(--s3)}
-.cmodb{padding:16px}
-.cmodbtn{width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.5);border:none;color:#fff;cursor:pointer;position:absolute;top:10px;right:10px;font-size:13px;display:flex;align-items:center;justify-content:center}
-.empty{text-align:center;padding:50px 20px;color:var(--txt3)}
-.empty .ei{font-size:52px;margin-bottom:12px}
-/* narrator bar */
-.narrbar{background:rgba(0,0,0,.7);border:1px solid rgba(255,140,0,.3);border-radius:8px;padding:8px 12px;margin-top:6px;width:100%;font-size:11px;color:var(--acc2);display:flex;align-items:center;gap:7px;min-height:36px}
-.narrbar .pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--acc2);flex-shrink:0}
-.narrbar.speaking .pulse-dot{animation:pulse .5s infinite}
+
+/* ── EXAMPLE BOX ── */
+.exbox{margin:10px 14px 14px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.15);border-radius:9px;padding:10px 12px}
+.exbox p{font-size:10px;color:var(--txt2);line-height:1.65;margin-bottom:7px}
+.exbtn{background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.25);color:var(--acc);padding:5px 12px;border-radius:5px;cursor:pointer;font-size:10px;font-weight:700;font-family:'Inter',sans-serif;transition:.18s}
+.exbtn:hover{background:rgba(0,212,255,.22)}
+
+/* scrollbar */
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bdr2);border-radius:3px}
 </style>
 </head>
 <body>
-<div class="app">
-<header class="topbar">
-  <div class="logo">🎬 Cartoon Story Studio</div>
-  <span class="tbd tbd-o">✨ Pixar AI</span>
-  <span class="tbd tbd-b">🎭 Animated</span>
-  <span class="tbd tbd-g">🗣 Voices</span>
-  <span class="tbd tbd-p">🎙 Narrator</span>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo">🎬 Story Video Maker</div>
+  <span class="tbadge t1">🎙 Word-by-Word Narration</span>
+  <span class="tbadge t2">✨ AI Scene Images</span>
   <div style="margin-left:auto;display:flex;gap:8px">
     <button class="btn btn-out" onclick="clearAll()" style="font-size:11px">🗑 Clear</button>
-    <button class="btn btn-fire" id="genall-btn" onclick="generateAllImages()" style="display:none">🖼 Generate Images</button>
-    <button class="btn btn-grn" onclick="renderVideo()" id="render-btn">🎬 Export Video</button>
+    <button class="btn btn-pri" id="genall-btn" onclick="generateAllImages()" style="display:none">🖼 Generate Images</button>
+    <button class="btn btn-grn" id="export-btn" onclick="exportVideo()">🎬 Export Video</button>
   </div>
-</header>
+</div>
 
+<!-- MAIN -->
+<div class="main">
+
+<!-- LEFT — Story Input + Scene List -->
 <aside class="lpanel">
-  <div class="tabs">
-    <button class="tab on" id="tab-chars" onclick="swTab('chars')">🎭 Characters</button>
-    <button class="tab" id="tab-story" onclick="swTab('story')">✍️ Write Story</button>
-  </div>
-  <div id="pane-chars">
-    <div class="sh"><div class="sh-bar"></div>10 Characters — use their names in your story</div>
-    <div class="clist" id="char-list"></div>
-  </div>
-  <div id="pane-story" style="display:none">
-    <div class="sbox">
-      <div class="sh" style="margin:-12px -12px 10px;padding:10px 12px"><div class="sh-bar"></div>Your Story</div>
-      <textarea class="sta" id="story-ta" placeholder="Write your story here. Use character names and describe actions.
+  <div class="sh"><div class="shd"></div>Write Your Story</div>
+  <div class="sbox">
+    <textarea class="sta" id="story-ta" placeholder="Write your story here. The narrator will read it out loud, word by word, while matching AI images play in the background.
 
 Example:
-Brian wakes up late and runs to school. Inspector Kamau arrives in his police car..."></textarea>
-      <div class="hints">Characters: <span>Brian, Zawadi, Mama Wanjiru, Inspector Kamau, Doctor Amara, Chef Omondi, Mwalimu Hassan, Merchant Fatuma, Baba James, Ranger Kipchoge</span></div>
-      <div style="margin-top:10px"><button class="btn btn-fire btn-full" id="parse-btn" onclick="parseStory()">✨ Generate Scenes from Story</button></div>
+Brian woke up late. He ran to school at full speed. The teacher was waiting..."></textarea>
+    <div class="hints">
+      Write in any style — drama, comedy, true story, fiction.<br/>
+      The AI will split it into <b>scenes with images</b> and narrate each word.
     </div>
-    <div class="exbox">
-      <div class="extitle">⚡ Quick Start</div>
-      <p style="font-size:10px;color:var(--txt2);line-height:1.6">Brian late for school → runs → Inspector Kamau bursts in → Mama Wanjiru drags Brian home. 8 action scenes, no setup.</p>
-      <button class="exbtn" onclick="loadExample()">🚀 Load Example → Generate Images</button>
+    <div style="margin-top:10px;display:flex;gap:8px">
+      <button class="btn btn-pri btn-full" id="parse-btn" onclick="parseStory()">✨ Create Scenes from Story</button>
+    </div>
+  </div>
+
+  <div class="exbox">
+    <p><b style="color:var(--acc)">⚡ Quick Example</b><br/>A dramatic story about Brian being late to school — 6 scenes, ready to generate images instantly.</p>
+    <button class="exbtn" onclick="loadExample()">🚀 Load Example Story →</button>
+  </div>
+
+  <div class="sh" style="margin-top:auto"><div class="shd"></div>Scene Pipeline <span style="color:var(--txt);margin-left:5px" id="sc-count"></span></div>
+  <div class="scenelist" id="scenelist">
+    <div style="text-align:center;padding:30px 10px;color:var(--txt3);font-size:12px">
+      Write a story above and click<br/><b style="color:var(--acc)">Create Scenes</b> to begin
     </div>
   </div>
 </aside>
 
+<!-- CENTER — Phone Preview -->
 <main class="cpanel">
-  <div class="chead">
-    <h2>🎬 Scene Pipeline</h2>
-    <span class="scbadge" id="sc-badge">0 scenes</span>
-  </div>
-  <div class="pipe" id="pipe">
-    <div class="empty" id="empty-st">
-      <div class="ei">🎭</div>
-      <div style="font-family:'Bebas Neue';font-size:20px;color:var(--txt2);margin-bottom:6px">Scenes appear here</div>
-      <div style="font-size:12px;line-height:1.7;max-width:280px;margin:0 auto">Use <strong style="color:var(--acc)">Write Story</strong> tab to write your story, then click <strong style="color:var(--acc)">Generate Scenes</strong></div>
+  <div class="preview-area">
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="pnotch"><div class="pnotch-b"></div></div>
+        <canvas id="pcanv" width="540" height="960"></canvas>
+        <div class="phone-bottom"></div>
+      </div>
+    </div>
+
+    <div class="progbar"><div class="progfill" id="progfill" style="width:0%"></div></div>
+    <div class="scene-info" id="scene-info">Scene 0 / 0 · Word 0 / 0</div>
+
+    <div class="pcontrols">
+      <button class="pcbtn" onclick="prevScene()">◀ Prev</button>
+      <button class="pcbtn play" id="play-btn" onclick="togglePlay()">▶ Play Story</button>
+      <button class="pcbtn" onclick="nextScene()">Next ▶</button>
     </div>
   </div>
 </main>
 
+<!-- RIGHT — Voice + Render -->
 <aside class="rpanel">
-  <div class="sh"><div class="sh-bar"></div>Preview</div>
-  <div class="prev-wrap">
-    <div class="phone">
-      <div class="pnotch"><div class="pnotch-bar"></div></div>
-      <canvas id="pcanv" width="540" height="960"></canvas>
+  <div class="sh"><div class="shd"></div>Narrator Voice</div>
+  <div class="vset">
+    <div class="vrow">
+      <label>Voice</label>
+      <select class="vsel" id="voice-sel" style="flex:1"></select>
     </div>
-    <div class="pbtns">
-      <button class="pbtn" onclick="prevSc()">◀</button>
-      <button class="pbtn pp" id="play-btn" onclick="togglePlay()">▶ Play</button>
-      <button class="pbtn" onclick="nextSc()">▶</button>
+    <div class="vrow">
+      <label>Speed</label>
+      <input type="range" min="0.6" max="1.4" step="0.05" value="0.9" id="rate-sl" oninput="document.getElementById('rate-val').textContent=this.value"/>
+      <span id="rate-val">0.9</span>
     </div>
-    <div class="scind" id="sc-ind">Scene 0 / 0</div>
-    <!-- Narrator display -->
-    <div class="narrbar" id="narrbar">
-      <div class="pulse-dot"></div>
-      <span id="narr-text" style="line-height:1.4">Narrator will speak here during playback</span>
+    <div class="vrow">
+      <label>Pitch</label>
+      <input type="range" min="0.6" max="1.4" step="0.05" value="1.0" id="pitch-sl" oninput="document.getElementById('pitch-val').textContent=this.value"/>
+      <span id="pitch-val">1.0</span>
+    </div>
+    <button class="btn btn-out btn-full" style="font-size:11px;margin-top:4px" onclick="testVoice()">🔊 Test Voice</button>
+  </div>
+
+  <div class="sh"><div class="shd"></div>Caption Style</div>
+  <div style="padding:12px;display:flex;flex-direction:column;gap:8px">
+    <div class="vrow"><label>Size</label>
+      <input type="range" min="40" max="90" step="2" value="62" id="font-sz" oninput="document.getElementById('fsz-val').textContent=this.value;previewCurrent()"/>
+      <span id="fsz-val">62</span>
+    </div>
+    <div class="vrow"><label>Position</label>
+      <input type="range" min="50" max="82" step="1" value="68" id="cap-pos" oninput="document.getElementById('pos-val').textContent=this.value+'%';previewCurrent()"/>
+      <span id="pos-val">68%</span>
+    </div>
+    <div style="font-size:10px;color:var(--txt3)">Words per group</div>
+    <div style="display:flex;gap:6px">
+      <button class="btn btn-out" id="wpg1" onclick="setWPG(1)" style="flex:1;font-size:11px">1 Word</button>
+      <button class="btn btn-pri" id="wpg2" onclick="setWPG(2)" style="flex:1;font-size:11px">2 Words</button>
+      <button class="btn btn-out" id="wpg3" onclick="setWPG(3)" style="flex:1;font-size:11px">3 Words</button>
     </div>
   </div>
 
-  <div class="vsec">
-    <h4>🎙 Voice Test</h4>
-    <div class="vtest" id="voice-test-btns"></div>
-    <div style="margin-top:8px">
-      <button class="btn btn-out btn-full" style="font-size:11px" onclick="speakCurrentScene()">🔊 Speak This Scene</button>
-    </div>
-  </div>
-
+  <div class="sh"><div class="shd"></div>Export Video</div>
   <div class="rsec">
-    <h4>🎬 Export</h4>
-    <button class="btn btn-grn btn-full" onclick="renderVideo()" id="render-btn2">🎬 Export Video (WebM)</button>
-    <div id="rprog" style="display:none;margin-top:9px">
-      <div class="pbar"><div class="pfill" id="pfill" style="width:0%"></div></div>
-      <div class="ptxt" id="ptxt">Preparing...</div>
+    <div class="tip"><b>How it works:</b><br/>
+    1. Generate images for all scenes<br/>
+    2. Click Export — video records while playing<br/>
+    3. Voice audio is captured live<br/>
+    4. Download your WebM video</div>
+
+    <button class="btn btn-grn btn-full" onclick="exportVideo()" id="export-btn2">🎬 Export Video (WebM)</button>
+    <div id="render-prog" style="display:none">
+      <div class="rbar"><div class="rfill" id="rfill" style="width:0%"></div></div>
+      <div class="rtxt" id="rtxt">Preparing...</div>
     </div>
-    <div id="dlarea" style="display:none;text-align:center;padding:8px 0">
-      <a id="dllink" class="dlbtn" download="cartoon.webm">⬇ DOWNLOAD</a>
-      <div style="font-size:10px;color:var(--txt3);margin-top:5px">TikTok · Reels · Shorts</div>
+    <div id="dl-area" style="display:none;text-align:center">
+      <a id="dl-link" class="dlbtn" download="story.webm">⬇ DOWNLOAD VIDEO</a>
+      <div style="font-size:10px;color:var(--txt3);margin-top:6px">Ready for TikTok · Reels · Shorts</div>
     </div>
   </div>
 </aside>
 </div>
 
-<div class="ov" id="ov"><div class="ovbox"><div class="spin" style="width:36px;height:36px;border-width:3.5px;margin:0 auto 14px"></div><h3 id="ov-title">Working...</h3><p id="ov-msg">Please wait</p></div></div>
-<div class="cmod" id="cmod" onclick="if(event.target===this)closeCmod()"><div class="cmodbox"><div class="cmodemi" id="cm-emi"></div><div class="cmodb"><div style="font-family:'Bebas Neue';font-size:22px;letter-spacing:1px;color:var(--acc2)" id="cm-name"></div><div style="font-size:11px;color:var(--txt2);margin-bottom:8px" id="cm-role"></div><div style="font-size:11px;color:var(--txt);line-height:1.7;background:var(--s1);padding:8px;border-radius:7px" id="cm-desc"></div><div style="font-size:10px;color:var(--txt3);margin-top:8px;padding:6px 8px;background:rgba(0,0,0,.3);border-radius:5px" id="cm-voice"></div></div><button class="cmodbtn" onclick="closeCmod()">✕</button></div></div>
+<!-- Overlay -->
+<div class="ov" id="ov">
+  <div class="ovbox">
+    <div class="spin" style="width:34px;height:34px;border-width:3px;margin:0 auto 12px"></div>
+    <h3 id="ov-title">Working...</h3>
+    <p id="ov-msg">Please wait</p>
+    <div class="ovsteps" id="ov-steps"></div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
 // ══════════════════════════════════════════════════════════════════
-//  CARTOON STORY STUDIO v5 — Pro Characters · Rich Backgrounds · Narrator
+//  STORY VIDEO MAKER — Word-by-Word Narration + AI Images
+//  Style: @hisytstories on TikTok
 // ══════════════════════════════════════════════════════════════════
 
-const CW=540,CH=960;
-const canvas=document.getElementById('pcanv');
-const ctx=canvas.getContext('2d');
+const CW=540, CH=960;
+const canvas = document.getElementById('pcanv');
+const ctx = canvas.getContext('2d');
 
-// ── CHARACTERS ──────────────────────────────────────────────────
-const CHARS={
-  "Brian":{emoji:"👦",role:"Schoolboy",desc:"A curious 10-year-old African boy who loves adventure and always gets into funny situations.",
-    skin:"#C68642",skinD:"#A0522D",skinHL:"#DEB887",hair:"#1a0800",shirt:"#1565C0",pants:"#0D47A1",shoes:"#212121",
-    voice:{pitch:1.55,rate:1.12},size:0.72,fat:false,thin:false},
-  "Zawadi":{emoji:"👧",role:"Best Friend",desc:"Brian's clever best friend. Braided hair with colourful beads and always a dimpled smile.",
-    skin:"#A0522D",skinD:"#8B4513",skinHL:"#CD853F",hair:"#0d0400",shirt:"#880E4F",pants:"#6A1B9A",shoes:"#1a1a1a",
-    voice:{pitch:1.65,rate:1.08},size:0.74,fat:false,thin:false},
-  "Mama Wanjiru":{emoji:"👩",role:"Brian's Mother",desc:"Brian's caring but strict Mama. Wears colourful traditional kitenge dresses.",
-    skin:"#8B4513",skinD:"#6B3410",skinHL:"#A0522D",hair:"#0a0300",shirt:"#E65100",pants:"#BF360C",shoes:"#2a1000",
-    voice:{pitch:1.05,rate:0.90},size:0.92,fat:false,thin:false},
-  "Inspector Kamau":{emoji:"👮",role:"Police Officer",desc:"The town's dramatic police officer. Big belly, big mustache, big personality!",
-    skin:"#6B3410",skinD:"#4A2208",skinHL:"#8B4513",hair:"#050200",shirt:"#0D47A1",pants:"#1A237E",shoes:"#050a15",
-    voice:{pitch:0.68,rate:0.82},size:1.05,fat:true,thin:false},
-  "Doctor Amara":{emoji:"👩‍⚕️",role:"Town Doctor",desc:"Dr Amara is brilliant and calm. Always in her white coat with stethoscope.",
-    skin:"#8B4513",skinD:"#6B3410",skinHL:"#A0522D",hair:"#0d0500",shirt:"#FAFAFA",pants:"#455A64",shoes:"#263238",
-    voice:{pitch:1.12,rate:0.93},size:0.86,fat:false,thin:false},
-  "Chef Omondi":{emoji:"👨‍🍳",role:"The Big Chef",desc:"Chef Omondi loves food more than anything. Always cheerful in his chef uniform.",
-    skin:"#5C2A0A",skinD:"#3E1A07",skinHL:"#7A3A10",hair:"#060300",shirt:"#FAFAFA",pants:"#78909C",shoes:"#1a1a1a",
-    voice:{pitch:0.82,rate:0.86},size:1.0,fat:true,thin:false},
-  "Mwalimu Hassan":{emoji:"👨‍🏫",role:"Schoolteacher",desc:"Stern but fair. Mwalimu Hassan taught every child in town. Tall, thin, always with books.",
-    skin:"#7A3D15",skinD:"#5C2A0A",skinHL:"#9A5020",hair:"#111",shirt:"#F5F5F5",pants:"#37474F",shoes:"#1a1a1a",
-    voice:{pitch:0.88,rate:0.86},size:0.94,fat:false,thin:true},
-  "Merchant Fatuma":{emoji:"👩‍🦱",role:"Market Merchant",desc:"Sells the best fruit in town and shouts the loudest prices. Bright colourful dress.",
-    skin:"#8B4513",skinD:"#6B3410",skinHL:"#A5682A",hair:"#0a0400",shirt:"#F57F17",pants:"#E65100",shoes:"#1a0a00",
-    voice:{pitch:1.28,rate:1.15},size:0.88,fat:false,thin:false},
-  "Baba James":{emoji:"👴",role:"Village Elder",desc:"The respected village elder. Always calm and wise in his white kanzu robe.",
-    skin:"#5C2A0A",skinD:"#3E1A07",skinHL:"#7A3A10",hair:"#888",shirt:"#EEEEEE",pants:"#BDBDBD",shoes:"#3a2a1a",
-    voice:{pitch:0.76,rate:0.72},size:0.88,fat:false,thin:false},
-  "Ranger Kipchoge":{emoji:"🦺",role:"Wildlife Ranger",desc:"Strong and adventurous. Protects the national park in his khaki ranger uniform.",
-    skin:"#7A3D15",skinD:"#5C2A0A",skinHL:"#9A5020",hair:"#0d0600",shirt:"#6D4C41",pants:"#4E342E",shoes:"#2a1a0a",
-    voice:{pitch:0.90,rate:0.97},size:1.0,fat:false,thin:false}
-};
+// ── STATE ──────────────────────────────────────────────────────
+let scenes = [];          // [{narration, imgPrompt, imgUrl, imgStatus, imgEl}]
+let curScene = -1;
+let wordsPerGroup = 2;    // how many words show at once
+let isPlaying = false;
+let playback = null;      // current playback controller
+let imgCache = {};        // idx → HTMLImageElement
 
-// ── NARRATOR VOICE ──────────────────────────────────────────────
-const synth=window.speechSynthesis;
-let narratorActive=false;
+// ── VOICE SETUP ────────────────────────────────────────────────
+const synth = window.speechSynthesis;
+let voices = [];
 
-function getBestVoice(wantDeep){
-  const voices=synth.getVoices();
-  // Prefer english
-  const eng=voices.filter(v=>v.lang.startsWith('en'));
-  return eng[0]||voices[0]||null;
+function loadVoices(){
+  voices = synth.getVoices();
+  const sel = document.getElementById('voice-sel');
+  sel.innerHTML = '';
+  // Prefer English voices, prioritize clear/natural ones
+  const eng = voices.filter(v => v.lang.startsWith('en'));
+  const all = eng.length ? eng : voices;
+  all.forEach((v,i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${v.name} (${v.lang})`;
+    sel.appendChild(opt);
+  });
+  // Pick best default — prefer Google/Natural voices
+  const best = all.findIndex(v => v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha'));
+  if(best >= 0) sel.value = best;
+}
+synth.onvoiceschanged = loadVoices;
+loadVoices();
+setTimeout(loadVoices, 500); // some browsers delay
+
+function getVoice(){
+  const sel = document.getElementById('voice-sel');
+  const allEng = voices.filter(v => v.lang.startsWith('en'));
+  const pool = allEng.length ? allEng : voices;
+  return pool[parseInt(sel.value)] || pool[0] || null;
 }
 
-function speakLine(text,charName,cb){
-  if(!text){if(cb)cb();return;}
+function testVoice(){
   synth.cancel();
-  const utt=new SpeechSynthesisUtterance(text);
-  const ch=CHARS[charName];
-  if(ch){utt.pitch=ch.voice.pitch;utt.rate=ch.voice.rate;}
-  else{utt.pitch=1.0;utt.rate=1.0;}
-  utt.volume=1;
-  const v=getBestVoice(ch&&ch.voice.pitch<0.85);
-  if(v)utt.voice=v;
-  utt.onend=()=>{if(cb)cb();};
-  utt.onerror=()=>{if(cb)cb();};
+  const utt = new SpeechSynthesisUtterance("Hello! This is your narrator voice. It will read your story word by word.");
+  utt.rate = parseFloat(document.getElementById('rate-sl').value);
+  utt.pitch = parseFloat(document.getElementById('pitch-sl').value);
+  const v = getVoice(); if(v) utt.voice = v;
   synth.speak(utt);
 }
 
-function speakNarrator(text,cb){
-  if(!text){if(cb)cb();return;}
-  synth.cancel();
-  const utt=new SpeechSynthesisUtterance(text);
-  utt.pitch=1.0;utt.rate=0.95;utt.volume=1;
-  const voices=synth.getVoices();
-  // Try to pick a clear English narrator voice
-  const v=voices.find(v=>v.name.includes('Google')&&v.lang==='en-US')
-         ||voices.find(v=>v.lang==='en-US')
-         ||voices.find(v=>v.lang.startsWith('en'))
-         ||voices[0];
-  if(v)utt.voice=v;
-  utt.onend=()=>{narratorActive=false;document.getElementById('narrbar').classList.remove('speaking');if(cb)cb();};
-  utt.onerror=()=>{narratorActive=false;if(cb)cb();};
-  narratorActive=true;
-  document.getElementById('narrbar').classList.add('speaking');
-  document.getElementById('narr-text').textContent=text;
-  synth.speak(utt);
-}
-
-function buildNarration(s){
-  // Craft a rich narrator sentence from scene data
-  const chars=s.characters||[];
-  const charStr=chars.length===1?chars[0]:chars.length===2?`${chars[0]} and ${chars[1]}`:chars.join(', ');
-  const loc=s.location?` at the ${s.location.replace(/_/g,' ')}`:'';
-  const action=s.action?s.action.replace(/brian|zawadi|mama wanjiru|inspector kamau|doctor amara|chef omondi|mwalimu hassan|merchant fatuma|baba james|ranger kipchoge/gi,'').trim():'';
-  let narr='';
-  if(s.dialogue&&s.speaker){
-    narr=`${charStr}${loc}. ${s.speaker} says — ${s.dialogue}`;
-  } else {
-    narr=`${charStr}${loc}. ${action||s.caption||''}`;
-  }
-  return narr;
-}
-
-function speakCurrentScene(){
-  if(curScene<0||curScene>=scenes.length)return;
-  const s=scenes[curScene];
-  speakNarrator(buildNarration(s));
-}
-
-// ── VOICE TEST BUTTONS ───────────────────────────────────────────
-function buildVoiceTestBtns(){
-  const wrap=document.getElementById('voice-test-btns');wrap.innerHTML='';
-  Object.keys(CHARS).forEach(name=>{
-    const btn=document.createElement('button');btn.className='vtbtn';
-    btn.textContent=CHARS[name].emoji+' '+name.split(' ')[0];
-    btn.addEventListener('click',()=>speakLine(`Hello! I am ${name}.`,name));
-    wrap.appendChild(btn);
+// ── CAPTION SETTINGS ───────────────────────────────────────────
+function setWPG(n){
+  wordsPerGroup = n;
+  ['wpg1','wpg2','wpg3'].forEach((id,i) => {
+    document.getElementById(id).className = 'btn ' + (i+1===n?'btn-pri':'btn-out');
   });
+  previewCurrent();
 }
 
-// ══════════════════════════════════════════════════════════════════
-//  PROFESSIONAL CHARACTER RENDERER
-// ══════════════════════════════════════════════════════════════════
+// ── STORY → SCENES ─────────────────────────────────────────────
+async function parseStory(){
+  const text = document.getElementById('story-ta').value.trim();
+  if(!text){ toast('Write a story first!','err'); return; }
 
-function drawChar(C, charName, anim, frame){
-  // C = canvas context, already translated to character center-bottom
-  const ch=CHARS[charName]||CHARS['Brian'];
-  const s=ch.size;
-  const fatMul=ch.fat?1.32:ch.thin?0.82:1.0;
-  const t=frame*0.09;
+  showOv('Analysing your story...', 'Breaking it into visual scenes');
+  setOvSteps([{l:'Understanding story structure',s:'active'},{l:'Creating scene descriptions',s:'wait'},{l:'Building image prompts',s:'wait'}]);
 
-  C.save();
-  switch(anim){
-    case 'walk':   _animWalk(C,ch,s,fatMul,t,frame);break;
-    case 'run':    _animRun(C,ch,s,fatMul,t,frame);break;
-    case 'talk':   _animTalk(C,ch,s,fatMul,t,frame);break;
-    case 'laugh':  _animLaugh(C,ch,s,fatMul,t,frame);break;
-    case 'cry':    _animCry(C,ch,s,fatMul,t,frame);break;
-    case 'wake':   _animWake(C,ch,s,fatMul,t,frame);break;
-    case 'run_scared': _animRun(C,ch,s,fatMul,t,frame,true);break;
-    case 'angry':  _animAngry(C,ch,s,fatMul,t,frame);break;
-    case 'arrive': _animArrive(C,ch,s,fatMul,t,frame);break;
-    case 'jump':   _animJump(C,ch,s,fatMul,t,frame);break;
-    case 'eat':    _animEat(C,ch,s,fatMul,t,frame);break;
-    case 'shocked':_animShocked(C,ch,s,fatMul,t,frame);break;
-    case 'drag':   _animWalk(C,ch,s,fatMul,t,frame);break;
-    default:       _animStand(C,ch,s,fatMul,t,frame);
-  }
-  C.restore();
-}
+  try {
+    const prompt = `You are creating a TikTok story video. Split this story into 5-8 visual scenes.
 
-// ── CORE BODY DRAWING ────────────────────────────────────────────
-function _body(C,ch,s,fm,bw,bh,legAngleL,legAngleR,armAngleL,armAngleR,headTilt,mouthState,eyeState,extra){
-  const lw=11*s*fm, lh=42*s, aw=10*s*fm, ah=32*s;
-  const hw=28*s*fm, hh=32*s*fm;
-  const by=-bh*0.5; // body center y (top of body is -bh)
-  const legTop=bh*0.5;
+Story: "${text}"
 
-  // ── LEGS ──
-  ['L','R'].forEach((side,i)=>{
-    const ang=(i===0?legAngleL:legAngleR)*Math.PI/180;
-    const lx=(i===0?-1:1)*bw*0.25;
-    C.save();C.translate(lx,legTop);C.rotate(ang);
-    // Upper leg
-    C.fillStyle=ch.pants;
-    _roundRect(C,-lw/2,0,lw,lh*0.55,4);C.fill();
-    // Knee joint
-    C.fillStyle=ch.pants;
-    C.beginPath();C.arc(0,lh*0.55,lw*0.52,0,Math.PI*2);C.fill();
-    // Lower leg
-    _roundRect(C,-lw*0.45,lh*0.55,lw*0.9,lh*0.42,3);C.fill();
-    // Shoe
-    C.save();C.translate(0,lh*0.97);
-    C.fillStyle=ch.shoes;
-    C.shadowColor='rgba(0,0,0,0.3)';C.shadowBlur=4;
-    C.beginPath();C.ellipse(lw*0.15,3,lw*0.95,lw*0.52,0,0,Math.PI*2);C.fill();
-    C.shadowBlur=0;
-    // Shoe highlight
-    C.fillStyle='rgba(255,255,255,0.12)';
-    C.beginPath();C.ellipse(lw*0.05,-1,lw*0.55,lw*0.2,0,0,Math.PI*2);C.fill();
-    C.restore();C.restore();
-  });
+For each scene return:
+- narration: The exact text from the story that belongs to this scene (keep original words, this will be read aloud)
+- imgPrompt: A detailed visual image prompt (what should be SEEN, 3D photorealistic render style, describe the exact scene/action/character)
 
-  // ── BODY/TORSO ──
-  C.shadowColor='rgba(0,0,0,0.25)';C.shadowBlur=10;
-  // Main torso
-  C.fillStyle=ch.shirt;
-  _roundRect(C,-bw/2,-bh/2,bw,bh,8*s);C.fill();
-  C.shadowBlur=0;
-  // Side shading
-  const bodyShade=C.createLinearGradient(-bw/2,-bh/2,bw/2,-bh/2);
-  bodyShade.addColorStop(0,'rgba(0,0,0,0.18)');
-  bodyShade.addColorStop(0.3,'rgba(0,0,0,0)');
-  bodyShade.addColorStop(0.7,'rgba(0,0,0,0)');
-  bodyShade.addColorStop(1,'rgba(0,0,0,0.22)');
-  C.fillStyle=bodyShade;_roundRect(C,-bw/2,-bh/2,bw,bh,8*s);C.fill();
-  // Shirt details — collar
-  C.fillStyle='rgba(255,255,255,0.15)';
-  C.beginPath();C.moveTo(-bw*0.12,-bh/2);C.lineTo(0,-bh/2+8*s);C.lineTo(bw*0.12,-bh/2);C.closePath();C.fill();
-  // Fat belly button
-  if(ch.fat){
-    C.fillStyle='rgba(0,0,0,0.12)';
-    C.beginPath();C.arc(0,bh*0.1,4*s,0,Math.PI*2);C.fill();
-  }
+Return ONLY valid JSON: {"scenes":[{"narration":"...","imgPrompt":"..."}]}
 
-  // ── ARMS ──
-  ['L','R'].forEach((side,i)=>{
-    const ang=(i===0?armAngleL:armAngleR);
-    const ax=(i===0?-bw/2:bw/2);
-    C.save();C.translate(ax,-bh*0.25);C.rotate(ang);
-    // Upper arm
-    C.fillStyle=ch.shirt;
-    C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=5;
-    _roundRect(C,(i===0?-aw:0),0,aw,ah*0.55,5);C.fill();
-    C.shadowBlur=0;
-    // Elbow
-    C.fillStyle=ch.shirt;
-    C.beginPath();C.arc((i===0?-aw/2:aw/2),ah*0.55,aw*0.5,0,Math.PI*2);C.fill();
-    // Lower arm / forearm
-    C.fillStyle=ch.skin;
-    _roundRect(C,(i===0?-aw*0.8+aw*0.1:aw*0.1),ah*0.55,aw*0.7,ah*0.42,4);C.fill();
-    // Hand
-    C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=5;
-    C.fillStyle=ch.skin;
-    C.beginPath();C.arc((i===0?-aw*0.45:aw*0.45),ah,aw*0.52,0,Math.PI*2);C.fill();
-    C.shadowBlur=0;
-    // Knuckle lines
-    C.strokeStyle=ch.skinD;C.lineWidth=0.8;
-    for(let k=0;k<3;k++){
-      const kx=(i===0?-aw*0.45:aw*0.45)+(k-1)*aw*0.18;
-      C.beginPath();C.arc(kx,ah,aw*0.12,Math.PI*0.2,Math.PI*0.8);C.stroke();
-    }
-    C.restore();
-  });
+Rules:
+- narration must be the actual story text (original words, no changes)
+- imgPrompt must describe the VISUAL: character appearance, action, setting, lighting, camera angle
+- imgPrompt ends with: "3D photorealistic render, Unreal Engine quality, cinematic lighting, 9:16 vertical portrait"
+- Each scene = 1-3 sentences of narration`;
 
-  // ── HEAD ──
-  C.save();C.translate(0,-bh/2-hh*0.38);C.rotate(headTilt*Math.PI/180);
-  // Neck
-  C.fillStyle=ch.skin;
-  _roundRect(C,-7*s,-5*s,14*s,12*s,4);C.fill();
-  // Head base (slightly squashed sphere for cartoon look)
-  C.shadowColor='rgba(0,0,0,0.3)';C.shadowBlur=12;
-  C.fillStyle=ch.skin;
-  C.beginPath();C.ellipse(0,0,hw,hh,0,0,Math.PI*2);C.fill();
-  C.shadowBlur=0;
-  // Face highlight (lighter zone)
-  const faceHL=C.createRadialGradient(-hw*0.1,-hh*0.15,0,-hw*0.1,-hh*0.15,hw*0.8);
-  faceHL.addColorStop(0,ch.skinHL);faceHL.addColorStop(0.6,'transparent');
-  C.fillStyle=faceHL;C.beginPath();C.ellipse(0,0,hw,hh,0,0,Math.PI*2);C.fill();
-  // Chin shadow
-  const chinShade=C.createLinearGradient(0,hh*0.4,0,hh);
-  chinShade.addColorStop(0,'rgba(0,0,0,0)');chinShade.addColorStop(1,'rgba(0,0,0,0.18)');
-  C.fillStyle=chinShade;C.beginPath();C.ellipse(0,0,hw,hh,0,0,Math.PI*2);C.fill();
-
-  // ── HAIR ──
-  C.fillStyle=ch.hair;
-  if(charName==='Zawadi'||charName==='Merchant Fatuma'){
-    // Braided hair
-    C.beginPath();C.ellipse(0,-hh*0.42,hw*0.98,hh*0.52,0,Math.PI,Math.PI*2);C.fill();
-    // Braid details
-    C.fillStyle='rgba(255,255,255,0.06)';
-    for(let b=0;b<5;b++){
-      const bx=-hw*0.6+b*hw*0.3;
-      C.beginPath();C.arc(bx,-hh*0.65,hw*0.1,0,Math.PI*2);C.fill();
-    }
-    // Beads
-    const beadColors=['#FFD700','#FF6347','#32CD32','#1E90FF','#FF69B4'];
-    beadColors.forEach((col,b)=>{
-      C.fillStyle=col;
-      C.beginPath();C.arc(-hw*0.5+b*hw*0.25,-hh*0.72,3.5,0,Math.PI*2);C.fill();
+    const resp = await fetch('https://text.pollinations.ai/', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        messages:[{role:'user',content:prompt}],
+        model:'openai', jsonMode:true, seed:Math.floor(Math.random()*9999)
+      })
     });
-  } else if(charName==='Baba James'){
-    // White hair + beard
-    C.fillStyle='#cccccc';
-    C.beginPath();C.ellipse(0,-hh*0.38,hw*0.9,hh*0.45,0,Math.PI,Math.PI*2);C.fill();
-    C.fillStyle='#d8d8d8';
-    C.beginPath();C.ellipse(0,hh*0.3,hw*0.45,hh*0.28,0,0,Math.PI*2);C.fill();
-  } else if(charName==='Inspector Kamau'||charName==='Chef Omondi'){
-    // Short tight hair
-    C.beginPath();C.ellipse(0,-hh*0.35,hw*0.96,hh*0.44,0,Math.PI,Math.PI*2);C.fill();
-    // Mustache for Kamau
-    if(charName==='Inspector Kamau'){
-      C.fillStyle='#0a0500';
-      C.beginPath();C.ellipse(-hw*0.15,hh*0.08,hw*0.22,hh*0.08,0.2,0,Math.PI*2);C.fill();
-      C.beginPath();C.ellipse(hw*0.15,hh*0.08,hw*0.22,hh*0.08,-0.2,0,Math.PI*2);C.fill();
-    }
-    // Chef hat
-    if(charName==='Chef Omondi'){
-      C.fillStyle='#FAFAFA';
-      _roundRect(C,-hw*0.7,-hh*0.96,hw*1.4,hh*0.5,8);C.fill();
-      C.beginPath();C.ellipse(0,-hh*0.55,hw*0.85,hh*0.28,0,0,Math.PI*2);C.fill();
-    }
-    // Police cap for Kamau
-    if(charName==='Inspector Kamau'){
-      C.fillStyle='#0D47A1';
-      _roundRect(C,-hw*0.85,-hh*0.88,hw*1.7,hh*0.38,6);C.fill();
-      C.fillStyle='#0a3080';
-      _roundRect(C,-hw*1.0,-hh*0.54,hw*2.0,hh*0.12,3);C.fill();
-      C.fillStyle='#FFD700';
-      C.beginPath();C.arc(0,-hh*0.72,6,0,Math.PI*2);C.fill();
-    }
-    // Teacher glasses for Mwalimu
-  } else if(charName==='Mwalimu Hassan'){
-    C.beginPath();C.ellipse(0,-hh*0.38,hw*0.92,hh*0.44,0,Math.PI,Math.PI*2);C.fill();
-  } else {
-    // Default natural hair
-    C.beginPath();C.ellipse(0,-hh*0.38,hw*0.96,hh*0.5,0,Math.PI,Math.PI*2);C.fill();
-    // Hair texture lines
-    C.strokeStyle='rgba(255,255,255,0.05)';C.lineWidth=1.5;
-    for(let hl=0;hl<3;hl++){
-      C.beginPath();C.arc(0,-hh*0.2,hw*(0.4+hl*0.2),Math.PI*1.1,Math.PI*1.9);C.stroke();
-    }
-  }
+    if(!resp.ok) throw new Error(resp.status);
+    const raw = await resp.text();
+    const data = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    const rs = data.scenes || data;
+    if(!Array.isArray(rs)||!rs.length) throw new Error('no scenes');
 
-  // Ranger hat
-  if(charName==='Ranger Kipchoge'){
-    C.fillStyle='#795548';
-    C.beginPath();C.ellipse(0,-hh*0.52,hw*1.15,hh*0.22,0,0,Math.PI*2);C.fill();
-    _roundRect(C,-hw*0.75,-hh*0.88,hw*1.5,hh*0.42,4);C.fill();
-  }
+    updateOvStep(0,'done'); updateOvStep(1,'done'); updateOvStep(2,'active');
 
-  // ── EYES ──
-  const eyeY=-hh*0.18;
-  const eyeAngry=extra&&extra.angry;
-  const eyeSad=extra&&extra.sad;
-  const eyeWide=extra&&extra.wide;
-  const eyeClosed=extra&&extra.closed;
+    scenes = rs.map((s,i) => ({
+      narration: s.narration || '',
+      imgPrompt: (s.imgPrompt || s.narration || '').substring(0,200),
+      imgUrl: null, imgStatus:'idle', imgEl:null
+    }));
 
-  // Eye whites
-  C.fillStyle='#fff';
-  C.shadowColor='rgba(0,0,0,0.1)';C.shadowBlur=3;
-  C.beginPath();
-  if(eyeClosed){
-    C.fillStyle=ch.skin; // closed eyes = skin lines
-  } else {
-    C.ellipse(-hw*0.29,eyeY,hw*0.22,hh*(eyeWide?0.2:0.16),0,0,Math.PI*2);C.fill();
-    C.beginPath();C.ellipse(hw*0.29,eyeY,hw*0.22,hh*(eyeWide?0.2:0.16),0,0,Math.PI*2);C.fill();
-  }
-  C.shadowBlur=0;
+    updateOvStep(2,'done');
+    await new Promise(r=>setTimeout(r,400));
+    hideOv();
+    finishLoad();
 
-  if(eyeClosed){
-    // Sleeping/closed: curved line
-    C.strokeStyle=ch.skinD;C.lineWidth=2.5;C.lineCap='round';
-    C.beginPath();C.arc(-hw*0.29,eyeY+2,hw*0.16,Math.PI*0.05,Math.PI*0.95);C.stroke();
-    C.beginPath();C.arc(hw*0.29,eyeY+2,hw*0.16,Math.PI*0.05,Math.PI*0.95);C.stroke();
-  } else {
-    // Iris
-    const irisColor=ch.hair==='#888'?'#8888aa':'#2a1200';
-    C.fillStyle=irisColor;
-    C.beginPath();C.arc(-hw*0.29,eyeY,hw*0.13,0,Math.PI*2);C.fill();
-    C.beginPath();C.arc(hw*0.29,eyeY,hw*0.13,0,Math.PI*2);C.fill();
-    // Pupil
-    C.fillStyle='#000';
-    C.beginPath();C.arc(-hw*0.29,eyeY,hw*0.07,0,Math.PI*2);C.fill();
-    C.beginPath();C.arc(hw*0.29,eyeY,hw*0.07,0,Math.PI*2);C.fill();
-    // Eye shine (2 dots per eye for pro look)
-    C.fillStyle='rgba(255,255,255,0.95)';
-    C.beginPath();C.arc(-hw*0.25,eyeY-hw*0.06,hw*0.05,0,Math.PI*2);C.fill();
-    C.beginPath();C.arc(-hw*0.34,eyeY+hw*0.01,hw*0.025,0,Math.PI*2);C.fill();
-    C.beginPath();C.arc(hw*0.33,eyeY-hw*0.06,hw*0.05,0,Math.PI*2);C.fill();
-    C.beginPath();C.arc(hw*0.24,eyeY+hw*0.01,hw*0.025,0,Math.PI*2);C.fill();
-    // Eyelashes (upper lash line)
-    C.strokeStyle='rgba(0,0,0,0.7)';C.lineWidth=2;C.lineCap='round';
-    C.beginPath();C.ellipse(-hw*0.29,eyeY,hw*0.22,hh*0.16,0,Math.PI*1.1,Math.PI*1.9);C.stroke();
-    C.beginPath();C.ellipse(hw*0.29,eyeY,hw*0.22,hh*0.16,0,Math.PI*1.1,Math.PI*1.9);C.stroke();
-  }
-
-  // ── EYEBROWS ──
-  C.strokeStyle=ch.hair==='#888'?'#aaa':ch.hair;
-  C.lineWidth=3*s;C.lineCap='round';
-  if(eyeAngry){
-    C.beginPath();C.moveTo(-hw*0.48,eyeY-hh*0.24);C.lineTo(-hw*0.1,eyeY-hh*0.14);C.stroke();
-    C.beginPath();C.moveTo(hw*0.48,eyeY-hh*0.24);C.lineTo(hw*0.1,eyeY-hh*0.14);C.stroke();
-  } else if(eyeSad){
-    C.beginPath();C.moveTo(-hw*0.44,eyeY-hh*0.15);C.lineTo(-hw*0.1,eyeY-hh*0.22);C.stroke();
-    C.beginPath();C.moveTo(hw*0.44,eyeY-hh*0.15);C.lineTo(hw*0.1,eyeY-hh*0.22);C.stroke();
-  } else {
-    C.beginPath();C.moveTo(-hw*0.46,eyeY-hh*0.2);C.lineTo(-hw*0.11,eyeY-hh*0.23);C.stroke();
-    C.beginPath();C.moveTo(hw*0.46,eyeY-hh*0.2);C.lineTo(hw*0.11,eyeY-hh*0.23);C.stroke();
-  }
-
-  // Glasses for Mwalimu Hassan
-  if(charName==='Mwalimu Hassan'){
-    C.strokeStyle='#888';C.lineWidth=2.5;C.fillStyle='rgba(180,220,255,0.18)';
-    C.beginPath();C.ellipse(-hw*0.29,eyeY,hw*0.27,hh*0.22,0,0,Math.PI*2);C.fill();C.stroke();
-    C.beginPath();C.ellipse(hw*0.29,eyeY,hw*0.27,hh*0.22,0,0,Math.PI*2);C.fill();C.stroke();
-    C.beginPath();C.moveTo(-hw*0.02,eyeY);C.lineTo(hw*0.02,eyeY);C.stroke();
-    C.beginPath();C.moveTo(-hw*0.56,eyeY-2);C.lineTo(-hw*0.7,eyeY-3);C.stroke();
-    C.beginPath();C.moveTo(hw*0.56,eyeY-2);C.lineTo(hw*0.7,eyeY-3);C.stroke();
-  }
-
-  // ── NOSE ──
-  C.fillStyle=ch.skinD;C.globalAlpha=0.4;
-  C.beginPath();C.ellipse(0,hh*0.08,hw*0.11,hh*0.09,0,0,Math.PI*2);C.fill();
-  C.globalAlpha=1;
-
-  // ── CHEEKS ──
-  C.fillStyle='rgba(200,70,50,0.16)';
-  C.beginPath();C.ellipse(-hw*0.44,eyeY+hh*0.15,hw*0.2,hh*0.1,0,0,Math.PI*2);C.fill();
-  C.beginPath();C.ellipse(hw*0.44,eyeY+hh*0.15,hw*0.2,hh*0.1,0,0,Math.PI*2);C.fill();
-
-  // ── MOUTH ──
-  C.strokeStyle='rgba(0,0,0,0.65)';C.lineCap='round';C.lineWidth=2.5*s;
-  if(mouthState==='open'||mouthState==='laugh'){
-    C.fillStyle=mouthState==='laugh'?'#1a0500':'#2a0800';
-    C.beginPath();C.ellipse(0,hh*0.28,hw*0.35,hh*0.18,0,0,Math.PI*2);C.fill();
-    // Teeth
-    C.fillStyle='#fff';
-    C.beginPath();
-    _roundRect(C,-hw*0.28,hh*0.18,hw*0.56,hh*0.12,2);C.fill();
-    // Tongue for laugh
-    if(mouthState==='laugh'){
-      C.fillStyle='#e06060';
-      C.beginPath();C.ellipse(0,hh*0.34,hw*0.2,hh*0.1,0,0,Math.PI*2);C.fill();
-    }
-  } else if(mouthState==='sad'){
-    C.beginPath();C.arc(0,hh*0.42,hw*0.26,Math.PI+0.25,-0.25);C.stroke();
-  } else if(mouthState==='flat'){
-    C.beginPath();C.moveTo(-hw*0.22,hh*0.28);C.lineTo(hw*0.22,hh*0.28);C.stroke();
-  } else {
-    // Default smile
-    C.beginPath();C.arc(0,hh*0.12,hw*0.28,-0.05,Math.PI+0.05);C.stroke();
-  }
-  C.restore(); // restore from head translate
-}
-
-// ── ANIMATION POSES ─────────────────────────────────────────────
-function _animStand(C,ch,s,fm,t){
-  const bw=40*s*fm,bh=52*s;
-  const bob=Math.sin(t*0.7)*2.5;
-  C.save();C.translate(0,bob);
-  _body(C,ch,s,fm,bw,bh,0,0,0.08,−0.08,Math.sin(t*0.5)*2,'smile',false,{});
-  C.restore();
-}
-
-function _animWalk(C,ch,s,fm,t,frame){
-  const bw=40*s*fm,bh=52*s;
-  const leg=Math.sin(t*2.2)*28;
-  const arm=Math.sin(t*2.2)*0.55;
-  const bob=Math.abs(Math.sin(t*2.2))*4-2;
-  C.save();C.translate(0,bob);
-  _body(C,ch,s,fm,bw,bh,leg,-leg,arm,-arm,Math.sin(t*1.5)*3,'smile',false,{});
-  C.restore();
-}
-
-function _animRun(C,ch,s,fm,t,frame,scared=false){
-  const bw=40*s*fm,bh=52*s;
-  const leg=Math.sin(t*3.5)*42;
-  const arm=Math.sin(t*3.5)*0.85;
-  const bob=Math.abs(Math.sin(t*3.5))*8-4;
-  const lean=-0.22;
-  C.save();C.translate(0,bob);C.rotate(lean);
-  _body(C,ch,s,fm,bw,bh,leg,-leg,arm,-arm,-8,scared?'open':'smile',false,{wide:scared});
-  C.restore();
-  // Speed lines
-  C.save();C.translate(0,bob);
-  C.strokeStyle='rgba(255,255,255,0.3)';C.lineWidth=2.5;C.lineCap='round';
-  for(let i=0;i<5;i++){
-    C.globalAlpha=0.5-i*0.08;
-    const ly=-20+i*22;const lx=-60-i*12;
-    C.beginPath();C.moveTo(lx,ly);C.lineTo(lx-28-i*5,ly);C.stroke();
-  }
-  C.globalAlpha=1;C.restore();
-}
-
-function _animTalk(C,ch,s,fm,t,frame){
-  const bw=40*s*fm,bh=52*s;
-  const bob=Math.sin(t)*2;
-  const mouthOpen=Math.abs(Math.sin(t*3.2))>0.45;
-  const armSwing=Math.sin(t)*0.5;
-  C.save();C.translate(0,bob);
-  _body(C,ch,s,fm,bw,bh,0,0,armSwing,-0.1,Math.sin(t*0.8)*5,mouthOpen?'open':'smile',false,{});
-  C.restore();
-}
-
-function _animLaugh(C,ch,s,fm,t,frame){
-  const bw=40*s*fm,bh=52*s;
-  const shake=Math.sin(t*5)*4;
-  const belly=Math.abs(Math.sin(t*4))*7;
-  C.save();C.translate(shake,-belly*0.3);
-  _body(C,ch,s,fm,bw+belly*0.05,bh,-5,5,-0.7,0.7,Math.sin(t*4)*14,'laugh',false,{});
-  // Laugh tears
-  if(Math.sin(t*3)>0.2){
-    const hw=28*s*fm;
-    C.fillStyle='rgba(140,195,255,0.85)';
-    C.beginPath();C.ellipse(-hw*0.38,-bh/2-32*s*fm+Math.sin(t*2)*10,3,6,0.1,0,Math.PI*2);C.fill();
-    C.beginPath();C.ellipse(hw*0.38,-bh/2-32*s*fm+Math.sin(t*2+0.8)*10,3,6,-0.1,0,Math.PI*2);C.fill();
-  }
-  C.restore();
-}
-
-function _animCry(C,ch,s,fm,t,frame){
-  const bw=40*s*fm,bh=52*s;
-  const sob=Math.sin(t*2)*3;
-  C.save();C.translate(0,sob);
-  _body(C,ch,s,fm,bw,bh,0,0,-0.8,0.8,Math.sin(t)*8,'sad',false,{sad:true});
-  // Big cartoon tears
-  const hw=28*s*fm;
-  C.fillStyle='rgba(100,180,255,0.9)';
-  for(let d=0;d<3;d++){
-    const dy=-bh/2-32*s*fm+Math.sin(t*2+d)*18+d*16;
-    C.beginPath();C.ellipse(-hw*0.32,dy,3.5,7,0.05,0,Math.PI*2);C.fill();
-    C.beginPath();C.ellipse(hw*0.32,dy,3.5,7,-0.05,0,Math.PI*2);C.fill();
-  }
-  C.restore();
-}
-
-function _animWake(C,ch,s,fm,t,frame){
-  const bw=40*s*fm,bh=52*s;
-  const prog=Math.min(frame/28,1);
-  const eyeState=prog<0.3?{closed:true}:prog<0.6?{}:{};
-  const armRaise=-Math.PI*0.55*prog;
-  const yOff=(1-prog)*18;
-  C.save();C.translate(0,yOff);
-  _body(C,ch,s,fm,bw,bh*Math.max(0.5,prog)+(1-prog)*8,0,0,armRaise*0.7,armRaise,
-    Math.sin(t)*(1-prog)*6,'smile',false,eyeState);
-  // Z bubbles
-  if(prog<0.45){
-    const hw=28*s*fm;
-    C.font=`bold ${14*s}px sans-serif`;C.fillStyle='rgba(200,220,255,0.8)';
-    C.fillText('z',hw+10,-bh/2-40*s*fm+Math.sin(frame*0.1)*5);
-    C.font=`bold ${10*s}px sans-serif`;
-    C.fillText('z',hw+20,-bh/2-55*s*fm+Math.sin(frame*0.1+1)*4);
-    C.font=`bold ${7*s}px sans-serif`;
-    C.fillText('z',hw+28,-bh/2-67*s*fm+Math.sin(frame*0.1+2)*3);
-  }
-  C.restore();
-}
-
-function _animArrive(C,ch,s,fm,t,frame){
-  const bw=40*s*fm,bh=52*s;
-  const prog=Math.min(frame/25,1);
-  const legSwing=Math.sin(t*2)*(1-prog)*26;
-  const bob=Math.abs(Math.sin(t*2))*(1-prog)*4-2;
-  const armL=prog>0.9?-0.75:Math.sin(t*2)*0.5;
-  const armR=prog>0.9?0.75:-Math.sin(t*2)*0.5;
-  // Dust cloud on arrival
-  if(prog>0.85){
-    C.fillStyle='rgba(180,150,100,0.3)';
-    for(let d=0;d<4;d++){
-      C.beginPath();C.arc(-30+d*20,-bh*0.6,(8-d)*3,0,Math.PI*2);C.fill();
-    }
-  }
-  C.save();C.translate(0,bob);
-  _body(C,ch,s,fm,bw,bh,legSwing*(1-prog),-legSwing*(1-prog),armL,armR,
-    Math.sin(t)*3*(1-prog),'smile',false,{});
-  C.restore();
-}
-
-function _animAngry(C,ch,s,fm,t,frame){
-  const bw=40*s*fm,bh=52*s;
-  const shake=Math.sin(t*7)*3.5;
-  C.save();C.translate(shake,0);
-  _body(C,ch,s,fm,bw,bh,10,-10,0.9,-0.9,0,'flat',false,{angry:true});
-  // Anger symbols
-  const hw=28*s*fm;
-  C.font=`${16*s}px sans-serif`;
-  C.fillText('💢',hw,-bh/2-40*s*fm+Math.sin(t*4)*3);
-  // Steam lines
-  C.strokeStyle='rgba(255,150,50,0.7)';C.lineWidth=2;C.lineCap='round';
-  for(let i=0;i<3;i++){
-    C.beginPath();
-    C.moveTo(-hw*0.3+i*hw*0.3,-bh/2-42*s*fm);
-    C.lineTo(-hw*0.3+i*hw*0.3+Math.sin(i)*4,-bh/2-55*s*fm);
-    C.stroke();
-  }
-  C.restore();
-}
-
-function _animJump(C,ch,s,fm,t,frame){
-  const bw=40*s*fm,bh=52*s;
-  const jumpY=-Math.abs(Math.sin(frame*0.14))*60;
-  const legSpread=Math.abs(Math.sin(frame*0.14))*30;
-  C.save();C.translate(0,jumpY);
-  _body(C,ch,s,fm,bw,bh,legSpread,-legSpread,-1.05,1.05,0,'open',false,{wide:true});
-  C.restore();
-  // Jump dust on landing
-  if(jumpY>-8){
-    C.fillStyle='rgba(180,150,100,0.4)';
-    for(let d=0;d<5;d++){
-      C.beginPath();C.arc(-40+d*20,0,(6-d)*3,0,Math.PI*2);C.fill();
-    }
+  } catch(e){
+    console.error(e); hideOv();
+    // Fallback: split story manually
+    scenes = fallbackSplit(text);
+    finishLoad();
+    toast('Scenes created (offline mode)','ok');
   }
 }
 
-function _animShocked(C,ch,s,fm,t,frame){
-  const bw=40*s*fm,bh=52*s;
-  const tremb=Math.sin(t*9)*2.5;
-  C.save();C.translate(tremb,0);
-  _body(C,ch,s,fm,bw,bh,-6,6,-1.3,1.3,0,'open',false,{wide:true});
-  // Shock burst rays
-  const hw=28*s*fm;
-  for(let i=0;i<8;i++){
-    const ang=i/8*Math.PI*2+t*0.5;
-    const r=hw+12;
-    C.strokeStyle=`rgba(255,220,0,${0.5+Math.sin(t*3+i)*0.4})`;
-    C.lineWidth=2.5;
-    C.beginPath();
-    C.moveTo(Math.cos(ang)*r,-bh/2-32*s*fm+Math.sin(ang)*r);
-    C.lineTo(Math.cos(ang)*(r+10),-bh/2-32*s*fm+Math.sin(ang)*(r+10));
-    C.stroke();
-  }
-  C.restore();
-}
-
-function _animEat(C,ch,s,fm,t,frame){
-  const bw=40*s*fm,bh=52*s;
-  const chew=Math.abs(Math.sin(t*4))>0.5;
-  const bob=Math.sin(t)*1.5;
-  C.save();C.translate(0,bob);
-  _body(C,ch,s,fm,bw,bh,0,0,-1.15,0.1,0,chew?'open':'smile',false,{});
-  // Food
-  const hw=28*s*fm;
-  C.fillStyle='#F4A460';C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=5;
-  C.beginPath();C.arc(hw*0.6,-bh/2-20*s*fm,9*s,0,Math.PI*2);C.fill();
-  C.shadowBlur=0;
-  C.fillStyle='#FF6347';
-  C.beginPath();C.arc(hw*0.6,-bh/2-22*s*fm,5*s,0,Math.PI*2);C.fill();
-  // Aroma wisps
-  if(Math.sin(t*2)>0){
-    C.strokeStyle='rgba(255,200,100,0.4)';C.lineWidth=1.5;C.lineCap='round';
-    C.beginPath();C.moveTo(hw*0.55,-bh/2-32*s*fm);
-    C.quadraticCurveTo(hw*0.7,-bh/2-45*s*fm,hw*0.55,-bh/2-55*s*fm);C.stroke();
-  }
-  C.restore();
-}
-
-// ── HELPER: rounded rect ──────────────────────────────────────────
-function _roundRect(C,x,y,w,h,r){
-  C.beginPath();
-  C.moveTo(x+r,y);C.lineTo(x+w-r,y);C.arcTo(x+w,y,x+w,y+r,r);
-  C.lineTo(x+w,y+h-r);C.arcTo(x+w,y+h,x+w-r,y+h,r);
-  C.lineTo(x+r,y+h);C.arcTo(x,y+h,x,y+h-r,r);
-  C.lineTo(x,y+r);C.arcTo(x,y,x+r,y,r);C.closePath();
-}
-
-// ── FIX: missing negative number syntax ──────────────────────────
-const m0_08=0.08,mn0_08=-0.08;
-
-// ══════════════════════════════════════════════════════════════════
-//  RICH BACKGROUND PAINTER
-// ══════════════════════════════════════════════════════════════════
-
-function drawBackground(C, bgKey, frame, imgEl){
-  const t=frame*0.018;
-  if(imgEl){
-    // AI image with Ken Burns
-    C.save();
-    const sc=1+0.05*(frame/120);
-    const px=Math.sin(frame*0.007)*14;
-    C.translate(CW/2+px,CH/2);C.scale(sc,sc);C.translate(-CW/2,-CH/2);
-    const iw=imgEl.naturalWidth||imgEl.width,ih=imgEl.naturalHeight||imgEl.height;
-    const is=Math.max(CW/iw,CH/ih);
-    C.drawImage(imgEl,(CW-iw*is)/2,(CH-ih*is)/2,iw*is,ih*is);
-    C.restore();
-    // Rich vignette
-    const vg=C.createRadialGradient(CW/2,CH*0.4,CW*0.3,CW/2,CH*0.5,CW*0.9);
-    vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(0,0,0,0.4)');
-    C.fillStyle=vg;C.fillRect(0,0,CW,CH);
-    // Bottom darken for character
-    const bg2=C.createLinearGradient(0,CH*0.5,0,CH);
-    bg2.addColorStop(0,'transparent');bg2.addColorStop(1,'rgba(0,0,0,0.65)');
-    C.fillStyle=bg2;C.fillRect(0,0,CW,CH);
-    return;
-  }
-
-  switch(bgKey){
-    case 'wake':case 'home': _bgHome(C,t,frame,bgKey==='wake'); break;
-    case 'school':           _bgSchool(C,t,frame); break;
-    case 'market':           _bgMarket(C,t,frame); break;
-    case 'road':case 'walk':case 'run':case 'arrive': _bgRoad(C,t,frame); break;
-    case 'hospital':         _bgHospital(C,t,frame); break;
-    case 'forest':           _bgForest(C,t,frame); break;
-    case 'night':            _bgNight(C,t,frame); break;
-    case 'city':             _bgCity(C,t,frame); break;
-    case 'checkpoint':       _bgCheckpoint(C,t,frame); break;
-    default:                 _bgRoad(C,t,frame);
-  }
-}
-
-function _skyGrad(C,top,bot){
-  const g=C.createLinearGradient(0,0,0,CH*0.62);
-  g.addColorStop(0,top);g.addColorStop(1,bot);
-  C.fillStyle=g;C.fillRect(0,0,CW,CH);
-}
-function _ground(C,col1,col2){
-  const g=C.createLinearGradient(0,CH*0.56,0,CH);
-  g.addColorStop(0,col1);g.addColorStop(1,col2);
-  C.fillStyle=g;C.fillRect(0,CH*0.56,CW,CH);
-}
-function _sun(C,x,y,r,col='#FFD700'){
-  // Glow
-  const glow=C.createRadialGradient(x,y,r*0.5,x,y,r*2.5);
-  glow.addColorStop(0,'rgba(255,220,50,0.35)');glow.addColorStop(1,'transparent');
-  C.fillStyle=glow;C.fillRect(0,0,CW,CH*0.4);
-  // Rays
-  C.save();C.translate(x,y);
-  for(let i=0;i<12;i++){
-    const a=i/12*Math.PI*2;
-    C.strokeStyle='rgba(255,210,50,0.25)';C.lineWidth=3;
-    C.beginPath();C.moveTo(Math.cos(a)*r,Math.sin(a)*r);C.lineTo(Math.cos(a)*(r+22),Math.sin(a)*(r+22));C.stroke();
-  }
-  C.restore();
-  C.fillStyle=col;C.beginPath();C.arc(x,y,r,0,Math.PI*2);C.fill();
-  C.fillStyle='rgba(255,255,200,0.6)';C.beginPath();C.arc(x-r*0.2,y-r*0.2,r*0.45,0,Math.PI*2);C.fill();
-}
-function _cloud(C,x,y,w,h,alpha=0.88){
-  C.fillStyle=`rgba(255,255,255,${alpha})`;
-  C.shadowColor='rgba(0,0,0,0.08)';C.shadowBlur=8;
-  C.beginPath();C.ellipse(x,y,w*0.5,h*0.5,0,0,Math.PI*2);C.fill();
-  C.beginPath();C.ellipse(x+w*0.32,y+h*0.08,w*0.34,h*0.42,0,0,Math.PI*2);C.fill();
-  C.beginPath();C.ellipse(x-w*0.3,y+h*0.1,w*0.3,h*0.38,0,0,Math.PI*2);C.fill();
-  C.beginPath();C.ellipse(x+w*0.1,y-h*0.22,w*0.24,h*0.32,0,0,Math.PI*2);C.fill();
-  C.shadowBlur=0;
-}
-function _hills(C,col,yBase,amp){
-  C.fillStyle=col;C.beginPath();C.moveTo(0,yBase);
-  for(let x=0;x<=CW;x+=CW/12)C.lineTo(x,yBase-amp-Math.sin(x*0.013)*amp*0.8-Math.cos(x*0.022)*amp*0.5);
-  C.lineTo(CW,CH);C.lineTo(0,CH);C.closePath();C.fill();
-}
-function _road(C,roadCol,lineCol,t){
-  C.fillStyle=roadCol;
-  C.beginPath();C.moveTo(CW*0.28,CH*0.57);C.lineTo(CW*0.72,CH*0.57);C.lineTo(CW,CH);C.lineTo(0,CH);C.closePath();C.fill();
-  // Road edge lines
-  C.strokeStyle='rgba(255,255,255,0.15)';C.lineWidth=2;
-  C.beginPath();C.moveTo(CW*0.28,CH*0.57);C.lineTo(0,CH);C.stroke();
-  C.beginPath();C.moveTo(CW*0.72,CH*0.57);C.lineTo(CW,CH);C.stroke();
-  // Centre dashes (animated)
-  C.strokeStyle=lineCol;C.lineWidth=3;C.setLineDash([28,18]);
-  C.lineDashOffset=-t*60%46;
-  C.beginPath();C.moveTo(CW/2,CH*0.57);C.lineTo(CW/2,CH);C.stroke();
-  C.setLineDash([]);
-}
-function _tree(C,x,y,h,trunkW,leafColor){
-  // Trunk
-  C.fillStyle='#5D4037';
-  _roundRect(C,x-trunkW/2,y-h*0.35,trunkW,h*0.4,3);C.fill();
-  // Canopy layers
-  C.fillStyle=leafColor;
-  C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=8;
-  C.beginPath();C.moveTo(x,y-h);C.lineTo(x-h*0.42,y-h*0.45);C.lineTo(x+h*0.42,y-h*0.45);C.closePath();C.fill();
-  C.beginPath();C.moveTo(x,y-h*0.72);C.lineTo(x-h*0.52,y-h*0.18);C.lineTo(x+h*0.52,y-h*0.18);C.closePath();C.fill();
-  // Highlight
-  C.fillStyle='rgba(255,255,255,0.12)';
-  C.beginPath();C.moveTo(x-h*0.08,y-h);C.lineTo(x-h*0.32,y-h*0.5);C.lineTo(x,y-h*0.52);C.closePath();C.fill();
-  C.shadowBlur=0;
-}
-
-function _bgRoad(C,t,frame){
-  _skyGrad(C,'#5BB8F5','#A8D8EA');
-  _sun(C,CW*0.8,CH*0.12,32);
-  _cloud(C,CW*0.12+Math.sin(t*0.4)*8,CH*0.17,90,34,0.9);
-  _cloud(C,CW*0.58+Math.sin(t*0.3)*6,CH*0.22,68,26,0.85);
-  _cloud(C,CW*0.38+Math.sin(t*0.25)*5,CH*0.14,52,20,0.8);
-  // Far hills
-  _hills(C,'#4a7a3a',CH*0.56,55);
-  // Mid hills
-  _hills(C,'#5a9a46',CH*0.60,35);
-  // Ground
-  _ground(C,'#6aa84f','#3d6e2a');
-  // Grass texture strips
-  C.fillStyle='rgba(255,255,255,0.06)';
-  for(let i=0;i<6;i++) C.fillRect(CW*(0.08+i*0.15),CH*0.57,CW*0.06,2);
-  _road(C,'#556070','rgba(255,240,150,0.55)',t);
-  // Side bushes
-  C.fillStyle='#3d7a2a';
-  for(let b=0;b<5;b++){C.beginPath();C.arc(b*CW*0.22+20,CH*0.58,10+b*2,Math.PI,Math.PI*2);C.fill();}
-  for(let b=0;b<5;b++){C.beginPath();C.arc(b*CW*0.22+CW*0.62,CH*0.58,10+b*2,Math.PI,Math.PI*2);C.fill();}
-  // Trees
-  _tree(C,CW*0.08,CH*0.56,90,12,'#2d6e1e');
-  _tree(C,CW*0.88,CH*0.56,80,10,'#358025');
-  _tree(C,CW*0.92,CH*0.52,60,8,'#2d6e1e');
-}
-
-function _bgSchool(C,t,frame){
-  _skyGrad(C,'#64B5F6','#BBDEFB');
-  _sun(C,CW*0.85,CH*0.1,28,'#FDD835');
-  _cloud(C,CW*0.1+Math.sin(t*0.3)*6,CH*0.16,78,28,0.88);
-  _cloud(C,CW*0.62+Math.sin(t*0.2)*5,CH*0.2,60,22,0.82);
-  _hills(C,'#5a9a46',CH*0.55,40);
-  _ground(C,'#7cb55a','#4a8e35');
-  _road(C,'#8a9aa0','rgba(255,255,255,0.4)',t);
-  // School building — main
-  C.fillStyle='#FFF176';
-  C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=12;
-  _roundRect(C,CW*0.05,CH*0.22,CW*0.5,CH*0.32,6);C.fill();C.shadowBlur=0;
-  // Roof
-  C.fillStyle='#E53935';
-  C.beginPath();C.moveTo(CW*0.02,CH*0.24);C.lineTo(CW*0.3,CH*0.12);C.lineTo(CW*0.58,CH*0.24);C.closePath();C.fill();
-  // Roof highlight
-  C.fillStyle='rgba(255,255,255,0.15)';
-  C.beginPath();C.moveTo(CW*0.12,CH*0.22);C.lineTo(CW*0.3,CH*0.13);C.lineTo(CW*0.3,CH*0.22);C.closePath();C.fill();
-  // Windows
-  C.fillStyle='#90CAF9';C.strokeStyle='#1565C0';C.lineWidth=2;
-  [[0.1,0.27],[0.22,0.27],[0.38,0.27],[0.1,0.37],[0.22,0.37],[0.38,0.37]].forEach(([wx,wy])=>{
-    _roundRect(C,CW*wx,CH*wy,CW*0.09,CH*0.07,3);C.fill();C.stroke();
-    // Window shine
-    C.fillStyle='rgba(255,255,255,0.35)';
-    C.fillRect(CW*wx+3,CH*wy+3,CW*0.03,CH*0.025);
-    C.fillStyle='#90CAF9';
-  });
-  // Door
-  C.fillStyle='#1565C0';
-  _roundRect(C,CW*0.25,CH*0.41,CW*0.1,CH*0.14,8);C.fill();
-  C.fillStyle='#FFD700';C.beginPath();C.arc(CW*0.34,CH*0.485,3,0,Math.PI*2);C.fill();
-  // SCHOOL sign
-  C.fillStyle='rgba(0,0,0,0.7)';
-  C.font=`bold ${16}px Poppins,sans-serif`;C.textAlign='center';
-  C.fillText('ST. MARY SCHOOL',CW*0.3,CH*0.265);C.textAlign='left';
-  // School gate
-  C.strokeStyle='#795548';C.lineWidth=5;
-  C.beginPath();C.moveTo(CW*0.58,CH*0.35);C.lineTo(CW*0.58,CH*0.58);C.stroke();
-  C.beginPath();C.moveTo(CW*0.66,CH*0.35);C.lineTo(CW*0.66,CH*0.58);C.stroke();
-  C.beginPath();C.moveTo(CW*0.55,CH*0.35);C.lineTo(CW*0.69,CH*0.35);C.stroke();
-  // Mango tree
-  _tree(C,CW*0.82,CH*0.55,100,14,'#2E7D32');
-  // Flowers
-  ['#FF5252','#FFD740','#69F0AE'].forEach((col,i)=>{
-    C.fillStyle=col;C.beginPath();C.arc(CW*(0.6+i*0.05),CH*0.57,5,0,Math.PI*2);C.fill();
-  });
-}
-
-function _bgMarket(C,t,frame){
-  _skyGrad(C,'#FF8F00','#FFCA28');
-  _sun(C,CW*0.75,CH*0.1,36,'#FF6F00');
-  _cloud(C,CW*0.15+Math.sin(t*0.3)*6,CH*0.18,70,24,0.75);
-  _hills(C,'#8d6e4a',CH*0.56,38);
-  _ground(C,'#a1887f','#6d4c41');
-  // Market stalls
-  const stallCols=[['#E53935','#EF9A9A'],['#F57F17','#FFE082'],['#2E7D32','#A5D6A7'],['#1565C0','#90CAF9']];
-  stallCols.forEach(([col,light],i)=>{
-    const sx=CW*(0.02+i*0.25);const sw=CW*0.23;const sy=CH*0.28;
-    // Stall frame
-    C.fillStyle='#5D4037';
-    C.fillRect(sx,sy,8,CH*0.28);C.fillRect(sx+sw-8,sy,8,CH*0.28);
-    // Canopy
-    C.fillStyle=col;C.shadowColor='rgba(0,0,0,0.15)';C.shadowBlur=6;
-    C.beginPath();C.moveTo(sx-8,sy);C.lineTo(sx+sw+8,sy);
-    C.lineTo(sx+sw,sy+CH*0.07);C.lineTo(sx,sy+CH*0.07);C.closePath();C.fill();
-    // Canopy stripe
-    C.fillStyle=light;
-    for(let s2=0;s2<5;s2++){
-      C.beginPath();C.moveTo(sx+s2*(sw+16)/5,sy);C.lineTo(sx+s2*(sw+16)/5+8,sy+CH*0.07);
-      C.lineTo(sx+s2*(sw+16)/5+12,sy+CH*0.07);C.lineTo(sx+s2*(sw+16)/5+4,sy);C.closePath();C.fill();
-    }
-    C.shadowBlur=0;
-    // Table
-    C.fillStyle='#795548';
-    _roundRect(C,sx,sy+CH*0.07,sw,CH*0.1,4);C.fill();
-    // Produce
-    const items=['🍅','🌽','🍌','🥬','🍊'];
-    items.slice(0,4).forEach((item,j)=>{
-      C.font=`${16}px serif`;C.fillText(item,sx+6+j*sw*0.25,sy+CH*0.15);
+function fallbackSplit(text){
+  const sents = text.match(/[^.!?]+[.!?]+/g) || [text];
+  const groups = [];
+  for(let i=0;i<sents.length;i+=2){
+    const narr = (sents[i]+(sents[i+1]||'')).trim();
+    groups.push({
+      narration: narr,
+      imgPrompt: `${narr.substring(0,80)}, 3D photorealistic render, Unreal Engine quality, cinematic lighting, 9:16 vertical portrait`,
+      imgUrl:null, imgStatus:'idle', imgEl:null
     });
-  });
-  // Hanging goods string
-  C.strokeStyle='#5D4037';C.lineWidth=2;
-  C.beginPath();C.moveTo(0,CH*0.26);C.lineTo(CW,CH*0.26);C.stroke();
-  // Dirt ground with dust effect
-  C.fillStyle='rgba(160,120,80,0.25)';
-  for(let d=0;d<8;d++){C.beginPath();C.arc(d*70+20,CH*0.58,(5+d%3)*2,0,Math.PI*2);C.fill();}
-}
-
-function _bgHospital(C,t,frame){
-  _skyGrad(C,'#E3F2FD','#BBDEFB');
-  _sun(C,CW*0.82,CH*0.1,26,'#FDD835');
-  _cloud(C,CW*0.1+Math.sin(t*0.3)*5,CH*0.15,72,26,0.85);
-  _hills(C,'#81C784',CH*0.56,35);
-  _ground(C,'#A5D6A7','#66BB6A');
-  _road(C,'#90A4AE','rgba(255,255,255,0.4)',t);
-  // Hospital building
-  C.fillStyle='#FAFAFA';C.shadowColor='rgba(0,0,0,0.15)';C.shadowBlur=14;
-  _roundRect(C,CW*0.04,CH*0.16,CW*0.56,CH*0.38,8);C.fill();C.shadowBlur=0;
-  // Horizontal stripes
-  C.fillStyle='#E3F2FD';
-  C.fillRect(CW*0.04,CH*0.24,CW*0.56,CH*0.04);
-  C.fillRect(CW*0.04,CH*0.35,CW*0.56,CH*0.04);
-  // Red cross sign
-  C.fillStyle='#E53935';
-  C.fillRect(CW*0.22,CH*0.18,CW*0.12,CH*0.06);
-  C.fillRect(CW*0.26,CH*0.14,CW*0.04,CH*0.14);
-  // HOSPITAL text
-  C.fillStyle='#1565C0';C.font=`bold 14px Poppins,sans-serif`;C.textAlign='center';
-  C.fillText('COUNTY HOSPITAL',CW*0.32,CH*0.165);C.textAlign='left';
-  // Windows
-  C.fillStyle='#BBDEFB';C.strokeStyle='#90CAF9';C.lineWidth=1.5;
-  [[0.07,0.26],[0.19,0.26],[0.33,0.26],[0.45,0.26],[0.07,0.38],[0.19,0.38],[0.33,0.38],[0.45,0.38]].forEach(([wx,wy])=>{
-    _roundRect(C,CW*wx,CH*wy,CW*0.1,CH*0.07,2);C.fill();C.stroke();
-  });
-  // Ambulance
-  C.fillStyle='#FFFFFF';C.shadowColor='rgba(0,0,0,0.2)';C.shadowBlur=6;
-  _roundRect(C,CW*0.62,CH*0.42,CW*0.28,CH*0.12,5);C.fill();C.shadowBlur=0;
-  C.fillStyle='#E53935';C.fillRect(CW*0.67,CH*0.44,CW*0.1,CH*0.04);C.fillRect(CW*0.7,CH*0.41,CW*0.04,CH*0.10);
-  // Ambulance wheel
-  C.fillStyle='#212121';
-  C.beginPath();C.arc(CW*0.67,CH*0.54,CW*0.03,0,Math.PI*2);C.fill();
-  C.beginPath();C.arc(CW*0.86,CH*0.54,CW*0.03,0,Math.PI*2);C.fill();
-}
-
-function _bgHome(C,t,frame,isMorning){
-  // Interior scene
-  const wallCol=isMorning?'#FFF3E0':'#FBE9E7';
-  C.fillStyle=wallCol;C.fillRect(0,0,CW,CH);
-  // Wall pattern
-  C.fillStyle='rgba(0,0,0,0.02)';
-  for(let x=0;x<CW;x+=40) C.fillRect(x,0,1,CH);
-  for(let y=0;y<CH;y+=40) C.fillRect(0,y,CW,1);
-  // Floor
-  const fl=C.createLinearGradient(0,CH*0.7,0,CH);
-  fl.addColorStop(0,'#8D6E63');fl.addColorStop(1,'#5D4037');
-  C.fillStyle=fl;C.fillRect(0,CH*0.7,CW,CH);
-  // Floor tiles
-  C.strokeStyle='rgba(255,255,255,0.12)';C.lineWidth=1;
-  for(let x=0;x<CW;x+=54) C.strokeRect(x,CH*0.7,54,CH*0.3);
-  for(let y=CH*0.7;y<CH;y+=54) C.strokeRect(0,y,CW,54);
-  // Back wall stripe
-  C.fillStyle='rgba(0,0,0,0.04)';C.fillRect(0,CH*0.68,CW,4);
-  // Big window
-  C.fillStyle='rgba(0,0,0,0.12)';_roundRect(C,CW*0.55,CH*0.08,CW*0.38,CH*0.42,6);C.fill();
-  C.fillStyle=isMorning?'#FFF9C4':'#FFCC02';
-  _roundRect(C,CW*0.55,CH*0.08,CW*0.38,CH*0.42,6);C.fill();
-  // Window frame
-  C.strokeStyle='#5D4037';C.lineWidth=4;_roundRect(C,CW*0.55,CH*0.08,CW*0.38,CH*0.42,6);C.stroke();
-  C.beginPath();C.moveTo(CW*0.74,CH*0.08);C.lineTo(CW*0.74,CH*0.5);C.stroke();
-  C.beginPath();C.moveTo(CW*0.55,CH*0.29);C.lineTo(CW*0.93,CH*0.29);C.stroke();
-  // Morning sunrays through window
-  if(isMorning){
-    C.fillStyle='rgba(255,235,100,0.08)';
-    for(let r=0;r<4;r++){
-      C.beginPath();C.moveTo(CW*0.74,CH*0.08);
-      C.lineTo(CW*(0.4+r*0.15),CH*0.7);C.lineTo(CW*(0.4+r*0.15+0.12),CH*0.7);
-      C.closePath();C.fill();
-    }
   }
-  // Bed (for wake scene)
-  if(isMorning){
-    C.fillStyle='#FF8A65';_roundRect(C,CW*0.02,CH*0.5,CW*0.48,CH*0.2,6);C.fill();
-    C.fillStyle='#FFCCBC';_roundRect(C,CW*0.02,CH*0.5,CW*0.22,CH*0.2,6);C.fill();// pillow
-    // Blanket pattern
-    C.strokeStyle='rgba(200,80,30,0.4)';C.lineWidth=2;
-    for(let s2=0;s2<5;s2++) C.strokeRect(CW*(0.04+s2*0.09),CH*0.52,CW*0.08,CH*0.16);
-  }
-  // Picture frames on wall
-  [[0.04,0.1,'#FF7043'],[0.18,0.08,'#42A5F5'],[0.34,0.12,'#66BB6A']].forEach(([fx,fy,fc])=>{
-    C.strokeStyle='#5D4037';C.lineWidth=3;
-    _roundRect(C,CW*fx,CH*fy,CW*0.1,CH*0.14,2);C.stroke();
-    C.fillStyle=fc;_roundRect(C,CW*fx+3,CH*fy+3,CW*0.1-6,CH*0.14-6,2);C.fill();
-  });
-  // TV
-  C.fillStyle='#212121';_roundRect(C,CW*0.03,CH*0.42,CW*0.38,CH*0.22,8);C.fill();
-  C.fillStyle='#424242';_roundRect(C,CW*0.05,CH*0.44,CW*0.34,CH*0.18,4);C.fill();
-  C.fillStyle='rgba(0,80,200,0.3)';_roundRect(C,CW*0.05,CH*0.44,CW*0.34,CH*0.18,4);C.fill();
+  return groups.length ? groups : [{narration:text, imgPrompt:`${text.substring(0,80)}, 3D render, cinematic, 9:16 vertical`, imgUrl:null, imgStatus:'idle', imgEl:null}];
 }
 
-function _bgForest(C,t,frame){
-  // Deep jungle
-  C.fillStyle='#1B5E20';C.fillRect(0,0,CW,CH);
-  // Canopy gradient
-  const cg=C.createLinearGradient(0,0,0,CH*0.5);
-  cg.addColorStop(0,'#1B5E20');cg.addColorStop(1,'#2E7D32');
-  C.fillStyle=cg;C.fillRect(0,0,CW,CH*0.5);
-  // Sunlight shafts
-  C.fillStyle='rgba(255,235,100,0.07)';
-  for(let i=0;i<6;i++){
-    const sx=CW*(0.1+i*0.16)+Math.sin(t+i)*10;
-    C.save();C.translate(sx,0);C.rotate(0.05+i*0.02);
-    C.fillRect(-15,0,30,CH*0.7);C.restore();
-  }
-  // Far trees
-  for(let i=0;i<8;i++) _tree(C,CW*i/7,CH*0.52,100+i%3*20,12,'#1B5E20');
-  // Ground
-  const gg=C.createLinearGradient(0,CH*0.56,0,CH);
-  gg.addColorStop(0,'#2E7D32');gg.addColorStop(1,'#1B5E20');
-  C.fillStyle=gg;C.fillRect(0,CH*0.56,CW,CH);
-  // Dirt path
-  C.fillStyle='#5D4037';
-  C.beginPath();C.moveTo(CW*0.35,CH*0.57);C.lineTo(CW*0.65,CH*0.57);C.lineTo(CW*0.58,CH);C.lineTo(CW*0.42,CH);C.closePath();C.fill();
-  // Path stones
-  C.fillStyle='rgba(255,255,255,0.12)';
-  for(let s2=0;s2<5;s2++){C.beginPath();C.ellipse(CW*0.5+Math.sin(s2)*20,CH*(0.65+s2*0.07),12,6,0.1,0,Math.PI*2);C.fill();}
-  // Near trees
-  _tree(C,CW*0.04,CH*0.56,120,16,'#2E7D32');
-  _tree(C,CW*0.88,CH*0.56,110,14,'#1B5E20');
-  // Ferns
-  C.fillStyle='#388E3C';
-  for(let f=0;f<12;f++){
-    const fx=CW*(0.05+f*0.08),fy=CH*0.57;
-    C.beginPath();C.ellipse(fx,fy,15,8,f%2===0?0.4:-0.4,0,Math.PI*2);C.fill();
-  }
-  // Fireflies
-  for(let i=0;i<12;i++){
-    const fx=(i*137+frame*0.4)%CW;
-    const fy=CH*0.2+(i*83)%(CH*0.35);
-    const glow=0.3+Math.abs(Math.sin(frame*0.05+i))*0.7;
-    C.fillStyle=`rgba(200,255,100,${glow})`;
-    C.beginPath();C.arc(fx,fy,2.5,0,Math.PI*2);C.fill();
-  }
+function finishLoad(){
+  curScene = 0;
+  renderSceneList();
+  updateCount();
+  drawFrame(0, [], -1);
+  document.getElementById('genall-btn').style.display = 'flex';
+  toast(`✅ ${scenes.length} scenes ready! Click "Generate Images".`,'ok');
 }
 
-function _bgNight(C,t,frame){
-  const sg=C.createLinearGradient(0,0,0,CH*0.65);
-  sg.addColorStop(0,'#0A0E2A');sg.addColorStop(1,'#1a2a4a');
-  C.fillStyle=sg;C.fillRect(0,0,CW,CH);
-  // Stars
-  for(let i=0;i<120;i++){
-    const sx=(i*157+3)%CW;const sy=(i*83+7)%(CH*0.55);
-    const blink=0.3+0.7*Math.abs(Math.sin(frame*0.03+i));
-    C.fillStyle=`rgba(255,255,240,${blink})`;
-    const sr=i%5===0?2:1;
-    C.beginPath();C.arc(sx,sy,sr,0,Math.PI*2);C.fill();
-  }
-  // Moon
-  C.shadowColor='rgba(200,220,255,0.6)';C.shadowBlur=25;
-  C.fillStyle='#F5F5DC';C.beginPath();C.arc(CW*0.8,CH*0.1,30,0,Math.PI*2);C.fill();
-  C.fillStyle='#E8E8C8';C.beginPath();C.arc(CW*0.8-8,CH*0.1-6,10,0,Math.PI*2);C.fill();
-  C.shadowBlur=0;
-  // Moon glow
-  const mg=C.createRadialGradient(CW*0.8,CH*0.1,20,CW*0.8,CH*0.1,120);
-  mg.addColorStop(0,'rgba(200,220,255,0.2)');mg.addColorStop(1,'transparent');
-  C.fillStyle=mg;C.fillRect(0,0,CW,CH*0.4);
-  // Hills silhouette
-  C.fillStyle='#0d1530';
-  C.beginPath();C.moveTo(0,CH*0.58);
-  for(let x=0;x<=CW;x+=CW/10) C.lineTo(x,CH*0.56-50-Math.sin(x*0.014)*40);
-  C.lineTo(CW,CH);C.lineTo(0,CH);C.closePath();C.fill();
-  // Ground
-  C.fillStyle='#0f1a0f';C.fillRect(0,CH*0.6,CW,CH);
-  // Campfire glow
-  const fg=C.createRadialGradient(CW/2,CH*0.72,0,CW/2,CH*0.72,110);
-  fg.addColorStop(0,'rgba(255,120,30,0.4)');fg.addColorStop(0.5,'rgba(255,80,0,0.15)');fg.addColorStop(1,'transparent');
-  C.fillStyle=fg;C.fillRect(0,0,CW,CH);
-  // Fire
-  C.fillStyle='#FF6F00';C.beginPath();C.ellipse(CW/2,CH*0.72,18,12,0,0,Math.PI*2);C.fill();
-  C.fillStyle='#FF8F00';C.beginPath();C.ellipse(CW/2,CH*0.70,12,18+Math.sin(frame*0.15)*4,0,0,Math.PI*2);C.fill();
-  C.fillStyle='#FFD54F';C.beginPath();C.ellipse(CW/2,CH*0.68,6,12+Math.sin(frame*0.2)*3,0,0,Math.PI*2);C.fill();
-  // Logs
-  C.fillStyle='#5D4037';
-  C.save();C.translate(CW/2,CH*0.74);C.rotate(0.4);C.fillRect(-24,-4,48,8);C.restore();
-  C.save();C.translate(CW/2,CH*0.74);C.rotate(-0.4);C.fillRect(-24,-4,48,8);C.restore();
-  // Acacia silhouette
-  C.fillStyle='#0a1208';_tree(C,CW*0.12,CH*0.56,90,10,'#0a1208');
-  C.fillStyle='#0a1208';_tree(C,CW*0.85,CH*0.56,80,9,'#0a1208');
-}
-
-function _bgCity(C,t,frame){
-  _skyGrad(C,'#90A4AE','#B0BEC5');
-  _sun(C,CW*0.75,CH*0.1,25,'#FFCA28');
-  // Buildings
-  const bldgs=[
-    {x:0.0,w:0.15,h:0.55,col:'#546E7A',win:'#FFEE58'},{x:0.14,w:0.12,h:0.45,col:'#607D8B',win:'#80D8FF'},
-    {x:0.25,w:0.18,h:0.65,col:'#455A64',win:'#FFEE58'},{x:0.42,w:0.14,h:0.5,col:'#546E7A',win:'#80D8FF'},
-    {x:0.55,w:0.2,h:0.7,col:'#37474F',win:'#FFCA28'},{x:0.74,w:0.14,h:0.48,col:'#607D8B',win:'#FFEE58'},
-    {x:0.87,w:0.13,h:0.58,col:'#455A64',win:'#80D8FF'}
-  ];
-  bldgs.forEach(b=>{
-    C.fillStyle=b.col;C.fillRect(CW*b.x,CH*(1-b.h)-CH*0.04,CW*b.w,CH*b.h);
-    // Windows grid
-    for(let wr=0;wr<8;wr++) for(let wc=0;wc<3;wc++){
-      const wx=CW*b.x+8+wc*(CW*b.w/3);
-      const wy=CH*(1-b.h)-CH*0.04+12+wr*CH*0.07;
-      if(wy<CH*0.57){
-        C.fillStyle=Math.random()>0.3?b.win:'rgba(0,0,0,0.3)';
-        C.fillRect(wx,wy,CW*b.w/3-8,CH*0.05);
-      }
-    }
-  });
-  _ground(C,'#546E7A','#37474F');
-  _road(C,'#37474F','rgba(255,255,255,0.5)',t);
-  // Matatu
-  C.fillStyle='#F4511E';_roundRect(C,CW*0.1,CH*0.58,CW*0.22,CH*0.1,5);C.fill();
-  C.fillStyle='#212121';C.beginPath();C.arc(CW*0.16,CH*0.68,CW*0.025,0,Math.PI*2);C.fill();
-  C.beginPath();C.arc(CW*0.28,CH*0.68,CW*0.025,0,Math.PI*2);C.fill();
-  C.fillStyle='#BBDEFB';C.fillRect(CW*0.12,CH*0.59,CW*0.06,CH*0.06);
-  C.fillStyle='#FFD740';C.fillText('ROUTE 11 NAIROBI',CW*0.12,CH*0.599);
-  // Power lines
-  C.strokeStyle='rgba(0,0,0,0.4)';C.lineWidth=1.5;
-  C.beginPath();C.moveTo(0,CH*0.35);C.lineTo(CW,CH*0.35);C.stroke();
-  for(let p=0;p<8;p++){
-    C.beginPath();C.moveTo(CW*p/7,CH*0.32);C.lineTo(CW*p/7,CH*0.38);C.stroke();
-  }
-}
-
-function _bgCheckpoint(C,t,frame){
-  _bgRoad(C,t,frame);
-  // Police car
-  C.fillStyle='#0D47A1';_roundRect(C,CW*0.55,CH*0.42,CW*0.35,CH*0.14,6);C.fill();
-  C.fillStyle='#FAFAFA';C.fillRect(CW*0.62,CH*0.44,CW*0.14,CH*0.08);// windshield
-  // Lights flashing
-  const fl=frame%20<10;
-  C.fillStyle=fl?'#E53935':'rgba(200,0,0,0.3)';
-  C.beginPath();C.arc(CW*0.65,CH*0.41,8,0,Math.PI*2);C.fill();
-  C.fillStyle=fl?'rgba(0,0,200,0.3)':'#1565C0';
-  C.beginPath();C.arc(CW*0.76,CH*0.41,8,0,Math.PI*2);C.fill();
-  if(fl){
-    const gfl=C.createRadialGradient(CW*0.65,CH*0.41,4,CW*0.65,CH*0.41,50);
-    gfl.addColorStop(0,'rgba(255,0,0,0.25)');gfl.addColorStop(1,'transparent');
-    C.fillStyle=gfl;C.fillRect(0,0,CW,CH*0.5);
-  }
-  // Barriers
-  const barCols=['#E53935','#FFFFFF'];
-  for(let b=0;b<8;b++){
-    C.fillStyle=barCols[b%2];C.fillRect(CW*0.02+b*(CW*0.06),CH*0.55,CW*0.055,CH*0.04);
-  }
-  // POLICE CHECKPOINT sign
-  C.fillStyle='#FFFFFF';_roundRect(C,CW*0.1,CH*0.47,CW*0.3,CH*0.06,4);C.fill();
-  C.strokeStyle='#E53935';C.lineWidth=2;_roundRect(C,CW*0.1,CH*0.47,CW*0.3,CH*0.06,4);C.stroke();
-  C.fillStyle='#D32F2F';C.font=`bold 13px Poppins,sans-serif`;C.textAlign='center';
-  C.fillText('POLICE CHECKPOINT',CW*0.25,CH*0.510);C.textAlign='left';
-  // Cones
-  [0.05,0.15,0.5].forEach(cx=>{
-    C.fillStyle='#FF6F00';
-    C.beginPath();C.moveTo(CW*cx,CH*0.59);C.lineTo(CW*cx-8,CH*0.59);C.lineTo(CW*cx-3,CH*0.52);C.lineTo(CW*cx+3,CH*0.52);C.lineTo(CW*cx+8,CH*0.59);C.closePath();C.fill();
-    C.fillStyle='#FFF';C.fillRect(CW*cx-8,CH*0.555,16,3);
-  });
-}
-
-// ══════════════════════════════════════════════════════════════════
-//  SCENE FRAME RENDERER
-// ══════════════════════════════════════════════════════════════════
-
-const ACTION_MAP=[
-  {keys:['wake','waking','wakes up','gets up'],anim:'wake',bg:'wake'},
-  {keys:['run','running','sprint','flee','rush','races'],anim:'run',bg:'road'},
-  {keys:['runs scared','scared','panick'],anim:'run_scared',bg:'road'},
-  {keys:['laugh','laughing','laughs','chuckle'],anim:'laugh',bg:'default'},
-  {keys:['cry','crying','cries','tears','sob'],anim:'cry',bg:'default'},
-  {keys:['arrive','arrives','arriving','steps out','drives up','bursts in','bursts through','pulls up'],anim:'arrive',bg:'road'},
-  {keys:['shout','shouting','shouts','yell','screaming','screams','angry','argues','argue'],anim:'angry',bg:'default'},
-  {keys:['shock','shocked','surprised','jaw drop'],anim:'shocked',bg:'default'},
-  {keys:['jump','jumping','jumps','leap','cheer','cheering'],anim:'jump',bg:'default'},
-  {keys:['eat','eating','eats','devour','feast'],anim:'eat',bg:'market'},
-  {keys:['walk','walking','walks','stroll','goes to','heading','march'],anim:'walk',bg:'road'},
-  {keys:['talk','talking','talks','says','said','tells','speak','explains','greet','discuss'],anim:'talk',bg:'default'},
-];
-
-function detectAnim(text){
-  const tx=(text||'').toLowerCase();
-  for(const r of ACTION_MAP) if(r.keys.some(k=>tx.includes(k))) return {anim:r.anim,bg:r.bg};
-  return {anim:'stand',bg:'default'};
-}
-
-let scenes=[];let curScene=-1;let playTimer=null;let imgCache={};
-
-async function drawSceneFrame(idx,frame){
-  ctx.clearRect(0,0,CW,CH);
-  if(idx<0||idx>=scenes.length){
-    // Empty state
-    const eg=ctx.createLinearGradient(0,0,0,CH);
-    eg.addColorStop(0,'#0a0d1a');eg.addColorStop(1,'#0d1520');
-    ctx.fillStyle=eg;ctx.fillRect(0,0,CW,CH);
-    ctx.font='72px serif';ctx.textAlign='center';ctx.fillText('🎬',CW/2,CH/2-20);
-    ctx.font='bold 24px Poppins,sans-serif';ctx.fillStyle='rgba(255,255,255,0.2)';
-    ctx.fillText('Your Preview',CW/2,CH/2+40);ctx.textAlign='left';return;
-  }
-  const s=scenes[idx];
-  const {anim,bg}=detectAnim(s.action||s.caption||'');
-  const bgKey=s.location||bg;
-  const imgEl=imgCache[idx]||null;
-
-  // 1. Background
-  drawBackground(ctx,bgKey,frame,imgEl);
-
-  // 2. Characters
-  const chars=s.characters||[];
-  const count=chars.length;
-  const positions=count===1?[CW*0.5]:count===2?[CW*0.32,CW*0.68]:[CW*0.22,CW*0.5,CW*0.78];
-  const anims=count===1?[anim]:count===2?[anim,'talk']:[anim,'talk','stand'];
-
-  chars.slice(0,3).forEach((name,i)=>{
-    if(!CHARS[name])return;
-    const px=positions[i];const py=CH*0.76;
-    const flip=i>0&&count>1; // second char faces left
-    ctx.save();
-    if(flip){ctx.translate(px,py);ctx.scale(-1,1);ctx.translate(-px,-py);}
-    ctx.translate(0,0);
-    // Shadow under character
-    ctx.fillStyle='rgba(0,0,0,0.2)';ctx.beginPath();
-    const cs=CHARS[name].size*(CHARS[name].fat?1.3:1);
-    ctx.ellipse(px,py+2,28*cs,8,0,0,Math.PI*2);ctx.fill();
-    // Draw character
-    ctx.save();ctx.translate(px,py);
-    drawChar(ctx,name,anims[i]||'stand',frame);
-    ctx.restore();
-    ctx.restore();
-  });
-
-  // 3. Speech bubble
-  if(s.dialogue&&s.speaker&&frame>18){
-    const alpha=Math.min(1,(frame-18)/12);
-    ctx.globalAlpha=alpha;
-    drawSpeechBubble(ctx,s.dialogue,s.speaker,CW/2,CH*0.35);
-    ctx.globalAlpha=1;
-  }
-
-  // 4. Caption
-  const capAlpha=Math.min(1,frame/14);
-  ctx.globalAlpha=capAlpha;
-  drawCaption(ctx,s.caption||'');
-  ctx.globalAlpha=1;
-
-  // 5. HUD
-  drawHUD(ctx,idx,s);
-}
-
-function drawSpeechBubble(C,text,charName,x,y){
-  const ch=CHARS[charName];
-  const accentColor=ch?ch.shirt:'#FF4500';
-  C.font='bold 27px Poppins,sans-serif';
-  const words=text.split(' ');const maxW=370;const lh=38;
-  const lines=[];let cur='';
-  words.forEach(w=>{const tt=cur?cur+' '+w:w;if(C.measureText(tt).width>maxW){lines.push(cur);cur=w;}else cur=tt;});if(cur)lines.push(cur);
-  const bw=Math.min(440,maxW+50),bh=lines.length*lh+58;
-  const bx=Math.max(8,x-bw/2),by=Math.max(8,y-bh/2);
-  // Drop shadow
-  C.shadowColor='rgba(0,0,0,0.35)';C.shadowBlur=18;C.shadowOffsetY=4;
-  // Bubble
-  _roundRect(C,bx,by,bw,bh,18);C.fillStyle='rgba(255,255,255,0.97)';C.fill();
-  C.shadowColor='transparent';C.shadowBlur=0;C.shadowOffsetY=0;
-  // Accent top stripe
-  _roundRect(C,bx,by,bw,7,18);C.fillStyle=accentColor;C.fill();
-  C.fillRect(bx,by+7,bw,3); // flatten bottom of stripe
-  // Speaker name tag
-  C.fillStyle=accentColor;
-  _roundRect(C,bx+12,by+14,C.measureText(charName).width+18,22,8);C.fill();
-  C.fillStyle='#fff';C.font='bold 12px Inter,sans-serif';C.textAlign='left';
-  C.fillText(charName,bx+21,by+29);
-  // Text lines
-  C.font='bold 27px Poppins,sans-serif';C.fillStyle='#111';C.textAlign='center';
-  lines.forEach((ln,i)=>C.fillText(ln,x,by+44+i*lh));
-  // Tail
-  C.fillStyle='rgba(255,255,255,0.97)';
-  C.beginPath();C.moveTo(x-12,by+bh);C.lineTo(x,by+bh+22);C.lineTo(x+12,by+bh);C.closePath();C.fill();
-  C.textAlign='left';
-}
-
-function drawCaption(C,text){
-  if(!text)return;
-  C.font='bold 30px Poppins,sans-serif';
-  const words=text.split(' ');const maxW=CW-90;const lh=44;
-  const lines=[];let cur='';
-  words.forEach(w=>{const tt=cur?cur+' '+w:w;if(C.measureText(tt).width>maxW){lines.push(cur);cur=w;}else cur=tt;});if(cur)lines.push(cur);
-  const totalH=lines.length*lh+32;const by=CH-totalH-52;
-  // Glass morphism bg
-  C.shadowColor='rgba(0,0,0,0.4)';C.shadowBlur=12;
-  _roundRect(C,14,by-8,CW-28,totalH+8,12);
-  C.fillStyle='rgba(10,10,20,0.78)';C.fill();
-  C.shadowBlur=0;
-  // Accent gradient stripe
-  const ag=C.createLinearGradient(14,0,CW-14,0);
-  ag.addColorStop(0,'#ff4500');ag.addColorStop(0.5,'#ff8c00');ag.addColorStop(1,'#ffd700');
-  _roundRect(C,14,by-8,CW-28,5,3);C.fillStyle=ag;C.fill();
-  C.textAlign='center';
-  lines.forEach((ln,i)=>{
-    // Text outline
-    C.strokeStyle='rgba(0,0,0,0.9)';C.lineWidth=4;C.lineJoin='round';
-    C.strokeText(ln,CW/2,by+i*lh+28);
-    C.fillStyle='#fff';C.font='bold 30px Poppins,sans-serif';
-    C.fillText(ln,CW/2,by+i*lh+28);
-  });
-  C.textAlign='left';
-}
-
-function drawHUD(C,idx,s){
-  // Scene pill
-  C.shadowColor='rgba(0,0,0,0.5)';C.shadowBlur=8;
-  _roundRect(C,14,44,64,34,8);C.fillStyle='rgba(0,0,0,0.62)';C.fill();
-  C.shadowBlur=0;
-  C.font='bold 10px Inter,sans-serif';C.fillStyle='rgba(255,255,255,0.45)';C.fillText('SCENE',20,57);
-  C.font='bold 20px Bebas Neue,sans-serif';C.fillStyle='#fff';C.fillText(idx+1,20,76);
-  // Character emojis top right
-  let ex=CW-14;
-  (s.characters||[]).slice(0,3).reverse().forEach(n=>{
-    if(!CHARS[n])return;
-    C.font='20px serif';C.textAlign='right';C.fillText(CHARS[n].emoji,ex,66);ex-=28;
-  });
-  C.textAlign='left';
-  // Handle watermark
-  C.font='bold 15px Inter,sans-serif';C.textAlign='right';
-  C.shadowColor='rgba(0,0,0,0.8)';C.shadowBlur=6;
-  C.fillStyle='rgba(255,255,255,0.38)';
-  C.fillText('@CartoonStudio',CW-12,CH-14);
-  C.shadowBlur=0;C.textAlign='left';
-  // Location name top centre
-  const locName=(s.location||'').replace(/_/g,' ').toUpperCase();
-  if(locName){
-    C.font='bold 11px Inter,sans-serif';C.textAlign='center';
-    C.fillStyle='rgba(255,255,255,0.28)';
-    C.fillText('📍 '+locName,CW/2,30);C.textAlign='left';
-  }
-}
-
-// ── PLAYBACK ────────────────────────────────────────────────────
-function togglePlay(){
-  if(playTimer){
-    clearInterval(playTimer);playTimer=null;
-    synth.cancel();narratorActive=false;
-    document.getElementById('play-btn').textContent='▶ Play';
-    document.getElementById('narrbar').classList.remove('speaking');
-    return;
-  }
-  document.getElementById('play-btn').textContent='⏹ Stop';
-  let scIdx=Math.max(0,curScene);let lf=0;const FPS=24;const FPScene=FPS*6;
-  let spokScene=-1;
-  playTimer=setInterval(async()=>{
-    await drawSceneFrame(scIdx,lf);
-    // Trigger narrator + character voice at start of each scene
-    if(spokScene!==scIdx){
-      spokScene=scIdx;
-      const s=scenes[scIdx];
-      if(s){
-        // Narrate scene description first, then character dialogue
-        const narr=buildNarration(s);
-        document.getElementById('narr-text').textContent=narr;
-        speakNarrator(narr,()=>{
-          if(s.dialogue&&s.speaker&&playTimer){
-            setTimeout(()=>speakLine(s.dialogue,s.speaker),300);
-          }
-        });
-      }
-    }
-    lf++;
-    if(lf>=FPScene){
-      lf=0;scIdx=(scIdx+1)%Math.max(1,scenes.length);
-      curScene=scIdx;renderPipeline();
-      document.getElementById('sc-ind').textContent=`Scene ${scIdx+1} / ${scenes.length}`;
-    }
-  },1000/FPS);
-}
-function prevSc(){if(curScene>0){curScene--;renderPipeline();drawSceneFrame(curScene,0);updateInd();}}
-function nextSc(){if(curScene<scenes.length-1){curScene++;renderPipeline();drawSceneFrame(curScene,0);updateInd();}}
-function updateInd(){document.getElementById('sc-ind').textContent=`Scene ${Math.max(0,curScene+1)} / ${scenes.length}`;}
-
-function speakCurrentScene(){
-  if(curScene<0||curScene>=scenes.length)return;
-  const s=scenes[curScene];
-  speakNarrator(buildNarration(s),()=>{
-    if(s.dialogue&&s.speaker) setTimeout(()=>speakLine(s.dialogue,s.speaker),200);
-  });
-}
-
-function buildNarration(s){
-  const chars=(s.characters||[]);
-  const cStr=chars.length===1?chars[0]:chars.length===2?`${chars[0]} and ${chars[1]}`:chars.join(', ');
-  const locMap={wake:'in the bedroom',market:'at the market',school:'at school',road:'on the road',hospital:'at the hospital',home:'at home',forest:'in the forest',night:'at night',city:'in the city',checkpoint:'at the police checkpoint',river:'at the river',field:'in the field'};
-  const locStr=locMap[s.location]||'';
-  let narr='';
-  if(s.dialogue&&s.speaker){
-    const others=chars.filter(c=>c!==s.speaker);
-    narr=`${cStr}${locStr?' '+locStr:''}. ${s.speaker} says: ${s.dialogue}`;
-  } else {
-    narr=`${cStr}${locStr?' '+locStr:''}. ${(s.action||s.caption||'').replace(/[.!?]*$/,'')}.`;
-  }
-  return narr;
-}
-
-// ── IMAGE GENERATION ────────────────────────────────────────────
-function buildShortPrompt(s){
-  const SHORT={
-    "Brian":"African boy age 10 blue school uniform short hair",
-    "Zawadi":"African girl age 12 braided hair with colourful beads school dress",
-    "Mama Wanjiru":"African middle-aged woman orange kitenge traditional dress head wrap",
-    "Inspector Kamau":"fat African police officer navy blue uniform gold badge big black mustache",
-    "Doctor Amara":"African woman doctor white coat stethoscope round glasses natural afro",
-    "Chef Omondi":"fat African man white chef uniform tall chef hat big smile",
-    "Mwalimu Hassan":"tall thin African teacher white shirt tie round glasses books",
-    "Merchant Fatuma":"African market woman colourful dress white headscarf basket fruits",
-    "Baba James":"elderly African man white kanzu robe wooden walking stick grey beard",
-    "Ranger Kipchoge":"athletic African ranger khaki uniform wide brimmed hat binoculars"
-  };
-  const LOC={wake:'inside cosy African home bedroom morning light',market:'vibrant African outdoor market colourful stalls',
-    river:'wide African river green banks',hospital:'outside clean African hospital red cross sign',school:'African primary school yellow building mango tree',
-    forest:'tropical African forest path green canopy',city:'busy Nairobi city street matatus',home:'inside warm Kenyan family home',
-    road:'African tarmac road savanna acacia trees',field:'African savanna field big sky',night:'African night sky stars campfire',
-    checkpoint:'police roadblock checkpoint desert road'};
-  const {anim}=detectAnim(s.action||s.caption||'');
-  const ACTS={wake:'waking up stretching arms in bed',run:'running full sprint arms pumping',run_scared:'running panicked arms flailing',
-    walk:'walking briskly forward',laugh:'laughing uncontrollably head thrown back',cry:'crying big tears hands on face',
-    arrive:'arriving dramatically stepping forward arms wide',angry:'shouting angrily pointing finger shaking fist',
-    shocked:'shocked jaw dropped eyes wide open hands on cheeks',jump:'jumping in the air arms raised celebrating',
-    eat:'eating enthusiastically food in hand',talk:'talking expressively gesturing with hands',stand:'standing confidently'};
-  const chars=(s.characters||[]).slice(0,2).map(n=>SHORT[n]||n).join(' and ');
-  const loc=LOC[s.location]||'East Africa outdoor';
-  const act=ACTS[anim]||anim;
-  return `${chars}, ${act}, ${loc}, Pixar 3D animation style, cinematic lighting, vivid colours, 9:16 vertical portrait`.substring(0,210);
-}
-
-function loadImgFx(url,ms=62000){
+// ── IMAGE GENERATION ───────────────────────────────────────────
+function loadImgP(url, ms=65000){
   return new Promise((res,rej)=>{
-    const img=new Image();img.crossOrigin='anonymous';
-    const timer=setTimeout(()=>{img.src='';rej(new Error('timeout'));},ms);
-    img.onload=()=>{clearTimeout(timer);res(img);};
-    img.onerror=()=>{clearTimeout(timer);rej(new Error('error'));};
-    img.src=url;
+    const img = new Image(); img.crossOrigin='anonymous';
+    const t = setTimeout(()=>{img.src='';rej(new Error('timeout'));}, ms);
+    img.onload = ()=>{ clearTimeout(t); res(img); };
+    img.onerror= ()=>{ clearTimeout(t); rej(new Error('error')); };
+    img.src = url;
   });
 }
 
-async function generateSceneImage(idx){
-  const s=scenes[idx];if(!s)return;
-  s.imgStatus='generating';updateSceneRow(idx);
-  if(curScene===idx) drawSceneFrame(idx,0);
-  const seed=Math.floor(Math.random()*99999);
-  const prompt=encodeURIComponent(s.imgPrompt||buildShortPrompt(s));
+async function generateSceneImg(idx){
+  const s = scenes[idx]; if(!s) return;
+  s.imgStatus = 'generating';
+  renderSceneList();
+
+  const seed = Math.floor(Math.random()*99999);
+  const p = encodeURIComponent(s.imgPrompt);
+  const models = ['flux','turbo'];
+
   for(let a=0;a<2;a++){
-    const model=a===0?'flux':'turbo';
-    const url=`https://image.pollinations.ai/prompt/${prompt}?width=540&height=960&seed=${seed}&model=${model}&nologo=true`;
-    try{
-      const img=await loadImgFx(url);
-      s.imgUrl=url;s.imgStatus='done';imgCache[idx]=img;
-      if(curScene===idx) drawSceneFrame(idx,0);
-      updateSceneRow(idx);return;
-    }catch(e){console.warn(`Scene ${idx+1} attempt ${a+1} failed:`,e.message);if(a<1)await new Promise(r=>setTimeout(r,3000));}
+    const url = `https://image.pollinations.ai/prompt/${p}?width=540&height=960&seed=${seed}&model=${models[a]}&nologo=true`;
+    try {
+      const img = await loadImgP(url);
+      s.imgUrl = url; s.imgStatus = 'done'; s.imgEl = img;
+      imgCache[idx] = img;
+      if(curScene === idx) previewCurrent();
+      renderSceneList(); return;
+    } catch(e){
+      console.warn(`Scene ${idx+1} attempt ${a+1}: ${e.message}`);
+      if(a<1) await new Promise(r=>setTimeout(r,3000));
+    }
   }
-  s.imgStatus='error';updateSceneRow(idx);
+  s.imgStatus = 'error'; renderSceneList();
 }
 
 async function generateAllImages(){
-  const btn=document.getElementById('genall-btn');btn.disabled=true;
+  const btn = document.getElementById('genall-btn');
+  btn.disabled = true;
   for(let i=0;i<scenes.length;i++){
-    btn.innerHTML=`⏳ Scene ${i+1}/${scenes.length}...`;
+    btn.innerHTML = `⏳ Scene ${i+1}/${scenes.length}...`;
     toast(`🎨 Generating scene ${i+1} of ${scenes.length}...`,'ok');
-    await generateSceneImage(i);renderPipeline();
-    if(i<scenes.length-1){
-      for(let c=5;c>=1;c--){btn.innerHTML=`⏳ Next in ${c}s...`;await new Promise(r=>setTimeout(r,1000));}
+    await generateSceneImg(i);
+    renderSceneList();
+    if(i < scenes.length-1){
+      for(let c=5;c>=1;c--){
+        btn.innerHTML=`⏳ Next in ${c}s...`;
+        await new Promise(r=>setTimeout(r,1000));
+      }
     }
   }
-  btn.disabled=false;btn.innerHTML='🖼 Generate All Images';
+  btn.disabled=false; btn.innerHTML='🖼 Regenerate Images';
   const done=scenes.filter(s=>s.imgStatus==='done').length;
   const fail=scenes.filter(s=>s.imgStatus==='error').length;
-  toast(fail?`✅ ${done} done · ⚠️ ${fail} failed — click 🎨 to retry`:`🎉 All ${done} images ready! Export your video.`,'ok');
+  toast(fail?`✅ ${done} done · ⚠️ ${fail} failed`:`🎉 All ${done} images ready! Press ▶ Play Story.`,'ok');
 }
 
-// ── STORY PARSER ───────────────────────────────────────────────
-async function parseStory(){
-  const text=document.getElementById('story-ta').value.trim();
-  if(!text){toast('Write a story first!','err');return;}
-  showOv('Reading Your Story...','AI is analysing scenes and characters...');
-  try{
-    const names=Object.keys(CHARS).join(', ');
-    const prompt=`Break this story into cartoon TikTok scenes. Return ONLY valid JSON.
-Characters (use EXACT names): ${names}
-Story: "${text}"
-Return: {"scenes":[{"caption":"short punchy max 8 words","characters":["Name1"],"action":"specific physical movement description","location":"one of: wake/walk/school/market/home/road/hospital/forest/night/city/checkpoint/default","dialogue":"exact words or empty","speaker":"name or empty","mood":"happy/funny/angry/sad/surprised/dramatic"}]}
-Rules: 6-9 scenes, action MUST describe physical movement with verbs, punchy TikTok captions.`;
-    const resp=await fetch('https://text.pollinations.ai/',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:[{role:'user',content:prompt}],model:'openai',jsonMode:true,seed:Math.floor(Math.random()*9999)})});
-    if(!resp.ok)throw new Error(resp.status);
-    const raw=await resp.text();
-    const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
-    const rs=parsed.scenes||parsed;
-    if(!Array.isArray(rs)||!rs.length)throw new Error('no scenes');
-    scenes=rs.map((s,i)=>({...s,sceneNum:i+1,characters:(s.characters||[]).filter(c=>CHARS[c]),
-      imgPrompt:buildShortPrompt({...s,characters:(s.characters||[]).filter(c=>CHARS[c])}),imgUrl:null,imgStatus:'idle'}));
-    finishParsed();
-  }catch(e){
-    console.error(e);hideOv();
-    const fb=fallbackParse(text);
-    if(fb.length){scenes=fb;finishParsed();}
-    else toast('Could not parse story. Try the example!','err');
+// ── CANVAS DRAWING ─────────────────────────────────────────────
+// currentWords: array of strings currently shown
+// highlight: index within currentWords to highlight (-1 = show all same)
+function drawFrame(scIdx, currentWords, wordHighlightIdx){
+  ctx.clearRect(0,0,CW,CH);
+
+  // Background image
+  const s = scenes[scIdx];
+  const imgEl = s ? (imgCache[scIdx]||s.imgEl||null) : null;
+
+  if(imgEl){
+    // Draw image with slight Ken Burns
+    ctx.drawImage(imgEl, 0,0, CW, CH);
+    // Dark gradient overlay for text readability
+    const grad = ctx.createLinearGradient(0,CH*0.4,0,CH);
+    grad.addColorStop(0,'rgba(0,0,0,0.1)');
+    grad.addColorStop(1,'rgba(0,0,0,0.72)');
+    ctx.fillStyle=grad; ctx.fillRect(0,0,CW,CH);
+    // Top gradient too
+    const tgrad = ctx.createLinearGradient(0,0,0,CH*0.25);
+    tgrad.addColorStop(0,'rgba(0,0,0,0.45)');
+    tgrad.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=tgrad; ctx.fillRect(0,0,CW,CH);
+  } else {
+    // Placeholder - dark gradient
+    const g=ctx.createLinearGradient(0,0,0,CH);
+    g.addColorStop(0,'#0a0e1a'); g.addColorStop(1,'#060810');
+    ctx.fillStyle=g; ctx.fillRect(0,0,CW,CH);
+    if(s && s.imgStatus==='generating'){
+      ctx.font='40px serif'; ctx.textAlign='center'; ctx.fillText('⏳',CW/2,CH/2-20);
+      ctx.font='bold 20px Inter,sans-serif'; ctx.fillStyle='rgba(0,212,255,0.6)';
+      ctx.fillText('Generating image...',CW/2,CH/2+30);
+    } else {
+      ctx.font='40px serif'; ctx.textAlign='center'; ctx.fillText('🎬',CW/2,CH/2-20);
+      ctx.font='bold 18px Inter,sans-serif'; ctx.fillStyle='rgba(255,255,255,0.2)';
+      ctx.fillText('Generate images to preview',CW/2,CH/2+30);
+    }
+    ctx.textAlign='left';
+  }
+
+  // Word captions
+  if(currentWords && currentWords.length > 0){
+    drawWordCaption(currentWords, wordHighlightIdx);
+  } else if(s && s.narration && !isPlaying){
+    // Show first few words as preview
+    const preview = s.narration.split(' ').slice(0,wordsPerGroup);
+    drawWordCaption(preview, -1, 0.4);
+  }
+
+  // HUD elements
+  drawHUD(scIdx);
+}
+
+function drawWordCaption(words, hlIdx, globalAlpha=1){
+  const fontSize = parseInt(document.getElementById('font-sz').value) || 62;
+  const posY = (parseInt(document.getElementById('cap-pos').value)||68) / 100 * CH;
+
+  ctx.save();
+  ctx.globalAlpha = globalAlpha;
+  ctx.textAlign = 'center';
+
+  // Join words into display text
+  const displayText = words.join(' ');
+
+  ctx.font = `900 ${fontSize}px 'Poppins','Inter',sans-serif`;
+  const tw = ctx.measureText(displayText).width;
+  const x = CW/2;
+  const y = posY;
+
+  // Thick black outline (stroke)
+  ctx.strokeStyle = '#000000';
+  ctx.lineWidth = fontSize * 0.14;
+  ctx.lineJoin = 'round';
+  ctx.strokeText(displayText, x, y);
+
+  // White fill
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillText(displayText, x, y);
+
+  ctx.restore();
+  ctx.textAlign = 'left';
+}
+
+function drawHUD(scIdx){
+  // Scene number — subtle top left
+  if(scIdx>=0 && scenes.length>0){
+    ctx.fillStyle='rgba(255,255,255,0.25)';
+    ctx.font='bold 13px Inter,sans-serif';
+    ctx.fillText(`${scIdx+1} / ${scenes.length}`, 20, 30);
+  }
+  // Watermark bottom right
+  ctx.font='bold 15px Inter,sans-serif'; ctx.textAlign='right';
+  ctx.fillStyle='rgba(255,255,255,0.35)';
+  ctx.shadowColor='rgba(0,0,0,0.8)'; ctx.shadowBlur=6;
+  ctx.fillText('@StoryVideo', CW-14, CH-14);
+  ctx.shadowBlur=0; ctx.textAlign='left';
+}
+
+function previewCurrent(){
+  if(curScene>=0 && curScene<scenes.length){
+    drawFrame(curScene, [], -1);
   }
 }
-function fallbackParse(text){
-  const names=Object.keys(CHARS);
-  const sents=text.match(/[^.!?]+[.!?]+/g)||[text];
-  const groups=[];let cur=[];
-  sents.forEach((s,i)=>{cur.push(s.trim());if(cur.length>=2||i===sents.length-1){groups.push(cur.join(' '));cur=[];}});
-  return groups.map((g,i)=>{
-    const chars=names.filter(n=>g.includes(n));
-    const dm=g.match(/"([^"]+)"|says?\s+"([^"]+)"/i);
-    const {anim,bg}=detectAnim(g);
-    const loc=Object.keys({wake:1,school:1,market:1,hospital:1,forest:1,night:1,city:1,checkpoint:1,road:1,home:1}).find(l=>g.toLowerCase().includes(l))||bg;
-    const s={caption:g.split(' ').slice(0,7).join(' ').replace(/[.!?]/g,'')+'...',
-      characters:chars.length?chars:[names[0]],action:g,location:loc,
-      dialogue:dm?(dm[1]||dm[2]||''):'',speaker:chars[0]||'',mood:'funny',sceneNum:i+1};
-    s.imgPrompt=buildShortPrompt(s);s.imgUrl=null;s.imgStatus='idle';return s;
+
+// ── PLAYBACK ENGINE ────────────────────────────────────────────
+// This is the core — it speaks each scene's narration and
+// shows words word-by-word in sync using onboundary events.
+
+function togglePlay(){
+  if(isPlaying){ stopPlayback(); return; }
+  startPlayback(curScene>=0?curScene:0);
+}
+
+function stopPlayback(){
+  isPlaying = false;
+  synth.cancel();
+  document.getElementById('play-btn').textContent = '▶ Play Story';
+  document.getElementById('play-btn').className = 'pcbtn play';
+  if(playback){ clearTimeout(playback.fallbackTimer); playback=null; }
+  previewCurrent();
+}
+
+function startPlayback(startScIdx){
+  if(!scenes.length){ toast('No scenes! Write a story first.','err'); return; }
+  isPlaying = true;
+  document.getElementById('play-btn').textContent = '⏹ Stop';
+  document.getElementById('play-btn').className = 'pcbtn stop';
+  playSceneSequence(startScIdx);
+}
+
+function playSceneSequence(scIdx){
+  if(!isPlaying || scIdx >= scenes.length){ stopPlayback(); return; }
+  curScene = scIdx;
+  renderSceneList();
+  drawFrame(scIdx, [], -1);
+  updateInfo();
+
+  const s = scenes[scIdx];
+  if(!s || !s.narration){ playSceneSequence(scIdx+1); return; }
+
+  // Split narration into words
+  const allWords = s.narration.trim().split(/\s+/).filter(w=>w.length>0);
+  let wordIdx = 0;
+
+  // Draw first group immediately
+  showWordGroup(scIdx, allWords, 0);
+
+  // Set up speech
+  const utt = new SpeechSynthesisUtterance(s.narration);
+  utt.rate = parseFloat(document.getElementById('rate-sl').value);
+  utt.pitch = parseFloat(document.getElementById('pitch-sl').value);
+  const v = getVoice(); if(v) utt.voice = v;
+
+  // Track words via boundary events
+  utt.onboundary = (e) => {
+    if(e.name !== 'word') return;
+    if(!isPlaying) return;
+    // Find which word index this is
+    const charIdx = e.charIndex;
+    let accumulated = 0;
+    let wIdx = 0;
+    const text = s.narration;
+    const wordList = text.split(/\s+/).filter(w=>w.length>0);
+    let pos = 0;
+    for(let i=0;i<wordList.length;i++){
+      pos = text.indexOf(wordList[i], pos);
+      if(pos >= charIdx){ wIdx = i; break; }
+      pos += wordList[i].length;
+    }
+    wordIdx = wIdx;
+    showWordGroup(scIdx, allWords, wordIdx);
+    updateProgress(scIdx, allWords.length, wordIdx);
+  };
+
+  // Fallback word timing (for browsers that don't support onboundary well)
+  let fbIdx = 0;
+  const avgMs = Math.max(120, 300 / (utt.rate||1)); // ~ms per word
+  const fallbackStep = () => {
+    if(!isPlaying) return;
+    if(fbIdx < allWords.length){
+      // Only use fallback if boundary events aren't firing
+      if(fbIdx >= wordIdx){ wordIdx = fbIdx; showWordGroup(scIdx, allWords, fbIdx); }
+      fbIdx += wordsPerGroup;
+      playback = {fallbackTimer: setTimeout(fallbackStep, avgMs * wordsPerGroup)};
+    }
+  };
+  playback = {fallbackTimer: setTimeout(fallbackStep, avgMs * wordsPerGroup)};
+
+  utt.onend = () => {
+    if(!isPlaying) return;
+    clearTimeout(playback?.fallbackTimer);
+    // Show last words briefly then move on
+    showWordGroup(scIdx, allWords, allWords.length-1);
+    setTimeout(()=>{ if(isPlaying) playSceneSequence(scIdx+1); }, 600);
+  };
+  utt.onerror = () => {
+    if(isPlaying) setTimeout(()=>playSceneSequence(scIdx+1), 500);
+  };
+
+  synth.cancel();
+  synth.speak(utt);
+}
+
+function showWordGroup(scIdx, allWords, startIdx){
+  if(!isPlaying && !scenes[scIdx]) return;
+  const group = allWords.slice(startIdx, startIdx + wordsPerGroup);
+  if(group.length === 0) return;
+  drawFrame(scIdx, group, -1);
+}
+
+function updateProgress(scIdx, totalWords, wordIdx){
+  const scProg = scIdx / scenes.length;
+  const wordProg = totalWords > 0 ? wordIdx / totalWords / scenes.length : 0;
+  const pct = (scProg + wordProg) * 100;
+  document.getElementById('progfill').style.width = Math.min(100,pct) + '%';
+  document.getElementById('scene-info').textContent = `Scene ${scIdx+1} / ${scenes.length} · Word ${wordIdx+1} / ${totalWords}`;
+}
+
+function updateInfo(){
+  const s = scenes[curScene];
+  const wc = s ? s.narration.split(' ').length : 0;
+  document.getElementById('scene-info').textContent = `Scene ${curScene+1} / ${scenes.length} · ${wc} words`;
+  document.getElementById('progfill').style.width = ((curScene/scenes.length)*100) + '%';
+}
+
+function prevScene(){
+  if(isPlaying) stopPlayback();
+  if(curScene > 0){ curScene--; renderSceneList(); previewCurrent(); updateInfo(); }
+}
+function nextScene(){
+  if(isPlaying) stopPlayback();
+  if(curScene < scenes.length-1){ curScene++; renderSceneList(); previewCurrent(); updateInfo(); }
+}
+
+// ── VIDEO EXPORT ───────────────────────────────────────────────
+// Strategy: Use MediaRecorder on the canvas stream to capture video frames.
+// We play the story (with speech) while recording.
+// The final WebM contains visual frames synced to the narration.
+
+async function exportVideo(){
+  if(!scenes.length){ toast('No scenes!','err'); return; }
+
+  const ebtn = document.getElementById('export-btn');
+  const ebtn2 = document.getElementById('export-btn2');
+  ebtn.disabled = true; ebtn2.disabled = true;
+  document.getElementById('render-prog').style.display = 'block';
+  document.getElementById('dl-area').style.display = 'none';
+
+  toast('🎬 Recording started — playing your story...','ok');
+
+  // Set up canvas recording
+  const stream = canvas.captureStream(24);
+  let mime = 'video/webm;codecs=vp9';
+  if(!MediaRecorder.isTypeSupported(mime)) mime = 'video/webm';
+  const rec = new MediaRecorder(stream, {mimeType:mime, videoBitsPerSecond:5000000});
+  const chunks = [];
+  rec.ondataavailable = e => { if(e.data.size>0) chunks.push(e.data); };
+  rec.start(100);
+
+  document.getElementById('rfill').style.width = '5%';
+  document.getElementById('rtxt').textContent = 'Recording...';
+
+  // Play story while recording
+  await new Promise(resolve => {
+    let scIdx = 0;
+    let totalScenes = scenes.length;
+
+    function playNext(){
+      if(scIdx >= totalScenes){ resolve(); return; }
+      const s = scenes[scIdx];
+      const allWords = (s.narration||'').trim().split(/\s+/).filter(w=>w.length>0);
+      curScene = scIdx; renderSceneList();
+      drawFrame(scIdx, allWords.slice(0,wordsPerGroup), -1);
+
+      const pct = 5 + (scIdx/totalScenes)*90;
+      document.getElementById('rfill').style.width = pct+'%';
+      document.getElementById('rtxt').textContent = `Recording scene ${scIdx+1} of ${totalScenes}...`;
+
+      const utt = new SpeechSynthesisUtterance(s.narration||'');
+      utt.rate = parseFloat(document.getElementById('rate-sl').value);
+      utt.pitch = parseFloat(document.getElementById('pitch-sl').value);
+      const v = getVoice(); if(v) utt.voice = v;
+
+      let wordIdx = 0;
+      utt.onboundary = (e) => {
+        if(e.name !== 'word') return;
+        const charIdx = e.charIndex;
+        const text = s.narration||'';
+        const wordList = text.split(/\s+/).filter(w=>w.length>0);
+        let pos=0;let wIdx=0;
+        for(let i=0;i<wordList.length;i++){
+          pos=text.indexOf(wordList[i],pos);
+          if(pos>=charIdx){wIdx=i;break;}
+          pos+=wordList[i].length;
+        }
+        wordIdx=wIdx;
+        const group=allWords.slice(wIdx,wIdx+wordsPerGroup);
+        if(group.length>0) drawFrame(scIdx,group,-1);
+      };
+
+      // Fallback word advance
+      let fbI=0;
+      const avgMs = Math.max(110, 280/(parseFloat(document.getElementById('rate-sl').value)||0.9));
+      const fb = () => {
+        if(fbI<allWords.length){
+          if(fbI>=wordIdx){const g=allWords.slice(fbI,fbI+wordsPerGroup);if(g.length>0)drawFrame(scIdx,g,-1);}
+          fbI+=wordsPerGroup;
+          setTimeout(fb, avgMs*wordsPerGroup);
+        }
+      };
+      setTimeout(fb, avgMs);
+
+      utt.onend = ()=>{ scIdx++; setTimeout(playNext,400); };
+      utt.onerror = ()=>{ scIdx++; setTimeout(playNext,200); };
+      synth.cancel(); synth.speak(utt);
+    }
+    playNext();
   });
-}
-function finishParsed(){
-  hideOv();curScene=0;renderPipeline();updateBadge();drawSceneFrame(0,0);
-  document.getElementById('genall-btn').style.display='flex';document.getElementById('empty-st').style.display='none';
-  toast(`✅ ${scenes.length} scenes ready! Click "Generate All Images".`,'ok');
-}
 
-// ── PRE-BUILT EXAMPLE ──────────────────────────────────────────
-const EX=[
-  {caption:"Brian wakes up LATE! 😱",characters:["Brian"],action:"Brian waking up suddenly in bed arms stretching wide eyes open shocked",location:"wake",dialogue:"Oh no! I am SO late!",speaker:"Brian",mood:"surprised",sceneNum:1,
-   imgPrompt:"African boy 10yo blue school uniform, waking up suddenly in bed stretching arms wide eyes open, inside cosy African home bedroom morning sunlight, Pixar 3D animation cinematic, 9:16 vertical"},
-  {caption:"Brian runs full speed! 💨",characters:["Brian"],action:"Brian running full sprint down road school bag bouncing wildly mouth open panicking",location:"road",dialogue:"",speaker:"",mood:"scared",sceneNum:2,
-   imgPrompt:"African boy 10yo blue school uniform, running full sprint down African road school bag bouncing wildly mouth open panicking, wide shot morning light, Pixar 3D animation, 9:16 vertical"},
-  {caption:"Mwalimu is NOT happy 😤",characters:["Mwalimu Hassan"],action:"Mwalimu Hassan standing arms crossed at school gate checking watch stern disapproving face",location:"school",dialogue:"You are THIRTY minutes late, Brian!",speaker:"Mwalimu Hassan",mood:"angry",sceneNum:3,
-   imgPrompt:"tall thin African teacher white shirt tie glasses, standing arms crossed at school gate checking watch stern disapproving face, African school compound mango tree, Pixar 3D animation, 9:16 vertical"},
-  {caption:"Brian skids to a stop! 😬",characters:["Brian","Mwalimu Hassan"],action:"Brian skidding stopping almost falling at school gate breathless, Mwalimu pointing inside angrily",location:"school",dialogue:"Sorry Mwalimu! Sorry sorry SORRY!",speaker:"Brian",mood:"scared",sceneNum:4,
-   imgPrompt:"African boy 10yo skidding to stop at school gate breathless almost falling, tall thin African teacher pointing inside angry, African school compound, Pixar 3D animation, 9:16 vertical"},
-  {caption:"Inspector Kamau BURSTS IN! 🚔",characters:["Inspector Kamau"],action:"Inspector Kamau kicking classroom door open arms spread wide dramatic entrance police uniform",location:"school",dialogue:"EVERYONE OUTSIDE! This is an emergency!",speaker:"Inspector Kamau",mood:"dramatic",sceneNum:5,
-   imgPrompt:"fat African police officer navy uniform gold badge mustache, dramatically kicking classroom door open arms wide, shocked children inside school, dramatic low angle, Pixar 3D animation, 9:16 vertical"},
-  {caption:"Children run out screaming! 🎉",characters:["Brian"],action:"Brian and children running wildly out of school cheering jumping arms in the air",location:"school",dialogue:"YESSS! No more school today!",speaker:"Brian",mood:"happy",sceneNum:6,
-   imgPrompt:"African boy 10yo and school children running out of school wildly cheering arms raised big smiles, African school compound blue sky sunshine, Pixar 3D animation wide shot, 9:16 vertical"},
-  {caption:"Mama Wanjiru APPEARS! 😳",characters:["Mama Wanjiru","Brian"],action:"Mama Wanjiru grabbing Brian firmly by the ear Brian yelping in pain",location:"road",dialogue:"BRIAN! Where do you think you are going?!",speaker:"Mama Wanjiru",mood:"angry",sceneNum:7,
-   imgPrompt:"African middle-aged woman orange kitenge dress head wrap, grabbing African boy by ear firmly boy yelping pain face, African road, Pixar 3D animation medium shot, 9:16 vertical"},
-  {caption:"Inspector Kamau CRACKS UP! 🤣",characters:["Inspector Kamau"],action:"Inspector Kamau bending over laughing uncontrollably slapping big belly tears streaming down face",location:"road",dialogue:"Ha ha ha! That boy will NEVER learn!",speaker:"Inspector Kamau",mood:"funny",sceneNum:8,
-   imgPrompt:"fat African police officer navy uniform, bending over laughing uncontrollably slapping big belly tears of laughter, police car behind, African road sunny, Pixar 3D animation, 9:16 vertical"}
-];
-
-function loadExample(){
-  scenes=EX.map(s=>({...s,imgUrl:null,imgStatus:'idle'}));
-  curScene=0;renderPipeline();updateBadge();drawSceneFrame(0,0);
-  document.getElementById('genall-btn').style.display='flex';
-  document.getElementById('empty-st').style.display='none';
-  document.getElementById('story-ta').value=`Brian wakes up and shouts "Oh no I am SO late!" He runs full sprint down the road with his school bag bouncing wildly. Mwalimu Hassan stands at the school gate with arms crossed checking his watch and says "You are THIRTY minutes late Brian!" Brian skids to a stop almost falling and says "Sorry Mwalimu sorry sorry SORRY!" Suddenly Inspector Kamau kicks the classroom door open dramatically and shouts "EVERYONE OUTSIDE! This is an emergency!" Brian and all the children run out of school cheering and jumping. Brian shouts "YESSS no more school today!" Then Mama Wanjiru grabs Brian by the ear firmly and says "BRIAN! Where do you think you are going?!" Inspector Kamau bends over laughing and slapping his belly and says "Ha ha ha! That boy will NEVER learn!"`;
-  swTab('story');
-  toast(`✅ 8 scenes loaded! Click "🖼 Generate All Images" in the top bar!`,'ok');
-}
-
-// ── PIPELINE UI ───────────────────────────────────────────────
-function renderPipeline(){
-  const pipe=document.getElementById('pipe');
-  if(!scenes.length){pipe.innerHTML='';document.getElementById('empty-st').style.display='block';return;}
-  document.getElementById('empty-st').style.display='none';
-  pipe.innerHTML=scenes.map((s,i)=>sceneHTML(s,i)).join('');
-  scenes.forEach((_,i)=>{
-    const h=document.querySelector(`#sr-${i} .srhead`);
-    if(h)h.addEventListener('click',()=>selSc(i));
-  });
-}
-function sceneHTML(s,i){
-  const smap={idle:'sdot-i',generating:'sdot-g',done:'sdot-d',error:'sdot-e'};
-  const chips=(s.characters||[]).map(n=>`<span class="chip chip-c">${CHARS[n]?CHARS[n].emoji:''} ${n}</span>`).join('');
-  const {anim}=detectAnim(s.action||s.caption||'');
-  const thumb=s.imgStatus==='done'&&s.imgUrl?`<img src="${s.imgUrl}" alt=""/>`
-    :s.imgStatus==='generating'?`<div class="sthumb-ld"><div class="spin" style="width:20px;height:20px;border-width:2px"></div>Generating...</div>`
-    :`<div class="sthumb-ld"><span style="font-size:18px">🎨</span><span>Click 🎨</span></div>`;
-  return `<div class="srow${curScene===i?' active':''}" id="sr-${i}">
-<div class="srhead">
-  <div class="srnum">${i+1}</div>
-  <div class="srchips">${chips}<span class="chip chip-l">📍 ${s.location||'?'}</span>${s.dialogue?'<span class="chip chip-d">💬</span>':''}</div>
-  <div class="sract">
-    <div class="sdot ${smap[s.imgStatus]||'sdot-i'}"></div>
-    <button class="sabtn" onclick="event.stopPropagation();genOne(${i})" title="Generate image">🎨</button>
-    <button class="sabtn" onclick="event.stopPropagation();speakSceneIdx(${i})" title="Speak">🔊</button>
-    <button class="sabtn" onclick="event.stopPropagation();delSc(${i})" title="Delete">✕</button>
-  </div>
-</div>
-<div class="srbody">
-  <div class="sthumb">${thumb}</div>
-  <div class="sdet">
-    <div><div class="lbl">Caption</div><div class="val" style="font-weight:700;color:var(--txt)">${s.caption}</div></div>
-    <div><div class="lbl">Action · <span style="color:var(--acc2)">${anim}</span></div><div class="val">${s.action||'—'}</div></div>
-    ${s.dialogue?`<div class="sdia">"${s.dialogue}"<span style="font-style:normal;font-size:10px;opacity:.6"> — ${s.speaker}</span></div>`:''}
-  </div>
-</div></div>`;
-}
-function updateSceneRow(i){renderPipeline();}
-function updateBadge(){document.getElementById('sc-badge').textContent=`${scenes.length} scene${scenes.length!==1?'s':''}`;updateInd();}
-function selSc(i){curScene=i;renderPipeline();drawSceneFrame(i,0);updateInd();}
-function delSc(i){scenes.splice(i,1);if(curScene>=scenes.length)curScene=scenes.length-1;renderPipeline();updateBadge();}
-async function genOne(i){await generateSceneImage(i);renderPipeline();}
-function speakSceneIdx(i){const s=scenes[i];if(!s)return;speakNarrator(buildNarration(s),()=>{if(s.dialogue&&s.speaker)setTimeout(()=>speakLine(s.dialogue,s.speaker),200);});}
-
-// ── VIDEO RENDER ──────────────────────────────────────────────
-async function renderVideo(){
-  if(!scenes.length){toast('No scenes! Load example or write story first.','err');return;}
-  const rbtn=document.getElementById('render-btn');const rbtn2=document.getElementById('render-btn2');
-  rbtn.disabled=true;rbtn2.disabled=true;
-  const rp=document.getElementById('rprog');rp.style.display='block';
-  document.getElementById('dlarea').style.display='none';
-  const FPS=24,DUR=6,FPS_sc=FPS*DUR,total=scenes.length*FPS_sc;
-  const oc=document.createElement('canvas');oc.width=540;oc.height=960;
-  const oc2=oc.getContext('2d');
-  const stream=oc.captureStream(FPS);
-  let mime='video/webm;codecs=vp9';if(!MediaRecorder.isTypeSupported(mime))mime='video/webm';
-  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:5000000});
-  const chunks=[];rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};rec.start(100);
-
-  // Preload images into offscreen
-  document.getElementById('ptxt').textContent='Loading images...';
-  const imgs={};
-  for(let i=0;i<scenes.length;i++){
-    const s=scenes[i];if(s.imgUrl&&s.imgStatus==='done'){try{imgs[i]=imgCache[i]||await loadImgFx(s.imgUrl);}catch{}}
-  }
-
-  // Render each frame to offscreen canvas
-  const origCtx=ctx;
-  for(let f=0;f<total;f++){
-    const si=Math.floor(f/FPS_sc),lf=f%FPS_sc;
-    const s=scenes[si];
-    const {anim,bg}=detectAnim(s.action||s.caption||'');
-    const bgKey=s.location||bg;
-    oc2.clearRect(0,0,540,960);
-    // Use temp ctx swap trick
-    const savedCtx=ctx;
-    // Draw everything to oc2 by temporarily replacing global ctx
-    (function(){
-      const c=oc2;
-      // BG
-      drawBackground(c,bgKey,lf,imgs[si]||null);
-      // Characters
-      const chars=s.characters||[];const count=chars.length;
-      const positions=count===1?[270]:count===2?[270*0.62,270*1.36]:[270*0.42,270,270*1.56];
-      const anims=count===1?[anim]:count===2?[anim,'talk']:[anim,'talk','stand'];
-      chars.slice(0,3).forEach((name,i2)=>{
-        if(!CHARS[name])return;
-        const px=positions[i2];const py=960*0.76;
-        const flip=i2>0&&count>1;
-        c.save();if(flip){c.translate(px,py);c.scale(-1,1);c.translate(-px,-py);}
-        const cs=CHARS[name].size*(CHARS[name].fat?1.3:1);
-        c.fillStyle='rgba(0,0,0,0.2)';c.beginPath();c.ellipse(px,py+2,28*cs,8,0,0,Math.PI*2);c.fill();
-        // Draw char on temp canvas then composite
-        const tc=document.createElement('canvas');tc.width=540;tc.height=960;
-        const tc2=tc.getContext('2d');
-        // Replace global ctx, draw, restore
-        window.ctx=tc2;
-        try{tc2.save();tc2.translate(px,py);drawChar(tc2,name,anims[i2]||'stand',lf);tc2.restore();}catch(ex){}
-        window.ctx=savedCtx;
-        c.drawImage(tc,0,0);
-        c.restore();
-      });
-      // Speech bubble
-      if(s.dialogue&&s.speaker&&lf>18){
-        const al=Math.min(1,(lf-18)/12);c.globalAlpha=al;
-        const tc=document.createElement('canvas');tc.width=540;tc.height=960;const tc2=tc.getContext('2d');
-        window.ctx=savedCtx;drawSpeechBubble(tc2,s.dialogue,s.speaker,270,960*0.35);
-        c.drawImage(tc,0,0);c.globalAlpha=1;
-      }
-      // Caption
-      const ca=Math.min(1,lf/14);c.globalAlpha=ca;
-      const tc2c=document.createElement('canvas');tc2c.width=540;tc2c.height=960;
-      window.ctx=savedCtx;drawCaption(tc2c.getContext('2d'),s.caption||'');
-      const tc2ctx=tc2c.getContext('2d');drawCaption(tc2ctx,s.caption||'');
-      c.drawImage(tc2c,0,0);c.globalAlpha=1;
-      // HUD
-      window.ctx=savedCtx;
-      const hudTc=document.createElement('canvas');hudTc.width=540;hudTc.height=960;
-      const hudCtx=hudTc.getContext('2d');drawHUD(hudCtx,si,s);c.drawImage(hudTc,0,0);
-      window.ctx=savedCtx;
-    })();
-
-    const pct=Math.round(f/total*100);
-    document.getElementById('pfill').style.width=pct+'%';
-    document.getElementById('ptxt').textContent=`Rendering ${pct}% · Scene ${si+1}/${scenes.length}`;
-    if(f%4===0) await new Promise(r=>requestAnimationFrame(r));
-  }
-
+  // Stop recording
+  document.getElementById('rfill').style.width = '95%';
+  document.getElementById('rtxt').textContent = 'Finalising...';
+  await new Promise(r=>setTimeout(r,800));
   rec.stop();
-  rec.onstop=()=>{
-    const blob=new Blob(chunks,{type:mime});const url=URL.createObjectURL(blob);
-    document.getElementById('dllink').href=url;
-    document.getElementById('dlarea').style.display='block';
-    rp.style.display='none';rbtn.disabled=false;rbtn2.disabled=false;
-    toast('🎬 Video exported! Click Download.','ok');
+
+  rec.onstop = () => {
+    const blob = new Blob(chunks, {type:mime});
+    const url = URL.createObjectURL(blob);
+    document.getElementById('dl-link').href = url;
+    document.getElementById('dl-area').style.display = 'block';
+    document.getElementById('render-prog').style.display = 'none';
+    document.getElementById('rfill').style.width = '100%';
+    ebtn.disabled=false; ebtn2.disabled=false;
+    toast('🎬 Video ready! Click Download.','ok');
   };
 }
 
-// ── UI HELPERS ────────────────────────────────────────────────
-function showOv(t,m){document.getElementById('ov-title').textContent=t;document.getElementById('ov-msg').textContent=m;document.getElementById('ov').classList.add('show');}
-function hideOv(){document.getElementById('ov').classList.remove('show');}
-function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(type||'');t.style.display='block';clearTimeout(t._t);t._t=setTimeout(()=>t.style.display='none',3800);}
-function swTab(name){
-  document.getElementById('tab-chars').classList.toggle('on',name==='chars');
-  document.getElementById('tab-story').classList.toggle('on',name==='story');
-  document.getElementById('pane-chars').style.display=name==='chars'?'block':'none';
-  document.getElementById('pane-story').style.display=name==='story'?'block':'none';
-}
-function clearAll(){if(confirm('Clear all scenes?')){scenes=[];curScene=-1;renderPipeline();updateBadge();drawSceneFrame(-1,0);document.getElementById('genall-btn').style.display='none';imgCache={};synth.cancel();}}
-function showCharModal(name){const ch=CHARS[name];if(!ch)return;document.getElementById('cm-emi').textContent=ch.emoji;document.getElementById('cm-name').textContent=name;document.getElementById('cm-role').textContent=ch.role;document.getElementById('cm-desc').textContent=ch.desc;document.getElementById('cm-voice').textContent=`🎙 Voice pitch: ${ch.voice.pitch} · rate: ${ch.voice.rate} — ${ch.voice.pitch<0.85?'Deep voice':ch.voice.pitch>1.3?'High voice':'Normal voice'}`;document.getElementById('cmod').classList.add('show');}
-function closeCmod(){document.getElementById('cmod').classList.remove('show');}
-
-// ── BUILD CHAR LIST ──────────────────────────────────────────
-function buildCharList(){
-  document.getElementById('char-list').innerHTML=Object.entries(CHARS).map(([name,ch])=>`
-<div class="ccard" onclick="showCharModal('${name}')">
-  <div class="cavi">${ch.emoji}</div>
-  <div class="cinf">
-    <div class="cname">${name}</div>
-    <div class="crole">${ch.role}</div>
-    <span class="cvbadge" style="background:${ch.shirt}22;color:${ch.shirt};border:1px solid ${ch.shirt}44">🎙 ${ch.voice.pitch>1.3?'High':ch.voice.pitch<0.85?'Deep':'Normal'} voice</span>
+// ── SCENE LIST UI ──────────────────────────────────────────────
+function renderSceneList(){
+  const list = document.getElementById('scenelist');
+  if(!scenes.length){
+    list.innerHTML = '<div style="text-align:center;padding:30px 10px;color:var(--txt3);font-size:12px">Write a story above and click<br/><b style="color:var(--acc)">Create Scenes</b> to begin</div>';
+    return;
+  }
+  list.innerHTML = scenes.map((s,i) => {
+    const stmap = {idle:'si',generating:'sg',done:'sd',error:'se'};
+    const thumb = s.imgStatus==='done'&&s.imgUrl
+      ? `<img src="${s.imgUrl}" alt=""/>`
+      : s.imgStatus==='generating'
+      ? `<div class="sthumb-ld"><div class="spin" style="width:18px;height:18px;border-width:2px"></div>Generating...</div>`
+      : `<div class="sthumb-ld"><span style="font-size:20px">🎨</span>No image</div>`;
+    const wc = s.narration ? s.narration.trim().split(/\s+/).length : 0;
+    return `<div class="scard${curScene===i?' active':''}" id="sc-${i}">
+  <div class="scard-head">
+    <div class="snum">${i+1}</div>
+    <div class="scard-title">${s.narration.substring(0,45).replace(/</g,'&lt;')}...</div>
+    <div class="scard-acts">
+      <div class="sdot ${stmap[s.imgStatus]||'si'}"></div>
+      <button class="sacbtn" onclick="event.stopPropagation();genOne(${i})" title="Generate image">🎨</button>
+      <button class="sacbtn" onclick="event.stopPropagation();playSingle(${i})" title="Play scene">▶</button>
+      <button class="sacbtn" onclick="event.stopPropagation();delScene(${i})" title="Delete">✕</button>
+    </div>
   </div>
-  <button class="cprev" onclick="event.stopPropagation();speakLine('Hello, I am ${name}!','${name}')" title="Test voice">🔊</button>
-</div>`).join('');
+  <div class="scard-body">
+    <div class="sthumb">${thumb}</div>
+    <div class="snarr">${s.narration.replace(/</g,'&lt;')}</div>
+  </div>
+</div>`;
+  }).join('');
+  // Attach click handlers
+  scenes.forEach((_,i)=>{
+    const el=document.querySelector(`#sc-${i} .scard-head`);
+    if(el) el.addEventListener('click',()=>{ curScene=i; renderSceneList(); previewCurrent(); updateInfo(); });
+  });
 }
 
-// ── INIT ─────────────────────────────────────────────────────
-buildCharList();
-buildVoiceTestBtns();
-synth.onvoiceschanged=buildVoiceTestBtns;
-drawSceneFrame(-1,0);
-updateBadge();
+function updateCount(){
+  document.getElementById('sc-count').textContent = scenes.length ? `(${scenes.length})` : '';
+}
+
+async function genOne(i){ await generateSceneImg(i); renderSceneList(); previewCurrent(); }
+
+function playSingle(i){
+  stopPlayback();
+  setTimeout(()=>startPlayback(i), 100);
+}
+
+function delScene(i){
+  scenes.splice(i,1);
+  if(curScene>=scenes.length) curScene=scenes.length-1;
+  renderSceneList(); updateCount();
+  if(curScene>=0) previewCurrent();
+}
+
+// ── EXAMPLE ────────────────────────────────────────────────────
+const EXAMPLE_SCENES = [
+  {narration:"It was 7:45 in the morning. Brian's eyes snapped open. School started at eight.",
+   imgPrompt:"African teenage boy age 16, eyes wide open shocked in bed, bedroom with morning sunlight streaming through curtains, alarm clock showing 7:45, 3D photorealistic render, Unreal Engine quality, cinematic lighting, 9:16 vertical portrait"},
+  {narration:"He jumped out of bed, grabbed his uniform, and ran out the door still tucking in his shirt.",
+   imgPrompt:"African teenage boy running out of house front door, school uniform half tucked in, school bag bouncing, suburban African neighbourhood morning light, 3D photorealistic render, Unreal Engine quality, cinematic lighting, 9:16 vertical portrait"},
+  {narration:"He sprinted down the road as fast as his legs could carry him. His heart was pounding.",
+   imgPrompt:"African teenage boy in school uniform running full sprint down African tarmac road, motion blur on legs, determination on face, morning golden light, 3D photorealistic render, Unreal Engine quality, cinematic lighting, 9:16 vertical portrait"},
+  {narration:"At the school gate, Mwalimu Hassan stood waiting with his arms crossed and his watch in hand.",
+   imgPrompt:"Tall thin African male teacher in white shirt and tie, arms crossed sternly at school entrance gate, checking his wristwatch, African school compound background, 3D photorealistic render, Unreal Engine quality, cinematic lighting, 9:16 vertical portrait"},
+  {narration:"Brian skidded to a halt. The teacher looked him up and down slowly. 'You are thirty minutes late,' he said quietly.",
+   imgPrompt:"African teenage boy skidding to stop at school gate breathless, stern African teacher looking down at him disapprovingly, two characters face to face school gate, 3D photorealistic render, Unreal Engine quality, cinematic lighting, 9:16 vertical portrait"},
+  {narration:"Brian looked at his shoes. He had no excuse. But from inside the school, a roar of laughter erupted. Class had already begun without him.",
+   imgPrompt:"African teenage boy looking down at shoes shamefully outside school gate, school building behind with windows showing laughing children inside, 3D photorealistic render, Unreal Engine quality, cinematic lighting, 9:16 vertical portrait"}
+];
+
+function loadExample(){
+  document.getElementById('story-ta').value = `It was 7:45 in the morning. Brian's eyes snapped open. School started at eight. He jumped out of bed, grabbed his uniform, and ran out the door still tucking in his shirt. He sprinted down the road as fast as his legs could carry him. His heart was pounding. At the school gate, Mwalimu Hassan stood waiting with his arms crossed and his watch in hand. Brian skidded to a halt. The teacher looked him up and down slowly. "You are thirty minutes late," he said quietly. Brian looked at his shoes. He had no excuse. But from inside the school, a roar of laughter erupted. Class had already begun without him.`;
+
+  scenes = EXAMPLE_SCENES.map(s=>({...s, imgUrl:null, imgStatus:'idle', imgEl:null}));
+  curScene = 0;
+  renderSceneList(); updateCount();
+  drawFrame(0,[],−1);
+  document.getElementById('genall-btn').style.display = 'flex';
+  toast(`✅ 6 scenes loaded! Click "🖼 Generate Images" to add visuals.`,'ok');
+}
+
+// ── HELPERS ────────────────────────────────────────────────────
+function showOv(t,m){ document.getElementById('ov-title').textContent=t; document.getElementById('ov-msg').textContent=m; document.getElementById('ov').classList.add('show'); }
+function hideOv(){ document.getElementById('ov').classList.remove('show'); }
+function setOvSteps(steps){ document.getElementById('ov-steps').innerHTML=steps.map((s,i)=>`<div class="ost ${s.s}" id="os${i}">${s.s==='done'?'✅':s.s==='active'?'⏳':'⭕'} ${s.l}</div>`).join(''); }
+function updateOvStep(i,state){ const el=document.getElementById('os'+i); if(el){el.className='ost '+state;el.innerHTML=(state==='done'?'✅':state==='active'?'⏳':'⭕')+' '+el.textContent.slice(2);} }
+function toast(msg,type=''){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast '+(type||''); t.style.display='block'; clearTimeout(t._t); t._t=setTimeout(()=>t.style.display='none',3500); }
+function clearAll(){ if(confirm('Clear all scenes?')){ scenes=[]; curScene=-1; renderSceneList(); updateCount(); ctx.clearRect(0,0,CW,CH); document.getElementById('genall-btn').style.display='none'; stopPlayback(); imgCache={}; } }
+
+// ── INIT ───────────────────────────────────────────────────────
+// Draw empty state
+(function initCanvas(){
+  const g=ctx.createLinearGradient(0,0,0,CH);
+  g.addColorStop(0,'#0a0e1a'); g.addColorStop(1,'#060810');
+  ctx.fillStyle=g; ctx.fillRect(0,0,CW,CH);
+  ctx.font='56px serif'; ctx.textAlign='center'; ctx.fillText('🎬',CW/2,CH/2-20);
+  ctx.font='bold 22px Inter,sans-serif'; ctx.fillStyle='rgba(0,212,255,0.4)';
+  ctx.fillText('Write a story to start',CW/2,CH/2+40);
+  ctx.font='14px Inter,sans-serif'; ctx.fillStyle='rgba(255,255,255,0.15)';
+  ctx.fillText('or load the example below',CW/2,CH/2+72);
+  ctx.textAlign='left';
+})();
 </script>
 </body>
 </html>
