@@ -4,133 +4,152 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Story Video Maker</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;background:#0c0d14;color:#e0e4f8;font-family:'Inter',sans-serif}
+:root{
+  --bg:#080b12;--panel:#0d1120;--border:#1a1f35;--border2:#252a45;
+  --accent:#00e5ff;--accent2:#7c4dff;--accent3:#ff6b35;
+  --text:#dde3f8;--muted:#4a5278;--muted2:#2a3050;
+  --green:#00e676;--red:#ff3d57;--gold:#ffd740;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Syne',sans-serif}
 
 /* ─ LAYOUT ─ */
 .wrap{display:flex;flex-direction:column;height:100vh}
-.bar{height:50px;background:#11131e;border-bottom:1px solid #222538;display:flex;align-items:center;padding:0 18px;gap:12px;flex-shrink:0}
-.bar-logo{font-family:'Bebas Neue';font-size:22px;letter-spacing:2px;background:linear-gradient(90deg,#00d4ff,#7b66ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
-.bar-badge{padding:3px 9px;border-radius:12px;font-size:10px;font-weight:700;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.25);color:#00d4ff}
-.bar-right{margin-left:auto;display:flex;gap:8px}
+.bar{height:52px;background:var(--panel);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;position:relative}
+.bar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--accent),var(--accent2),transparent)}
+.logo{font-family:'Space Mono',monospace;font-weight:700;font-size:15px;color:var(--accent);letter-spacing:1px;white-space:nowrap}
+.logo span{color:var(--accent2)}
+.badge{padding:2px 8px;border-radius:4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.badge-b{background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--accent)}
+.badge-g{background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.2);color:var(--green)}
+.badge-o{background:rgba(255,107,53,.08);border:1px solid rgba(255,107,53,.2);color:var(--accent3)}
+.bar-right{margin-left:auto;display:flex;gap:6px;align-items:center}
 
 .body{display:flex;flex:1;overflow:hidden}
 
-/* ─ LEFT SIDEBAR ─ */
-.left{width:340px;flex-shrink:0;background:#11131e;border-right:1px solid #222538;display:flex;flex-direction:column;overflow:hidden}
-.left-top{flex:1;overflow-y:auto;padding:14px}
-.left-bot{border-top:1px solid #222538;overflow-y:auto;max-height:45%}
+/* ─ LEFT ─ */
+.left{width:320px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.left-top{flex:1;overflow-y:auto;padding:12px}
+.left-bot{border-top:1px solid var(--border);overflow-y:auto;max-height:44%}
 
-/* ─ CENTER PREVIEW ─ */
-.center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:12px;overflow:auto}
+/* ─ CENTER ─ */
+.center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:10px;overflow:auto;background:radial-gradient(ellipse at 50% 60%,rgba(124,77,255,.04) 0%,transparent 70%)}
 
-/* ─ RIGHT PANEL ─ */
-.right{width:260px;flex-shrink:0;background:#11131e;border-left:1px solid #222538;display:flex;flex-direction:column;overflow-y:auto}
+/* ─ RIGHT ─ */
+.right{width:252px;flex-shrink:0;background:var(--panel);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
 
-/* ─ PHONE ─ */
-.phone{background:#000;border-radius:28px;border:3px solid #1e1e1e;box-shadow:0 18px 55px rgba(0,0,0,.7),inset 0 0 0 1px #2a2a2a;overflow:hidden;flex-shrink:0}
-.pnotch{height:18px;display:flex;align-items:center;justify-content:center;background:#000}
-.pnotch-pill{width:44px;height:4px;background:#1a1a1a;border-radius:2px}
+/* ─ PHONE SHELLS ─ */
+.device-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
+.phone{background:#000;border-radius:26px;border:2.5px solid #1c1c1c;box-shadow:0 20px 60px rgba(0,0,0,.8),0 0 0 1px #111,inset 0 0 0 1px #2a2a2a;overflow:hidden;flex-shrink:0;position:relative}
+.phone.landscape{border-radius:18px}
+.pnotch{height:16px;display:flex;align-items:center;justify-content:center;background:#000;flex-shrink:0}
+.pnotch-pill{width:40px;height:4px;background:#1a1a1a;border-radius:2px}
 #cnv{display:block;background:#000}
-.phonebottom{height:14px;background:#000;border-radius:0 0 22px 22px}
+.phonebottom{height:12px;background:#000;flex-shrink:0}
+/* Landscape doesn't need notch */
+.phone.landscape .pnotch,.phone.landscape .phonebottom{display:none}
 
-.pctrl{display:flex;gap:7px}
-.pctrl button{flex:1;padding:9px 5px;border-radius:8px;border:1px solid #222538;background:#161923;color:#9a9ebb;cursor:pointer;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;transition:all .18s}
-.pctrl button:hover{background:#1e2130;color:#e0e4f8}
-.pctrl .playbtn{background:linear-gradient(135deg,#00d4ff,#7b66ff);border:none;color:#fff}
-.pctrl .playbtn:hover{filter:brightness(1.1)}
-.pctrl .stopbtn{background:linear-gradient(135deg,#cc2222,#ff4444);border:none;color:#fff}
-.prog-wrap{display:flex;flex-direction:column;align-items:stretch;gap:5px}
-.prog-bar{height:4px;background:#222538;border-radius:2px;overflow:hidden}
-.prog-fill{height:100%;background:linear-gradient(90deg,#00d4ff,#7b66ff);border-radius:2px;transition:width .2s}
-.prog-label{font-size:10px;color:#50546a;text-align:center}
+.orient-toggle{display:flex;gap:0;border:1px solid var(--border2);border-radius:6px;overflow:hidden}
+.orient-btn{padding:5px 12px;background:var(--bg);border:none;color:var(--muted);font-family:'Space Mono',monospace;font-size:10px;cursor:pointer;transition:.15s}
+.orient-btn.on{background:var(--accent2);color:#fff}
 
-/* ─ FORM ELEMENTS ─ */
-textarea{width:100%;background:#090b14;border:1px solid #222538;color:#e0e4f8;padding:10px 12px;border-radius:9px;font-family:'Inter',sans-serif;font-size:12px;line-height:1.7;resize:none;outline:none;transition:border-color .2s}
-textarea:focus{border-color:rgba(0,212,255,.45)}
-select{width:100%;background:#090b14;border:1px solid #222538;color:#e0e4f8;padding:7px 10px;border-radius:7px;font-size:12px;outline:none}
-select option{background:#11131e}
-input[type=range]{width:100%;accent-color:#00d4ff}
-label{font-size:11px;color:#6a7090;display:block;margin-bottom:4px}
+.pctrl{display:flex;gap:6px}
+.pctrl button{flex:1;padding:8px 4px;border-radius:7px;border:1px solid var(--border2);background:var(--bg);color:var(--muted);cursor:pointer;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;transition:all .15s}
+.pctrl button:hover{background:var(--panel);color:var(--text)}
+.pctrl .playbtn{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff}
+.pctrl .stopbtn{background:linear-gradient(135deg,#c62828,var(--red));border:none;color:#fff}
+
+.prog-wrap{display:flex;flex-direction:column;gap:4px}
+.prog-bar{height:3px;background:var(--border2);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width .3s}
+.prog-label{font-size:10px;color:var(--muted);text-align:center;font-family:'Space Mono',monospace}
+
+/* ─ FORM ─ */
+textarea,select{width:100%;background:var(--bg);border:1px solid var(--border2);color:var(--text);border-radius:7px;font-family:'Syne',sans-serif;font-size:12px;outline:none;transition:border-color .2s}
+textarea{padding:9px 11px;line-height:1.7;resize:none}
+textarea:focus{border-color:rgba(0,229,255,.4)}
+select{padding:6px 10px}
+select option{background:var(--panel)}
+input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+label{font-size:10px;color:var(--muted);display:block;margin-bottom:3px;letter-spacing:.5px}
 
 /* ─ BUTTONS ─ */
-.btn{padding:9px 15px;border-radius:8px;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;transition:all .18s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn{padding:8px 14px;border-radius:7px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;transition:all .15s;display:inline-flex;align-items:center;justify-content:center;gap:5px;letter-spacing:.3px}
 .btn:active{transform:scale(.97)}
-.btn-p{background:linear-gradient(135deg,#00d4ff,#7b66ff);color:#fff;box-shadow:0 3px 12px rgba(0,212,255,.25)}
-.btn-p:hover{filter:brightness(1.12);transform:translateY(-1px)}
-.btn-p:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-.btn-g{background:linear-gradient(135deg,#16a34a,#22cc55);color:#fff;box-shadow:0 3px 12px rgba(34,197,94,.2)}
-.btn-g:hover{filter:brightness(1.12);transform:translateY(-1px)}
-.btn-g:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.btn-o{background:transparent;border:1px solid #2e3250;color:#6a7090}
-.btn-o:hover{background:#161923;color:#e0e4f8}
+.btn-a{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 3px 14px rgba(0,229,255,.2)}
+.btn-a:hover{filter:brightness(1.12)}
+.btn-a:disabled{opacity:.35;cursor:not-allowed;filter:none}
+.btn-g{background:linear-gradient(135deg,#1b5e20,var(--green));color:#fff}
+.btn-g:hover{filter:brightness(1.1)}
+.btn-g:disabled{opacity:.35;cursor:not-allowed;filter:none}
+.btn-o{background:transparent;border:1px solid var(--border2);color:var(--muted)}
+.btn-o:hover{background:var(--bg);color:var(--text)}
 .btn-full{width:100%}
 
-/* ─ SECTION HEADER ─ */
-.sec{padding:10px 14px 7px;font-size:10px;font-weight:700;letter-spacing:1.3px;color:#383c58;text-transform:uppercase;border-bottom:1px solid #222538;display:flex;align-items:center;gap:7px;flex-shrink:0}
-.sec-dot{width:3px;height:12px;border-radius:2px;background:linear-gradient(#00d4ff,#7b66ff)}
+/* ─ SECTION ─ */
+.sec{padding:9px 12px 7px;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--muted2);text-transform:uppercase;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;flex-shrink:0}
+.sec-bar{width:2px;height:10px;border-radius:1px;background:linear-gradient(var(--accent),var(--accent2))}
 
 /* ─ SCENE CARDS ─ */
-.slist{padding:8px;display:flex;flex-direction:column;gap:6px}
-.scard{background:#161923;border:1px solid #222538;border-radius:9px;overflow:hidden;cursor:pointer;transition:border-color .15s}
-.scard:hover{border-color:#2e3250}
-.scard.on{border-color:rgba(0,212,255,.4);background:rgba(0,212,255,.04)}
-.sc-head{display:flex;align-items:center;gap:8px;padding:8px 11px}
-.sc-num{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#00d4ff,#7b66ff);color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sc-title{font-size:11px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sc-acts{display:flex;gap:3px;align-items:center;flex-shrink:0}
-.sdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.sd-i{background:#2e3250}.sd-g{background:#ff9800;animation:pulse .8s infinite}.sd-d{background:#22cc55}.sd-e{background:#ff4444}
-.sc-btn{width:22px;height:22px;border-radius:5px;border:1px solid #222538;background:#11131e;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;color:#6a7090;transition:.15s}
-.sc-btn:hover{background:#1e2130;color:#e0e4f8}
-.sc-body{border-top:1px solid #222538;padding:8px 11px;display:flex;gap:8px}
-.sc-thumb{width:60px;height:106px;border-radius:6px;background:#090b14;border:1px solid #222538;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#50546a;text-align:center;overflow:hidden;position:relative}
+.slist{padding:6px;display:flex;flex-direction:column;gap:5px}
+.scard{background:var(--bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:border-color .15s}
+.scard:hover{border-color:var(--border2)}
+.scard.on{border-color:rgba(0,229,255,.35);background:rgba(0,229,255,.02)}
+.sc-head{display:flex;align-items:center;gap:7px;padding:7px 10px}
+.sc-num{width:20px;height:20px;border-radius:5px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Space Mono',monospace}
+.sc-title{font-size:10px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sc-acts{display:flex;gap:2px;align-items:center;flex-shrink:0}
+.sdot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.sd-i{background:var(--border2)}.sd-g{background:var(--gold);animation:pulse .8s infinite}.sd-d{background:var(--green)}.sd-e{background:var(--red)}
+.sc-btn{width:20px;height:20px;border-radius:4px;border:1px solid var(--border);background:var(--panel);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--muted);transition:.15s}
+.sc-btn:hover{background:var(--border2);color:var(--text)}
+.sc-body{border-top:1px solid var(--border);padding:7px 10px;display:flex;gap:7px}
+.sc-thumb{width:54px;height:96px;border-radius:5px;background:var(--panel);border:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--muted);text-align:center;overflow:hidden}
+.sc-thumb.land{width:96px;height:54px}
 .sc-thumb img{width:100%;height:100%;object-fit:cover}
-.sc-narr{font-size:10px;color:#6a7090;line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical}
-.sc-dia{font-size:10px;color:#22cc55;font-style:italic;margin-top:3px;line-height:1.4}
-@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.sc-narr{font-size:9px;color:var(--muted);line-height:1.6;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
+.sc-dia{font-size:9px;color:var(--green);font-style:italic;margin-top:2px;line-height:1.4}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
 
-/* ─ CHARACTER CHIPS ─ */
-.char-chips{display:flex;flex-wrap:wrap;gap:5px;padding:10px 14px}
-.chip{padding:3px 9px;border-radius:12px;font-size:10px;font-weight:700;cursor:pointer;transition:.15s;border:1px solid transparent}
+/* ─ CHAR CHIPS ─ */
+.char-chips{display:flex;flex-wrap:wrap;gap:4px;padding:8px 0}
+.chip{padding:2px 8px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:.15s;font-family:'Space Mono',monospace}
 .chip:hover{filter:brightness(1.2)}
 
 /* ─ VOICE ROW ─ */
-.vrow{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.vrow label{width:52px;font-size:11px;color:#6a7090;flex-shrink:0}
-.vrow .vval{font-size:11px;color:#00d4ff;width:28px;text-align:right;flex-shrink:0}
+.vrow{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.vrow label{width:46px;font-size:10px;color:var(--muted);flex-shrink:0}
+.vrow .vval{font-size:10px;color:var(--accent);width:32px;text-align:right;flex-shrink:0;font-family:'Space Mono',monospace}
 
 /* ─ SPINNER ─ */
-.spin{border:2.5px solid #222538;border-top-color:#00d4ff;border-radius:50%;animation:spin .65s linear infinite;flex-shrink:0}
+.spin{border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* ─ OVERLAY ─ */
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
 .ov.show{display:flex}
-.ovbox{background:#161923;border:1px solid #2e3250;border-radius:14px;padding:28px 36px;text-align:center;max-width:340px;width:90%}
-.ovbox h3{font-family:'Bebas Neue';font-size:22px;letter-spacing:1px;color:#00d4ff;margin-bottom:6px}
-.ovbox p{font-size:12px;color:#6a7090;line-height:1.7}
+.ovbox{background:var(--panel);border:1px solid var(--border2);border-radius:12px;padding:28px 32px;text-align:center;max-width:300px;width:90%}
+.ovbox h3{font-family:'Space Mono',monospace;font-size:16px;color:var(--accent);margin-bottom:6px}
+.ovbox p{font-size:11px;color:var(--muted);line-height:1.7}
 
 /* ─ TOAST ─ */
-.toast{position:fixed;bottom:16px;right:16px;background:#161923;border:1px solid #2e3250;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;z-index:600;display:none;animation:fup .3s;box-shadow:0 5px 18px rgba(0,0,0,.4)}
-.tok{border-color:rgba(34,204,85,.4);color:#22cc55}
-.terr{border-color:rgba(255,68,68,.4);color:#ff6666}
-@keyframes fup{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.toast{position:fixed;bottom:14px;right:14px;background:var(--panel);border:1px solid var(--border2);border-radius:7px;padding:7px 13px;font-size:11px;font-weight:700;z-index:600;display:none;box-shadow:0 4px 20px rgba(0,0,0,.5);font-family:'Space Mono',monospace}
+.tok{border-color:rgba(0,230,118,.3);color:var(--green)}
+.terr{border-color:rgba(255,61,87,.3);color:var(--red)}
 
 /* ─ PANELS ─ */
-.rpanel-sec{padding:12px 14px;border-bottom:1px solid #222538}
-.rpanel-sec h4{font-size:10px;font-weight:700;letter-spacing:1px;color:#383c58;text-transform:uppercase;margin-bottom:8px}
+.rpanel-sec{padding:11px 13px;border-bottom:1px solid var(--border)}
+.rpanel-sec h4{font-size:9px;font-weight:700;letter-spacing:1.2px;color:var(--muted2);text-transform:uppercase;margin-bottom:8px}
 .dl-area{text-align:center;padding:8px 0}
-.dl-btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:9px;background:linear-gradient(135deg,#16a34a,#22cc55);color:#fff;font-family:'Bebas Neue';font-size:16px;letter-spacing:2px;text-decoration:none;box-shadow:0 3px 12px rgba(34,197,94,.25)}
-.tip{font-size:10px;color:#50546a;line-height:1.7;background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.1);border-radius:7px;padding:8px}
-.tip b{color:#00d4ff}
+.dl-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:8px;background:linear-gradient(135deg,#1b5e20,var(--green));color:#fff;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;text-decoration:none;box-shadow:0 3px 14px rgba(0,230,118,.2)}
+.tip{font-size:9px;color:var(--muted);line-height:1.7;background:rgba(0,229,255,.03);border:1px solid rgba(0,229,255,.1);border-radius:6px;padding:7px}
+.tip b{color:var(--accent)}
 
-/* scrollbar */
-::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:#2e3250;border-radius:2px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 </style>
 </head>
 <body>
@@ -138,120 +157,128 @@ label{font-size:11px;color:#6a7090;display:block;margin-bottom:4px}
 
 <!-- TOP BAR -->
 <div class="bar">
-  <span class="bar-logo">🎬 Story Video Maker</span>
-  <span class="bar-badge">🎙 Narrator + Voices</span>
-  <span class="bar-badge" style="background:rgba(34,204,85,.1);border-color:rgba(34,204,85,.25);color:#22cc55">✨ AI Scenes</span>
+  <span class="logo">🎬 STORY<span>MAKER</span></span>
+  <span class="badge badge-b">AI SCENES</span>
+  <span class="badge badge-g">NARRATOR</span>
+  <span class="badge badge-o">VIDEO EXPORT</span>
   <div class="bar-right">
-    <button class="btn btn-o" id="clear-btn" style="font-size:11px">🗑 Clear</button>
-    <button class="btn btn-p" id="genall-btn" style="display:none" onclick="genAll()">🖼 Generate Images</button>
-    <button class="btn btn-g" id="export-btn" onclick="startExport()">🎬 Export Video</button>
+    <div class="orient-toggle">
+      <button class="orient-btn on" id="port-btn" onclick="setOrient('portrait')">📱 Portrait</button>
+      <button class="orient-btn" id="land-btn" onclick="setOrient('landscape')">🖥 Landscape</button>
+    </div>
+    <button class="btn btn-o" id="clear-btn" style="font-size:10px">✕ Clear</button>
+    <button class="btn btn-a" id="genall-btn" style="display:none" onclick="genAll()">🖼 Generate Images</button>
+    <button class="btn btn-g" id="export-btn" onclick="startExport()">🎬 Export</button>
   </div>
 </div>
 
 <div class="body">
 
-<!-- LEFT: Story Input + Characters + Scene List -->
+<!-- LEFT -->
 <div class="left">
   <div class="left-top">
-
-    <!-- Characters -->
-    <div style="margin-bottom:12px">
-      <div class="sec" style="margin:0 -14px 8px"><div class="sec-dot"></div>10 Characters — click to test voice</div>
-      <div class="char-chips" id="char-chips" style="padding:8px 0"></div>
+    <div style="margin-bottom:10px">
+      <div class="sec" style="margin:0 -12px 8px"><div class="sec-bar"></div>Characters — click to hear voice</div>
+      <div class="char-chips" id="char-chips"></div>
     </div>
-
-    <!-- Story input -->
-    <div class="sec" style="margin:0 -14px 10px"><div class="sec-dot"></div>Write Your Story</div>
-    <textarea id="story-ta" rows="9" placeholder="Write your story here. Use character names — the app will auto-detect who is speaking.
-
-Example:
-Brian woke up late. He jumped out of bed and ran to the bathroom. He rushed to school. Mwalimu Hassan was waiting at the gate. Mwalimu said 'You are late again Brian.' Brian looked down and said 'Sorry sir.'"></textarea>
-
-    <div style="margin-top:8px;font-size:10px;color:#50546a;line-height:1.7">
-      Characters: <span style="color:#00d4ff;font-weight:700">Brian, Zawadi, Mama Wanjiru, Inspector Kamau, Doctor Amara, Chef Omondi, Mwalimu Hassan, Merchant Fatuma, Baba James, Ranger Kipchoge</span>
+    <div class="sec" style="margin:0 -12px 9px"><div class="sec-bar"></div>Write Your Story</div>
+    <textarea id="story-ta" rows="9" placeholder="Write your story here. Use character names naturally.&#10;&#10;Example:&#10;Brian woke up late and ran to school. Mwalimu Hassan waited at the gate and said 'You are late again.' Brian looked down and said 'Sorry sir, it will not happen again.'"></textarea>
+    <div style="margin-top:6px;font-size:9px;color:var(--muted);line-height:1.7">
+      Characters: <span style="color:var(--accent);font-family:'Space Mono',monospace;font-size:8px">Brian · Zawadi · Mama Wanjiru · Inspector Kamau · Doctor Amara · Chef Omondi · Mwalimu Hassan · Merchant Fatuma · Baba James · Ranger Kipchoge</span>
     </div>
-
-    <div style="display:flex;gap:7px;margin-top:10px">
-      <button class="btn btn-p btn-full" id="parse-btn" onclick="parseStory()">✨ Build Scenes</button>
-      <button class="btn btn-o" onclick="loadExample()" style="white-space:nowrap;font-size:11px">📖 Example</button>
+    <div style="display:flex;gap:6px;margin-top:9px">
+      <button class="btn btn-a btn-full" id="parse-btn" onclick="parseStory()">✨ Build Scenes</button>
+      <button class="btn btn-o" onclick="loadExample()" style="white-space:nowrap;font-size:10px">📖 Example</button>
     </div>
   </div>
-
-  <!-- Scene list -->
   <div class="left-bot">
-    <div class="sec"><div class="sec-dot"></div>Scenes <span id="sc-count" style="color:#e0e4f8;margin-left:4px"></span></div>
+    <div class="sec"><div class="sec-bar"></div>Scenes <span id="sc-count" style="color:var(--text);margin-left:3px"></span></div>
     <div class="slist" id="slist">
-      <div style="padding:20px;text-align:center;font-size:11px;color:#383c58">
-        Write a story and click <b style="color:#00d4ff">Build Scenes</b>
-      </div>
+      <div style="padding:18px;text-align:center;font-size:10px;color:var(--muted2)">Write a story and click <b style="color:var(--accent)">Build Scenes</b></div>
     </div>
   </div>
 </div>
 
-<!-- CENTER: Phone Preview -->
+<!-- CENTER -->
 <div class="center">
-  <div class="phone" id="phone-shell">
-    <div class="pnotch"><div class="pnotch-pill"></div></div>
-    <canvas id="cnv"></canvas>
-    <div class="phonebottom"></div>
-  </div>
-
-  <div class="prog-wrap" id="prog-wrap">
-    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-    <div class="prog-label" id="prog-label">Scene 0 / 0</div>
-  </div>
-
-  <div class="pctrl" id="pctrl">
-    <button onclick="prevSc()">◀ Prev</button>
-    <button class="playbtn" id="play-btn" onclick="onPlayBtn()">▶ Play</button>
-    <button onclick="nextSc()">Next ▶</button>
+  <div class="device-wrap">
+    <div class="phone" id="phone-shell">
+      <div class="pnotch" id="pnotch"><div class="pnotch-pill"></div></div>
+      <canvas id="cnv"></canvas>
+      <div class="phonebottom" id="pbot"></div>
+    </div>
+    <div class="prog-wrap" id="prog-wrap" style="width:300px">
+      <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+      <div class="prog-label" id="prog-label">Scene 0 / 0</div>
+    </div>
+    <div class="pctrl" id="pctrl" style="width:300px">
+      <button onclick="prevSc()">◀ Prev</button>
+      <button class="playbtn" id="play-btn" onclick="onPlayBtn()">▶ Play</button>
+      <button onclick="nextSc()">Next ▶</button>
+    </div>
   </div>
 </div>
 
-<!-- RIGHT: Voice Settings + Export -->
+<!-- RIGHT -->
 <div class="right">
-
   <div class="rpanel-sec">
     <h4>🎙 Narrator Voice</h4>
-    <div style="margin-bottom:8px">
+    <div style="margin-bottom:7px">
       <label>Voice</label>
       <select id="narr-voice"></select>
     </div>
-    <div class="vrow"><label>Speed</label><input type="range" min="0.6" max="1.5" step="0.05" value="0.92" id="narr-rate" oninput="document.getElementById('narr-rate-v').textContent=this.value"/><span class="vval" id="narr-rate-v">0.92</span></div>
+    <div class="vrow"><label>Speed</label><input type="range" min="0.6" max="1.4" step="0.05" value="0.88" id="narr-rate" oninput="document.getElementById('narr-rate-v').textContent=this.value"/><span class="vval" id="narr-rate-v">0.88</span></div>
     <div class="vrow"><label>Pitch</label><input type="range" min="0.5" max="1.5" step="0.05" value="1.0" id="narr-pitch" oninput="document.getElementById('narr-pitch-v').textContent=this.value"/><span class="vval" id="narr-pitch-v">1.0</span></div>
-    <button class="btn btn-o btn-full" style="font-size:11px;margin-top:4px" onclick="testNarrator()">🔊 Test Narrator</button>
+    <div class="vrow"><label>Volume</label><input type="range" min="0.3" max="1.0" step="0.05" value="1.0" id="narr-vol" oninput="document.getElementById('narr-vol-v').textContent=this.value"/><span class="vval" id="narr-vol-v">1.0</span></div>
+    <button class="btn btn-o btn-full" style="font-size:10px;margin-top:4px" onclick="testNarrator()">🔊 Test Narrator</button>
   </div>
 
   <div class="rpanel-sec">
     <h4>💬 Caption Style</h4>
-    <div class="vrow"><label>Size</label><input type="range" min="44" max="90" step="2" value="64" id="cap-size" oninput="document.getElementById('cap-size-v').textContent=this.value+'px';previewCur()"/><span class="vval" id="cap-size-v">64px</span></div>
-    <div class="vrow"><label>Y Pos</label><input type="range" min="50" max="85" step="1" value="68" id="cap-y" oninput="document.getElementById('cap-y-v').textContent=this.value+'%';previewCur()"/><span class="vval" id="cap-y-v">68%</span></div>
+    <div class="vrow"><label>Size</label><input type="range" min="36" max="88" step="2" value="60" id="cap-size" oninput="document.getElementById('cap-size-v').textContent=this.value+'px';previewCur()"/><span class="vval" id="cap-size-v">60px</span></div>
+    <div class="vrow"><label>Y Pos</label><input type="range" min="50" max="88" step="1" value="70" id="cap-y" oninput="document.getElementById('cap-y-v').textContent=this.value+'%';previewCur()"/><span class="vval" id="cap-y-v">70%</span></div>
     <div style="margin-top:6px">
-      <label style="margin-bottom:5px">Words shown at once</label>
-      <div style="display:flex;gap:5px">
-        <button class="btn btn-p" id="wpg-1" onclick="setWPG(1)" style="flex:1;font-size:11px">1</button>
-        <button class="btn btn-o" id="wpg-2" onclick="setWPG(2)" style="flex:1;font-size:11px">2</button>
-        <button class="btn btn-o" id="wpg-3" onclick="setWPG(3)" style="flex:1;font-size:11px">3</button>
+      <label style="margin-bottom:4px">Words shown at once</label>
+      <div style="display:flex;gap:4px">
+        <button class="btn btn-a" id="wpg-1" onclick="setWPG(1)" style="flex:1;font-size:10px">1</button>
+        <button class="btn btn-o" id="wpg-2" onclick="setWPG(2)" style="flex:1;font-size:10px">2</button>
+        <button class="btn btn-o" id="wpg-3" onclick="setWPG(3)" style="flex:1;font-size:10px">3</button>
       </div>
+    </div>
+  </div>
+
+  <div class="rpanel-sec">
+    <h4>🖼 Image Model</h4>
+    <select id="img-model">
+      <option value="flux">Flux (Best Quality)</option>
+      <option value="turbo">Turbo (Faster)</option>
+      <option value="flux-anime">Flux Anime</option>
+    </select>
+    <div style="margin-top:6px">
+      <label>Delay between scenes (sec)</label>
+      <select id="gen-delay">
+        <option value="6000">6 seconds</option>
+        <option value="8000" selected>8 seconds</option>
+        <option value="12000">12 seconds</option>
+      </select>
     </div>
   </div>
 
   <div class="rpanel-sec">
     <h4>🎬 Export</h4>
-    <div class="tip" style="margin-bottom:8px">
-      <b>Steps:</b> Generate images → Press Export → Video records live with voice → Download
+    <div class="tip" style="margin-bottom:7px">
+      <b>Steps:</b> Build Scenes → Generate Images → Export Video → Download
     </div>
     <button class="btn btn-g btn-full" onclick="startExport()" id="export-btn2">🎬 Export Video</button>
-    <div id="rbar-wrap" style="display:none;margin-top:8px">
-      <div class="prog-bar"><div class="prog-fill" id="rfill" style="width:0%"></div></div>
-      <div style="font-size:10px;color:#6a7090;text-align:center;margin-top:3px" id="rtxt">Recording...</div>
+    <div id="rbar-wrap" style="display:none;margin-top:7px">
+      <div class="prog-bar" style="height:4px"><div class="prog-fill" id="rfill" style="width:0%"></div></div>
+      <div style="font-size:9px;color:var(--muted);text-align:center;margin-top:3px;font-family:'Space Mono',monospace" id="rtxt">Recording...</div>
     </div>
     <div class="dl-area" id="dl-area" style="display:none">
       <a id="dl-link" class="dl-btn" download="story.webm">⬇ DOWNLOAD</a>
-      <div style="font-size:10px;color:#50546a;margin-top:5px">TikTok · Reels · Shorts</div>
+      <div style="font-size:9px;color:var(--muted);margin-top:4px">TikTok · Reels · Shorts</div>
     </div>
   </div>
-
 </div>
 </div>
 </div>
@@ -259,86 +286,90 @@ Brian woke up late. He jumped out of bed and ran to the bathroom. He rushed to s
 <!-- Overlay -->
 <div class="ov" id="ov">
   <div class="ovbox">
-    <div class="spin" style="width:32px;height:32px;margin:0 auto 12px"></div>
+    <div class="spin" style="width:28px;height:28px;margin:0 auto 12px"></div>
     <h3 id="ov-title">Working...</h3>
     <p id="ov-msg">Please wait</p>
   </div>
 </div>
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ════════════════════════════════════════════════════════════
-//  STORY VIDEO MAKER — Clean Functional Build
-// ════════════════════════════════════════════════════════════
+'use strict';
 
-// ── Canvas sizing ──────────────────────────────────────────
-const NATIVE_W = 540, NATIVE_H = 960;
-const DISPLAY_H = Math.min(380, window.innerHeight - 160);
-const DISPLAY_W = Math.round(DISPLAY_H * NATIVE_W / NATIVE_H);
+// ══════════════════════════════════════════════════════════
+//  ORIENTATION & CANVAS SIZING
+// ══════════════════════════════════════════════════════════
+let orient = 'portrait';
+const PORTRAIT_W = 540, PORTRAIT_H = 960;
+const LANDSCAPE_W = 960, LANDSCAPE_H = 540;
+
+let NW = PORTRAIT_W, NH = PORTRAIT_H;
+let DH, DW;
+
 const cnv = document.getElementById('cnv');
 const ctx = cnv.getContext('2d');
-cnv.width = NATIVE_W; cnv.height = NATIVE_H;
-cnv.style.width = DISPLAY_W + 'px'; cnv.style.height = DISPLAY_H + 'px';
-document.getElementById('pctrl').style.width = DISPLAY_W + 'px';
-document.getElementById('prog-wrap').style.width = DISPLAY_W + 'px';
 
-// ── 10 CHARACTERS ─────────────────────────────────────────
-const CHARS = {
-  "Brian": {
-    color: "#4488ff", emoji: "👦",
-    look: "10-year-old African boy, dark skin, short natural black hair, bright big eyes, blue school shirt and dark shorts",
-    voice: {pitch: 1.55, rate: 1.1}
-  },
-  "Zawadi": {
-    color: "#dd44ff", emoji: "👧",
-    look: "12-year-old African girl, dark skin, braided hair with yellow and orange beads, cheerful dimpled face, school uniform",
-    voice: {pitch: 1.65, rate: 1.08}
-  },
-  "Mama Wanjiru": {
-    color: "#ff8844", emoji: "👩",
-    look: "40-year-old African woman, dark skin, wearing bright orange and green kitenge dress, colourful head wrap, warm but stern face",
-    voice: {pitch: 1.05, rate: 0.88}
-  },
-  "Inspector Kamau": {
-    color: "#4466dd", emoji: "👮",
-    look: "Fat middle-aged African man, dark skin, navy blue police uniform with gold badge, big black mustache, round chubby face, police cap",
-    voice: {pitch: 0.65, rate: 0.80}
-  },
-  "Doctor Amara": {
-    color: "#22cc88", emoji: "👩‍⚕️",
-    look: "35-year-old African woman, dark skin, white doctor coat, stethoscope around neck, round glasses, natural afro hair",
-    voice: {pitch: 1.12, rate: 0.92}
-  },
-  "Chef Omondi": {
-    color: "#ffcc00", emoji: "👨‍🍳",
-    look: "Large fat African man, dark brown skin, white chef uniform with buttons, tall white chef hat, wide cheerful smile",
-    voice: {pitch: 0.82, rate: 0.86}
-  },
-  "Mwalimu Hassan": {
-    color: "#44ccff", emoji: "👨‍🏫",
-    look: "Tall thin African man, dark skin, white formal shirt and dark tie, round glasses, stern expression, holding books",
-    voice: {pitch: 0.88, rate: 0.85}
-  },
-  "Merchant Fatuma": {
-    color: "#ff4488", emoji: "👩‍🦱",
-    look: "Energetic African market woman, dark skin, bright colourful dress, white headscarf, expressive face, colourful bracelets",
-    voice: {pitch: 1.3, rate: 1.15}
-  },
-  "Baba James": {
-    color: "#aa8866", emoji: "👴",
-    look: "Elderly African man, very dark skin, grey white hair and beard, white traditional kanzu robe, wooden walking stick, wise peaceful face",
-    voice: {pitch: 0.75, rate: 0.72}
-  },
-  "Ranger Kipchoge": {
-    color: "#88cc44", emoji: "🦺",
-    look: "Athletic African man, dark skin, khaki ranger uniform, wide-brimmed khaki hat, binoculars around neck, strong confident face",
-    voice: {pitch: 0.90, rate: 0.96}
+function setOrient(o) {
+  orient = o;
+  document.getElementById('port-btn').className = 'orient-btn' + (o==='portrait'?' on':'');
+  document.getElementById('land-btn').className  = 'orient-btn' + (o==='landscape'?' on':'');
+  const shell = document.getElementById('phone-shell');
+  const notch = document.getElementById('pnotch');
+  const pbot  = document.getElementById('pbot');
+  if (o === 'landscape') {
+    shell.classList.add('landscape');
+    notch.style.display = 'none';
+    pbot.style.display  = 'none';
+    NW = LANDSCAPE_W; NH = LANDSCAPE_H;
+  } else {
+    shell.classList.remove('landscape');
+    notch.style.display = '';
+    pbot.style.display  = '';
+    NW = PORTRAIT_W; NH = PORTRAIT_H;
   }
+  resizeCanvas();
+  previewCur();
+}
+
+function resizeCanvas() {
+  const maxH = window.innerHeight - 180;
+  const maxW = window.innerWidth  - 620; // left+right panels
+  if (orient === 'portrait') {
+    DH = Math.min(360, maxH);
+    DW = Math.round(DH * NW / NH);
+  } else {
+    DW = Math.min(520, maxW);
+    DH = Math.round(DW * NH / NW);
+  }
+  cnv.width  = NW; cnv.height = NH;
+  cnv.style.width  = DW + 'px';
+  cnv.style.height = DH + 'px';
+  const pw = document.getElementById('prog-wrap');
+  const pc = document.getElementById('pctrl');
+  const w  = Math.max(DW, 220) + 'px';
+  pw.style.width = w; pc.style.width = w;
+}
+resizeCanvas();
+
+// ══════════════════════════════════════════════════════════
+//  CHARACTERS
+// ══════════════════════════════════════════════════════════
+const CHARS = {
+  "Brian":           {color:"#4488ff",emoji:"👦",look:"10-year-old African boy, dark brown skin, short natural black hair, bright wide eyes, blue school shirt and dark shorts, energetic expression",voice:{pitch:1.6,rate:1.05}},
+  "Zawadi":          {color:"#dd44ff",emoji:"👧",look:"12-year-old African girl, dark skin, braided hair with yellow beads, cheerful dimpled face, green school uniform",voice:{pitch:1.7,rate:1.06}},
+  "Mama Wanjiru":    {color:"#ff8844",emoji:"👩",look:"40-year-old African woman, dark skin, bright orange and green kitenge dress, colourful head wrap, warm but stern expression",voice:{pitch:1.05,rate:0.86}},
+  "Inspector Kamau": {color:"#4466dd",emoji:"👮",look:"Stocky middle-aged African man, dark skin, navy police uniform with gold badge, thick black moustache, stern face, police cap",voice:{pitch:0.62,rate:0.78}},
+  "Doctor Amara":    {color:"#22cc88",emoji:"👩‍⚕️",look:"35-year-old African woman, dark skin, white doctor coat, stethoscope, round glasses, natural afro hair, calm professional face",voice:{pitch:1.1,rate:0.90}},
+  "Chef Omondi":     {color:"#ffcc00",emoji:"👨‍🍳",look:"Large jolly African man, dark brown skin, white chef uniform, tall chef hat, wide smile, flour on hands",voice:{pitch:0.8,rate:0.84}},
+  "Mwalimu Hassan":  {color:"#44ccff",emoji:"👨‍🏫",look:"Tall thin African man, dark skin, white formal shirt, dark tie, round glasses, stern expression, holding textbooks",voice:{pitch:0.86,rate:0.83}},
+  "Merchant Fatuma": {color:"#ff4488",emoji:"👩‍🦱",look:"Energetic African market woman, dark skin, bright patterned dress, white headscarf, expressive face, colourful beaded bracelets",voice:{pitch:1.32,rate:1.12}},
+  "Baba James":      {color:"#aa8866",emoji:"👴",look:"Elderly African man, very dark skin, grey hair and beard, white kanzu robe, wooden walking stick, peaceful wise face",voice:{pitch:0.72,rate:0.70}},
+  "Ranger Kipchoge": {color:"#88cc44",emoji:"🦺",look:"Athletic African man, dark skin, khaki ranger uniform, wide-brimmed khaki hat, binoculars around neck, strong confident posture",voice:{pitch:0.88,rate:0.94}}
 };
 
-// ── SPEECH ────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+//  SPEECH
+// ══════════════════════════════════════════════════════════
 const SY = window.speechSynthesis;
 let allVoices = [];
 
@@ -346,48 +377,53 @@ function loadVoices() {
   allVoices = SY.getVoices();
   const sel = document.getElementById('narr-voice');
   sel.innerHTML = '';
-  const eng = allVoices.filter(v => v.lang && v.lang.startsWith('en'));
-  const pool = eng.length ? eng : allVoices;
-  pool.forEach((v, i) => {
+  const pool = allVoices.filter(v => v.lang && v.lang.startsWith('en'));
+  const use  = pool.length ? pool : allVoices;
+  use.forEach((v, i) => {
     const o = document.createElement('option');
     o.value = i;
     o.textContent = v.name + ' (' + v.lang + ')';
     sel.appendChild(o);
   });
-  // prefer a clear narrator voice
-  const pref = pool.findIndex(v =>
-    v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha') || v.name.includes('Daniel')
+  const pref = use.findIndex(v =>
+    /Google|Natural|Samantha|Daniel|Karen|Moira|Rishi|Enhanced/.test(v.name)
   );
   if (pref >= 0) sel.value = pref;
 }
 SY.onvoiceschanged = loadVoices;
 loadVoices();
-setTimeout(loadVoices, 800);
+setTimeout(loadVoices, 600);
+setTimeout(loadVoices, 1500);
 
 function getNarrVoice() {
-  const idx = parseInt(document.getElementById('narr-voice').value) || 0;
-  const eng = allVoices.filter(v => v.lang && v.lang.startsWith('en'));
-  const pool = eng.length ? eng : allVoices;
-  return pool[idx] || pool[0] || allVoices[0] || null;
+  const pool = allVoices.filter(v => v.lang && v.lang.startsWith('en'));
+  const use  = pool.length ? pool : allVoices;
+  return use[parseInt(document.getElementById('narr-voice').value) || 0] || allVoices[0];
+}
+function getCharVoice() {
+  const pool = allVoices.filter(v => v.lang && v.lang.startsWith('en'));
+  const use  = pool.length ? pool : allVoices;
+  return use[0] || allVoices[0];
 }
 
-function getCharVoice(charName) {
-  // Characters use same voice pool but different pitch/rate
-  const eng = allVoices.filter(v => v.lang && v.lang.startsWith('en'));
-  const pool = eng.length ? eng : allVoices;
-  return pool[0] || allVoices[0] || null;
-}
-
+// Improved speak with pause handling
 function speak(text, opts, onEnd) {
   SY.cancel();
-  if (!text) { if (onEnd) onEnd(); return; }
+  if (!text || !text.trim()) { if (onEnd) setTimeout(onEnd, 50); return; }
+
+  // Keep synthesis alive on Chrome (it pauses after ~15s)
+  const keepAlive = setInterval(() => {
+    if (!SY.speaking) clearInterval(keepAlive);
+    else { SY.pause(); SY.resume(); }
+  }, 12000);
+
   const utt = new SpeechSynthesisUtterance(text);
-  utt.rate  = opts.rate  || 0.92;
-  utt.pitch = opts.pitch || 1.0;
-  utt.volume = 1;
+  utt.rate   = opts.rate   || 0.88;
+  utt.pitch  = opts.pitch  || 1.0;
+  utt.volume = opts.volume != null ? opts.volume : 1.0;
   if (opts.voice) utt.voice = opts.voice;
-  utt.onend   = () => { if (onEnd) onEnd(); };
-  utt.onerror = () => { if (onEnd) onEnd(); };
+  utt.onend = () => { clearInterval(keepAlive); if (onEnd) onEnd(); };
+  utt.onerror = (e) => { clearInterval(keepAlive); console.warn('TTS error:', e.error); if (onEnd) onEnd(); };
   SY.speak(utt);
   return utt;
 }
@@ -395,14 +431,17 @@ function speak(text, opts, onEnd) {
 function testNarrator() {
   const v = getNarrVoice();
   speak(
-    "A story begins. Brian woke up and looked at the clock. It was already eight.",
+    "The sun was rising over the valley. Birds called out from the trees as the morning mist began to lift.",
     { rate: parseFloat(document.getElementById('narr-rate').value),
       pitch: parseFloat(document.getElementById('narr-pitch').value),
+      volume: parseFloat(document.getElementById('narr-vol').value),
       voice: v }
   );
 }
 
-// ── BUILD CHARACTER CHIPS ─────────────────────────────────
+// ══════════════════════════════════════════════════════════
+//  CHIPS
+// ══════════════════════════════════════════════════════════
 function buildChips() {
   const wrap = document.getElementById('char-chips');
   wrap.innerHTML = '';
@@ -410,366 +449,335 @@ function buildChips() {
     const ch = CHARS[name];
     const btn = document.createElement('button');
     btn.className = 'chip';
-    btn.style.background = ch.color + '22';
-    btn.style.borderColor = ch.color + '55';
+    btn.style.background  = ch.color + '18';
+    btn.style.borderColor = ch.color + '44';
     btn.style.color = ch.color;
     btn.textContent = ch.emoji + ' ' + name.split(' ')[0];
-    btn.title = 'Click to test ' + name + "'s voice";
-    btn.onclick = function() {
-      const v = getCharVoice(name);
-      speak('Hello! I am ' + name + '.', {
-        rate: ch.voice.rate,
-        pitch: ch.voice.pitch,
-        voice: v
-      });
-    };
+    btn.title = name;
+    btn.onclick = () => speak('Hello! I am ' + name + '. Nice to meet you.',
+      { rate:ch.voice.rate, pitch:ch.voice.pitch, voice:getCharVoice() });
     wrap.appendChild(btn);
   });
 }
 buildChips();
 
-// ── WORDS PER GROUP ───────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+//  WPG
+// ══════════════════════════════════════════════════════════
 let wpg = 1;
 function setWPG(n) {
   wpg = n;
   [1,2,3].forEach(i => {
-    const b = document.getElementById('wpg-' + i);
-    b.className = 'btn ' + (i === n ? 'btn-p' : 'btn-o');
+    document.getElementById('wpg-' + i).className = 'btn ' + (i===n ? 'btn-a' : 'btn-o');
   });
   previewCur();
 }
 
-// ── SCENES STATE ──────────────────────────────────────────
-let scenes = [];
-let curSc = -1;
+// ══════════════════════════════════════════════════════════
+//  SCENES
+// ══════════════════════════════════════════════════════════
+let scenes = [], curSc = -1;
 
-// Scene shape:
-// { narration, dialogue: [{speaker, text}], imgPrompt, imgUrl, imgEl, imgStatus }
-
-// ── CANVAS DRAWING ────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+//  CANVAS DRAW
+// ══════════════════════════════════════════════════════════
 function drawEmpty() {
-  ctx.fillStyle = '#0a0c18';
-  ctx.fillRect(0, 0, NATIVE_W, NATIVE_H);
+  ctx.fillStyle = '#07090f';
+  ctx.fillRect(0, 0, NW, NH);
   ctx.font = '64px serif';
   ctx.textAlign = 'center';
-  ctx.fillText('🎬', NATIVE_W/2, NATIVE_H/2 - 30);
-  ctx.font = 'bold 26px Inter,sans-serif';
-  ctx.fillStyle = 'rgba(0,212,255,0.5)';
-  ctx.fillText('Write a story to begin', NATIVE_W/2, NATIVE_H/2 + 40);
+  ctx.fillText('🎬', NW/2, NH/2 - 30);
+  ctx.font = 'bold 22px Syne,sans-serif';
+  ctx.fillStyle = 'rgba(0,229,255,0.4)';
+  ctx.fillText('Write a story to begin', NW/2, NH/2 + 40);
   ctx.textAlign = 'left';
 }
 
 function drawScene(scIdx, words, showDia, diaText, diaChar) {
-  ctx.clearRect(0, 0, NATIVE_W, NATIVE_H);
-
+  ctx.clearRect(0, 0, NW, NH);
   const s = scenes[scIdx];
   if (!s) { drawEmpty(); return; }
 
-  // ── Background image ──
-  const imgEl = s.imgEl || null;
-  if (imgEl) {
-    // Fill canvas keeping aspect ratio (cover)
-    const iw = imgEl.naturalWidth || imgEl.width;
-    const ih = imgEl.naturalHeight || imgEl.height;
-    const sc = Math.max(NATIVE_W / iw, NATIVE_H / ih);
-    const dw = iw * sc, dh = ih * sc;
-    ctx.drawImage(imgEl, (NATIVE_W - dw) / 2, (NATIVE_H - dh) / 2, dw, dh);
-    // Dark gradient overlay at bottom for text
-    const grad = ctx.createLinearGradient(0, NATIVE_H * 0.45, 0, NATIVE_H);
-    grad.addColorStop(0, 'rgba(0,0,0,0)');
-    grad.addColorStop(0.6, 'rgba(0,0,0,0.55)');
-    grad.addColorStop(1, 'rgba(0,0,0,0.75)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, NATIVE_W, NATIVE_H);
+  if (s.imgEl) {
+    const iw = s.imgEl.naturalWidth || s.imgEl.width;
+    const ih = s.imgEl.naturalHeight || s.imgEl.height;
+    const sc = Math.max(NW/iw, NH/ih);
+    const dw = iw*sc, dh = ih*sc;
+    ctx.drawImage(s.imgEl, (NW-dw)/2, (NH-dh)/2, dw, dh);
+    // Bottom gradient
+    const g = ctx.createLinearGradient(0, NH*0.42, 0, NH);
+    g.addColorStop(0, 'rgba(0,0,0,0)');
+    g.addColorStop(0.55, 'rgba(0,0,0,0.52)');
+    g.addColorStop(1, 'rgba(0,0,0,0.78)');
+    ctx.fillStyle = g; ctx.fillRect(0,0,NW,NH);
     // Top vignette
-    const tg = ctx.createLinearGradient(0, 0, 0, NATIVE_H * 0.2);
-    tg.addColorStop(0, 'rgba(0,0,0,0.4)');
-    tg.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = tg;
-    ctx.fillRect(0, 0, NATIVE_W, NATIVE_H);
+    const tg = ctx.createLinearGradient(0,0,0,NH*0.18);
+    tg.addColorStop(0,'rgba(0,0,0,0.45)');
+    tg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = tg; ctx.fillRect(0,0,NW,NH);
   } else {
-    // Placeholder dark bg
-    ctx.fillStyle = '#080a14';
-    ctx.fillRect(0, 0, NATIVE_W, NATIVE_H);
-    if (s.imgStatus === 'generating') {
-      ctx.font = '44px serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('⏳', NATIVE_W/2, NATIVE_H/2);
-      ctx.font = 'bold 20px Inter,sans-serif';
-      ctx.fillStyle = 'rgba(0,212,255,0.55)';
-      ctx.fillText('Generating image...', NATIVE_W/2, NATIVE_H/2 + 55);
-    } else {
-      ctx.font = '44px serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('🎨', NATIVE_W/2, NATIVE_H/2);
-      ctx.font = 'bold 18px Inter,sans-serif';
-      ctx.fillStyle = 'rgba(255,255,255,0.2)';
-      ctx.fillText('Click 🎨 to generate image', NATIVE_W/2, NATIVE_H/2 + 55);
-    }
+    ctx.fillStyle = '#07090f';
+    ctx.fillRect(0, 0, NW, NH);
+    ctx.font = '40px serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(s.imgStatus==='generating'?'⏳':'🎨', NW/2, NH/2);
+    ctx.font = 'bold 18px Syne,sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.fillText(s.imgStatus==='generating'?'Generating…':'Click 🎨 to generate', NW/2, NH/2+52);
     ctx.textAlign = 'left';
   }
 
-  // ── Narration words ──
-  if (words && words.length > 0) {
-    drawWords(words.join(' '));
-  }
-
-  // ── Dialogue bubble (when character speaks) ──
-  if (showDia && diaText && diaChar) {
-    drawDialogue(diaText, diaChar);
-  }
-
-  // ── HUD ──
+  if (words && words.length) drawWords(words.join(' '));
+  if (showDia && diaText && diaChar) drawDialogue(diaText, diaChar);
   drawHUD(scIdx);
 }
 
 function drawWords(text) {
-  const fontSize = parseInt(document.getElementById('cap-size').value) || 64;
-  const yPct = parseInt(document.getElementById('cap-y').value) || 68;
-  const y = (yPct / 100) * NATIVE_H;
+  const fontSize = parseInt(document.getElementById('cap-size').value) || 60;
+  const yPct     = parseInt(document.getElementById('cap-y').value)    || 70;
+  const y = (yPct/100) * NH;
 
   ctx.save();
   ctx.textAlign = 'center';
-  ctx.font = '900 ' + fontSize + 'px Poppins,Inter,sans-serif';
-
-  // Outline
-  ctx.strokeStyle = '#000000';
-  ctx.lineWidth = fontSize * 0.14;
-  ctx.lineJoin = 'round';
-  ctx.lineCap  = 'round';
-  ctx.strokeText(text, NATIVE_W / 2, y);
-  // Fill white
+  ctx.font = '900 ' + fontSize + 'px Syne,sans-serif';
+  ctx.strokeStyle = 'rgba(0,0,0,0.95)';
+  ctx.lineWidth   = fontSize * 0.15;
+  ctx.lineJoin    = 'round';
+  ctx.lineCap     = 'round';
+  ctx.strokeText(text, NW/2, y);
   ctx.fillStyle = '#FFFFFF';
-  ctx.fillText(text, NATIVE_W / 2, y);
-
+  ctx.fillText(text, NW/2, y);
   ctx.restore();
 }
 
 function drawDialogue(text, charName) {
-  const ch = CHARS[charName] || {};
+  const ch    = CHARS[charName] || {};
   const color = ch.color || '#ffffff';
-  const y = NATIVE_H * 0.82;
+  const padding = 22, bh = 70, bmargin = 28;
+  const by = NH - bmargin - bh;
 
   ctx.save();
-  // Bubble background
-  ctx.font = 'bold 24px Inter,sans-serif';
+  ctx.font = 'bold 22px Syne,sans-serif';
   const tw = ctx.measureText(text).width;
-  const bw = Math.min(tw + 48, NATIVE_W - 40);
-  const bh = 54;
-  const bx = NATIVE_W / 2 - bw / 2;
-  const by = y - 40;
+  const bw = Math.min(tw + padding*2, NW - 32);
+  const bx = NW/2 - bw/2;
 
-  ctx.fillStyle = 'rgba(0,0,0,0.78)';
-  _rrect(bx, by, bw, bh, 12);
-  ctx.fill();
-
-  // Color stripe
+  // Backdrop
+  ctx.fillStyle = 'rgba(0,0,0,0.82)';
+  rrect(bx, by, bw, bh, 10); ctx.fill();
+  // Accent top bar
   ctx.fillStyle = color;
-  _rrect(bx, by, bw, 5, 3);
-  ctx.fill();
+  rrect(bx, by, bw, 4, 3); ctx.fill();
 
-  // Speaker name
-  ctx.font = 'bold 13px Inter,sans-serif';
+  // Name
+  ctx.font = 'bold 12px Syne,sans-serif';
   ctx.fillStyle = color;
   ctx.textAlign = 'left';
-  ctx.fillText((ch.emoji || '') + ' ' + charName, bx + 12, by + 18);
+  ctx.fillText((ch.emoji||'') + ' ' + charName, bx+12, by+18);
 
-  // Dialogue text
-  ctx.font = 'bold 22px Inter,sans-serif';
+  // Text (wrap)
+  ctx.font = 'bold 21px Syne,sans-serif';
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'center';
-  // Simple wrap
   const maxW = bw - 24;
-  const words2 = text.split(' ');
-  let line = '', lines = [];
+  let words2 = text.split(' '), line = '', lines = [];
   words2.forEach(w => {
-    const t = line ? line + ' ' + w : w;
+    const t = line ? line+' '+w : w;
     if (ctx.measureText(t).width > maxW) { lines.push(line); line = w; } else line = t;
   });
   if (line) lines.push(line);
-  lines.slice(0, 2).forEach((l, i) => ctx.fillText(l, NATIVE_W / 2, by + 34 + i * 26));
-
+  lines.slice(0,2).forEach((l,i) => ctx.fillText(l, NW/2, by+35+i*24));
   ctx.restore();
 }
 
 function drawHUD(scIdx) {
-  // Scene counter
   ctx.save();
-  ctx.font = 'bold 13px Inter,sans-serif';
-  ctx.fillStyle = 'rgba(255,255,255,0.28)';
+  ctx.font = 'bold 12px Space Mono,monospace';
+  ctx.fillStyle = 'rgba(255,255,255,0.25)';
   ctx.textAlign = 'left';
-  ctx.fillText((scIdx + 1) + ' / ' + scenes.length, 18, 28);
-  // Handle
+  ctx.fillText((scIdx+1)+'/'+scenes.length, 16, 26);
   ctx.textAlign = 'right';
-  ctx.fillStyle = 'rgba(255,255,255,0.32)';
-  ctx.shadowColor = 'rgba(0,0,0,0.8)';
-  ctx.shadowBlur = 5;
-  ctx.fillText('@StoryVideo', NATIVE_W - 14, NATIVE_H - 14);
-  ctx.shadowBlur = 0;
+  ctx.fillStyle = 'rgba(255,255,255,0.28)';
+  ctx.shadowColor='rgba(0,0,0,0.9)'; ctx.shadowBlur=4;
+  ctx.fillText('@StoryVideo', NW-12, NH-12);
+  ctx.shadowBlur=0;
   ctx.restore();
 }
 
-function _rrect(x, y, w, h, r) {
+function rrect(x,y,w,h,r) {
   ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.arcTo(x + w, y, x + w, y + r, r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
-  ctx.lineTo(x + r, y + h);
-  ctx.arcTo(x, y + h, x, y + h - r, r);
-  ctx.lineTo(x, y + r);
-  ctx.arcTo(x, y, x + r, y, r);
-  ctx.closePath();
+  ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+  ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);
+  ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
 }
 
 function previewCur() {
   if (curSc >= 0 && curSc < scenes.length) {
     const s = scenes[curSc];
-    const preview = s.narration.split(/\s+/).slice(0, wpg);
-    drawScene(curSc, preview, false, '', '');
+    const prev = (s.narration||'').split(/\s+/).filter(Boolean).slice(0, wpg);
+    drawScene(curSc, prev, false, '', '');
+  } else {
+    drawEmpty();
   }
 }
 
-// ── IMAGE GENERATION ─────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+//  IMAGE GENERATION — FIXED with queue + backoff
+// ══════════════════════════════════════════════════════════
 function loadImg(url, ms) {
-  ms = ms || 65000;
-  return new Promise(function(res, rej) {
-    var img = new Image();
+  return new Promise((res, rej) => {
+    const img = new Image();
     img.crossOrigin = 'anonymous';
-    var t = setTimeout(function() { img.src = ''; rej(new Error('timeout')); }, ms);
-    img.onload = function() { clearTimeout(t); res(img); };
-    img.onerror = function() { clearTimeout(t); rej(new Error('load error')); };
+    const t = setTimeout(() => { img.src=''; rej(new Error('timeout')); }, ms||70000);
+    img.onload  = () => { clearTimeout(t); res(img); };
+    img.onerror = () => { clearTimeout(t); rej(new Error('load error')); };
     img.src = url;
   });
 }
 
-function wait(ms) {
-  return new Promise(function(r) { setTimeout(r, ms); });
+function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// Build Pollinations URL — vary model and seed per attempt
+function pollinationsUrl(prompt, attempt, scIdx) {
+  const model = document.getElementById('img-model').value;
+  const seed  = (scIdx * 317 + attempt * 71 + Math.floor(Math.random()*9999)) % 99999;
+  const w = orient==='landscape' ? LANDSCAPE_W : PORTRAIT_W;
+  const h = orient==='landscape' ? LANDSCAPE_H : PORTRAIT_H;
+  const models = [model, 'turbo', 'flux'];
+  const m = models[attempt % models.length];
+  return 'https://image.pollinations.ai/prompt/' +
+    encodeURIComponent(prompt) +
+    '?width=' + w + '&height=' + h + '&seed=' + seed + '&model=' + m + '&nologo=true&enhance=true';
 }
 
 async function genScene(idx) {
   const s = scenes[idx];
   if (!s) return;
+  if (s.imgStatus === 'generating') return; // prevent double-gen
+
   s.imgStatus = 'generating';
+  s.imgEl = null;
   renderList();
   if (curSc === idx) drawScene(idx, [], false, '', '');
 
-  const seed = Math.floor(Math.random() * 99999);
-  const p = encodeURIComponent(s.imgPrompt);
-  const urls = [
-    'https://image.pollinations.ai/prompt/' + p + '?width=540&height=960&seed=' + seed + '&model=flux&nologo=true',
-    'https://image.pollinations.ai/prompt/' + p + '?width=540&height=960&seed=' + (seed+1) + '&model=turbo&nologo=true'
-  ];
-
-  for (let a = 0; a < urls.length; a++) {
+  const MAX_ATTEMPTS = 4;
+  for (let a = 0; a < MAX_ATTEMPTS; a++) {
     try {
-      const img = await loadImg(urls[a]);
-      s.imgUrl = urls[a];
-      s.imgEl = img;
+      const url = pollinationsUrl(s.imgPrompt, a, idx);
+      // Wait before retry (not first attempt)
+      if (a > 0) {
+        toast('⏳ Scene '+(idx+1)+' retry '+(a)+'/'+MAX_ATTEMPTS+'...', 'ok');
+        await wait(4000 + a * 3000);
+      }
+      const img = await loadImg(url, 75000);
+      s.imgUrl    = url;
+      s.imgEl     = img;
       s.imgStatus = 'done';
       renderList();
       if (curSc === idx) drawScene(idx, [], false, '', '');
-      return;
+      return; // success
     } catch(e) {
       console.warn('Scene', idx+1, 'attempt', a+1, ':', e.message);
-      if (a === 0) await wait(3000);
     }
   }
   s.imgStatus = 'error';
   renderList();
+  toast('⚠️ Scene '+(idx+1)+' failed. Click 🎨 to retry.', 'err');
 }
 
+// Sequential generation with configurable delay between scenes
 async function genAll() {
-  const btn = document.getElementById('genall-btn');
+  const btn   = document.getElementById('genall-btn');
+  const delay = parseInt(document.getElementById('gen-delay').value) || 8000;
   btn.disabled = true;
+
   for (let i = 0; i < scenes.length; i++) {
-    btn.textContent = '⏳ Scene ' + (i+1) + '/' + scenes.length + '...';
-    toast('🎨 Generating scene ' + (i+1) + ' of ' + scenes.length + '...', 'ok');
+    btn.textContent = '⏳ Scene '+(i+1)+'/'+scenes.length+'...';
+    toast('🎨 Generating scene '+(i+1)+' of '+scenes.length+'…', 'ok');
+
     await genScene(i);
     renderList();
+
+    // Delay between scenes to avoid rate limiting
     if (i < scenes.length - 1) {
-      for (let c = 5; c >= 1; c--) {
-        btn.textContent = '⏳ Next in ' + c + 's...';
+      let remaining = delay / 1000;
+      while (remaining > 0) {
+        btn.textContent = '⏳ Next in '+remaining+'s…';
         await wait(1000);
+        remaining--;
       }
     }
   }
+
   btn.disabled = false;
   btn.textContent = '🖼 Regenerate Images';
-  const done = scenes.filter(function(s) { return s.imgStatus === 'done'; }).length;
-  const fail = scenes.filter(function(s) { return s.imgStatus === 'error'; }).length;
-  if (fail > 0) {
-    toast('✅ ' + done + ' done · ⚠️ ' + fail + ' failed — click 🎨 to retry', 'ok');
-  } else {
-    toast('🎉 All ' + done + ' images ready! Press ▶ Play.', 'ok');
-  }
+  const done = scenes.filter(s => s.imgStatus==='done').length;
+  const fail = scenes.filter(s => s.imgStatus==='error').length;
+  toast(fail ? '✅ '+done+' done · ⚠️ '+fail+' failed' : '🎉 All '+done+' images ready!', 'ok');
 }
 
-// ── STORY PARSER ─────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+//  STORY PARSER
+// ══════════════════════════════════════════════════════════
 async function parseStory() {
   const text = document.getElementById('story-ta').value.trim();
   if (!text) { toast('Write a story first!', 'err'); return; }
 
-  showOv('Reading your story...', 'Breaking into scenes and building image prompts');
+  showOv('Analysing story…', 'Building scenes and visual descriptions');
 
-  const charNames = Object.keys(CHARS).join(', ');
-  const charLooks = Object.keys(CHARS).map(function(n) {
-    return n + ': ' + CHARS[n].look;
-  }).join('\n');
+  const charLooks = Object.keys(CHARS).map(n => n + ': ' + CHARS[n].look).join('\n');
+  const w = orient==='landscape' ? '16:9 horizontal landscape' : '9:16 vertical portrait';
 
-  const prompt = 'Break this story into 5-8 visual scenes for a TikTok video.\n\n' +
-    'Available characters and their exact appearance:\n' + charLooks + '\n\n' +
+  const prompt =
+    'Break this story into 5-8 visual scenes for a short-form video.\n\n' +
+    'Characters and exact appearance:\n' + charLooks + '\n\n' +
     'Story:\n"' + text + '"\n\n' +
-    'Return ONLY valid JSON with no markdown:\n' +
+    'Return ONLY valid JSON (no markdown fences):\n' +
     '{"scenes":[{\n' +
-    '  "narration": "The narrator text for this scene (what is HAPPENING, keep original story words)",\n' +
-    '  "dialogue": [{"speaker":"Name","text":"exact words spoken"}],\n' +
-    '  "imgPrompt": "Detailed visual description. MUST include the character exact appearance from the list above. Describe the ACTION happening. End with: 3D photorealistic Unreal Engine render, cinematic lighting, 9:16 vertical portrait"\n' +
+    '  "narration": "Engaging narrator text describing what happens (2-3 natural sentences, vivid but concise)",\n' +
+    '  "dialogue": [{"speaker":"CharacterName","text":"exact words spoken"}],\n' +
+    '  "imgPrompt": "Highly detailed scene. MUST include exact character appearance. Describe action. Setting details. Cinematic. End with: 3D photorealistic Unreal Engine 5 render, cinematic dramatic lighting, ' + w + ' aspect ratio, 8k ultra quality"\n' +
     '}]}\n\n' +
     'Rules:\n' +
-    '- narration = what happens (narrative text, NOT what they say)\n' +
-    '- dialogue = only what characters actually say out loud\n' +
-    '- imgPrompt MUST reference the character\'s exact look from the list\n' +
-    '- imgPrompt describes the scene ACTION (running, sitting, arguing, etc)\n' +
-    '- Only use character names from the list';
+    '- narration uses vivid, engaging storytelling language — NOT flat summaries\n' +
+    '- dialogue only contains lines actually spoken aloud in the story\n' +
+    '- imgPrompt always references the character\'s exact appearance from the list\n' +
+    '- imgPrompt describes specific action (running, arguing, laughing, pointing etc)\n' +
+    '- Only use character names from the list above';
 
   try {
     const resp = await fetch('https://text.pollinations.ai/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        messages: [{ role: 'user', content: prompt }],
+        messages: [{role:'user', content:prompt}],
         model: 'openai',
         jsonMode: true,
-        seed: Math.floor(Math.random() * 9999)
+        seed: Math.floor(Math.random()*9999)
       })
     });
     if (!resp.ok) throw new Error(resp.status);
-    const raw = await resp.text();
-    const clean = raw.replace(/```json|```/g, '').trim();
-    const data = JSON.parse(clean);
-    const rs = data.scenes || data;
-    if (!Array.isArray(rs) || rs.length === 0) throw new Error('no scenes');
+    const raw   = await resp.text();
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const data  = JSON.parse(clean);
+    const rs    = data.scenes || data;
+    if (!Array.isArray(rs) || !rs.length) throw new Error('no scenes');
 
-    scenes = rs.map(function(s, i) {
-      return {
-        narration: s.narration || '',
-        dialogue:  Array.isArray(s.dialogue) ? s.dialogue : [],
-        imgPrompt: (s.imgPrompt || s.narration || '').substring(0, 220),
-        imgUrl: null, imgEl: null, imgStatus: 'idle'
-      };
-    });
+    scenes = rs.map(s => ({
+      narration:  s.narration  || '',
+      dialogue:   Array.isArray(s.dialogue) ? s.dialogue : [],
+      imgPrompt:  (s.imgPrompt || s.narration || '').substring(0, 240),
+      imgUrl: null, imgEl: null, imgStatus: 'idle'
+    }));
     hideOv();
     finishLoad();
-
   } catch(e) {
     console.error(e);
     hideOv();
-    // Fallback: split manually
     scenes = fallbackParse(text);
     finishLoad();
-    toast('Scenes built (offline mode)','ok');
+    toast('Scenes built (offline mode)', 'ok');
   }
 }
 
@@ -777,386 +785,374 @@ function fallbackParse(text) {
   const sents = text.match(/[^.!?]+[.!?]+/g) || [text];
   const out = [];
   for (let i = 0; i < sents.length; i += 2) {
-    const narr = ((sents[i] || '') + ' ' + (sents[i+1] || '')).trim();
-    // detect dialogue
-    const dia = [];
-    const re = /(\w[\w ]+) said[s]? ['"](.+?)['"]/gi;
+    const narr = ((sents[i]||'')+' '+(sents[i+1]||'')).trim();
+    const dia  = [];
+    const re   = /(\w[\w ]+?)\s+said[s]?\s+['"](.+?)['"]/gi;
     let m;
     while ((m = re.exec(narr)) !== null) {
-      if (CHARS[m[1]]) dia.push({ speaker: m[1], text: m[2] });
+      if (CHARS[m[1]]) dia.push({speaker:m[1], text:m[2]});
     }
-    // detect character for image
-    const charMatch = Object.keys(CHARS).find(function(n) { return narr.includes(n); });
-    const charLook = charMatch ? CHARS[charMatch].look : 'African person';
+    const charMatch = Object.keys(CHARS).find(n => narr.includes(n));
+    const charLook  = charMatch ? CHARS[charMatch].look : 'African person, dark skin';
     const loc = detectLocation(narr);
+    const w   = orient==='landscape' ? '16:9 horizontal landscape' : '9:16 vertical portrait';
     out.push({
-      narration: narr,
-      dialogue: dia,
-      imgPrompt: charLook + ', ' + narr.substring(0, 60) + ', ' + loc + ', 3D photorealistic Unreal Engine render, cinematic lighting, 9:16 vertical portrait',
-      imgUrl: null, imgEl: null, imgStatus: 'idle'
+      narration: narr, dialogue: dia,
+      imgPrompt: charLook + ', ' + narr.substring(0,70) + ', ' + loc + ', 3D photorealistic Unreal Engine render, cinematic lighting, ' + w + ' aspect ratio',
+      imgUrl:null, imgEl:null, imgStatus:'idle'
     });
   }
-  return out.length ? out : [{ narration: text, dialogue: [], imgPrompt: text.substring(0,80) + ', 3D photorealistic render, cinematic, 9:16 vertical portrait', imgUrl: null, imgEl: null, imgStatus: 'idle' }];
+  return out.length ? out : [{narration:text, dialogue:[],
+    imgPrompt: text.substring(0,80)+', 3D photorealistic, cinematic, '+
+      (orient==='landscape'?'16:9 landscape':'9:16 portrait')+' aspect ratio',
+    imgUrl:null,imgEl:null,imgStatus:'idle'}];
 }
 
-function detectLocation(text) {
-  const t = text.toLowerCase();
-  if (t.includes('school') || t.includes('gate') || t.includes('classroom')) return 'African school compound';
-  if (t.includes('market') || t.includes('stall') || t.includes('vendor')) return 'vibrant African outdoor market';
-  if (t.includes('hospital') || t.includes('doctor') || t.includes('clinic')) return 'modern African hospital';
-  if (t.includes('home') || t.includes('house') || t.includes('bedroom') || t.includes('kitchen')) return 'cozy Kenyan home interior';
-  if (t.includes('forest') || t.includes('tree') || t.includes('jungle')) return 'dense tropical African forest';
-  if (t.includes('road') || t.includes('street') || t.includes('run')) return 'African tarmac road savanna background';
-  if (t.includes('night') || t.includes('dark') || t.includes('star')) return 'African night sky with stars';
-  if (t.includes('police') || t.includes('checkpoint') || t.includes('station')) return 'African police station checkpoint';
-  if (t.includes('river') || t.includes('lake') || t.includes('water')) return 'wide African river bank';
-  return 'East African outdoor setting, natural light';
+function detectLocation(t) {
+  t = t.toLowerCase();
+  if (/school|gate|classroom|teacher/.test(t)) return 'African school compound with red brick buildings';
+  if (/market|stall|vendor|shop/.test(t))       return 'vibrant colourful African outdoor market';
+  if (/hospital|doctor|clinic|nurse/.test(t))   return 'modern bright African hospital interior';
+  if (/home|house|bedroom|kitchen|room/.test(t)) return 'cozy Kenyan home warm interior lighting';
+  if (/forest|tree|jungle|bush/.test(t))         return 'lush dense tropical African forest';
+  if (/road|street|run|path/.test(t))            return 'African tarmac road savanna horizon';
+  if (/night|dark|star|moon/.test(t))            return 'African night sky full of stars, warm firelight';
+  if (/police|station|checkpoint/.test(t))       return 'African police station exterior checkpoint';
+  if (/river|lake|water|beach/.test(t))          return 'wide East African river bank with acacia trees';
+  return 'East African outdoor setting, golden natural light';
 }
 
 function finishLoad() {
   curSc = 0;
-  renderList();
-  updateCount();
-  previewCur();
+  renderList(); updateCount(); previewCur();
   document.getElementById('genall-btn').style.display = 'flex';
-  toast('✅ ' + scenes.length + ' scenes ready! Click "🖼 Generate Images".', 'ok');
+  toast('✅ '+scenes.length+' scenes ready! Click "🖼 Generate Images".', 'ok');
 }
 
-// ── PLAYBACK ─────────────────────────────────────────────
-let isPlaying = false;
-let stopFlag = false;
+// ══════════════════════════════════════════════════════════
+//  PLAYBACK — improved narration flow
+// ══════════════════════════════════════════════════════════
+let isPlaying = false, stopFlag = false;
 
 function onPlayBtn() {
   if (isPlaying) {
-    stopFlag = true;
-    isPlaying = false;
-    SY.cancel();
-    document.getElementById('play-btn').textContent = '▶ Play';
-    document.getElementById('play-btn').className = 'playbtn';
+    stopFlag = true; isPlaying = false; SY.cancel();
+    setPlayBtn(false);
   } else {
     startPlay(curSc >= 0 ? curSc : 0);
   }
 }
 
+function setPlayBtn(playing) {
+  const btn = document.getElementById('play-btn');
+  btn.textContent = playing ? '⏹ Stop' : '▶ Play';
+  btn.className   = playing ? 'stopbtn' : 'playbtn';
+}
+
 function startPlay(fromIdx) {
   if (!scenes.length) { toast('Build scenes first!', 'err'); return; }
-  isPlaying = true;
-  stopFlag = false;
-  document.getElementById('play-btn').textContent = '⏹ Stop';
-  document.getElementById('play-btn').className = 'stopbtn';
+  isPlaying = true; stopFlag = false;
+  setPlayBtn(true);
   playFrom(fromIdx);
 }
 
 function playFrom(idx) {
   if (stopFlag || idx >= scenes.length) {
-    isPlaying = false;
-    document.getElementById('play-btn').textContent = '▶ Play';
-    document.getElementById('play-btn').className = 'playbtn';
-    return;
+    isPlaying = false; setPlayBtn(false); return;
   }
   curSc = idx;
-  renderList();
-  updateProg(idx);
+  renderList(); updateProg(idx);
 
   const s = scenes[idx];
-  if (!s) { playFrom(idx + 1); return; }
+  if (!s) { playFrom(idx+1); return; }
 
-  const narrWords = (s.narration || '').trim().split(/\s+/).filter(function(w) { return w.length > 0; });
-  drawScene(idx, narrWords.slice(0, wpg), false, '', '');
+  const narrWords = (s.narration||'').trim().split(/\s+/).filter(Boolean);
+  drawScene(idx, narrWords.slice(0,wpg), false, '', '');
 
-  // Build narration utterance
-  const narrUtt = new SpeechSynthesisUtterance(s.narration || '');
-  narrUtt.rate  = parseFloat(document.getElementById('narr-rate').value);
-  narrUtt.pitch = parseFloat(document.getElementById('narr-pitch').value);
-  narrUtt.volume = 1;
-  const nv = getNarrVoice();
-  if (nv) narrUtt.voice = nv;
+  // Calculate approx time per word for fallback ticker
+  const rate   = parseFloat(document.getElementById('narr-rate').value);
+  const avgMs  = Math.max(80, 240 / (rate||0.88));
+  let fbIdx    = 0, lastWi = 0;
 
-  // Track word position via boundary events
-  let lastWordIdx = 0;
-  narrUtt.onboundary = function(e) {
+  const utt = new SpeechSynthesisUtterance(s.narration||'');
+  utt.rate   = rate;
+  utt.pitch  = parseFloat(document.getElementById('narr-pitch').value);
+  utt.volume = parseFloat(document.getElementById('narr-vol').value);
+  const nv = getNarrVoice(); if (nv) utt.voice = nv;
+
+  // Word boundary — highlight current word group
+  utt.onboundary = e => {
     if (e.name !== 'word' || stopFlag) return;
-    const charIdx = e.charIndex;
-    const txt = s.narration || '';
-    const wlist = txt.split(/\s+/).filter(function(w) { return w.length > 0; });
-    let pos = 0, wIdx = 0;
-    for (let i = 0; i < wlist.length; i++) {
-      pos = txt.indexOf(wlist[i], pos);
-      if (pos >= charIdx) { wIdx = i; break; }
-      pos += wlist[i].length;
+    const ci = e.charIndex;
+    const txt = s.narration||'';
+    const wl  = txt.split(/\s+/).filter(Boolean);
+    let pos=0, wi=0;
+    for (let i=0; i<wl.length; i++) {
+      pos = txt.indexOf(wl[i], pos);
+      if (pos >= ci) { wi=i; break; }
+      pos += wl[i].length;
     }
-    lastWordIdx = wIdx;
-    const group = narrWords.slice(wIdx, wIdx + wpg);
-    if (group.length > 0) drawScene(idx, group, false, '', '');
+    lastWi = wi;
+    const g = narrWords.slice(wi, wi+wpg);
+    if (g.length) drawScene(idx, g, false, '', '');
   };
 
-  // Fallback word ticker (for browsers with poor boundary support)
-  const avgMs = Math.max(100, 260 / (narrUtt.rate || 0.92));
-  let fbIdx = 0;
+  // Fallback ticker (Chrome often doesn't fire onboundary reliably)
   function fbTick() {
     if (stopFlag || fbIdx >= narrWords.length) return;
-    if (fbIdx >= lastWordIdx) {
-      const g = narrWords.slice(fbIdx, fbIdx + wpg);
-      if (g.length > 0) drawScene(idx, g, false, '', '');
+    if (fbIdx >= lastWi) {
+      const g = narrWords.slice(fbIdx, fbIdx+wpg);
+      if (g.length) drawScene(idx, g, false, '', '');
     }
     fbIdx += wpg;
-    setTimeout(fbTick, avgMs * wpg);
+    setTimeout(fbTick, avgMs*wpg);
   }
-  setTimeout(fbTick, avgMs);
+  setTimeout(fbTick, avgMs*0.8);
 
-  narrUtt.onend = function() {
+  utt.onend = () => {
     if (stopFlag) return;
-    // Play dialogue if any
-    const dias = s.dialogue || [];
-    if (dias.length > 0) {
-      playDialogue(idx, dias, 0, function() {
-        if (!stopFlag) setTimeout(function() { playFrom(idx + 1); }, 400);
-      });
-    } else {
-      if (!stopFlag) setTimeout(function() { playFrom(idx + 1); }, 400);
-    }
+    const dias = s.dialogue||[];
+    playDialogues(idx, dias, 0, () => {
+      if (!stopFlag) setTimeout(() => playFrom(idx+1), 380);
+    });
   };
-  narrUtt.onerror = function() {
-    if (!stopFlag) playFrom(idx + 1);
-  };
+  utt.onerror = () => { if (!stopFlag) playFrom(idx+1); };
 
-  SY.cancel();
-  SY.speak(narrUtt);
-}
-
-function playDialogue(scIdx, dias, dIdx, onDone) {
-  if (stopFlag || dIdx >= dias.length) { onDone(); return; }
-  const dia = dias[dIdx];
-  const ch = CHARS[dia.speaker] || {};
-
-  // Show dialogue bubble on screen
-  const narrWords = (scenes[scIdx].narration || '').trim().split(/\s+/).filter(function(w) { return w.length > 0; });
-  drawScene(scIdx, narrWords.slice(-wpg), true, dia.text, dia.speaker);
-
-  const utt = new SpeechSynthesisUtterance(dia.text || '');
-  utt.rate  = ch.voice ? ch.voice.rate  : 0.95;
-  utt.pitch = ch.voice ? ch.voice.pitch : 1.0;
-  utt.volume = 1;
-  const cv = getCharVoice(dia.speaker);
-  if (cv) utt.voice = cv;
-  utt.onend   = function() { if (!stopFlag) playDialogue(scIdx, dias, dIdx + 1, onDone); };
-  utt.onerror = function() { if (!stopFlag) playDialogue(scIdx, dias, dIdx + 1, onDone); };
   SY.cancel();
   SY.speak(utt);
 }
 
+function playDialogues(scIdx, dias, dIdx, onDone) {
+  if (stopFlag || dIdx >= dias.length) { onDone(); return; }
+  const dia = dias[dIdx];
+  const ch  = CHARS[dia.speaker]||{};
+  const nw  = (scenes[scIdx].narration||'').trim().split(/\s+/).filter(Boolean);
+  drawScene(scIdx, nw.slice(-wpg), true, dia.text, dia.speaker);
+
+  const utt = new SpeechSynthesisUtterance(dia.text||'');
+  utt.rate   = ch.voice ? ch.voice.rate  : 0.92;
+  utt.pitch  = ch.voice ? ch.voice.pitch : 1.0;
+  utt.volume = parseFloat(document.getElementById('narr-vol').value);
+  const cv = getCharVoice(); if (cv) utt.voice = cv;
+  utt.onend  = () => { if (!stopFlag) playDialogues(scIdx, dias, dIdx+1, onDone); };
+  utt.onerror= () => { if (!stopFlag) playDialogues(scIdx, dias, dIdx+1, onDone); };
+  SY.cancel(); SY.speak(utt);
+}
+
 function updateProg(idx) {
-  const pct = scenes.length ? ((idx / scenes.length) * 100) : 0;
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-label').textContent = 'Scene ' + (idx+1) + ' / ' + scenes.length;
+  const pct = scenes.length ? (idx/scenes.length)*100 : 0;
+  document.getElementById('prog-fill').style.width  = pct+'%';
+  document.getElementById('prog-label').textContent = 'Scene '+(idx+1)+' / '+scenes.length;
 }
 
 function prevSc() {
-  if (isPlaying) { stopFlag=true; isPlaying=false; SY.cancel(); document.getElementById('play-btn').textContent='▶ Play'; document.getElementById('play-btn').className='playbtn'; }
+  if (isPlaying) { stopFlag=true; isPlaying=false; SY.cancel(); setPlayBtn(false); }
   if (curSc > 0) { curSc--; renderList(); previewCur(); updateProg(curSc); }
 }
 function nextSc() {
-  if (isPlaying) { stopFlag=true; isPlaying=false; SY.cancel(); document.getElementById('play-btn').textContent='▶ Play'; document.getElementById('play-btn').className='playbtn'; }
-  if (curSc < scenes.length - 1) { curSc++; renderList(); previewCur(); updateProg(curSc); }
+  if (isPlaying) { stopFlag=true; isPlaying=false; SY.cancel(); setPlayBtn(false); }
+  if (curSc < scenes.length-1) { curSc++; renderList(); previewCur(); updateProg(curSc); }
 }
 
-// ── EXPORT VIDEO ─────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+//  EXPORT VIDEO
+// ══════════════════════════════════════════════════════════
 async function startExport() {
   if (!scenes.length) { toast('Build scenes first!', 'err'); return; }
-  if (isPlaying) { stopFlag=true; isPlaying=false; SY.cancel(); }
+  if (isPlaying) { stopFlag=true; isPlaying=false; SY.cancel(); setPlayBtn(false); }
 
-  document.getElementById('export-btn').disabled = true;
+  document.getElementById('export-btn').disabled  = true;
   document.getElementById('export-btn2').disabled = true;
   document.getElementById('rbar-wrap').style.display = 'block';
-  document.getElementById('dl-area').style.display = 'none';
-
-  toast('🎬 Recording started — playing story...', 'ok');
+  document.getElementById('dl-area').style.display   = 'none';
+  toast('🎬 Recording started…', 'ok');
 
   const stream = cnv.captureStream(24);
   let mime = 'video/webm;codecs=vp9';
   if (!MediaRecorder.isTypeSupported(mime)) mime = 'video/webm';
-  const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 5000000 });
+  const rec    = new MediaRecorder(stream, {mimeType:mime, videoBitsPerSecond:6000000});
   const chunks = [];
-  rec.ondataavailable = function(e) { if (e.data.size > 0) chunks.push(e.data); };
+  rec.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
   rec.start(100);
 
-  // Play all scenes sequentially while recording
-  await new Promise(function(resolve) {
+  await new Promise(resolve => {
     let si = 0;
     function doScene() {
       if (si >= scenes.length) { resolve(); return; }
-      const s = scenes[si];
-      const pct = 5 + (si / scenes.length) * 88;
-      document.getElementById('rfill').style.width = pct + '%';
-      document.getElementById('rtxt').textContent = 'Recording scene ' + (si+1) + ' of ' + scenes.length + '...';
+      const s   = scenes[si];
+      const pct = 5 + (si/scenes.length)*88;
+      document.getElementById('rfill').style.width = pct+'%';
+      document.getElementById('rtxt').textContent  = 'Recording scene '+(si+1)+' of '+scenes.length+'…';
       updateProg(si);
-
       curSc = si; renderList();
-      const nw = (s.narration||'').trim().split(/\s+/).filter(function(w){return w.length>0;});
-      drawScene(si, nw.slice(0, wpg), false, '', '');
+
+      const nw    = (s.narration||'').trim().split(/\s+/).filter(Boolean);
+      const rate  = parseFloat(document.getElementById('narr-rate').value);
+      const avgMs = Math.max(80, 240/(rate||0.88));
+      drawScene(si, nw.slice(0,wpg), false, '', '');
 
       const nu = new SpeechSynthesisUtterance(s.narration||'');
-      nu.rate  = parseFloat(document.getElementById('narr-rate').value);
-      nu.pitch = parseFloat(document.getElementById('narr-pitch').value);
-      nu.volume = 1;
-      const nv = getNarrVoice(); if(nv) nu.voice = nv;
+      nu.rate   = rate;
+      nu.pitch  = parseFloat(document.getElementById('narr-pitch').value);
+      nu.volume = parseFloat(document.getElementById('narr-vol').value);
+      const nv = getNarrVoice(); if (nv) nu.voice = nv;
 
-      let lwi = 0;
-      nu.onboundary = function(e) {
-        if (e.name !== 'word') return;
-        const ci = e.charIndex;
-        const txt = s.narration||'';
-        const wl = txt.split(/\s+/).filter(function(w){return w.length>0;});
-        let pos=0, wi=0;
+      let lwi=0, fbi=0;
+      nu.onboundary = e => {
+        if (e.name!=='word') return;
+        const ci=e.charIndex, txt=s.narration||'';
+        const wl=txt.split(/\s+/).filter(Boolean);
+        let pos=0,wi=0;
         for(let i=0;i<wl.length;i++){pos=txt.indexOf(wl[i],pos);if(pos>=ci){wi=i;break;}pos+=wl[i].length;}
         lwi=wi;
         const g=nw.slice(wi,wi+wpg);
-        if(g.length>0) drawScene(si,g,false,'','');
+        if(g.length) drawScene(si,g,false,'','');
       };
-      const avgMs = Math.max(100, 260/(nu.rate||0.92));
-      let fbi=0;
       function fbt(){
         if(fbi>=nw.length)return;
-        if(fbi>=lwi){const g=nw.slice(fbi,fbi+wpg);if(g.length>0)drawScene(si,g,false,'','');}
+        if(fbi>=lwi){const g=nw.slice(fbi,fbi+wpg);if(g.length)drawScene(si,g,false,'','');}
         fbi+=wpg; setTimeout(fbt,avgMs*wpg);
       }
-      setTimeout(fbt,avgMs);
+      setTimeout(fbt,avgMs*0.8);
 
-      nu.onend = function() {
-        const dias = s.dialogue||[];
+      nu.onend = () => {
+        const dias=s.dialogue||[];
         let di=0;
         function doDia(){
-          if(di>=dias.length){si++;setTimeout(doScene,350);return;}
+          if(di>=dias.length){si++;setTimeout(doScene,320);return;}
           const d=dias[di];
           drawScene(si,nw.slice(-wpg),true,d.text,d.speaker);
           const du=new SpeechSynthesisUtterance(d.text||'');
-          const dch=CHARS[d.speaker]||{};
-          du.rate=(dch.voice?dch.voice.rate:0.95);
-          du.pitch=(dch.voice?dch.voice.pitch:1.0);
-          du.volume=1;
-          const dcv=getCharVoice(d.speaker);if(dcv)du.voice=dcv;
-          du.onend=function(){di++;doDia();};
-          du.onerror=function(){di++;doDia();};
+          const dc=CHARS[d.speaker]||{};
+          du.rate  =(dc.voice?dc.voice.rate:0.92);
+          du.pitch =(dc.voice?dc.voice.pitch:1.0);
+          du.volume=parseFloat(document.getElementById('narr-vol').value);
+          const dcv=getCharVoice();if(dcv)du.voice=dcv;
+          du.onend=()=>{di++;doDia();};
+          du.onerror=()=>{di++;doDia();};
           SY.cancel();SY.speak(du);
         }
         doDia();
       };
-      nu.onerror=function(){si++;setTimeout(doScene,200);};
+      nu.onerror=()=>{si++;setTimeout(doScene,200);};
       SY.cancel(); SY.speak(nu);
     }
     doScene();
   });
 
   document.getElementById('rfill').style.width = '96%';
-  document.getElementById('rtxt').textContent = 'Finishing...';
-  await wait(800);
+  document.getElementById('rtxt').textContent  = 'Finishing…';
+  await wait(900);
   rec.stop();
-
-  rec.onstop = function() {
-    const blob = new Blob(chunks, { type: mime });
-    const url = URL.createObjectURL(blob);
+  rec.onstop = () => {
+    const blob = new Blob(chunks, {type:mime});
+    const url  = URL.createObjectURL(blob);
     document.getElementById('dl-link').href = url;
-    document.getElementById('dl-area').style.display = 'block';
+    document.getElementById('dl-link').download = orient==='landscape' ? 'story-landscape.webm' : 'story-portrait.webm';
+    document.getElementById('dl-area').style.display   = 'block';
     document.getElementById('rbar-wrap').style.display = 'none';
-    document.getElementById('rfill').style.width = '100%';
-    document.getElementById('export-btn').disabled = false;
+    document.getElementById('export-btn').disabled  = false;
     document.getElementById('export-btn2').disabled = false;
     toast('🎬 Done! Click Download.', 'ok');
   };
 }
 
-// ── SCENE LIST ───────────────────────────────────────────
+// ══════════════════════════════════════════════════════════
+//  SCENE LIST
+// ══════════════════════════════════════════════════════════
 function renderList() {
   const list = document.getElementById('slist');
   if (!scenes.length) {
-    list.innerHTML = '<div style="padding:20px;text-align:center;font-size:11px;color:#383c58">Write a story and click <b style="color:#00d4ff">Build Scenes</b></div>';
+    list.innerHTML = '<div style="padding:16px;text-align:center;font-size:10px;color:var(--muted2)">Write a story and click <b style="color:var(--accent)">Build Scenes</b></div>';
     return;
   }
-  const stmap = { idle:'sd-i', generating:'sd-g', done:'sd-d', error:'sd-e' };
-  list.innerHTML = scenes.map(function(s, i) {
-    const thumb = s.imgStatus === 'done' && s.imgUrl
-      ? '<img src="' + s.imgUrl + '" alt=""/>'
-      : s.imgStatus === 'generating'
-      ? '<div style="display:flex;flex-direction:column;align-items:center;gap:3px"><div class="spin" style="width:16px;height:16px;border-width:2px"></div><span style="font-size:9px">Gen...</span></div>'
-      : '<span style="font-size:18px">🎨</span>';
-    const diaHtml = s.dialogue && s.dialogue.length
-      ? s.dialogue.map(function(d){ return '<div class="sc-dia">"' + d.text.substring(0,40) + '..." — ' + d.speaker + '</div>'; }).join('')
-      : '';
-    return '<div class="scard' + (curSc===i?' on':'') + '" id="sc-' + i + '">' +
-      '<div class="sc-head" data-idx="' + i + '">' +
-        '<div class="sc-num">' + (i+1) + '</div>' +
-        '<div class="sc-title">' + s.narration.substring(0,42).replace(/</g,'&lt;') + '...</div>' +
+  const stmap = {idle:'sd-i',generating:'sd-g',done:'sd-d',error:'sd-e'};
+  const thumbClass = orient==='landscape' ? 'sc-thumb land' : 'sc-thumb';
+  list.innerHTML = scenes.map((s,i) => {
+    const thumb = s.imgStatus==='done' && s.imgUrl
+      ? '<img src="'+s.imgUrl+'" alt=""/>'
+      : s.imgStatus==='generating'
+      ? '<div class="spin" style="width:14px;height:14px;border-width:2px"></div>'
+      : '<span style="font-size:16px">🎨</span>';
+    const diaHtml = (s.dialogue||[]).map(d =>
+      '<div class="sc-dia">"'+d.text.substring(0,36)+'…" — '+d.speaker+'</div>'
+    ).join('');
+    return '<div class="scard'+(curSc===i?' on':'')+'" id="sc-'+i+'">' +
+      '<div class="sc-head" data-idx="'+i+'">' +
+        '<div class="sc-num">'+(i+1)+'</div>' +
+        '<div class="sc-title">'+s.narration.substring(0,42).replace(/</g,'&lt;')+'…</div>' +
         '<div class="sc-acts">' +
-          '<div class="sdot ' + (stmap[s.imgStatus]||'sd-i') + '"></div>' +
-          '<button class="sc-btn" data-gen="' + i + '" title="Generate image">🎨</button>' +
-          '<button class="sc-btn" data-play="' + i + '" title="Play from here">▶</button>' +
-          '<button class="sc-btn" data-del="' + i + '" title="Delete">✕</button>' +
+          '<div class="sdot '+(stmap[s.imgStatus]||'sd-i')+'"></div>' +
+          '<button class="sc-btn" data-gen="'+i+'" title="Gen image">🎨</button>' +
+          '<button class="sc-btn" data-play="'+i+'" title="Play">▶</button>' +
+          '<button class="sc-btn" data-del="'+i+'" title="Delete">✕</button>' +
         '</div>' +
       '</div>' +
       '<div class="sc-body">' +
-        '<div class="sc-thumb">' + thumb + '</div>' +
-        '<div><div class="sc-narr">' + s.narration.replace(/</g,'&lt;') + '</div>' + diaHtml + '</div>' +
+        '<div class="'+thumbClass+'">'+thumb+'</div>' +
+        '<div><div class="sc-narr">'+s.narration.replace(/</g,'&lt;')+'</div>'+diaHtml+'</div>' +
       '</div>' +
     '</div>';
   }).join('');
 
-  // Attach events after rendering
-  document.querySelectorAll('.sc-head[data-idx]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      const i = parseInt(el.getAttribute('data-idx'));
-      curSc = i; renderList(); previewCur(); updateProg(i);
+  list.querySelectorAll('.sc-head[data-idx]').forEach(el => {
+    el.addEventListener('click', () => {
+      curSc = parseInt(el.getAttribute('data-idx'));
+      renderList(); previewCur(); updateProg(curSc);
     });
   });
-  document.querySelectorAll('.sc-btn[data-gen]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
+  list.querySelectorAll('.sc-btn[data-gen]').forEach(btn => {
+    btn.addEventListener('click', e => {
       e.stopPropagation();
-      genScene(parseInt(btn.getAttribute('data-gen')));
+      const i = parseInt(btn.getAttribute('data-gen'));
+      scenes[i].imgStatus = 'idle'; // reset so genScene runs
+      genScene(i);
     });
   });
-  document.querySelectorAll('.sc-btn[data-play]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
+  list.querySelectorAll('.sc-btn[data-play]').forEach(btn => {
+    btn.addEventListener('click', e => {
       e.stopPropagation();
       if (isPlaying) { stopFlag=true; isPlaying=false; SY.cancel(); }
-      setTimeout(function() { startPlay(parseInt(btn.getAttribute('data-play'))); }, 100);
+      setTimeout(() => startPlay(parseInt(btn.getAttribute('data-play'))), 100);
     });
   });
-  document.querySelectorAll('.sc-btn[data-del]').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
+  list.querySelectorAll('.sc-btn[data-del]').forEach(btn => {
+    btn.addEventListener('click', e => {
       e.stopPropagation();
       const i = parseInt(btn.getAttribute('data-del'));
-      scenes.splice(i, 1);
-      if (curSc >= scenes.length) curSc = scenes.length - 1;
+      scenes.splice(i,1);
+      if (curSc >= scenes.length) curSc = scenes.length-1;
       renderList(); updateCount();
-      if (curSc >= 0) previewCur();
+      if (curSc >= 0) previewCur(); else drawEmpty();
     });
   });
 }
 
 function updateCount() {
-  document.getElementById('sc-count').textContent = scenes.length ? '(' + scenes.length + ')' : '';
+  document.getElementById('sc-count').textContent = scenes.length ? '('+scenes.length+')' : '';
 }
 
-// ── CLEAR ─────────────────────────────────────────────────
-document.getElementById('clear-btn').addEventListener('click', function() {
+// ══════════════════════════════════════════════════════════
+//  MISC
+// ══════════════════════════════════════════════════════════
+document.getElementById('clear-btn').addEventListener('click', () => {
   if (!confirm('Clear all scenes?')) return;
-  if (isPlaying) { stopFlag=true; isPlaying=false; SY.cancel(); }
-  scenes = []; curSc = -1;
+  if (isPlaying) { stopFlag=true; isPlaying=false; SY.cancel(); setPlayBtn(false); }
+  scenes=[]; curSc=-1;
   renderList(); updateCount(); drawEmpty();
-  document.getElementById('genall-btn').style.display = 'none';
-  document.getElementById('dl-area').style.display = 'none';
+  document.getElementById('genall-btn').style.display='none';
+  document.getElementById('dl-area').style.display='none';
 });
 
-// ── EXAMPLE ───────────────────────────────────────────────
 function loadExample() {
   document.getElementById('story-ta').value =
-    "Brian woke up and looked at his phone. It was already 7:50. School started at eight. He jumped out of bed and ran to the bathroom. He brushed his teeth for five seconds, grabbed his school bag, and sprinted out the front door. He ran down the road at full speed, his heart pounding. At the school gate, Mwalimu Hassan stood with his arms crossed, staring at his watch. Brian skidded to a stop right in front of him. Mwalimu Hassan looked at him slowly and said 'You are twenty minutes late.' Brian tried to catch his breath. He said 'Sorry sir, it will not happen again.' Mwalimu Hassan shook his head and pointed at the gate. Then from inside, the whole class burst out laughing. They had been watching through the window the whole time.";
+    "Brian woke up and looked at his phone. It was already 7:50. School started at eight. He jumped out of bed and ran to the bathroom. He brushed his teeth for five seconds, grabbed his bag, and sprinted out the door. He ran down the road, his heart pounding. At the school gate, Mwalimu Hassan stood with arms crossed and said 'You are twenty minutes late, young man.' Brian skidded to a stop. He said 'Sorry sir, it will never happen again.' Mwalimu Hassan pointed at the gate. The whole class burst out laughing from behind the window.";
   toast('Example loaded! Click ✨ Build Scenes.', 'ok');
 }
 
-// ── OVERLAY / TOAST ───────────────────────────────────────
 function showOv(t, m) {
   document.getElementById('ov-title').textContent = t;
-  document.getElementById('ov-msg').textContent = m;
+  document.getElementById('ov-msg').textContent   = m;
   document.getElementById('ov').classList.add('show');
 }
 function hideOv() { document.getElementById('ov').classList.remove('show'); }
@@ -1164,13 +1160,13 @@ function hideOv() { document.getElementById('ov').classList.remove('show'); }
 function toast(msg, type) {
   const el = document.getElementById('toast');
   el.textContent = msg;
-  el.className = 'toast ' + (type === 'ok' ? 'tok' : type === 'err' ? 'terr' : '');
+  el.className   = 'toast ' + (type==='ok'?'tok':type==='err'?'terr':'');
   el.style.display = 'block';
   clearTimeout(el._t);
-  el._t = setTimeout(function() { el.style.display = 'none'; }, 3500);
+  el._t = setTimeout(() => { el.style.display='none'; }, 3800);
 }
 
-// ── INIT ──────────────────────────────────────────────────
+// ── INIT ────────────────────────────────────────────────
 drawEmpty();
 </script>
 </body>
